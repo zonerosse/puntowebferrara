@@ -3,8 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} | Punto Web Ferrara</title>
+    <title>{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web Ferrara{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web, SEO e web marketing a Ferrara e provincia.{{ end }}{{ end }}">
+    <meta name="keywords" content="realizzazione siti web ferrara, web agency ferrara, seo ferrara, creazione siti internet ferrara, posizionamento google ferrara">
+    <meta name="author" content="Punto Web Ferrara">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ .Permalink }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web Ferrara{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web e SEO a Ferrara.{{ end }}{{ end }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:site_name" content="Punto Web Ferrara">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    
     <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Schema.org LocalBusiness -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://puntowebferrara.com/#organization",
+        "name": "Punto Web Ferrara",
+        "description": "Web agency a Ferrara specializzata in realizzazione siti web, SEO e posizionamento Google. Creiamo siti professionali che portano clienti.",
+        "url": "https://puntowebferrara.com",
+        "telephone": "+39 333 0000000",
+        "email": "info@puntowebferrara.it",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ferrara",
+            "addressRegion": "Emilia-Romagna",
+            "addressCountry": "IT"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "44.8381",
+            "longitude": "11.6198"
+        },
+        "areaServed": {
+            "@type": "City",
+            "name": "Ferrara"
+        },
+        "priceRange": "€€",
+        "openingHours": "Mo-Fr 09:00-18:00",
+        "sameAs": []
+    }
+    </script>
+    
+    {{ if .IsHome }}
+    <!-- Schema.org WebSite per sitelinks search -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Punto Web Ferrara",
+        "url": "https://puntowebferrara.com"
+    }
+    </script>
+    {{ end }}
 </head>
 <body>
     <header class="site-header">
@@ -47,7 +110,7 @@
                     <ul><li>📍 {{ .Site.Params.indirizzo }}</li><li>📞 {{ .Site.Params.telefono }}</li></ul>
                 </div>
             </div>
-            <div class="footer-bottom">© {{ now.Year }} Punto Web Ferrara</div>
+            <div class="footer-bottom">© {{ now.Year }} Punto Web Ferrara — P.IVA {{ .Site.Params.piva }}</div>
         </div>
     </footer>
 </body>

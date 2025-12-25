@@ -1,6 +1,13 @@
-baseURL = 'https://puntowebferrara.it/'
+baseURL = 'https://puntowebferrara.com/'
 languageCode = 'it'
 title = 'Punto Web Ferrara'
+enableRobotsTXT = true
+
+# Sitemap
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
 
 [menus]
   [[menus.main]]
@@ -25,6 +32,7 @@ title = 'Punto Web Ferrara'
     weight = 5
 
 [params]
+  description = "Punto Web Ferrara: realizziamo siti web professionali, SEO e web marketing a Ferrara. Preventivo gratuito."
   telefono = "333 0000000"
   email = "info@puntowebferrara.it"
   indirizzo = "Ferrara (FE)"
