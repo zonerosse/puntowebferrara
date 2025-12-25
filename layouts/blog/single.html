@@ -1,0 +1,46 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <div class="blog-header-meta">
+            <a href="/blog/" class="back-link">← Torna al Blog</a>
+            <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
+        </div>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
+    </div>
+</section>
+
+<article class="section">
+    <div class="container">
+        <div class="blog-content">
+            {{ .Content }}
+        </div>
+        
+        <div class="blog-footer">
+            <div class="blog-tags">
+                {{ with .Params.tags }}
+                {{ range . }}
+                <span class="portfolio-tag">{{ . }}</span>
+                {{ end }}
+                {{ end }}
+            </div>
+            
+            <div class="blog-share">
+                <p><strong>Ti è stato utile?</strong> Condividilo!</p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<section class="section section-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>Hai Bisogno di Aiuto con il Tuo Sito?</h2>
+            <p>Contattaci per una consulenza gratuita.</p>
+        </div>
+        <div class="section-cta">
+            <a href="/preventivo/" class="btn btn-dark">Richiedi Preventivo Gratuito</a>
+        </div>
+    </div>
+</section>
+{{ end }}

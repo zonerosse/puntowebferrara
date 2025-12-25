@@ -1,0 +1,49 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1>Blog</h1>
+        <p>Consigli, guide e novità sul mondo del web per professionisti e aziende</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {{ if .Pages }}
+        <div class="blog-grid">
+            {{ range .Pages.ByDate.Reverse }}
+            <article class="blog-card">
+                <div class="blog-card-image">
+                    <span class="blog-icon">{{ with .Params.icon }}{{ . }}{{ else }}📝{{ end }}</span>
+                </div>
+                <div class="blog-card-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
+                        {{ with .Params.category }}<span class="blog-category">{{ . }}</span>{{ end }}
+                    </div>
+                    <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                    <p>{{ .Summary | truncate 150 }}</p>
+                    <a href="{{ .Permalink }}" class="blog-link">Leggi tutto →</a>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        {{ else }}
+        <div class="intro-text">
+            <p>Nessun articolo ancora. Torna presto!</p>
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Hai un Progetto in Mente?</h2>
+            <p>Contattaci per una consulenza gratuita sul tuo sito web.</p>
+            <div class="cta-buttons">
+                <a href="/preventivo/" class="btn btn-primary btn-large">Richiedi Preventivo</a>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}
