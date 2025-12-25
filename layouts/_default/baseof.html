@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} | Punto Web Ferrara</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
+            <button class="menu-toggle" onclick="document.querySelector('.main-nav').classList.toggle('active')">☰</button>
+            <nav class="main-nav">
+                <ul>
+                    {{ range .Site.Menus.main }}
+                    {{ if eq .Name "Contatti" }}
+                    <li><a href="{{ .URL }}" class="nav-cta">{{ .Name }}</a></li>
+                    {{ else }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                    {{ end }}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
+                    <p>Siti web professionali e SEO a Ferrara.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Servizi</h4>
+                    <ul><li><a href="/servizi/">Siti Web</a></li><li><a href="/servizi/">SEO</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Link</h4>
+                    <ul><li><a href="/chi-siamo/">Chi Siamo</a></li><li><a href="/contatti/">Contatti</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contatti</h4>
+                    <ul><li>📍 {{ .Site.Params.indirizzo }}</li><li>📞 {{ .Site.Params.telefono }}</li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">© {{ now.Year }} Punto Web Ferrara</div>
+        </div>
+    </footer>
+</body>
+</html>
