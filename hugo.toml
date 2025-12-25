@@ -29,6 +29,10 @@ enableRobotsTXT = true
     name = 'Contatti'
     url = '/contatti/'
     weight = 5
+  [[menus.main]]
+    name = 'Preventivo'
+    url = '/preventivo/'
+    weight = 6
 
 [params]
   description = "Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO e posizionamento Google. Preventivo gratuito."

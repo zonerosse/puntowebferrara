@@ -116,7 +116,7 @@
             <nav class="main-nav" aria-label="Navigazione principale">
                 <ul>
                     {{ range .Site.Menus.main }}
-                    {{ if eq .Name "Contatti" }}
+                    {{ if eq .Name "Preventivo" }}
                     <li><a href="{{ .URL }}" class="nav-cta">{{ .Name }}</a></li>
                     {{ else }}
                     <li><a href="{{ .URL }}">{{ .Name }}</a></li>
