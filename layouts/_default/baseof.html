@@ -25,7 +25,7 @@
     <!-- CSS critico inline per performance - tutto inline per evitare render blocking -->
     <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--primary:#0d4275;--primary-dark:#092d4f;--accent:#0891b2;--accent-light:#06b6d4;--dark:#111827;--text:#1f2937;--text-light:#374151;--light:#f3f4f6;--white:#fff;--border:#e5e7eb}
+    :root{--primary:#0d4275;--primary-dark:#092d4f;--accent:#0369a1;--accent-light:#0284c7;--dark:#111827;--text:#1f2937;--text-light:#374151;--light:#f3f4f6;--white:#fff;--border:#e5e7eb}
     html{scroll-behavior:smooth}
     body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.7;color:var(--text);background:var(--white);min-height:100vh}
     .container{max-width:1200px;margin:0 auto;padding:0 20px}
@@ -47,17 +47,17 @@
     
     /* HERO - dimensioni fisse per evitare CLS */
     .hero{min-height:600px;padding:140px 0 80px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white)}
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-    .hero h1{color:var(--white);margin-bottom:24px}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;min-height:420px}
+    .hero h1{color:var(--white);margin-bottom:24px;min-height:auto}
     .hero h1 span{color:var(--accent-light)}
-    .hero-subtitle{font-size:1.2rem;opacity:0.95;margin-bottom:32px;line-height:1.8}
+    .hero-subtitle{font-size:1.2rem;opacity:0.95;margin-bottom:32px;line-height:1.8;min-height:auto}
     .hero-features{display:flex;gap:24px;margin-bottom:32px;flex-wrap:wrap;min-height:32px}
-    .hero-feature{display:flex;align-items:center;gap:8px;font-weight:500}
+    .hero-feature{display:flex;align-items:center;gap:8px;font-weight:500;white-space:nowrap}
     .hero-icon{width:24px;height:24px;min-width:24px;color:var(--accent-light)}
     .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;min-height:52px}
     .hero-note{font-size:0.9rem;opacity:0.8;min-height:24px}
-    .hero-visual{display:flex;justify-content:center}
-    .hero-illustration{width:100%;max-width:400px;height:300px}
+    .hero-visual{display:flex;justify-content:center;align-items:center;min-height:300px}
+    .hero-illustration{width:100%;max-width:400px;height:300px;min-height:300px}
     
     /* BUTTONS */
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;min-height:52px;border-radius:8px;font-weight:600;font-size:1rem;border:none;cursor:pointer}
@@ -181,7 +181,7 @@
                     <p>Realizziamo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti.</p>
                 </div>
                 <div class="footer-col">
-                    <h4>Servizi</h4>
+                    <p class="footer-title">Servizi</p>
                     <ul>
                         <li><a href="/servizi/">Realizzazione Siti Web</a></li>
                         <li><a href="/servizi/">SEO e Posizionamento</a></li>
@@ -189,7 +189,7 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Informazioni</h4>
+                    <p class="footer-title">Informazioni</p>
                     <ul>
                         <li><a href="/chi-siamo/">Chi Siamo</a></li>
                         <li><a href="/portfolio/">Portfolio</a></li>
@@ -198,7 +198,7 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Contattaci</h4>
+                    <p class="footer-title">Contattaci</p>
                     <ul class="footer-contact">
                         <li>📍 Ferrara (FE)</li>
                         <li>📞 <a href="tel:+393924635584">392 463 5584</a></li>
