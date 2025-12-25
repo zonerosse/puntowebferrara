@@ -819,6 +819,14 @@ img {
     color: var(--white);
 }
 
+.section-dark p {
+    color: #e2e8f0;
+}
+
+.section-dark strong {
+    color: #fff;
+}
+
 .section-label-light {
     background: rgba(255,255,255,0.1);
     color: var(--accent-light);
@@ -858,7 +866,7 @@ img {
 .no-cms-solution li {
     padding: 12px 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.9);
+    color: #e2e8f0;
 }
 
 .no-cms-problem li:last-child,
