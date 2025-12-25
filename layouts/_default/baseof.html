@@ -13,10 +13,59 @@
     <!-- Open Graph -->
     <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
     <meta property="og:description" content="{{ if .IsHome }}Web agency a Ferrara. Siti web professionali, SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: siti web e SEO a Ferrara.{{ end }}{{ end }}">
+    <meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:locale" content="it_IT">
     <meta property="og:site_name" content="Punto Web Ferrara">
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Punto Web Ferrara",
+      "description": "Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing.",
+      "url": "https://puntowebferrara.com",
+      "telephone": "+393924635584",
+      "email": "zonerosse@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ferrara",
+        "addressRegion": "Emilia-Romagna",
+        "addressCountry": "IT"
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Ferrara e provincia"
+      },
+      "priceRange": "€€",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "sameAs": []
+    }
+    </script>
+    {{ if .IsHome }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Punto Web Ferrara",
+      "url": "https://puntowebferrara.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://puntowebferrara.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    {{ end }}
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
