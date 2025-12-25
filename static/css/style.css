@@ -167,7 +167,7 @@ img {
     font-size: 0.95rem;
 }
 
-.logo span { color: var(--accent); }
+.logo span { color: #0ea5e9; }
 .logo:hover { color: var(--primary); }
 
 .main-nav ul {
@@ -214,6 +214,7 @@ img {
     padding: 140px 0 100px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: var(--white);
+    contain: layout style;
 }
 
 .hero-grid {
@@ -281,13 +282,16 @@ img {
 .hero-illustration {
     width: 100%;
     max-width: 400px;
-    height: 300px;
+    height: auto;
     min-height: 300px;
+    aspect-ratio: 4/3;
 }
 
 /* SECTIONS */
 .section {
     padding: 80px 0;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
 }
 
 .section-light {
@@ -744,7 +748,7 @@ img {
 }
 
 .footer-brand p {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.85);
     font-size: 0.95rem;
 }
 
@@ -764,18 +768,17 @@ img {
 }
 
 .footer-col a {
-    color: rgba(255,255,255,0.7);
-    transition: color 0.2s;
+    color: rgba(255,255,255,0.85);
 }
 .footer-col a:hover {
     color: var(--white);
 }
 
 .footer-contact li {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.85);
 }
 .footer-contact a {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.85);
 }
 .footer-contact a:hover {
     color: var(--accent-light);
