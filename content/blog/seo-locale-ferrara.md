@@ -5,6 +5,9 @@ date: 2024-12-28
 icon: "📍"
 category: "SEO"
 tags: ["seo", "google", "ferrara", "local seo"]
+sitemap:
+  priority: 0.6
+  changefreq: monthly
 ---
 
 Quando qualcuno cerca "ristorante Ferrara" o "dentista vicino a me", Google mostra risultati locali. Se la tua attività non appare, stai regalando clienti ai concorrenti.

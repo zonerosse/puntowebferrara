@@ -8,6 +8,8 @@ enableRobotsTXT = true
   filename = 'sitemap.xml'
   priority = 0.5
 
+# Priority personalizzate per pagina nel front matter
+
 [menus]
   [[menus.main]]
     name = 'Home'

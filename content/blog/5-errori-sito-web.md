@@ -5,6 +5,9 @@ date: 2025-01-02
 icon: "⚠️"
 category: "Consigli"
 tags: ["errori", "ottimizzazione", "performance"]
+sitemap:
+  priority: 0.6
+  changefreq: monthly
 ---
 
 Hai un sito web ma non porta risultati? Forse stai commettendo uno di questi errori comuni che vediamo ogni giorno nei siti di professionisti e piccole imprese.

@@ -5,6 +5,9 @@ date: 2025-01-05
 icon: "🌐"
 category: "Guide"
 tags: ["siti web", "ferrara", "business"]
+sitemap:
+  priority: 0.6
+  changefreq: monthly
 ---
 
 Se hai un'attività a Ferrara e non hai ancora un sito web, stai perdendo clienti ogni giorno. Non è un'esagerazione: nel 2025, **il 97% delle persone cerca online** prima di scegliere un professionista o un'azienda.

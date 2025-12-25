@@ -1,6 +1,9 @@
 ---
 title: "Privacy Policy"
 description: "Informativa sulla privacy di Punto Web Ferrara. Come trattiamo i tuoi dati personali."
+sitemap:
+  priority: 0.3
+  changefreq: yearly
 ---
 
 ## Informativa sulla Privacy
