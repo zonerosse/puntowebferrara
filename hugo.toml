@@ -3,7 +3,6 @@ languageCode = 'it'
 title = 'Punto Web Ferrara'
 enableRobotsTXT = true
 
-# Sitemap
 [sitemap]
   changefreq = 'weekly'
   filename = 'sitemap.xml'
@@ -32,8 +31,7 @@ enableRobotsTXT = true
     weight = 5
 
 [params]
-  description = "Punto Web Ferrara: realizziamo siti web professionali, SEO e web marketing a Ferrara. Preventivo gratuito."
-  telefono = "333 0000000"
-  email = "info@puntowebferrara.it"
+  description = "Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO e posizionamento Google. Preventivo gratuito."
+  telefono = "392 463 5584"
+  email = "zonerosse@gmail.com"
   indirizzo = "Ferrara (FE)"
-  piva = "00000000000"

@@ -3,43 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web Ferrara{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}</title>
-    <meta name="description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web, SEO e web marketing a Ferrara e provincia.{{ end }}{{ end }}">
-    <meta name="keywords" content="realizzazione siti web ferrara, web agency ferrara, seo ferrara, creazione siti internet ferrara, posizionamento google ferrara">
+    <title>{{ if .IsHome }}Realizzazione Siti Web Ferrara | Web Agency | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing. Siti veloci, moderni e ottimizzati. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web, SEO e web marketing a Ferrara e provincia.{{ end }}{{ end }}">
+    <meta name="keywords" content="realizzazione siti web ferrara, web agency ferrara, seo ferrara, creazione siti internet ferrara, posizionamento google ferrara, agenzia web ferrara">
     <meta name="author" content="Punto Web Ferrara">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ .Permalink }}">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web Ferrara{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
-    <meta property="og:description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web e SEO a Ferrara.{{ end }}{{ end }}">
+    <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}Web agency a Ferrara. Siti web professionali, SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: siti web e SEO a Ferrara.{{ end }}{{ end }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:locale" content="it_IT">
     <meta property="og:site_name" content="Punto Web Ferrara">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- CSS critico inline per performance -->
+    <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#0d4275;--primary-dark:#092d4f;--accent:#0891b2;--accent-light:#22d3ee;--dark:#111827;--text:#1f2937;--text-light:#4b5563;--light:#f3f4f6;--white:#fff}
+    html{scroll-behavior:smooth}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.7;color:var(--text);background:var(--white)}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    h1,h2,h3,h4{color:var(--dark);line-height:1.3;font-weight:700}
+    a{color:var(--primary);text-decoration:none}
+    .site-header{position:fixed;top:0;left:0;right:0;background:var(--white);box-shadow:0 1px 3px rgba(0,0,0,0.1);z-index:1000}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;max-width:1200px;margin:0 auto}
+    .logo{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:800;color:var(--primary)}
+    .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:0.9rem}
+    .logo span{color:var(--accent)}
+    .main-nav ul{display:flex;list-style:none;gap:4px}
+    .main-nav a{display:block;padding:8px 16px;color:var(--text);font-weight:500;border-radius:6px;transition:background 0.2s}
+    .main-nav a:hover{background:var(--light);color:var(--primary)}
+    .nav-cta{background:var(--primary)!important;color:var(--white)!important}
+    .nav-cta:hover{background:var(--primary-dark)!important}
+    .menu-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--primary);padding:8px}
+    .hero{padding:140px 0 80px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:8px;font-weight:600;border:none;cursor:pointer;transition:all 0.2s}
+    .btn-primary{background:var(--accent);color:var(--white)}
+    .btn-primary:hover{background:var(--accent-light);color:var(--dark)}
+    .btn-outline{background:transparent;color:var(--white);border:2px solid var(--white)}
+    .btn-outline:hover{background:var(--white);color:var(--primary)}
+    @media(max-width:768px){.menu-toggle{display:block}.main-nav{position:fixed;top:60px;left:0;right:0;background:var(--white);padding:16px;box-shadow:0 4px 6px rgba(0,0,0,0.1);display:none}.main-nav.active{display:block}.main-nav ul{flex-direction:column}.hero{padding:100px 0 60px}}
+    </style>
+    
+    <!-- CSS non critico caricato in modo asincrono -->
+    <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
     
     <!-- Schema.org LocalBusiness -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "@id": "https://puntowebferrara.com/#organization",
+        "@type": "ProfessionalService",
+        "@id": "https://puntowebferrara.com/#business",
         "name": "Punto Web Ferrara",
-        "description": "Web agency a Ferrara specializzata in realizzazione siti web, SEO e posizionamento Google. Creiamo siti professionali che portano clienti.",
+        "description": "Web agency a Ferrara specializzata in realizzazione siti web professionali, SEO e posizionamento Google. Creiamo siti veloci e ottimizzati che portano clienti.",
         "url": "https://puntowebferrara.com",
-        "telephone": "+39 333 0000000",
-        "email": "info@puntowebferrara.it",
+        "telephone": "+39 392 463 5584",
+        "email": "zonerosse@gmail.com",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Ferrara",
             "addressRegion": "Emilia-Romagna",
+            "postalCode": "44121",
             "addressCountry": "IT"
         },
         "geo": {
@@ -47,24 +78,29 @@
             "latitude": "44.8381",
             "longitude": "11.6198"
         },
-        "areaServed": {
-            "@type": "City",
-            "name": "Ferrara"
-        },
+        "areaServed": [
+            {"@type": "City", "name": "Ferrara"},
+            {"@type": "State", "name": "Emilia-Romagna"}
+        ],
         "priceRange": "€€",
-        "openingHours": "Mo-Fr 09:00-18:00",
-        "sameAs": []
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+        },
+        "serviceType": ["Web Design", "SEO", "Web Development", "Digital Marketing"]
     }
     </script>
     
     {{ if .IsHome }}
-    <!-- Schema.org WebSite per sitelinks search -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Punto Web Ferrara",
-        "url": "https://puntowebferrara.com"
+        "url": "https://puntowebferrara.com",
+        "description": "Web agency a Ferrara - Realizziamo siti web professionali e ottimizzati SEO"
     }
     </script>
     {{ end }}
@@ -72,9 +108,12 @@
 <body>
     <header class="site-header">
         <div class="header-inner">
-            <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
-            <button class="menu-toggle" onclick="document.querySelector('.main-nav').classList.toggle('active')">☰</button>
-            <nav class="main-nav">
+            <a href="/" class="logo" aria-label="Punto Web Ferrara - Home">
+                <div class="logo-icon">PW</div>
+                Punto<span>Web</span>
+            </a>
+            <button class="menu-toggle" aria-label="Apri menu" onclick="document.querySelector('.main-nav').classList.toggle('active')">☰</button>
+            <nav class="main-nav" aria-label="Navigazione principale">
                 <ul>
                     {{ range .Site.Menus.main }}
                     {{ if eq .Name "Contatti" }}
@@ -87,30 +126,47 @@
             </nav>
         </div>
     </header>
-    <main>
+    
+    <main id="main-content">
         {{ block "main" . }}{{ end }}
     </main>
+    
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
-                    <p>Siti web professionali e SEO a Ferrara.</p>
+                    <p>Realizziamo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Servizi</h4>
-                    <ul><li><a href="/servizi/">Siti Web</a></li><li><a href="/servizi/">SEO</a></li></ul>
+                    <ul>
+                        <li><a href="/servizi/">Realizzazione Siti Web</a></li>
+                        <li><a href="/servizi/">SEO e Posizionamento</a></li>
+                        <li><a href="/servizi/">Web Marketing</a></li>
+                    </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Link</h4>
-                    <ul><li><a href="/chi-siamo/">Chi Siamo</a></li><li><a href="/contatti/">Contatti</a></li></ul>
+                    <h4>Informazioni</h4>
+                    <ul>
+                        <li><a href="/chi-siamo/">Chi Siamo</a></li>
+                        <li><a href="/portfolio/">Portfolio</a></li>
+                        <li><a href="/contatti/">Contatti</a></li>
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                    </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Contatti</h4>
-                    <ul><li>📍 {{ .Site.Params.indirizzo }}</li><li>📞 {{ .Site.Params.telefono }}</li></ul>
+                    <h4>Contattaci</h4>
+                    <ul class="footer-contact">
+                        <li>📍 Ferrara (FE)</li>
+                        <li>📞 <a href="tel:+393924635584">392 463 5584</a></li>
+                        <li>✉️ <a href="mailto:zonerosse@gmail.com">zonerosse@gmail.com</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-bottom">© {{ now.Year }} Punto Web Ferrara — P.IVA {{ .Site.Params.piva }}</div>
+            <div class="footer-bottom">
+                <p>© {{ now.Year }} Punto Web Ferrara — Tutti i diritti riservati</p>
+            </div>
         </div>
     </footer>
 </body>

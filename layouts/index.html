@@ -1,91 +1,227 @@
 {{ define "main" }}
+<!-- HERO -->
 <section class="hero">
     <div class="container">
-        <div class="hero-content">
-            <h1>Realizziamo Siti Web a Ferrara che <span>Portano Clienti</span></h1>
-            <p class="hero-subtitle">Web agency specializzata in siti web professionali, SEO e posizionamento su Google.</p>
-            <div class="hero-badges">
-                <span class="badge">⚡ Siti Veloci</span>
-                <span class="badge">📱 Mobile First</span>
-                <span class="badge">🎯 SEO Ottimizzato</span>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <h1>Realizziamo <span>Siti Web a Ferrara</span> che Portano Clienti</h1>
+                <p class="hero-subtitle">Sei un professionista o un'azienda di Ferrara e vuoi essere trovato online? Creiamo siti web veloci, moderni e ottimizzati per Google. <strong>Niente tecnicismi</strong>, solo risultati concreti per la tua attività.</p>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <span>Siti Ultraveloci</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        <span>Mobile First</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <span>SEO Ottimizzato</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="/contatti/" class="btn btn-primary">Richiedi Preventivo Gratuito</a>
+                    <a href="/servizi/" class="btn btn-outline">Scopri i Servizi</a>
+                </div>
+                <p class="hero-note">✓ Risposta entro 24 ore · ✓ Preventivo senza impegno · ✓ Nessun costo nascosto</p>
             </div>
-            <div class="hero-buttons">
-                <a href="/contatti/" class="btn btn-primary">Richiedi Preventivo</a>
-                <a href="/servizi/" class="btn btn-outline">Scopri i Servizi</a>
+            <div class="hero-visual">
+                <svg viewBox="0 0 400 300" class="hero-illustration">
+                    <rect x="50" y="30" width="300" height="200" rx="8" fill="#1e3a5f" opacity="0.3"/>
+                    <rect x="70" y="50" width="260" height="160" rx="4" fill="#fff" opacity="0.9"/>
+                    <rect x="90" y="70" width="80" height="8" rx="2" fill="#0891b2"/>
+                    <rect x="90" y="90" width="180" height="6" rx="2" fill="#cbd5e1"/>
+                    <rect x="90" y="105" width="150" height="6" rx="2" fill="#cbd5e1"/>
+                    <rect x="90" y="120" width="120" height="6" rx="2" fill="#cbd5e1"/>
+                    <rect x="90" y="150" width="60" height="30" rx="4" fill="#0891b2"/>
+                    <circle cx="320" cy="180" r="40" fill="#22d3ee" opacity="0.3"/>
+                    <circle cx="340" cy="60" r="20" fill="#0891b2" opacity="0.2"/>
+                </svg>
             </div>
         </div>
     </div>
 </section>
 
+<!-- PROBLEMA/SOLUZIONE -->
+<section class="section">
+    <div class="container">
+        <div class="intro-text">
+            <h2>Perché la Tua Attività a Ferrara Ha Bisogno di un Sito Web Professionale</h2>
+            <p>Nel 2024, <strong>il 97% delle persone cerca online</strong> prima di scegliere un professionista o un'azienda. Se non hai un sito web, o se il tuo sito è lento e datato, stai perdendo clienti ogni giorno.</p>
+            <p>Un sito web professionale non è solo una vetrina: è uno <strong>strumento di business</strong> che lavora per te 24 ore su 24, 7 giorni su 7. È il tuo miglior commerciale, sempre disponibile, sempre professionale.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SERVIZI -->
 <section class="section section-light">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Cosa Facciamo</span>
-            <h2>I Nostri Servizi</h2>
+            <span class="section-label">I Nostri Servizi</span>
+            <h2>Cosa Possiamo Fare per la Tua Attività</h2>
+            <p>Soluzioni digitali concrete per professionisti e aziende di Ferrara e provincia.</p>
         </div>
         <div class="services-grid">
             <div class="service-card">
-                <div class="service-icon">🌐</div>
-                <h3>Siti Web</h3>
-                <p>Siti professionali, veloci e ottimizzati.</p>
-                <ul class="service-features">
-                    <li>Design responsive</li>
-                    <li>Velocità ottimale</li>
-                    <li>SEO inclusa</li>
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <h3>Realizzazione Siti Web</h3>
+                <p>Creiamo siti web professionali su misura per la tua attività. Design moderno, velocità di caricamento ottimale e facilità di gestione. Dal sito vetrina all'e-commerce.</p>
+                <ul class="service-list">
+                    <li>Siti vetrina per professionisti</li>
+                    <li>Siti aziendali</li>
+                    <li>Landing page efficaci</li>
+                    <li>E-commerce</li>
                 </ul>
             </div>
             <div class="service-card">
-                <div class="service-icon">🔍</div>
-                <h3>SEO</h3>
-                <p>Fatti trovare su Google a Ferrara.</p>
-                <ul class="service-features">
-                    <li>Keyword locali</li>
-                    <li>SEO locale</li>
-                    <li>Report mensili</li>
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                </div>
+                <h3>SEO e Posizionamento Google</h3>
+                <p>Fatti trovare da chi cerca i tuoi servizi a Ferrara. Ottimizziamo il tuo sito per apparire nelle prime posizioni di Google per le ricerche che contano.</p>
+                <ul class="service-list">
+                    <li>SEO locale per Ferrara</li>
+                    <li>Ottimizzazione on-page</li>
+                    <li>Google My Business</li>
+                    <li>Analisi e report mensili</li>
                 </ul>
             </div>
             <div class="service-card">
-                <div class="service-icon">📈</div>
-                <h3>Marketing</h3>
-                <p>Strategie per aumentare le conversioni.</p>
-                <ul class="service-features">
-                    <li>Google Ads</li>
-                    <li>Social Media</li>
-                    <li>Email Marketing</li>
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <h3>Restyling Siti Esistenti</h3>
+                <p>Il tuo sito è datato o troppo lento? Lo trasformiamo in uno strumento moderno ed efficace, mantenendo il posizionamento acquisito e migliorando le conversioni.</p>
+                <ul class="service-list">
+                    <li>Redesign completo</li>
+                    <li>Ottimizzazione velocità</li>
+                    <li>Aggiornamento tecnologico</li>
+                    <li>Migrazione sicura</li>
                 </ul>
             </div>
+        </div>
+        <div class="section-cta">
+            <a href="/servizi/" class="btn btn-dark">Scopri Tutti i Servizi</a>
         </div>
     </div>
 </section>
 
+<!-- PERCHÉ NOI -->
 <section class="section">
     <div class="container">
         <div class="section-header">
             <span class="section-label">Perché Sceglierci</span>
-            <h2>I Numeri Parlano</h2>
+            <h2>Cosa Ci Distingue dalle Altre Web Agency</h2>
+            <p>Non siamo una grande agenzia con account manager e processi infiniti. Parliamo la tua lingua e capiamo le tue esigenze.</p>
         </div>
-        <div class="why-grid">
-            <div class="why-item">
-                <div class="why-number">100%</div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-number">100%</div>
                 <h4>Clienti Soddisfatti</h4>
+                <p>Ogni progetto è seguito con cura fino al raggiungimento degli obiettivi concordati.</p>
             </div>
-            <div class="why-item">
-                <div class="why-number">48h</div>
-                <h4>Tempo Risposta</h4>
+            <div class="feature-item">
+                <div class="feature-number">24h</div>
+                <h4>Tempo di Risposta</h4>
+                <p>Rispondiamo a tutte le richieste entro 24 ore lavorative. Sempre.</p>
             </div>
-            <div class="why-item">
-                <div class="why-number">0€</div>
+            <div class="feature-item">
+                <div class="feature-number">0€</div>
                 <h4>Costi Nascosti</h4>
+                <p>Preventivi chiari e dettagliati. Il prezzo concordato è quello finale, senza sorprese.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-number">100</div>
+                <h4>PageSpeed Score</h4>
+                <p>I nostri siti raggiungono punteggi perfetti su Google PageSpeed Insights.</p>
             </div>
         </div>
     </div>
 </section>
 
+<!-- PROCESSO -->
+<section class="section section-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Come Lavoriamo</span>
+            <h2>Dal Primo Contatto al Sito Online in 4 Step</h2>
+            <p>Un processo semplice e trasparente, senza complicazioni inutili.</p>
+        </div>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="process-number">1</div>
+                <h4>Ascoltiamo</h4>
+                <p>Ci racconti la tua attività, i tuoi obiettivi e il tuo pubblico. Analizziamo insieme cosa serve davvero.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">2</div>
+                <h4>Progettiamo</h4>
+                <p>Ti presentiamo una proposta dettagliata con strategia, tempistiche e preventivo trasparente.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">3</div>
+                <h4>Realizziamo</h4>
+                <p>Costruiamo il tuo sito tenendoti aggiornato ad ogni fase. Nessuna sorpresa, massima collaborazione.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">4</div>
+                <h4>Lanciamo</h4>
+                <p>Pubblichiamo il sito e ti formiamo sulla gestione. Rimaniamo disponibili per supporto e aggiornamenti.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Domande Frequenti</span>
+            <h2>Tutto Quello che Vuoi Sapere</h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h4>Quanto costa un sito web?</h4>
+                <p>Dipende dalla complessità del progetto. Un sito vetrina professionale parte da <strong>700€</strong>, progetti più complessi con funzionalità avanzate possono arrivare a qualche migliaio di euro. Forniamo sempre un preventivo dettagliato prima di iniziare.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Quanto tempo ci vuole?</h4>
+                <p>Un sito vetrina standard richiede <strong>2-3 settimane</strong>. Progetti più complessi possono richiedere 4-6 settimane. Ti comunichiamo sempre tempistiche realistiche e le rispettiamo.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Potrò aggiornare il sito da solo?</h4>
+                <p>Assolutamente sì. Tutti i nostri siti sono progettati per essere <strong>facilmente gestibili</strong> anche senza competenze tecniche. Forniamo formazione inclusa nel prezzo.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Cosa include il prezzo?</h4>
+                <p>Design personalizzato, sviluppo, ottimizzazione SEO base, versione mobile, formazione sulla gestione e <strong>30 giorni di assistenza</strong> post-lancio. Hosting e dominio sono a parte.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Lavorate solo a Ferrara?</h4>
+                <p>Siamo specializzati nel mercato di <strong>Ferrara e provincia</strong>, ma lavoriamo con clienti in tutta l'Emilia-Romagna e anche nel resto d'Italia per progetti in remoto.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Come funziona il pagamento?</h4>
+                <p>Generalmente chiediamo il <strong>30% all'ordine</strong> e il saldo alla consegna. Per progetti più grandi possiamo concordare pagamenti dilazionati. Accettiamo bonifico.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINALE -->
 <section class="cta-section">
     <div class="container">
-        <h2>Pronto a Portare la Tua Attività Online?</h2>
-        <p>Contattaci per una consulenza gratuita.</p>
-        <a href="/contatti/" class="btn btn-primary">Richiedi Preventivo</a>
+        <div class="cta-content">
+            <h2>Pronto a Portare la Tua Attività Online?</h2>
+            <p>Raccontaci il tuo progetto. Ti ricontatteremo entro 24 ore con una proposta personalizzata e un preventivo gratuito, senza impegno.</p>
+            <div class="cta-buttons">
+                <a href="/contatti/" class="btn btn-primary btn-large">Richiedi Preventivo Gratuito</a>
+                <a href="tel:+393924635584" class="btn btn-outline btn-large">Chiamaci: 392 463 5584</a>
+            </div>
+        </div>
     </div>
 </section>
 {{ end }}

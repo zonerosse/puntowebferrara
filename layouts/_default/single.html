@@ -2,11 +2,13 @@
 <section class="page-header">
     <div class="container">
         <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
     </div>
 </section>
-<section class="content-section">
+
+<section class="section">
     <div class="container">
-        <div class="content-text">
+        <div class="page-content" style="max-width: 800px; margin: 0 auto;">
             {{ .Content }}
         </div>
     </div>
