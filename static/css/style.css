@@ -16,7 +16,7 @@
     --accent-dark: #0e7490;
     --dark: #111827;
     --text: #1f2937;
-    --text-light: #4b5563;
+    --text-light: #374151;
     --light: #f3f4f6;
     --lighter: #f9fafb;
     --white: #ffffff;
@@ -78,12 +78,12 @@ img {
     align-items: center;
     justify-content: center;
     padding: 14px 28px;
+    min-height: 52px;
     border-radius: 8px;
     font-weight: 600;
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
     text-decoration: none;
     gap: 8px;
 }
@@ -95,8 +95,6 @@ img {
 .btn-primary:hover {
     background: var(--accent-dark);
     color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
 }
 
 .btn-dark {
@@ -120,6 +118,7 @@ img {
 
 .btn-large {
     padding: 18px 36px;
+    min-height: 60px;
     font-size: 1.1rem;
 }
 
@@ -129,6 +128,7 @@ img {
     top: 0;
     left: 0;
     right: 0;
+    height: 64px;
     background: var(--white);
     box-shadow: var(--shadow);
     z-index: 1000;
@@ -138,7 +138,8 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    height: 64px;
+    padding: 0 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -155,6 +156,7 @@ img {
 .logo-icon {
     width: 40px;
     height: 40px;
+    min-width: 40px;
     background: linear-gradient(135deg, var(--primary), var(--accent));
     border-radius: 10px;
     display: flex;
@@ -208,6 +210,7 @@ img {
 
 /* HERO */
 .hero {
+    min-height: 600px;
     padding: 140px 0 100px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: var(--white);
@@ -252,6 +255,7 @@ img {
 .hero-icon {
     width: 24px;
     height: 24px;
+    min-width: 24px;
     color: var(--accent-light);
 }
 
@@ -275,7 +279,7 @@ img {
 .hero-illustration {
     width: 100%;
     max-width: 400px;
-    height: auto;
+    height: 300px;
 }
 
 /* SECTIONS */
@@ -348,11 +352,9 @@ img {
     padding: 40px 32px;
     border-radius: 16px;
     box-shadow: var(--shadow);
-    transition: all 0.3s;
     border: 1px solid var(--border);
 }
 .service-card:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
 }
 
@@ -521,6 +523,7 @@ img {
 
 /* PAGE HEADER */
 .page-header {
+    min-height: 280px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     padding: 140px 0 60px;
     color: var(--white);
@@ -573,11 +576,9 @@ img {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: all 0.3s;
     border: 1px solid var(--border);
 }
 .portfolio-item:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
 }
 
@@ -795,11 +796,9 @@ img {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: all 0.3s;
     border: 1px solid var(--border);
 }
 .blog-card:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
 }
 
