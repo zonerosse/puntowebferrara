@@ -244,6 +244,48 @@
     </div>
 </section>
 
+<!-- SPEED TEST TOOL -->
+<section class="section section-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Strumento Gratuito</span>
+            <h2>Quanto È Veloce il Tuo Sito?</h2>
+            <p>Inserisci l'URL del tuo sito e scopri il punteggio. Poi confrontalo con il nostro.</p>
+        </div>
+        <div class="speed-test-box">
+            <div class="speed-test-input-group">
+                <input type="url" id="speedTestUrl" class="speed-test-input" placeholder="https://www.tuosito.it" />
+                <button onclick="testSpeed()" class="btn btn-primary">Testa Velocità</button>
+            </div>
+            <div class="speed-test-links">
+                <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fpuntowebferrara.com%2F" target="_blank" class="speed-compare-link">📊 Vedi il punteggio di questo sito: <strong>93+</strong></a>
+            </div>
+        </div>
+        <div class="speed-test-note">
+            <p>Il test apre Google PageSpeed Insights, lo strumento ufficiale di Google per misurare le performance dei siti web.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+function testSpeed() {
+    var url = document.getElementById('speedTestUrl').value;
+    if (url) {
+        if (!url.startsWith('http')) {
+            url = 'https://' + url;
+        }
+        window.open('https://pagespeed.web.dev/analysis?url=' + encodeURIComponent(url), '_blank');
+    } else {
+        alert('Inserisci un URL da testare');
+    }
+}
+document.getElementById('speedTestUrl').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        testSpeed();
+    }
+});
+</script>
+
 <!-- CTA FINALE -->
 <section class="cta-section">
     <div class="container">
