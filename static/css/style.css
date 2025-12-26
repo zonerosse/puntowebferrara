@@ -796,10 +796,10 @@ img {
 
 /* SPEED TEST */
 .speed-test-box {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto 24px;
     background: var(--white);
-    padding: 40px;
+    padding: 48px;
     border-radius: 16px;
     box-shadow: var(--shadow-lg);
 }
@@ -812,12 +812,12 @@ img {
 
 .speed-test-input {
     flex: 1;
-    padding: 18px 24px;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    font-size: 1.2rem;
+    padding: 20px 28px;
+    border: 3px solid var(--border);
+    border-radius: 10px;
+    font-size: 1.4rem;
     font-family: inherit;
-    min-width: 300px;
+    min-width: 400px;
 }
 
 .speed-test-input:focus {
@@ -826,8 +826,9 @@ img {
 }
 
 .speed-test-input-group .btn {
-    padding: 18px 32px;
-    font-size: 1.1rem;
+    padding: 20px 40px;
+    font-size: 1.2rem;
+    white-space: nowrap;
 }
 
 .speed-test-links {
