@@ -45,3 +45,6 @@ enableRobotsTXT = true
   telefono = "392 463 5584"
   email = "zonerosse@gmail.com"
   indirizzo = "Ferrara (FE)"
+
+[taxonomies]
+  # Disabilitate per evitare pagine extra
