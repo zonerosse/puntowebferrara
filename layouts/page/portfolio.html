@@ -1,28 +1,51 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><span class="bolt-inline">⚡</span> Portfolio</h1>
-        <p>Siti realizzati con Hugo, HTML/CSS puro e Cloudflare</p>
+        <h1><span class="bolt-inline">⚡</span> I Miei Lavori</h1>
+        <p>Siti reali. Velocità reale. Risultati verificabili.</p>
     </div>
 </section>
 
+<!-- CTA IMMEDIATA -->
 <section class="section">
     <div class="container">
+        <div class="cta-box">
+            <h3>🎯 Vuoi un Sito Così?</h3>
+            <p>PageSpeed 95-100. Hosting gratuito. Zero manutenzione.</p>
+            <a href="/preventivo/" class="btn">RICHIEDI PREVENTIVO →</a>
+        </div>
+    </div>
+</section>
+
+<!-- PROVA PRINCIPALE -->
+<section class="section section-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>La Prova del Nove</h2>
+            <p>Non devi credermi sulla parola. Verifica tu stesso.</p>
+        </div>
         <div class="portfolio-grid">
             <div class="portfolio-item portfolio-featured">
                 <div class="portfolio-image">
                     <span class="portfolio-icon">🐕</span>
                 </div>
                 <div class="portfolio-content">
-                    <div class="portfolio-badge">Progetto Reale</div>
+                    <div class="portfolio-badge" style="background:#059669;">Progetto Reale</div>
                     <h3>Del Piccolo Diavolo</h3>
                     <p class="portfolio-subtitle">Allevamento Staffordshire Bull Terrier</p>
-                    <p>Sito per allevamento cinofilo ENCI con gallery cucciolate, pagine genitori, informazioni sulla razza e blog. Realizzato con Hugo e HTML/CSS puro.</p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Hugo</span>
-                        <span class="portfolio-tag">HTML/CSS</span>
-                        <span class="portfolio-tag">Cloudflare</span>
-                        <span class="portfolio-tag portfolio-tag-accent">PageSpeed 100</span>
+                    <div class="quick-stats" style="margin: 16px 0;">
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="color:#059669; font-size: 1.5rem;">100</div>
+                            <div class="quick-stat-label">PageSpeed</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="font-size: 1.5rem;">0€</div>
+                            <div class="quick-stat-label">Hosting</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="font-size: 1.5rem;">0</div>
+                            <div class="quick-stat-label">Hack</div>
+                        </div>
                     </div>
                     <div class="portfolio-buttons">
                         <a href="https://www.delpiccolodiavolo.it" target="_blank" class="btn btn-primary">Visita il Sito →</a>
@@ -36,133 +59,92 @@
                 </div>
                 <div class="portfolio-content">
                     <div class="portfolio-badge">Questo Sito</div>
-                    <h3>Punto Web Ferrara</h3>
-                    <p class="portfolio-subtitle">Web Developer Freelance</p>
-                    <p>Il sito che stai visitando. Realizzato con Hugo, HTML/CSS puro e hostato su Cloudflare Pages. Zero WordPress, zero framework JavaScript.</p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Hugo</span>
-                        <span class="portfolio-tag">HTML/CSS</span>
-                        <span class="portfolio-tag">Cloudflare</span>
-                        <span class="portfolio-tag portfolio-tag-accent">PageSpeed 95+</span>
+                    <h3>Paolo Boldrini Web</h3>
+                    <p class="portfolio-subtitle">Il sito che stai navigando</p>
+                    <div class="quick-stats" style="margin: 16px 0;">
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="color:#059669; font-size: 1.5rem;">95+</div>
+                            <div class="quick-stat-label">PageSpeed</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="font-size: 1.5rem;">0€</div>
+                            <div class="quick-stat-label">Hosting</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" style="font-size: 1.5rem;">&lt;1s</div>
+                            <div class="quick-stat-label">Caricamento</div>
+                        </div>
                     </div>
                     <div class="portfolio-buttons">
                         <a href="https://pagespeed.web.dev/analysis?url=https://puntowebferrara.com" target="_blank" class="btn btn-outline">Verifica PageSpeed →</a>
                     </div>
                 </div>
             </div>
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <span class="portfolio-icon">⚖️</span>
-                </div>
-                <div class="portfolio-content">
-                    <h3>Studio Professionale</h3>
-                    <p>Sito per professionisti (avvocati, commercialisti, consulenti) con servizi, team e modulo richiesta consulenza.</p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Hugo</span>
-                        <span class="portfolio-tag">HTML/CSS</span>
-                        <span class="portfolio-tag">Cloudflare</span>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <span class="portfolio-icon">🍕</span>
-                </div>
-                <div class="portfolio-content">
-                    <h3>Ristorante / Pizzeria</h3>
-                    <p>Sito con menu digitale, orari, integrazione Google Maps e possibilità di prenotazione.</p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Hugo</span>
-                        <span class="portfolio-tag">HTML/CSS</span>
-                        <span class="portfolio-tag">Cloudflare</span>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-image">
-                    <span class="portfolio-icon">🔧</span>
-                </div>
-                <div class="portfolio-content">
-                    <h3>Artigiano / Impresa</h3>
-                    <p>Sito per artigiani e imprese edili con portfolio lavori, servizi e richiesta preventivi.</p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Hugo</span>
-                        <span class="portfolio-tag">HTML/CSS</span>
-                        <span class="portfolio-tag">Cloudflare</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
-<!-- TECH TRIO -->
+<!-- CTA INTERMEDIA -->
 <section class="section section-dark">
     <div class="container">
-        <div class="section-header">
-            <h2 style="color: var(--white);">La Tecnologia Dietro Ogni Progetto</h2>
-        </div>
-        <div class="tech-trio">
-            <div class="tech-box">
-                <div class="tech-box-icon">⚡</div>
-                <h3>HUGO</h3>
-                <p class="tech-box-subtitle">Generatore Statico</p>
-                <ul>
-                    <li>Il più veloce al mondo</li>
-                    <li>Niente database</li>
-                    <li>Sicurezza totale</li>
-                </ul>
-            </div>
-            <div class="tech-box tech-box-accent">
-                <div class="tech-box-icon">{ }</div>
-                <h3>HTML/CSS PURO</h3>
-                <p class="tech-box-subtitle">Zero Framework</p>
-                <ul>
-                    <li>Codice leggero</li>
-                    <li>Caricamento istantaneo</li>
-                    <li>Manutenzione zero</li>
-                </ul>
-            </div>
-            <div class="tech-box">
-                <div class="tech-box-icon">☁</div>
-                <h3>CLOUDFLARE</h3>
-                <p class="tech-box-subtitle">Hosting Globale</p>
-                <ul>
-                    <li>CDN in 300+ città</li>
-                    <li>Hosting gratuito</li>
-                    <li>Uptime 99.9%</li>
-                </ul>
-            </div>
+        <div class="cta-box cta-box-accent" style="background: rgba(255,255,255,0.1);">
+            <h3>💡 Vuoi Questi Risultati per il Tuo Sito?</h3>
+            <p>Ti spiego come funziona. Chiamata gratuita, 15 minuti.</p>
+            <a href="/preventivo/" class="btn">PARLIAMONE →</a>
         </div>
     </div>
 </section>
 
-<section class="section section-light">
+<!-- ESEMPI SETTORI -->
+<section class="section">
     <div class="container">
         <div class="section-header">
-            <span class="section-label">Feedback</span>
-            <h2>Cosa Dicono i Miei Clienti</h2>
+            <h2>Settori che Posso Servire</h2>
         </div>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <p><em>"Professionale e disponibile. Ha capito subito le mie esigenze e realizzato un sito che mi rappresenta perfettamente. Lo consiglio!"</em></p>
-                <p style="margin-top: 16px;"><strong>— Marco R., Imprenditore</strong></p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⚖️</div>
+                <h3>Professionisti</h3>
+                <p>Avvocati, commercialisti, consulenti. Sito con servizi, team, richiesta consulenza.</p>
             </div>
-            <div class="faq-item">
-                <p><em>"Finalmente un sito veloce e facile da gestire. I clienti mi trovano su Google e le richieste sono aumentate. Ottimo lavoro!"</em></p>
-                <p style="margin-top: 16px;"><strong>— Laura B., Professionista</strong></p>
+            <div class="service-card">
+                <div class="service-icon">🍕</div>
+                <h3>Ristoranti</h3>
+                <p>Menu digitale, orari, mappa, prenotazioni. Tutto quello che serve.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Artigiani</h3>
+                <p>Portfolio lavori, servizi, richiesta preventivi. Fatti trovare dai clienti.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏠</div>
+                <h3>Immobiliare</h3>
+                <p>Annunci, gallery, contatti. Senza i costi delle piattaforme.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💪</div>
+                <h3>Palestre / PT</h3>
+                <p>Servizi, orari, prenotazioni, area clienti.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🐕</div>
+                <h3>Allevamenti</h3>
+                <p>Cucciolate, genitori, gallery, certificazioni. So di cosa parlo.</p>
             </div>
         </div>
     </div>
 </section>
 
+<!-- CTA FINALE -->
 <section class="cta-section">
     <div class="container">
         <div class="cta-content">
-            <h2>Vuoi Vedere il Tuo Progetto qui?</h2>
-            <p>Contattami per discutere della tua idea. Sarò felice di mostrarti come posso aiutarti.</p>
+            <h2>Vuoi Essere il Prossimo?</h2>
+            <p>Preventivo gratuito in 24 ore. Zero impegno.</p>
             <div class="cta-buttons">
-                <a href="/preventivo/" class="btn btn-primary btn-large">Richiedi Preventivo Gratuito</a>
+                <a href="/preventivo/" class="btn btn-primary btn-large">RICHIEDI PREVENTIVO →</a>
+                <a href="tel:+393924635584" class="btn btn-outline btn-large">📞 392 463 5584</a>
             </div>
         </div>
     </div>

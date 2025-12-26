@@ -1,66 +1,39 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><span class="bolt-inline">⚡</span> Richiedi un Preventivo Gratuito</h1>
-        <p>Compila il form e riceverai un preventivo dettagliato entro 24 ore</p>
+        <h1><span class="bolt-inline">⚡</span> Preventivo Gratuito in 24h</h1>
+        <p>Zero impegno. Zero sorprese. Solo numeri chiari.</p>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h2>Come Funziona</h2>
-                <p>Raccontami il tuo progetto: più dettagli mi dai, più preciso sarà il preventivo. Non ti impegna a nulla.</p>
-                
-                <div class="process-steps" style="margin-top: 32px;">
-                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-                        <div class="process-number" style="flex-shrink: 0;">1</div>
-                        <div>
-                            <h4 style="margin-bottom: 4px;">Compila il form</h4>
-                            <p style="color: var(--text-light); margin: 0;">Descrivi la tua attività e cosa ti serve</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-                        <div class="process-number" style="flex-shrink: 0;">2</div>
-                        <div>
-                            <h4 style="margin-bottom: 4px;">Ti ricontatto</h4>
-                            <p style="color: var(--text-light); margin: 0;">Entro 24 ore per eventuali chiarimenti</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-                        <div class="process-number" style="flex-shrink: 0;">3</div>
-                        <div>
-                            <h4 style="margin-bottom: 4px;">Ricevi il preventivo</h4>
-                            <p style="color: var(--text-light); margin: 0;">Dettagliato, chiaro e senza impegno</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item" style="margin-top: 32px;">
-                    <h3>💡 Cosa include il preventivo?</h3>
-                    <p>Descrizione dettagliata del lavoro, tempistiche, costi suddivisi per fase, cosa è incluso e cosa no. Tutto chiaro, nessuna sorpresa.</p>
-                </div>
-
-                <div class="faq-item" style="margin-top: 24px;">
-                    <h3>⚡ Tecnologia Hugo + Cloudflare</h3>
-                    <p>Tutti i miei siti sono realizzati con Hugo (generatore statico) e hostati su Cloudflare. Risultato: velocità 95-100 PageSpeed, sicurezza totale, hosting gratuito.</p>
-                </div>
+        <!-- RASSICURAZIONE IMMEDIATA -->
+        <div class="quick-stats" style="margin-bottom: 40px;">
+            <div class="quick-stat">
+                <div class="quick-stat-value">24h</div>
+                <div class="quick-stat-label">Risposta Garantita</div>
             </div>
-            
+            <div class="quick-stat">
+                <div class="quick-stat-value">0€</div>
+                <div class="quick-stat-label">Costo Preventivo</div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-value">0</div>
+                <div class="quick-stat-label">Impegno</div>
+            </div>
+        </div>
+        
+        <div class="contact-grid">
+            <!-- COLONNA FORM -->
             <div class="contact-form">
-                <h3>Parlami del Tuo Progetto</h3>
+                <h3>📝 Compila in 2 Minuti</h3>
                 <form action="https://formspree.io/f/xwvkeobz" method="POST">
-                    <input type="hidden" name="_subject" value="Richiesta Preventivo - Punto Web Ferrara">
+                    <input type="hidden" name="_subject" value="Richiesta Preventivo - Paolo Boldrini Web">
                     
                     <div class="form-group">
-                        <label for="name">Nome e Cognome *</label>
+                        <label for="name">Nome *</label>
                         <input type="text" id="name" name="name" required placeholder="Il tuo nome">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="business">Nome Attività / Azienda</label>
-                        <input type="text" id="business" name="business" placeholder="Es: Studio Legale Rossi">
                     </div>
                     
                     <div class="form-group">
@@ -70,107 +43,105 @@
                     
                     <div class="form-group">
                         <label for="phone">Telefono *</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="Per ricontattarti velocemente">
+                        <input type="tel" id="phone" name="phone" required placeholder="Per risponderti velocemente">
                     </div>
                     
                     <div class="form-group">
-                        <label for="service">Tipo di Progetto *</label>
+                        <label for="service">Cosa Ti Serve? *</label>
                         <select id="service" name="service" required>
                             <option value="">Seleziona...</option>
                             <option value="sito-vetrina">Sito Vetrina (da 700€)</option>
-                            <option value="sito-aziendale">Sito Aziendale (da 1.200€)</option>
                             <option value="landing-page">Landing Page (da 400€)</option>
                             <option value="migrazione-wordpress">Migrazione da WordPress (da 500€)</option>
                             <option value="restyling">Restyling Sito Esistente</option>
-                            <option value="seo">Solo SEO / Posizionamento</option>
-                            <option value="non-so">Non so, ho bisogno di consulenza</option>
+                            <option value="non-so">Non so ancora, consigliami</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="budget">Budget Indicativo</label>
-                        <select id="budget" name="budget">
-                            <option value="">Preferisco non dirlo</option>
-                            <option value="sotto-500">Meno di 500€</option>
-                            <option value="500-1000">500€ - 1.000€</option>
-                            <option value="1000-2000">1.000€ - 2.000€</option>
-                            <option value="2000-5000">2.000€ - 5.000€</option>
-                            <option value="oltre-5000">Oltre 5.000€</option>
-                        </select>
+                        <label for="current-site">Hai già un sito?</label>
+                        <input type="url" id="current-site" name="current-site" placeholder="https://... (opzionale)">
                     </div>
                     
                     <div class="form-group">
-                        <label for="deadline">Hai una scadenza?</label>
-                        <select id="deadline" name="deadline">
-                            <option value="">Nessuna urgenza</option>
-                            <option value="1-mese">Entro 1 mese</option>
-                            <option value="2-mesi">Entro 2 mesi</option>
-                            <option value="3-mesi">Entro 3 mesi</option>
-                            <option value="flessibile">Sono flessibile</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="current-site">Hai già un sito web?</label>
-                        <input type="url" id="current-site" name="current-site" placeholder="https://... (lascia vuoto se non ce l'hai)">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Descrivi il tuo progetto *</label>
-                        <textarea id="message" name="message" required placeholder="Di cosa si occupa la tua attività? Cosa vorresti ottenere dal sito? Hai riferimenti di siti che ti piacciono?"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="how-found">Come mi hai trovato?</label>
-                        <select id="how-found" name="how-found">
-                            <option value="">Seleziona...</option>
-                            <option value="google">Google</option>
-                            <option value="passaparola">Passaparola</option>
-                            <option value="social">Social Media</option>
-                            <option value="linkedin">LinkedIn</option>
-                            <option value="altro">Altro</option>
-                        </select>
+                        <label for="message">Raccontami in breve *</label>
+                        <textarea id="message" name="message" required placeholder="Di cosa ti occupi? Cosa ti serve dal sito? (anche 2 righe vanno bene)"></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label style="display: flex; align-items: flex-start; gap: 10px; font-weight: normal;">
                             <input type="checkbox" name="privacy" required style="width: auto; margin-top: 4px;">
-                            <span>Ho letto e accetto la <a href="/privacy/" target="_blank">Privacy Policy</a> *</span>
+                            <span>Accetto la <a href="/privacy/" target="_blank">Privacy Policy</a> *</span>
                         </label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary form-submit">Invia Richiesta Preventivo</button>
+                    <button type="submit" class="btn btn-primary form-submit" style="width: 100%; font-size: 1.1rem; padding: 16px;">
+                        INVIA RICHIESTA →
+                    </button>
                     
-                    <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-light); text-align: center;">
-                        🔒 I tuoi dati sono al sicuro. Non li condivido con nessuno.
+                    <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-light); text-align: center;">
+                        🔒 Dati al sicuro • Rispondo io personalmente
                     </p>
                 </form>
+            </div>
+            
+            <!-- COLONNA INFO -->
+            <div class="contact-info">
+                <div class="result-box result-box-success">
+                    <h4>✅ Cosa Ricevi</h4>
+                    <p>Preventivo dettagliato con: costi, tempistiche, cosa è incluso. <strong>Nessuna sorpresa dopo.</strong></p>
+                </div>
+                
+                <div style="margin-top: 32px;">
+                    <h3>⚡ Preferisci Chiamare?</h3>
+                    <p style="margin-bottom: 16px;">Nessun problema. Parliamone a voce.</p>
+                    <a href="tel:+393924635584" class="btn btn-outline" style="width: 100%;">📞 392 463 5584</a>
+                </div>
+                
+                <div style="margin-top: 32px;">
+                    <h3>💬 Oppure WhatsApp</h3>
+                    <p style="margin-bottom: 16px;">Scrivimi quando vuoi.</p>
+                    <a href="https://wa.me/393924635584" target="_blank" class="btn btn-outline" style="width: 100%;">Scrivi su WhatsApp →</a>
+                </div>
+                
+                <div class="result-box" style="margin-top: 32px;">
+                    <h4>🎯 I Miei Prezzi</h4>
+                    <p style="margin-bottom: 8px;"><strong>Sito Vetrina:</strong> da 700€</p>
+                    <p style="margin-bottom: 8px;"><strong>Landing Page:</strong> da 400€</p>
+                    <p style="margin-bottom: 8px;"><strong>Migrazione WP:</strong> da 500€</p>
+                    <p><em>+ Hosting gratuito per sempre</em></p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- RASSICURAZIONE FINALE -->
 <section class="section section-light">
     <div class="container">
         <div class="section-header">
-            <h2>Domande sul Preventivo</h2>
+            <h2>Nessun Rischio</h2>
         </div>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Il preventivo è davvero gratuito?</h3>
-                <p>Sì, completamente gratuito e senza impegno. Analizzo le tue esigenze e ti fornisco una proposta dettagliata.</p>
+        <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 8px;">🆓</div>
+                <h3>Preventivo Gratis</h3>
+                <p>Non ti costa nulla chiederlo</p>
             </div>
-            <div class="faq-item">
-                <h3>Quanto tempo ci vuole?</h3>
-                <p>Riceverai il preventivo entro 24-48 ore lavorative dalla richiesta.</p>
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 8px;">⏱️</div>
+                <h3>Risposta in 24h</h3>
+                <p>Non ti faccio aspettare</p>
             </div>
-            <div class="faq-item">
-                <h3>Posso chiedere modifiche al preventivo?</h3>
-                <p>Certo! Il preventivo è una base di partenza. Posso adattarlo alle tue esigenze e al tuo budget.</p>
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 8px;">🚫</div>
+                <h3>Zero Pressioni</h3>
+                <p>Decidi tu con calma</p>
             </div>
-            <div class="faq-item">
-                <h3>Cosa succede dopo?</h3>
-                <p>Se il preventivo ti convince, si parte! Altrimenti nessun problema, nessuna pressione. Decidi tu con calma.</p>
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 8px;">👤</div>
+                <h3>Parlo Io</h3>
+                <p>Niente call center</p>
             </div>
         </div>
     </div>

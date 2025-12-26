@@ -1,58 +1,122 @@
 ---
-title: "5 Errori che Rovinano il Sito Web della Tua Attività"
-description: "Errori comuni che penalizzano i siti web di professionisti e PMI. Scopri come evitarli e migliorare le performance del tuo sito."
-date: 2025-01-02
-icon: "⚠️"
-category: "Consigli"
-tags: ["errori", "ottimizzazione", "performance"]
-sitemap:
-  priority: 0.6
-  changefreq: monthly
+title: "5 Errori che Uccidono il Tuo Sito Web (E Come Evitarli)"
+date: 2025-12-15
+description: "Il tuo sito non porta clienti? Probabilmente stai facendo uno di questi 5 errori. Vediamo quali sono e come risolverli subito."
+tags: ["errori", "sito web", "conversioni"]
+categories: ["Guide"]
+author: "Paolo Boldrini"
+slug: "5-errori-sito-web"
 ---
 
-Hai un sito web ma non porta risultati? Forse stai commettendo uno di questi errori comuni che vediamo ogni giorno nei siti di professionisti e piccole imprese.
+Hai un sito web ma non arriva nessun cliente?
 
-## 1. Sito Lento: il Killer Silenzioso
+**Non sei solo.** L'80% dei siti ha almeno uno di questi problemi.
 
-Se il tuo sito impiega più di 3 secondi a caricare, **il 53% dei visitatori lo abbandona**. Google lo penalizza nel posizionamento.
+<div class="cta-box">
+<h3>🔍 Il Tuo Sito Ha Questi Problemi?</h3>
+<p>Te lo dico gratis in 24 ore. Analisi veloce, zero impegno.</p>
+<a href="/preventivo/" class="btn">ANALIZZA IL MIO SITO →</a>
+</div>
 
-**Come verificare:** Vai su [PageSpeed Insights](https://pagespeed.web.dev) e inserisci il tuo sito. Se il punteggio è sotto 50, hai un problema serio.
+## Errore #1: È Troppo Lento
 
-**Soluzioni:** Ottimizzare le immagini, usare un hosting veloce, eliminare plugin inutili.
+<div class="quick-stats">
+<div class="quick-stat">
+<div class="quick-stat-value" style="color:#dc2626">53%</div>
+<div class="quick-stat-label">Utenti che scappano dopo 3 secondi</div>
+</div>
+</div>
 
-## 2. Non Ottimizzato per Mobile
+Se il tuo sito carica in più di 3 secondi, **hai già perso metà dei visitatori**.
 
-Oltre il **60% delle ricerche** avviene da smartphone. Se il tuo sito non si vede bene su mobile, stai perdendo la maggior parte dei potenziali clienti.
+**Come verificare:** [PageSpeed Insights](https://pagespeed.web.dev/)
 
-**Come verificare:** Apri il tuo sito dal telefono. I testi sono leggibili? I bottoni si cliccano facilmente?
+**Sotto 50?** Houston, abbiamo un problema.
 
-## 3. Nessuna Call-to-Action Chiara
+<div class="result-box result-box-success">
+<h4>✅ I Miei Siti</h4>
+<p>PageSpeed 95-100. Caricano in meno di 1 secondo. Sempre.</p>
+</div>
 
-Cosa vuoi che faccia il visitatore? Chiamarti? Compilare un form? Se non glielo dici chiaramente, non lo farà.
+## Errore #2: Non Si Trova su Google
 
-**Soluzione:** Ogni pagina deve avere un obiettivo chiaro e un bottone ben visibile.
+Hai un sito bellissimo che nessuno vede. 
 
-## 4. Contenuti Generici o Assenti
+**Sintomi:**
+- Cerchi la tua attività e non esci
+- Zero visite organiche
+- Solo chi ha l'indirizzo diretto ti trova
 
-"Siamo un'azienda leader nel settore" non dice nulla. I tuoi contenuti devono rispondere alle domande dei clienti e dimostrare la tua competenza.
+**Causa:** Nessuna ottimizzazione SEO.
 
-**Soluzione:** Scrivi come parli. Spiega cosa fai, per chi, e perché sei diverso.
+**Soluzione:** Titoli, descrizioni, contenuti ottimizzati, velocità, struttura corretta.
 
-## 5. Zero SEO: Invisibile su Google
+## Errore #3: Non È Mobile-Friendly
 
-Se non hai ottimizzato titoli, descrizioni e contenuti per le parole chiave giuste, Google non ti mostra a chi ti cerca.
+<div class="quick-stats">
+<div class="quick-stat">
+<div class="quick-stat-value">70%</div>
+<div class="quick-stat-label">Traffico da smartphone</div>
+</div>
+</div>
 
-**Esempio:** Se sei un idraulico a Ferrara, il tuo sito deve contenere "idraulico Ferrara", "pronto intervento idraulico Ferrara", ecc.
+Se il tuo sito fa schifo su telefono, perdi il **70% dei potenziali clienti**.
 
-## Come Rimediare?
+**Test veloce:** apri il tuo sito dal telefono. Devi pizzicare per leggere? Bocciato.
 
-Se il tuo sito ha uno o più di questi problemi, le opzioni sono due:
+## Errore #4: Nessuna Call-to-Action
 
-1. **Ottimizzarlo:** A volte bastano piccoli interventi
-2. **Rifarlo:** Se è troppo datato, meglio ripartire da zero
+Il visitatore arriva sul tuo sito e poi... cosa deve fare?
 
-In entrambi i casi, [contattaci per una valutazione gratuita](/preventivo/). Ti diremo onestamente cosa conviene fare.
+**Errori comuni:**
+- Nessun bottone evidente
+- "Contattaci" nascosto in fondo
+- Nessun numero di telefono visibile
+- Form di contatto sepolto
 
----
+**La regola:** in ogni pagina deve essere **chiaro e facile** il prossimo passo.
 
-*Il tuo sito ha bisogno di un check-up? [Scrivici](/contatti/).*
+<div class="result-box result-box-success">
+<h4>✅ Cosa Faccio Io</h4>
+<p>Ogni pagina ha CTA chiare. Bottoni visibili. Contatto sempre a portata di click.</p>
+</div>
+
+## Errore #5: Design Anni '90
+
+Il tuo sito sembra fatto nel 2005? **Stai perdendo credibilità**.
+
+I visitatori giudicano in 0.05 secondi. Se il sito sembra vecchio, pensano che l'azienda sia vecchia.
+
+**Segnali di allarme:**
+- Font Comic Sans o simili
+- Colori che "urlano"
+- Layout non allineato
+- Immagini pixelate
+
+<div class="cta-box cta-box-warning">
+<h3>😬 Hai Uno di Questi Problemi?</h3>
+<p>Risolviamolo. Dimmi qual è il tuo sito e ti dico cosa non va.</p>
+<a href="/preventivo/" class="btn">VOGLIO UN'OPINIONE →</a>
+</div>
+
+## Il Vero Problema
+
+Spesso questi 5 errori hanno una **causa comune:** 
+
+WordPress mal configurato, tema economico, zero manutenzione.
+
+La soluzione non è "rattoppare". È **ripartire con tecnologia giusta**.
+
+## Quanto Costa Sistemare?
+
+| Approccio | Costo | Risultato |
+|-----------|-------|-----------|
+| Rattoppare WordPress | 300-800€ | Temporaneo |
+| Rifare su WordPress | 1.500-3.000€ | Gli stessi problemi torneranno |
+| **Rifare con tecnologia moderna** | **1.000-2.000€** | **Problema risolto per sempre** |
+
+<div class="cta-box cta-box-accent">
+<h3>🚀 Vuoi un Sito Che Funziona?</h3>
+<p>Veloce, trovabile, bello, con CTA chiare. E che non si rompe.</p>
+<a href="/preventivo/" class="btn">PARLIAMONE →</a>
+</div>

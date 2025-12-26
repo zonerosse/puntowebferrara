@@ -1,117 +1,93 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><span class="bolt-inline">⚡</span> Contattami</h1>
-        <p>Parliamo del tuo progetto. Risposta garantita entro 24 ore.</p>
+        <h1><span class="bolt-inline">⚡</span> Parliamo</h1>
+        <p>Scegli come contattarmi. Rispondo in 24h.</p>
     </div>
 </section>
 
+<!-- CTA IMMEDIATA - 3 MODI -->
 <section class="section">
     <div class="container">
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h2>Iniziamo a Collaborare</h2>
-                <p>Hai un'idea per un nuovo sito web? Vuoi migliorare la tua presenza online? Contattami senza impegno per una consulenza gratuita.</p>
-                <p>Rispondo a tutte le richieste entro 24 ore lavorative. Preferisco le email ma puoi anche chiamarmi direttamente.</p>
-                
-                <ul class="contact-details">
-                    <li>
-                        <span class="contact-icon">📞</span>
-                        <div>
-                            <strong>Telefono</strong><br>
-                            <a href="tel:+393924635584">392 463 5584</a>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="contact-icon">✉️</span>
-                        <div>
-                            <strong>Email</strong><br>
-                            <a href="mailto:zonerosse@gmail.com">zonerosse@gmail.com</a>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="contact-icon">📍</span>
-                        <div>
-                            <strong>Zona</strong><br>
-                            Ostellato (FE) - Ferrara e provincia
-                        </div>
-                    </li>
-                    <li>
-                        <span class="contact-icon">🕐</span>
-                        <div>
-                            <strong>Orari</strong><br>
-                            Lun-Ven: 9:00 - 18:00
-                        </div>
-                    </li>
-                </ul>
+        <div class="services-grid">
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2.5rem; margin-bottom: 16px;">📞</div>
+                <h3>Chiamami</h3>
+                <p>Preferisci parlare a voce? Sono disponibile.</p>
+                <a href="tel:+393924635584" class="btn btn-primary" style="width: 100%; margin-top: 16px;">392 463 5584</a>
             </div>
-            
-            <div class="contact-form">
-                <h3>Richiedi un Preventivo Gratuito</h3>
-                <form action="https://formspree.io/f/xwvkeobz" method="POST">
-                    <div class="form-group">
-                        <label for="name">Nome e Cognome *</label>
-                        <input type="text" id="name" name="name" required placeholder="Il tuo nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required placeholder="La tua email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefono</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Il tuo numero (opzionale)">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Servizio di Interesse</label>
-                        <select id="service" name="service">
-                            <option value="">Seleziona...</option>
-                            <option value="sito-vetrina">Sito Vetrina</option>
-                            <option value="sito-aziendale">Sito Aziendale</option>
-                            <option value="landing-page">Landing Page</option>
-                            <option value="restyling">Restyling Sito Esistente</option>
-                            <option value="migrazione-wordpress">Migrazione da WordPress</option>
-                            <option value="seo">SEO e Posizionamento</option>
-                            <option value="altro">Altro</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Messaggio *</label>
-                        <textarea id="message" name="message" required placeholder="Raccontami il tuo progetto..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label style="display: flex; align-items: flex-start; gap: 10px; font-weight: normal;">
-                            <input type="checkbox" name="privacy" required style="width: auto; margin-top: 4px;">
-                            <span>Ho letto e accetto la <a href="/privacy/" target="_blank">Privacy Policy</a> *</span>
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary form-submit">Invia Richiesta</button>
-                </form>
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2.5rem; margin-bottom: 16px;">💬</div>
+                <h3>WhatsApp</h3>
+                <p>Scrivimi quando vuoi. Rispondo appena posso.</p>
+                <a href="https://wa.me/393924635584" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 16px; background: #25D366;">WhatsApp →</a>
+            </div>
+            <div class="service-card" style="text-align: center;">
+                <div style="font-size: 2.5rem; margin-bottom: 16px;">✉️</div>
+                <h3>Email</h3>
+                <p>Per richieste dettagliate o preventivi.</p>
+                <a href="mailto:info@paolobaldrini.it" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Scrivi Email</a>
             </div>
         </div>
     </div>
 </section>
 
+<!-- FORM RAPIDO -->
 <section class="section section-light">
     <div class="container">
         <div class="section-header">
-            <h2>Domande Prima di Contattarmi?</h2>
+            <h2>Oppure Compila Qui</h2>
+            <p>Ti ricontatto io entro 24 ore</p>
         </div>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Il preventivo è gratuito?</h3>
-                <p>Assolutamente sì. Analizzo le tue esigenze e ti fornisco un preventivo dettagliato senza alcun impegno.</p>
+        <div style="max-width: 600px; margin: 0 auto;">
+            <form action="https://formspree.io/f/xwvkeobz" method="POST" class="contact-form" style="background: white; padding: 32px; border-radius: 12px;">
+                <input type="hidden" name="_subject" value="Contatto - Paolo Boldrini Web">
+                
+                <div class="form-group">
+                    <label for="name">Nome *</label>
+                    <input type="text" id="name" name="name" required placeholder="Il tuo nome">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefono *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Per richiamarti">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Di cosa hai bisogno? *</label>
+                    <textarea id="message" name="message" required placeholder="Scrivi pure in breve, ti richiamo per i dettagli"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; font-weight: normal;">
+                        <input type="checkbox" name="privacy" required style="width: auto; margin-top: 4px;">
+                        <span>Accetto la <a href="/privacy/" target="_blank">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary form-submit" style="width: 100%; font-size: 1.1rem; padding: 16px;">
+                    RICHIAMAMI →
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- INFO -->
+<section class="section">
+    <div class="container">
+        <div class="quick-stats">
+            <div class="quick-stat">
+                <div class="quick-stat-value">📍</div>
+                <div class="quick-stat-label">Ostellato (FE)</div>
             </div>
-            <div class="faq-item">
-                <h3>Quanto tempo per una risposta?</h3>
-                <p>Rispondo a tutte le richieste entro 24 ore lavorative. Per urgenze puoi chiamarmi direttamente.</p>
+            <div class="quick-stat">
+                <div class="quick-stat-value">🌍</div>
+                <div class="quick-stat-label">Lavoro in Tutta Italia</div>
             </div>
-            <div class="faq-item">
-                <h3>Possiamo incontrarci di persona?</h3>
-                <p>Certo! Sono di Ostellato, disponibile per incontri di persona a Ferrara e provincia.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Lavori anche fuori Ferrara?</h3>
-                <p>Sì, lavoro con clienti in tutta Italia. Per progetti a distanza uso videochiamate e strumenti di collaborazione online.</p>
+            <div class="quick-stat">
+                <div class="quick-stat-value">⏱️</div>
+                <div class="quick-stat-label">Risposta in 24h</div>
             </div>
         </div>
     </div>
