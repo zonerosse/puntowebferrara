@@ -869,6 +869,17 @@ img {
     }
     .speed-test-input {
         min-width: 100%;
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 18px 20px;
+    }
+    .speed-test-input-group .btn {
+        width: 100%;
+        padding: 18px 24px;
+        font-size: 1.1rem;
+    }
+    .speed-test-box {
+        padding: 28px 20px;
     }
 }
 
