@@ -1,12 +1,12 @@
 ---
-title: "Perché Non Uso WordPress (E Tu Non Dovresti)"
-description: "WordPress, Wix, Squarespace: ecco perché non li uso per i miei clienti. Scopri i problemi nascosti dei CMS e l'alternativa che fa volare il tuo sito."
+title: "Perché Non Uso WordPress (E Cosa Uso Invece)"
+description: "WordPress è lento e vulnerabile. Io uso Hugo, HTML/CSS puro e Cloudflare per creare siti veloci (PageSpeed 95+), sicuri e con hosting gratuito."
 date: 2025-01-10
-icon: "⚔️"
-category: "Opinioni"
-tags: ["wordpress", "cms", "performance", "sicurezza"]
+icon: "⚡"
+category: "Tecnologia"
+tags: ["wordpress", "hugo", "html css", "cloudflare", "performance", "sicurezza"]
 sitemap:
-  priority: 0.7
+  priority: 0.8
   changefreq: monthly
 ---
 
@@ -82,23 +82,48 @@ Peggio ancora:
 
 In 5 anni di Wix Premium spendi **900-2400€**. Per un sito che non è nemmeno tuo.
 
-## L'Alternativa: Siti Statici
+## L'Alternativa: Hugo + HTML/CSS Puro + Cloudflare
 
 I siti che realizzo sono **statici**. Niente database, niente PHP, niente plugin.
 
-Solo HTML, CSS e (quando serve) JavaScript pulito.
+Uso tre strumenti precisi:
+
+### Hugo: Il Generatore Più Veloce al Mondo
+
+**Hugo** è un generatore di siti statici. Prende i contenuti e li trasforma in pagine HTML pure, pronte da servire.
+
+- Build di un intero sito: **millisecondi** (WordPress: minuti)
+- Nessun database da interrogare
+- Nessun PHP da eseguire
+- Codice finale pulito e leggero
+
+### HTML/CSS Puro: Zero Framework
+
+Niente React, niente Vue, niente Bootstrap da 300KB. Solo **HTML e CSS scritti a mano**, ottimizzati per la velocità.
+
+- Codice leggero (questo sito: ~30KB totali)
+- Nessuna dipendenza da librerie esterne
+- Manutenzione zero
+- Funziona ovunque, per sempre
+
+### Cloudflare Pages: Hosting Globale Gratuito
+
+I siti li hosto su **Cloudflare Pages**:
+
+- **CDN globale**: il tuo sito servito da 300+ datacenter nel mondo
+- **Hosting gratuito**: sì, zero euro per sempre
+- **HTTPS automatico**: certificato SSL incluso
+- **Uptime 99.9%**: più affidabile del tuo hosting a pagamento
 
 ### I Risultati Parlano
 
-| Metrica | WordPress medio | I miei siti |
+| Metrica | WordPress medio | I miei siti (Hugo) |
 |---------|-----------------|-------------|
 | Tempo caricamento | 3-5 secondi | 0.8 secondi |
 | PageSpeed Score | 40-60 | 95-100 |
 | Vulnerabilità note | Decine | Zero |
 | Aggiornamenti richiesti | Settimanali | Nessuno |
-| Costo hosting | 100-200€/anno | 0€* |
-
-*Sì, zero. Cloudflare Pages è gratis per siti statici.
+| Costo hosting | 100-200€/anno | 0€ (Cloudflare) |
 
 ### Ma Posso Aggiornare il Sito?
 
@@ -132,6 +157,8 @@ WordPress, Wix e simili esistono perché permettono a chiunque di creare un sito
 
 Un sito lento, vulnerabile e pieno di codice inutile non ti porta clienti. Ti fa perdere soldi.
 
+Con **Hugo + HTML/CSS puro + Cloudflare** elimini tutti questi problemi.
+
 ## Vuoi Vedere la Differenza?
 
 Testa questo sito su [PageSpeed Insights](https://pagespeed.web.dev/). Poi testa un qualsiasi sito WordPress.
@@ -140,4 +167,4 @@ I numeri non mentono.
 
 ---
 
-**Vuoi un sito veloce, sicuro e senza pensieri?** [Richiedi un preventivo gratuito](/preventivo/) e vediamo insieme come posso aiutarti.
+**Vuoi un sito veloce, sicuro e senza pensieri?** [Richiedi un preventivo gratuito](/preventivo/) — realizzo siti con Hugo, HTML/CSS puro e hosting gratuito su Cloudflare.

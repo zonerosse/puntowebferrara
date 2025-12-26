@@ -62,7 +62,6 @@ p:last-child { margin-bottom: 0; }
 a {
     color: var(--primary);
     text-decoration: none;
-    transition: color 0.2s;
 }
 a:hover { color: var(--accent); }
 
@@ -182,7 +181,7 @@ img {
     color: var(--text);
     font-weight: 500;
     border-radius: 6px;
-    transition: all 0.2s;
+    transition: background 0.2s, transform 0.2s;
 }
 .main-nav a:hover {
     background: var(--light);
@@ -276,7 +275,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 300px;
+    min-height: 320px;
+    width: 100%;
 }
 
 .hero-illustration {
@@ -1343,18 +1343,15 @@ img {
    LAMPO - STILI SEMPLICI E PULITI
    ======================================== */
 
-/* Emoji gigante homepage */
+/* Emoji gigante homepage - SENZA animazione per evitare CLS */
 .bolt-emoji {
-    font-size: 12rem;
+    font-size: 20rem;
     line-height: 1;
-    filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.8));
-    animation: bolt-appear 0.5s ease-out;
-}
-
-@keyframes bolt-appear {
-    0% { transform: scale(0.5); opacity: 0; }
-    60% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
+    filter: drop-shadow(0 0 60px rgba(34, 211, 238, 0.9));
+    display: block;
+    width: 320px;
+    height: 320px;
+    text-align: center;
 }
 
 /* Lampo inline per header pagine */
@@ -1374,7 +1371,13 @@ img {
 /* Responsive */
 @media (max-width: 768px) {
     .bolt-emoji {
-        font-size: 8rem;
+        font-size: 14rem;
+        width: 224px;
+        height: 224px;
+    }
+    
+    .hero-visual {
+        min-height: 224px;
     }
     
     .bolt-inline {
@@ -1384,7 +1387,13 @@ img {
 
 @media (max-width: 480px) {
     .bolt-emoji {
-        font-size: 6rem;
+        font-size: 10rem;
+        width: 160px;
+        height: 160px;
+    }
+    
+    .hero-visual {
+        min-height: 160px;
     }
     
     .bolt-inline {
@@ -1409,7 +1418,7 @@ img {
     border-radius: 16px;
     padding: 32px 24px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .tech-box:hover {
