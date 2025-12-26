@@ -533,23 +533,29 @@ img {
 
 /* PAGE HEADER */
 .page-header {
-    min-height: 280px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    padding: 140px 0 60px;
+    min-height: 200px;
+    background: linear-gradient(135deg, #0d4275 0%, #092d4f 50%, #0d4275 100%);
+    padding: 120px 0 60px;
     color: var(--white);
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .page-header h1 {
     color: var(--white);
     margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
 }
 
 .page-header p {
     font-size: 1.2rem;
-    opacity: 0.9;
+    color: rgba(255,255,255,0.9);
     max-width: 600px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 /* PAGE CONTENT */
@@ -1224,111 +1230,285 @@ img {
 }
 
 /* ========================================
-   LAMPO - SIMBOLO VELOCITÀ
+   LAMPO - SIMBOLO VELOCITÀ - MEGA IMPATTO
    ======================================== */
 
-/* Lampo Hero Homepage */
-.hero-bolt {
+/* Tech Badges in Hero */
+.tech-badges {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #0891b2 0%, #0d4275 100%);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4);
+}
+
+/* Hero Stats Row */
+.hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+    padding: 24px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    border: 2px solid #0891b2;
+}
+
+.hero-stat-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
 }
 
-.bolt-icon {
-    animation: pulse-glow 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
+.hero-stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
 }
 
-@keyframes pulse-glow {
-    0%, 100% { 
-        transform: scale(1); 
-        filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
-    }
-    50% { 
-        transform: scale(1.05); 
-        filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.8));
-    }
-}
-
-.bolt-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 24px;
-}
-
-.bolt-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.bolt-number {
+.hero-stat-value {
     font-size: 2rem;
     font-weight: 800;
     color: var(--primary);
     line-height: 1;
 }
 
-.bolt-label {
-    font-size: 0.9rem;
+.hero-stat-label {
+    font-size: 0.8rem;
     color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-top: 4px;
 }
 
-/* Lampo negli Header Pagine */
-.page-header {
+/* Mega Bolt Container */
+.hero-bolt-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+}
+
+.mega-bolt {
+    width: 250px;
+    height: 375px;
+    animation: bolt-pulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.8)) drop-shadow(0 0 60px rgba(8, 145, 178, 0.5));
+    z-index: 2;
+}
+
+@keyframes bolt-pulse {
+    0%, 100% { 
+        transform: scale(1) translateY(0); 
+    }
+    50% { 
+        transform: scale(1.08) translateY(-10px); 
+    }
+}
+
+/* Anelli animati attorno al lampo */
+.bolt-ring {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 3px solid rgba(34, 211, 238, 0.4);
+    border-radius: 50%;
+    animation: ring-expand 2s ease-out infinite;
+}
+
+.bolt-ring-2 {
+    animation-delay: 1s;
+}
+
+@keyframes ring-expand {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Background bolt gigante */
+.hero-bg-bolt {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 600px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(8, 145, 178, 0.05) 100%);
+    clip-path: polygon(60% 0%, 15% 47%, 40% 47%, 28% 100%, 90% 43%, 58% 43%, 78% 0%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero {
     position: relative;
     overflow: hidden;
 }
 
+/* ========================================
+   PAGE HEADERS - LAMPI DECORATIVI
+   ======================================== */
+
+/* Lampo grande a destra */
 .page-header::before {
     content: '';
-    position: absolute;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 120px;
-    height: 180px;
-    background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(8, 145, 178, 0.1) 100%);
-    clip-path: polygon(60% 0%, 20% 43%, 45% 43%, 35% 100%, 85% 50%, 55% 50%, 75% 0%);
-    opacity: 0.8;
-}
-
-.page-header::after {
-    content: '⚡';
     position: absolute;
     right: 5%;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 4rem;
-    opacity: 0.15;
+    width: 200px;
+    height: 300px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.6) 0%, rgba(8, 145, 178, 0.4) 100%);
+    clip-path: polygon(60% 0%, 15% 47%, 40% 47%, 28% 100%, 90% 43%, 58% 43%, 78% 0%);
+    z-index: 1;
+    filter: blur(1px);
 }
 
-/* Mobile lampo */
+/* Secondo lampo più piccolo */
+.page-header::after {
+    content: '';
+    position: absolute;
+    right: 15%;
+    top: 30%;
+    width: 80px;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.3) 0%, rgba(8, 145, 178, 0.2) 100%);
+    clip-path: polygon(60% 0%, 15% 47%, 40% 47%, 28% 100%, 90% 43%, 58% 43%, 78% 0%);
+    z-index: 1;
+}
+
+/* Particelle di velocità */
+.page-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* ========================================
+   RESPONSIVE LAMPO
+   ======================================== */
+
+@media (max-width: 992px) {
+    .hero-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero-bolt-container {
+        min-height: 280px;
+    }
+    
+    .mega-bolt {
+        width: 180px;
+        height: 270px;
+    }
+    
+    .bolt-ring {
+        width: 220px;
+        height: 220px;
+    }
+}
+
 @media (max-width: 768px) {
-    .hero-bolt .bolt-icon {
+    .tech-badges {
+        justify-content: center;
+    }
+    
+    .hero-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+        gap: 12px;
+    }
+    
+    .hero-stat-value {
+        font-size: 1.6rem;
+    }
+    
+    .hero-bolt-container {
+        min-height: 250px;
+        margin-top: 20px;
+    }
+    
+    .mega-bolt {
         width: 150px;
         height: 225px;
     }
     
-    .bolt-stats {
-        gap: 24px;
+    .bolt-ring {
+        width: 180px;
+        height: 180px;
     }
     
-    .bolt-number {
-        font-size: 1.5rem;
+    .hero-bg-bolt {
+        display: none;
+    }
+    
+    .page-header {
+        padding: 100px 0 50px;
+    }
+    
+    .page-header::before {
+        width: 120px;
+        height: 180px;
+        right: 2%;
+        opacity: 0.7;
+    }
+    
+    .page-header::after {
+        width: 50px;
+        height: 75px;
+        right: 8%;
+    }
+}
+
+@media (max-width: 480px) {
+    .tech-badges {
+        gap: 8px;
+    }
+    
+    .tech-badge {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .hero-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 16px;
+    }
+    
+    .hero-stat-value {
+        font-size: 1.4rem;
+    }
+    
+    .hero-stat-label {
+        font-size: 0.7rem;
     }
     
     .page-header::before {
         width: 80px;
         height: 120px;
-        right: 5%;
     }
     
     .page-header::after {
-        font-size: 2.5rem;
-        right: 2%;
+        display: none;
     }
 }
