@@ -124,7 +124,7 @@ Non è adatto per:
 - Siti con contenuti generati dagli utenti
 - Piattaforme con login utenti
 
-(Per quelli servono soluzioni diverse, e possiamo parlarne.)
+(Per quelli servono soluzioni diverse, e ne possiamo parlare insieme.)
 
 ## La Verità Scomoda
 

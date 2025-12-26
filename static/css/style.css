@@ -1222,3 +1222,113 @@ img {
         padding: 28px 24px;
     }
 }
+
+/* ========================================
+   LAMPO - SIMBOLO VELOCITÀ
+   ======================================== */
+
+/* Lampo Hero Homepage */
+.hero-bolt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bolt-icon {
+    animation: pulse-glow 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
+}
+
+@keyframes pulse-glow {
+    0%, 100% { 
+        transform: scale(1); 
+        filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
+    }
+    50% { 
+        transform: scale(1.05); 
+        filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.8));
+    }
+}
+
+.bolt-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 24px;
+}
+
+.bolt-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bolt-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.bolt-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+/* Lampo negli Header Pagine */
+.page-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 180px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(8, 145, 178, 0.1) 100%);
+    clip-path: polygon(60% 0%, 20% 43%, 45% 43%, 35% 100%, 85% 50%, 55% 50%, 75% 0%);
+    opacity: 0.8;
+}
+
+.page-header::after {
+    content: '⚡';
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4rem;
+    opacity: 0.15;
+}
+
+/* Mobile lampo */
+@media (max-width: 768px) {
+    .hero-bolt .bolt-icon {
+        width: 150px;
+        height: 225px;
+    }
+    
+    .bolt-stats {
+        gap: 24px;
+    }
+    
+    .bolt-number {
+        font-size: 1.5rem;
+    }
+    
+    .page-header::before {
+        width: 80px;
+        height: 120px;
+        right: 5%;
+    }
+    
+    .page-header::after {
+        font-size: 2.5rem;
+        right: 2%;
+    }
+}
