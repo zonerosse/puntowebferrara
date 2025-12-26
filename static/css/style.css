@@ -638,6 +638,47 @@ img {
     font-weight: 500;
 }
 
+.portfolio-tag-accent {
+    background: linear-gradient(135deg, #22d3ee, #0891b2);
+    color: #fff;
+}
+
+.portfolio-featured {
+    border: 2px solid var(--primary);
+    box-shadow: 0 10px 40px rgba(13, 66, 117, 0.15);
+}
+
+.portfolio-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.portfolio-subtitle {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.portfolio-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.portfolio-buttons .btn {
+    font-size: 0.9rem;
+}
+
 /* CONTACT */
 .contact-grid {
     display: grid;
@@ -1307,43 +1348,33 @@ img {
 .mega-bolt {
     width: 250px;
     height: 375px;
-    animation: bolt-pulse 1.5s ease-in-out infinite;
+    animation: bolt-flash 0.5s ease-out forwards;
     filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.8)) drop-shadow(0 0 60px rgba(8, 145, 178, 0.5));
     z-index: 2;
 }
 
-@keyframes bolt-pulse {
-    0%, 100% { 
-        transform: scale(1) translateY(0); 
+@keyframes bolt-flash {
+    0% { 
+        transform: scale(0.8);
+        opacity: 0;
     }
-    50% { 
-        transform: scale(1.08) translateY(-10px); 
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% { 
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
-/* Anelli animati attorno al lampo */
+/* Anelli rimossi - troppo anni 80 */
 .bolt-ring {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    border: 3px solid rgba(34, 211, 238, 0.4);
-    border-radius: 50%;
-    animation: ring-expand 2s ease-out infinite;
+    display: none;
 }
 
 .bolt-ring-2 {
-    animation-delay: 1s;
-}
-
-@keyframes ring-expand {
-    0% {
-        transform: scale(0.5);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
+    display: none;
 }
 
 /* Background bolt gigante */
@@ -1395,6 +1426,144 @@ img {
     background: linear-gradient(135deg, rgba(34, 211, 238, 0.3) 0%, rgba(8, 145, 178, 0.2) 100%);
     clip-path: polygon(60% 0%, 15% 47%, 40% 47%, 28% 100%, 90% 43%, 58% 43%, 78% 0%);
     z-index: 1;
+}
+
+/* ========================================
+   TECH TRIO - HUGO / HTML-CSS / CLOUDFLARE
+   ======================================== */
+
+.tech-trio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.tech-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(34, 211, 238, 0.3);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.tech-box:hover {
+    border-color: rgba(34, 211, 238, 0.6);
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tech-box-accent {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: rgba(34, 211, 238, 0.5);
+}
+
+.tech-box-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.tech-box h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.tech-box-subtitle {
+    color: #22d3ee;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.tech-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tech-box ul li {
+    color: rgba(255, 255, 255, 0.85);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.95rem;
+}
+
+.tech-box ul li:last-child {
+    border-bottom: none;
+}
+
+.tech-result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 40px;
+    padding: 24px;
+    background: rgba(34, 211, 238, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+.tech-result-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.tech-result-value {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.tech-result-separator {
+    color: rgba(34, 211, 238, 0.5);
+}
+
+/* Tech trio responsive */
+@media (max-width: 992px) {
+    .tech-trio {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+    
+    .tech-box {
+        padding: 24px 16px;
+    }
+    
+    .tech-box h3 {
+        font-size: 1.2rem;
+    }
+    
+    .tech-box-icon {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .tech-trio {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .tech-box {
+        padding: 24px;
+    }
+    
+    .tech-result {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .tech-result-separator {
+        display: none;
+    }
 }
 
 /* Particelle di velocità */
@@ -1510,5 +1679,85 @@ img {
     
     .page-header::after {
         display: none;
+    }
+}
+
+/* ========================================
+   TECH BAR - Header pagine interne
+   ======================================== */
+
+.tech-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+}
+
+.tech-bar-sep {
+    opacity: 0.4;
+    color: #22d3ee;
+}
+
+@media (max-width: 480px) {
+    .tech-bar {
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+}
+
+/* ========================================
+   PORTFOLIO - Featured items
+   ======================================== */
+
+.portfolio-featured {
+    border: 2px solid var(--primary);
+    background: linear-gradient(135deg, #f0f9ff 0%, #fff 100%);
+}
+
+.portfolio-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #0891b2 0%, #0d4275 100%);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.portfolio-subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.portfolio-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.portfolio-tag-accent {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .portfolio-buttons {
+        flex-direction: column;
+    }
+    
+    .portfolio-buttons .btn {
+        width: 100%;
+        text-align: center;
     }
 }
