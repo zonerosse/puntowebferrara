@@ -1,0 +1,4 @@
+<div class="result-box {{ with .Get "type" }}result-box-{{ . }}{{ end }}">
+    <h4>{{ .Get "title" }}</h4>
+    <p>{{ .Inner | markdownify }}</p>
+</div>

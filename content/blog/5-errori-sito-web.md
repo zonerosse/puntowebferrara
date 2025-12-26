@@ -1,122 +1,161 @@
 ---
 title: "5 Errori che Uccidono il Tuo Sito Web (E Come Evitarli)"
 date: 2025-12-15
-description: "Il tuo sito non porta clienti? Probabilmente stai facendo uno di questi 5 errori. Vediamo quali sono e come risolverli subito."
+description: "Il tuo sito non porta clienti? Probabilmente stai facendo uno di questi 5 errori comuni. Ecco come identificarli e risolverli."
 tags: ["errori", "sito web", "conversioni"]
 categories: ["Guide"]
 author: "Paolo Boldrini"
 slug: "5-errori-sito-web"
 ---
 
-Hai un sito web ma non arriva nessun cliente?
+Hai un sito web da anni ma non arriva nessun cliente. Oppure ne arrivano pochi, e di bassa qualità.
 
-**Non sei solo.** L'80% dei siti ha almeno uno di questi problemi.
+Non sei solo. L'80% dei siti di piccole attività ha almeno uno di questi problemi. Vediamo quali sono e come risolverli.
 
-<div class="cta-box">
-<h3>🔍 Il Tuo Sito Ha Questi Problemi?</h3>
-<p>Te lo dico gratis in 24 ore. Analisi veloce, zero impegno.</p>
-<a href="/preventivo/" class="btn">ANALIZZA IL MIO SITO →</a>
-</div>
+{{< cta title="Il Tuo Sito Ha Questi Problemi?" text="Analisi gratuita: ti dico cosa non funziona e come sistemarlo." link="/preventivo/" button="RICHIEDI ANALISI →" >}}
 
-## Errore #1: È Troppo Lento
+---
 
-<div class="quick-stats">
-<div class="quick-stat">
-<div class="quick-stat-value" style="color:#dc2626">53%</div>
-<div class="quick-stat-label">Utenti che scappano dopo 3 secondi</div>
-</div>
-</div>
+## Errore 1: Il Sito È Troppo Lento
 
-Se il tuo sito carica in più di 3 secondi, **hai già perso metà dei visitatori**.
+**Il dato:** il 53% degli utenti abbandona un sito che impiega più di 3 secondi a caricare.
 
-**Come verificare:** [PageSpeed Insights](https://pagespeed.web.dev/)
+Se il tuo sito è lento, hai già perso metà dei potenziali clienti prima ancora che vedano cosa offri.
 
-**Sotto 50?** Houston, abbiamo un problema.
+**Come verificare:**  
+Vai su [PageSpeed Insights](https://pagespeed.web.dev/) e inserisci il tuo URL. Punteggio sotto 50? Hai un problema serio.
 
-<div class="result-box result-box-success">
-<h4>✅ I Miei Siti</h4>
-<p>PageSpeed 95-100. Caricano in meno di 1 secondo. Sempre.</p>
-</div>
+**Cause comuni:**
+- Hosting economico condiviso
+- Troppe immagini non ottimizzate
+- Tema WordPress pesante
+- Troppi plugin
+- Nessun sistema di cache
 
-## Errore #2: Non Si Trova su Google
+**Come risolvere:**
+- Hosting di qualità (Siteground, Kinsta)
+- Compressione immagini (TinyPNG, ShortPixel)
+- Plugin di cache (WP Rocket)
+- Eliminazione plugin inutili
+- Oppure: migrazione a sito statico
 
-Hai un sito bellissimo che nessuno vede. 
+{{< box type="success" title="I Miei Siti" >}}
+PageSpeed 95-100 garantito. Caricamento sotto 1 secondo. [Verifica un esempio →](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
+{{< /box >}}
+
+---
+
+## Errore 2: Non Si Trova su Google
+
+Hai un sito bellissimo che nessuno vede. Cerchi il nome della tua attività e non esci nemmeno in prima pagina.
 
 **Sintomi:**
-- Cerchi la tua attività e non esci
 - Zero visite organiche
 - Solo chi ha l'indirizzo diretto ti trova
+- Nessuna richiesta dal sito
 
-**Causa:** Nessuna ottimizzazione SEO.
+**Cause comuni:**
+- Nessuna ottimizzazione SEO
+- Contenuti troppo scarni
+- Sito non indicizzato correttamente
+- Nessuna presenza su Google Business Profile
+- Concorrenti più autorevoli
 
-**Soluzione:** Titoli, descrizioni, contenuti ottimizzati, velocità, struttura corretta.
+**Come risolvere:**
+- Ottimizzazione title e meta description per ogni pagina
+- Contenuti di qualità che rispondono a domande reali
+- Struttura URL pulita
+- Google Business Profile completo
+- Link da siti locali (directory, associazioni)
 
-## Errore #3: Non È Mobile-Friendly
+---
 
-<div class="quick-stats">
-<div class="quick-stat">
-<div class="quick-stat-value">70%</div>
-<div class="quick-stat-label">Traffico da smartphone</div>
-</div>
-</div>
+## Errore 3: Non È Mobile-Friendly
 
-Se il tuo sito fa schifo su telefono, perdi il **70% dei potenziali clienti**.
+**Il dato:** oltre il 60% del traffico web proviene da smartphone.
 
-**Test veloce:** apri il tuo sito dal telefono. Devi pizzicare per leggere? Bocciato.
+Se il tuo sito fa schifo su mobile, stai ignorando la maggioranza dei tuoi potenziali clienti.
 
-## Errore #4: Nessuna Call-to-Action
+**Test rapido:**  
+Apri il tuo sito dal telefono. Devi pizzicare per leggere? I bottoni sono troppo piccoli? Il menu non funziona? Bocciato.
 
-Il visitatore arriva sul tuo sito e poi... cosa deve fare?
+**Cause comuni:**
+- Sito progettato solo per desktop
+- Tema vecchio non responsive
+- Elementi troppo piccoli per il touch
+- Pop-up invasivi su mobile
 
-**Errori comuni:**
-- Nessun bottone evidente
-- "Contattaci" nascosto in fondo
+**Come risolvere:**
+- Design mobile-first
+- Test su dispositivi reali
+- Bottoni di almeno 44x44 pixel
+- Niente pop-up bloccanti su mobile
+
+---
+
+## Errore 4: Nessuna Call-to-Action Chiara
+
+Il visitatore arriva sul tuo sito. Guarda, legge... e poi? Non sa cosa fare.
+
+**Sintomi:**
+- Tante visite, pochi contatti
 - Nessun numero di telefono visibile
-- Form di contatto sepolto
+- Form di contatto nascosto
+- Nessun bottone evidente
 
-**La regola:** in ogni pagina deve essere **chiaro e facile** il prossimo passo.
+**La regola d'oro:**  
+In ogni pagina deve essere **immediatamente chiaro** cosa vuoi che il visitatore faccia, e **facilissimo** farlo.
 
-<div class="result-box result-box-success">
-<h4>✅ Cosa Faccio Io</h4>
-<p>Ogni pagina ha CTA chiare. Bottoni visibili. Contatto sempre a portata di click.</p>
-</div>
+**Come risolvere:**
+- Bottone CTA visibile "above the fold" (prima di scrollare)
+- Numero di telefono cliccabile nell'header
+- Form di contatto semplice (max 4-5 campi)
+- Ripetere la CTA in fondo alla pagina
+- Testo dei bottoni orientato all'azione ("Richiedi Preventivo", non "Invia")
 
-## Errore #5: Design Anni '90
+{{< cta type="accent" title="Il Tuo Sito Converte?" text="Analizzo il tuo sito e ti dico dove stai perdendo clienti." link="/preventivo/" button="ANALISI GRATUITA →" >}}
 
-Il tuo sito sembra fatto nel 2005? **Stai perdendo credibilità**.
+---
 
-I visitatori giudicano in 0.05 secondi. Se il sito sembra vecchio, pensano che l'azienda sia vecchia.
+## Errore 5: Design Obsoleto
 
-**Segnali di allarme:**
-- Font Comic Sans o simili
-- Colori che "urlano"
+Il tuo sito sembra fatto nel 2010. Colori sgargianti, font datati, layout confuso.
+
+**Perché è grave:**  
+I visitatori giudicano la credibilità in 0.05 secondi. Un sito datato comunica un'azienda datata.
+
+**Segnali di design obsoleto:**
+- Font come Comic Sans, Papyrus, Times New Roman
+- Colori "urlanti" senza armonia
 - Layout non allineato
-- Immagini pixelate
+- Immagini pixelate o di stock riconoscibili
+- Effetti come ombreggiature pesanti, angoli molto arrotondati
+- Slider automatici in homepage (tendenza 2012)
 
-<div class="cta-box cta-box-warning">
-<h3>😬 Hai Uno di Questi Problemi?</h3>
-<p>Risolviamolo. Dimmi qual è il tuo sito e ti dico cosa non va.</p>
-<a href="/preventivo/" class="btn">VOGLIO UN'OPINIONE →</a>
-</div>
+**Come risolvere:**
+- Design pulito e minimale
+- Palette colori coerente (2-3 colori)
+- Font professionali (Inter, Open Sans, Montserrat)
+- Immagini di qualità, possibilmente originali
+- Tanto spazio bianco
+- Layout moderno a griglia
 
-## Il Vero Problema
+---
 
-Spesso questi 5 errori hanno una **causa comune:** 
+## Il Problema di Fondo
 
-WordPress mal configurato, tema economico, zero manutenzione.
+Spesso questi 5 errori hanno una **causa comune:** WordPress mal configurato, tema economico, nessuna strategia.
 
-La soluzione non è "rattoppare". È **ripartire con tecnologia giusta**.
+La soluzione non è sempre "rattoppare". A volte conviene **ripartire con tecnologia giusta** e strategia chiara.
+
+---
 
 ## Quanto Costa Sistemare?
 
 | Approccio | Costo | Risultato |
 |-----------|-------|-----------|
-| Rattoppare WordPress | 300-800€ | Temporaneo |
-| Rifare su WordPress | 1.500-3.000€ | Gli stessi problemi torneranno |
-| **Rifare con tecnologia moderna** | **1.000-2.000€** | **Problema risolto per sempre** |
+| Rattoppare l'esistente | 300-800€ | Miglioramenti temporanei |
+| Rifare su WordPress | 1.500-3.000€ | Stessi problemi torneranno |
+| Rifare con tecnologia moderna | 800-2.000€ | Problema risolto alla radice |
 
-<div class="cta-box cta-box-accent">
-<h3>🚀 Vuoi un Sito Che Funziona?</h3>
-<p>Veloce, trovabile, bello, con CTA chiare. E che non si rompe.</p>
-<a href="/preventivo/" class="btn">PARLIAMONE →</a>
-</div>
+{{< cta title="Vuoi un Sito che Funziona?" text="Veloce, trovabile, bello, che converte. E che non richiede manutenzione continua." link="/preventivo/" button="RICHIEDI PREVENTIVO →" >}}
