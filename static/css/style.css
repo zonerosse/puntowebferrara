@@ -107,12 +107,12 @@ img {
 
 .btn-outline {
     background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
 }
 .btn-outline:hover {
-    background: var(--white);
-    color: var(--primary);
+    background: var(--primary);
+    color: var(--white);
 }
 
 .btn-large {
@@ -264,6 +264,17 @@ img {
     gap: 16px;
     flex-wrap: wrap;
     margin-bottom: 24px;
+}
+
+.hero .btn-outline {
+    border-color: rgba(255,255,255,0.7);
+    color: #fff;
+}
+
+.hero .btn-outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: #fff;
+    color: #fff;
 }
 
 .hero-note {
@@ -522,6 +533,21 @@ img {
     font-size: 1.15rem;
     opacity: 0.95;
     margin-bottom: 32px;
+}
+
+.cta-section .btn-outline {
+    border-color: rgba(255,255,255,0.7);
+    color: #fff;
+}
+
+.cta-section .btn-outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: #fff;
+    color: #fff;
+}
+
+.cta-section a:not(.btn) {
+    color: #93c5fd;
 }
 
 .cta-buttons {
@@ -963,6 +989,32 @@ img {
     color: #fff;
 }
 
+.section-dark h2, .section-dark h3 {
+    color: #fff;
+}
+
+.section-dark .section-header p {
+    color: #94a3b8;
+}
+
+.section-dark a {
+    color: #60a5fa;
+}
+
+.section-dark a:hover {
+    color: #93c5fd;
+}
+
+.section-dark .btn-outline {
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+}
+
+.section-dark .btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+}
+
 .section-label-light {
     background: rgba(255,255,255,0.1);
     color: var(--accent-light);
@@ -1142,8 +1194,38 @@ img {
 }
 
 .blog-content a {
-    color: var(--accent);
+    color: #0369a1;
     text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.blog-content a:hover {
+    color: #0284c7;
+}
+
+/* Tabelle negli articoli */
+.blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.95rem;
+}
+
+.blog-content th,
+.blog-content td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.blog-content th {
+    background: var(--light);
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.blog-content tr:hover {
+    background: var(--lighter);
 }
 
 .blog-footer {
@@ -1700,6 +1782,11 @@ img {
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
+.cta-box a:not(.btn) {
+    color: #fff;
+    text-decoration: underline;
+}
+
 /* Risultato Box */
 .result-box {
     background: var(--light);
@@ -1707,6 +1794,11 @@ img {
     padding: 24px;
     margin: 32px 0;
     border-radius: 0 12px 12px 0;
+}
+
+.result-box a {
+    color: #0369a1;
+    text-decoration: underline;
 }
 
 .result-box-success {
@@ -1757,6 +1849,34 @@ img {
 .compare-table .good {
     color: #059669;
     font-weight: 600;
+}
+
+/* Tabella su sfondo scuro */
+.section-dark .compare-table {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+
+.section-dark .compare-table th {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+.section-dark .compare-table td {
+    color: #e2e8f0;
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.section-dark .compare-table td strong {
+    color: #fff;
+}
+
+.section-dark .compare-table .bad {
+    color: #fca5a5;
+}
+
+.section-dark .compare-table .good {
+    color: #6ee7b7;
 }
 
 /* Quick Stats */
