@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}Siti Web Veloci e Sicuri | Senza WordPress | Paolo Boldrini{{ else }}{{ .Title }} | Paolo Boldrini{{ end }}</title>
-    <meta name="description" content="{{ if .IsHome }}Realizzo siti web con PageSpeed 95+, impossibili da hackerare, hosting gratuito. Niente WordPress, niente problemi. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Paolo Boldrini: siti web veloci, sicuri e senza WordPress.{{ end }}{{ end }}">
+    <title>{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress | Hosting Gratuito{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}Realizzo siti web con PageSpeed 95+, impossibili da hackerare, hosting gratuito. Alternativa a WordPress senza manutenzione. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri e senza WordPress. PageSpeed 95+, hosting gratuito, zero manutenzione.{{ end }}{{ end }}">
     <meta name="keywords" content="siti web veloci, alternativa wordpress, sito senza wordpress, quanto costa sito web, siti web sicuri, hosting gratuito">
     <meta name="author" content="Paolo Boldrini">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ .Permalink }}">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="{{ if .IsHome }}Siti Web Veloci e Sicuri | Paolo Boldrini{{ else }}{{ .Title }} | Paolo Boldrini{{ end }}">
-    <meta property="og:description" content="{{ if .IsHome }}Siti web con PageSpeed 95+. Niente WordPress, niente problemi. Hosting gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Paolo Boldrini: siti web veloci e sicuri.{{ end }}{{ end }}">
+    <meta property="og:title" content="{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}Siti web con PageSpeed 95+. Alternativa WordPress senza manutenzione. Hosting gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri, senza WordPress. PageSpeed 95+, hosting gratuito.{{ end }}{{ end }}">
     <meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
