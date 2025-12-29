@@ -2,7 +2,8 @@
 title: "Siti Web per Allevamenti di Gatti | Allevatori Felini e Gattofili"
 description: "Realizzo siti web professionali per allevamenti di gatti. Schede con pedigree, cucciolate, test genetici. Veloci, ottimizzati SEO, senza WordPress."
 date: 2025-01-01
-layout: single
+type: page
+layout: siti-web-allevamenti-gatti
 url: /siti-web-allevamenti-gatti/
 keywords:
   - siti web allevamenti gatti
@@ -19,41 +20,6 @@ keywords:
   - sito con pedigree gatti
   - sito gattini disponibili
   - realizzazione siti gattofili
----
-
-# Siti Web per Allevamenti di Gatti
-
-**Realizzazione siti internet per allevatori felini**: creazione siti web professionali con schede pedigree, test genetici, cucciolate disponibili e risultati expo.
-
-## Per Allevatori Felini Professionisti
-
-Anche se allevo cani, conosco bene il mondo degli allevatori. Le dinamiche sono le stesse: **pedigree, selezione, cucciolate, test genetici, expo**. So cosa ti serve per presentare al meglio i tuoi gatti.
-
----
-
-## Esigenze Specifiche per Siti Web Allevatori di Gatti
-
-La **creazione di un sito internet per allevamento gatti** richiede funzionalità specifiche che conosco bene:
-
-### Schede Gatti Complete
-- Foto professionali (pose tipiche della razza)
-- Pedigree ANFI/WCF/TICA/FIFe
-- Titoli: CH, GIC, SC, DSM
-- Test genetici (PKD, HCM, FIV, FeLV)
-- Colore e pattern con codice EMS
-
-### Gestione Cucciolate
-- Cucciolate disponibili
-- Prenotazioni aperte
-- Archivio storico
-- Cuccioli "retired" disponibili
-
-### Standard e Informazioni Razza
-- Caratteristiche della razza
-- Standard ufficiale
-- Consigli per nuovi proprietari
-- Contratto di cessione
-
 ---
 
 ## Funzionalità per Allevatori Felini

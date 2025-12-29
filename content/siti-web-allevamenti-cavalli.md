@@ -2,7 +2,8 @@
 title: "Siti Web per Allevamenti di Cavalli | Scuderie e Allevatori Equini"
 description: "Realizzo siti web professionali per allevamenti di cavalli, scuderie, maneggi. Schede cavalli, pedigree, risultati gare. Veloci, SEO ottimizzati."
 date: 2025-01-01
-layout: single
+type: page
+layout: siti-web-allevamenti-cavalli
 url: /siti-web-allevamenti-cavalli/
 keywords:
   - siti web allevamenti cavalli
@@ -21,53 +22,7 @@ keywords:
   - sito web centro equestre
 ---
 
-# Siti Web per Allevamenti di Cavalli
-
-**Realizzazione siti internet per allevatori equini**: creazione siti web professionali per scuderie, maneggi e centri ippici con schede cavalli, pedigree e risultati sportivi.
-
-## Per Allevatori Equini, Scuderie e Maneggi
-
-Il mondo equestre ha esigenze specifiche: **pedigree, risultati sportivi, cavalli in vendita, servizi di monta**. Creo siti che mostrano il valore dei tuoi soggetti e attirano acquirenti seri.
-
----
-
-## Funzionalità per Siti Web Allevamenti Equini
-
-La **creazione di un sito internet per allevamento cavalli** o scuderia richiede funzionalità specifiche:
-
-### Schede Cavalli Professionali
-- Foto professionali (conformazione, movimento, salto)
-- Pedigree completo
-- Libretto sportivo e risultati
-- Video performance
-- Certificazioni sanitarie
-
-### Cavalli in Vendita
-- Sezione dedicata
-- Filtri per disciplina/età/prezzo
-- Richiesta informazioni diretta
-- Aggiornamento facile
-
-### Servizi Allevamento
-- Stalloni disponibili per monta
-- Fattrici
-- Puledri nati
-- Condizioni di cessione
-
----
-
-## Per Chi è Questo Servizio
-
-### Allevamenti di Cavalli
-- Cavalli sportivi (salto, dressage, completo)
-- Quarter Horse e Paint Horse
-- Frisoni
-- Arabi e Anglo-arabi
-- Lusitani e PRE
-- Pony (Shetland, Welsh, Connemara)
-
-### Scuderie e Centri Ippici
-- Pensione cavalli
+## Discipline e Razze
 - Scuola di equitazione
 - Passeggiate e trekking
 - Ippoterapia

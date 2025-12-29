@@ -23,22 +23,6 @@ enableRobotsTXT = false
     name = 'Allevamenti'
     url = '/siti-web-allevamenti/'
     weight = 3
-    identifier = 'allevamenti'
-  [[menus.main]]
-    name = 'Cani'
-    url = '/siti-web-allevamenti-cani/'
-    weight = 1
-    parent = 'allevamenti'
-  [[menus.main]]
-    name = 'Gatti'
-    url = '/siti-web-allevamenti-gatti/'
-    weight = 2
-    parent = 'allevamenti'
-  [[menus.main]]
-    name = 'Cavalli'
-    url = '/siti-web-allevamenti-cavalli/'
-    weight = 3
-    parent = 'allevamenti'
   [[menus.main]]
     name = 'Chi Sono'
     url = '/chi-siamo/'

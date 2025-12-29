@@ -1,76 +1,157 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><span class="bolt-inline">⚡</span> Portfolio</h1>
-        <p>Siti reali. Performance verificabili.</p>
+        <h1><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Portfolio</h1>
+        <p>Siti reali. Performance verificabili su Google PageSpeed.</p>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <div class="cta-box">
-            <h3>Vuoi un Sito con Queste Performance?</h3>
-            <p>PageSpeed 95-100, hosting gratuito, zero manutenzione.</p>
-            <a href="/preventivo/" class="btn">Richiedi Preventivo</a>
+        <div class="section-header">
+            <span class="section-label">Progetti Realizzati</span>
+            <h2>Allevamenti Cinofili</h2>
+            <p>Siti per allevatori che sanno cosa vogliono: velocità, professionalità, risultati.</p>
+        </div>
+        
+        <!-- PORTFOLIO GRID -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px;">
+            
+            <!-- DEL PICCOLO DIAVOLO -->
+            <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                <div style="background: linear-gradient(135deg, #0d4275 0%, #0369a1 100%); padding: 32px; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #0d4275;">DP</div>
+                    <h3 style="color: #fff; margin: 0 0 4px;">Del Piccolo Diavolo</h3>
+                    <p style="color: #bae6fd; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
+                </div>
+                <div style="padding: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; text-align: center;">
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">100</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">PageSpeed</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0.5s</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Caricamento</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0€</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Hosting/anno</div>
+                        </div>
+                    </div>
+                    <p style="color: #374151; font-size: 0.95rem; margin-bottom: 20px;">Sito completo con gallery cucciolate, pagine genitori, blog articoli. Hugo + Cloudflare.</p>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="https://www.delpiccolodiavolo.it" target="_blank" style="flex: 1; display: block; padding: 12px; background: #0d4275; color: #fff; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">Visita</a>
+                        <a href="https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it" target="_blank" style="flex: 1; display: block; padding: 12px; background: #f3f4f6; color: #374151; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">PageSpeed</a>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- CUCCIOLI STAFFY -->
+            <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); padding: 32px; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #7c3aed;">CS</div>
+                    <h3 style="color: #fff; margin: 0 0 4px;">Cuccioli Staffy</h3>
+                    <p style="color: #e9d5ff; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
+                </div>
+                <div style="padding: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; text-align: center;">
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">95+</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">PageSpeed</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0.6s</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Caricamento</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0€</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Hosting/anno</div>
+                        </div>
+                    </div>
+                    <p style="color: #374151; font-size: 0.95rem; margin-bottom: 20px;">Sito dedicato alle cucciolate disponibili. Design pulito, contatto diretto WhatsApp.</p>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="https://www.cuccioli-staffy.it" target="_blank" style="flex: 1; display: block; padding: 12px; background: #7c3aed; color: #fff; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">Visita</a>
+                        <a href="https://pagespeed.web.dev/analysis?url=https://www.cuccioli-staffy.it" target="_blank" style="flex: 1; display: block; padding: 12px; background: #f3f4f6; color: #374151; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">PageSpeed</a>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- THE REDS STAFFORD -->
+            <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                <div style="background: linear-gradient(135deg, #dc2626 0%, #f97316 100%); padding: 32px; text-align: center;">
+                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #dc2626;">TR</div>
+                    <h3 style="color: #fff; margin: 0 0 4px;">The Reds Stafford</h3>
+                    <p style="color: #fed7aa; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
+                </div>
+                <div style="padding: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; text-align: center;">
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">95+</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">PageSpeed</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0.7s</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Caricamento</div>
+                        </div>
+                        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">0€</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Hosting/anno</div>
+                        </div>
+                    </div>
+                    <p style="color: #374151; font-size: 0.95rem; margin-bottom: 20px;">Allevamento con bloodline inglesi. Gallery soggetti, risultati expo, cucciolate.</p>
+                    <div style="display: flex; gap: 12px;">
+                        <a href="https://thereds-stafford.com" target="_blank" style="flex: 1; display: block; padding: 12px; background: #dc2626; color: #fff; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">Visita</a>
+                        <a href="https://pagespeed.web.dev/analysis?url=https://thereds-stafford.com" target="_blank" style="flex: 1; display: block; padding: 12px; background: #f3f4f6; color: #374151; text-align: center; border-radius: 8px; font-weight: 600; text-decoration: none;">PageSpeed</a>
+                    </div>
+                </div>
+            </article>
+            
+        </div>
+    </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="section section-light">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;">
+            <div>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #0d4275;">3</div>
+                <div style="color: #6b7280;">Siti Allevamenti</div>
+            </div>
+            <div>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #0d4275;">100%</div>
+                <div style="color: #6b7280;">PageSpeed 95+</div>
+            </div>
+            <div>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #0d4275;">0€</div>
+                <div style="color: #6b7280;">Hosting pagato</div>
+            </div>
+            <div>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #0d4275;">0</div>
+                <div style="color: #6b7280;">Siti hackerati</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUESTO SITO -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Meta</span>
+            <h2>Questo Sito</h2>
+            <p>Stai navigando un sito realizzato con la stessa tecnologia.</p>
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 32px; border-radius: 16px; text-align: center; border: 2px solid #0891b2;">
+            <div style="font-size: 1.25rem; font-weight: 700; color: #0d4275; margin-bottom: 8px;">puntowebferrara.com</div>
+            <p style="color: #374151; margin-bottom: 24px;">Hugo + HTML/CSS puro + Cloudflare Pages. Zero WordPress, zero framework JavaScript.</p>
+            <a href="https://pagespeed.web.dev/analysis?url=https://puntowebferrara.com" target="_blank" class="btn btn-dark">Verifica PageSpeed</a>
         </div>
     </div>
 </section>
 
 <section class="section section-light">
-    <div class="container">
-        <div class="section-header">
-            <h2>Progetti Realizzati</h2>
-            <p>Verifica tu stesso le performance su Google PageSpeed.</p>
-        </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item portfolio-featured">
-                <div class="portfolio-image">
-                    <span class="portfolio-icon">DP</span>
-                </div>
-                <div class="portfolio-content">
-                    <div class="portfolio-badge">Progetto Reale</div>
-                    <h3>Del Piccolo Diavolo</h3>
-                    <p class="portfolio-subtitle">Allevamento Staffordshire Bull Terrier</p>
-                    <p>Sito completo per allevamento cinofilo ENCI: gallery cucciolate, pagine genitori, informazioni sulla razza, blog con articoli. Realizzato con Hugo e hostato su Cloudflare.</p>
-                    <div class="features-grid" style="margin: 24px 0;">
-                        <div class="feature-item" style="padding: 16px;">
-                            <div class="feature-number" style="font-size: 1.5rem;">100</div>
-                            <p style="margin: 0; font-size: 0.9rem;">PageSpeed</p>
-                        </div>
-                        <div class="feature-item" style="padding: 16px;">
-                            <div class="feature-number" style="font-size: 1.5rem;">0.5s</div>
-                            <p style="margin: 0; font-size: 0.9rem;">Caricamento</p>
-                        </div>
-                        <div class="feature-item" style="padding: 16px;">
-                            <div class="feature-number" style="font-size: 1.5rem;">0€</div>
-                            <p style="margin: 0; font-size: 0.9rem;">Hosting</p>
-                        </div>
-                    </div>
-                    <div class="portfolio-buttons">
-                        <a href="https://www.delpiccolodiavolo.it" target="_blank" class="btn btn-primary">Visita il Sito</a>
-                        <a href="https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it" target="_blank" class="btn btn-outline">Verifica PageSpeed</a>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item portfolio-featured">
-                <div class="portfolio-image">
-                    <span class="portfolio-icon">PB</span>
-                </div>
-                <div class="portfolio-content">
-                    <div class="portfolio-badge">Questo Sito</div>
-                    <h3>Paolo Boldrini Web</h3>
-                    <p class="portfolio-subtitle">Il sito che stai navigando</p>
-                    <p>Realizzato con Hugo, HTML/CSS puro e hostato su Cloudflare Pages. Zero WordPress, zero framework JavaScript, performance ottimali.</p>
-                    <div class="portfolio-buttons" style="margin-top: 24px;">
-                        <a href="https://pagespeed.web.dev/analysis?url=https://puntowebferrara.com" target="_blank" class="btn btn-outline">Verifica PageSpeed</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section">
     <div class="container">
         <div class="section-header">
             <h2>Settori Serviti</h2>
@@ -99,7 +180,7 @@
             </div>
             <div class="service-card">
                 <h3>Allevamenti</h3>
-                <p>Cani, gatti, altri animali. Cucciolate, pedigree, certificazioni. (Lo conosco bene!)</p>
+                <p>Cani, gatti, cavalli. Cucciolate, pedigree, certificazioni. (Lo conosco bene!)</p>
             </div>
         </div>
     </div>

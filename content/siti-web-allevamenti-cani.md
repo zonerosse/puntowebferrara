@@ -2,7 +2,8 @@
 title: "Siti Web per Allevamenti di Cani | Cinofili e Allevatori Professionisti"
 description: "Realizzo siti web professionali per allevamenti di cani. Schede con pedigree, cucciolate, gallery expo. Sono allevatore cinofilo dal 2013. Veloci, SEO ottimizzati."
 date: 2025-01-01
-layout: single
+type: page
+layout: siti-web-allevamenti-cani
 url: /siti-web-allevamenti-cani/
 keywords:
   - siti web allevamenti cani
@@ -21,33 +22,7 @@ keywords:
   - sito cucciolate disponibili
 ---
 
-# Siti Web per Allevamenti di Cani
-
-**Realizzazione siti internet per allevatori cinofili**: creazione siti web professionali con schede pedigree, gestione cucciolate, gallery expo e risultati.
-
-## Creati da un Allevatore Cinofilo
-
-Allevo **Staffordshire Bull Terrier** dal 2013 con l'affisso ENCI "Del Piccolo Diavolo". Non sono un web designer qualunque: conosco le expo, i pedigree, le selezioni, le cucciolate. **So cosa ti serve.**
-
----
-
-## Cosa Rende Diverso un Sito Web per Allevatori di Cani?
-
-Un **sito internet per allevamento cani** non è un sito vetrina qualsiasi. La creazione di un sito per allevatore cinofilo richiede funzionalità specifiche:
-
-### Schede Cani Professionali
-Ogni soggetto merita una pagina dedicata con:
-- Foto professionali (stack, movimento, testa)
-- Pedigree completo
-- Titoli e risultati expo
-- Test sanitari (HD, ED, DNA)
-- Genealogia interattiva
-
-### Gestione Cucciolate
-- Cucciolate disponibili in evidenza
-- Archivio storico cucciolate
-- Foto cuccioli con aggiornamenti
-- Prenotazioni e lista d'attesa
+## Razze per cui Realizzo Siti
 
 ### Sezione Expo e Risultati
 - Calendario expo
