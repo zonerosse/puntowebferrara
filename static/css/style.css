@@ -166,7 +166,7 @@ img {
     font-size: 0.95rem;
 }
 
-.logo span { color: #0369a1; }
+.logo span { color: #0369a1 !important; }
 .logo:hover { color: var(--primary); }
 
 .main-nav ul {
@@ -820,8 +820,12 @@ img {
     margin-bottom: 16px;
 }
 
+.footer-brand .logo span {
+    color: #38bdf8 !important;
+}
+
 .footer-brand p {
-    color: rgba(255,255,255,0.85);
+    color: #e5e7eb !important;
     font-size: 0.95rem;
 }
 
@@ -841,17 +845,17 @@ img {
 }
 
 .footer-col a {
-    color: rgba(255,255,255,0.85);
+    color: #e5e7eb;
 }
 .footer-col a:hover {
     color: var(--white);
 }
 
 .footer-contact li {
-    color: rgba(255,255,255,0.85);
+    color: #e5e7eb;
 }
 .footer-contact a {
-    color: rgba(255,255,255,0.85);
+    color: #e5e7eb;
 }
 .footer-contact a:hover {
     color: var(--accent-light);
