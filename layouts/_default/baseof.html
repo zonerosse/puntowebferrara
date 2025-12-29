@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}Realizzazione Siti Web Ferrara | Web Agency | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}</title>
-    <meta name="description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing. Siti veloci, moderni e ottimizzati. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web, SEO e web marketing a Ferrara e provincia.{{ end }}{{ end }}">
-    <meta name="keywords" content="realizzazione siti web ferrara, web agency ferrara, seo ferrara, creazione siti internet ferrara, posizionamento google ferrara, agenzia web ferrara">
-    <meta name="author" content="Punto Web Ferrara">
+    <title>{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress | Hosting Gratuito{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}Realizzo siti web con PageSpeed 95+, impossibili da hackerare, hosting gratuito. Alternativa a WordPress senza manutenzione. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri e senza WordPress. PageSpeed 95+, hosting gratuito, zero manutenzione.{{ end }}{{ end }}">
+    <meta name="keywords" content="siti web veloci, alternativa wordpress, sito senza wordpress, quanto costa sito web, siti web sicuri, hosting gratuito">
+    <meta name="author" content="Paolo Boldrini">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ .Permalink }}">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
-    <meta property="og:description" content="{{ if .IsHome }}Web agency a Ferrara. Siti web professionali, SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: siti web e SEO a Ferrara.{{ end }}{{ end }}">
+    <meta property="og:title" content="{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}Siti web con PageSpeed 95+. Alternativa WordPress senza manutenzione. Hosting gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri, senza WordPress. PageSpeed 95+, hosting gratuito.{{ end }}{{ end }}">
     <meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -202,7 +202,7 @@
         "@type": "WebSite",
         "name": "Punto Web Ferrara",
         "url": "https://puntowebferrara.com",
-        "description": "Web agency a Ferrara - Realizziamo siti web professionali e ottimizzati SEO"
+        "description": "Realizzo siti web professionali a Ferrara con Hugo e Cloudflare. Siti veloci, sicuri e ottimizzati SEO."
     }
     </script>
     {{ end }}
@@ -238,36 +238,36 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
-                    <p>Realizziamo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti.</p>
+                    <p>Realizzo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti. Tecnologia Hugo + Cloudflare.</p>
                 </div>
                 <div class="footer-col">
                     <p class="footer-title">Servizi</p>
                     <ul>
                         <li><a href="/servizi/">Realizzazione Siti Web</a></li>
                         <li><a href="/servizi/">SEO e Posizionamento</a></li>
-                        <li><a href="/servizi/">Web Marketing</a></li>
+                        <li><a href="/servizi/">Migrazione da WordPress</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <p class="footer-title">Informazioni</p>
                     <ul>
-                        <li><a href="/chi-siamo/">Chi Siamo</a></li>
+                        <li><a href="/chi-siamo/">Chi Sono</a></li>
                         <li><a href="/portfolio/">Portfolio</a></li>
                         <li><a href="/contatti/">Contatti</a></li>
                         <li><a href="/privacy/">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <p class="footer-title">Contattaci</p>
+                    <p class="footer-title">Contattami</p>
                     <ul class="footer-contact">
-                        <li>📍 Ferrara (FE)</li>
+                        <li>📍 Ostellato (FE)</li>
                         <li>📞 <a href="tel:+393924635584">392 463 5584</a></li>
                         <li>✉️ <a href="mailto:zonerosse@gmail.com">zonerosse@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© {{ now.Year }} Punto Web Ferrara — Tutti i diritti riservati</p>
+                <p>© {{ now.Year }} Punto Web Ferrara di Paolo Boldrini — Tutti i diritti riservati</p>
                 <p style="margin-top: 8px; font-size: 0.8rem;">Attività svolta in regime di prestazione occasionale (art. 2222 c.c.)</p>
             </div>
         </div>

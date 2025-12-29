@@ -1,6 +1,6 @@
 ---
 title: "Servizi Web a Ferrara"
-description: "Realizzazione siti web, SEO e posizionamento Google, restyling siti esistenti, e-commerce. Servizi web professionali a Ferrara."
+description: "Realizzazione siti web con Hugo, SEO e posizionamento Google, migrazione da WordPress. Servizi web professionali a Ferrara e provincia."
 type: "page"
 layout: "servizi"
 sitemap:
