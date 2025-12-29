@@ -70,7 +70,7 @@ Realizzo siti per allevamenti di:
 **Prezzi realizzazione sito web allevatore felino** - tutto incluso:
 
 ### Sito Base
-**700€** una tantum
+**500€** una tantum
 
 - Fino a 10 schede gatti
 - Cucciolate
@@ -79,27 +79,13 @@ Realizzo siti per allevamenti di:
 - Hosting gratuito
 
 ### Sito Professionale
-**1.200€** una tantum
+**1.000€** una tantum
 
 - Schede illimitate
 - Multilingua
 - Blog
 - SEO avanzato
 - Integrazione social
-
----
-
-## Richiedi Preventivo
-
-Dimmi che razza allevi e cosa vorresti nel sito. Preventivo in 24 ore.
-
-[Richiedi Preventivo](/preventivo/)
-
-📞 [392 463 5584](tel:+393924635584)
-
-📧 [zonerosse@gmail.com](mailto:zonerosse@gmail.com)
-
-💬 [WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20ho%20un%20allevamento%20di%20gatti%20e%20vorrei%20un%20preventivo)
 
 ---
 

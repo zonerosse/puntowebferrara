@@ -38,7 +38,7 @@ Un sito ottimizzato con form di contatto e call-to-action trasforma i visitatori
 
 ## Quanto Costa un Sito Web?
 
-Meno di quanto pensi. Un sito vetrina professionale parte da **700€**, un investimento che si ripaga con 2-3 clienti acquisiti.
+Meno di quanto pensi. Un sito vetrina professionale parte da **500€**, un investimento che si ripaga con 2-3 clienti acquisiti.
 
 Non servono siti complicati: serve un sito **veloce, chiaro e ottimizzato** per farsi trovare.
 

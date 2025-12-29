@@ -26,7 +26,7 @@ keywords:
 
 ## Da Allevatore per Allevatori
 
-Non sono il solito web designer che non sa cosa sia un pedigree. **Allevo Staffordshire Bull Terrier dal 2013** con l'affisso "Del Piccolo Diavolo". Conosco le tue esigenze perché sono le mie stesse esigenze.
+Non sono il solito web designer che non sa cosa sia un pedigree. **Allevo Staffordshire Bull Terrier dal 2013**. Conosco le tue esigenze perché sono le mie stesse esigenze.
 
 So cosa significa:
 - Gestire schede di cani con pedigree e genealogia
@@ -101,7 +101,7 @@ Guarda alcuni esempi di **creazione siti web per allevatori** che ho realizzato 
 **Prezzi chiari per la realizzazione del sito del tuo allevamento**, senza sorprese e senza costi nascosti.
 
 ### Sito Allevamento Standard
-**Da 700€** una tantum
+**Da 500€** una tantum
 
 - 5-7 pagine
 - Design personalizzato
@@ -110,7 +110,7 @@ Guarda alcuni esempi di **creazione siti web per allevatori** che ho realizzato 
 - Formazione gestione
 
 ### Sito Allevamento Premium
-**Da 1.200€** una tantum
+**Da 1.000€** una tantum
 
 - 10+ pagine
 - Design premium
@@ -181,20 +181,6 @@ Il primo anno sì. Dal secondo anno, il costo del dominio (.it o .com) è di cir
 Lo migro mantenendo il posizionamento SEO acquisito. Smetti di pagare hosting e manutenzione.
 
 ---
-
-## Pronto a Far Crescere il Tuo Allevamento Online?
-
-Raccontami del tuo allevamento. Ti preparo un preventivo personalizzato in 24 ore.
-
-**Senza impegno. Da allevatore ad allevatore.**
-
-[Richiedi Preventivo Gratuito](/preventivo/)
-
-📞 [Chiamami: 392 463 5584](tel:+393924635584)
-
-📧 [zonerosse@gmail.com](mailto:zonerosse@gmail.com)
-
-💬 [Scrivimi su WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20ho%20un%20allevamento%20e%20vorrei%20un%20preventivo%20per%20il%20sito%20web)
 
 ---
 

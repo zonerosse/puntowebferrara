@@ -106,7 +106,7 @@ Ho esperienza con siti per allevamenti di:
 **Prezzi creazione sito web allevatore cinofilo** - tutto incluso, nessun costo nascosto:
 
 ### Sito Allevamento Base
-**700€** una tantum
+**500€** una tantum
 
 - Fino a 5 schede cani
 - 1 sezione cucciolate
@@ -115,7 +115,7 @@ Ho esperienza con siti per allevamenti di:
 - Hosting gratuito
 
 ### Sito Allevamento Professionale
-**1.200€** una tantum
+**1.000€** una tantum
 
 - Schede cani illimitate
 - Cucciolate con archivio
@@ -131,20 +131,6 @@ Ho esperienza con siti per allevamenti di:
 - Nuovo design
 - Velocità 10x
 - Stop costi hosting
-
----
-
-## Richiedi Preventivo
-
-Dimmi che razza allevi, quanti soggetti hai, cosa vorresti nel sito. Ti rispondo in 24 ore con preventivo dettagliato.
-
-[Richiedi Preventivo](/preventivo/)
-
-📞 [392 463 5584](tel:+393924635584)
-
-📧 [zonerosse@gmail.com](mailto:zonerosse@gmail.com)
-
-💬 [WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20ho%20un%20allevamento%20di%20cani%20e%20vorrei%20un%20preventivo)
 
 ---
 

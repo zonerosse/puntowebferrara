@@ -8,7 +8,7 @@ url: /siti-web-handler/
 keywords:
   - siti web handler cinofili
   - sito web handler cani
-  - sito per handler professionista
+  - sito per handler
   - realizzazione siti handler
   - web design handler cinofilo
   - sito internet handler
@@ -39,14 +39,6 @@ Certo, possiamo aggiungere qualsiasi sezione ti serva: cani che segui abitualmen
 
 ---
 
-## Pronto a Farti Trovare?
+---
 
-Gli allevatori cercano handler su Google. Se non hai un sito, non esisti. Contattami per un preventivo gratuito.
-
-**Da allevatore a handler: parlo la tua lingua.**
-
-[Richiedi Preventivo Gratuito](/preventivo/)
-
-📞 [Chiamami: 392 463 5584](tel:+393924635584)
-
-💬 [Scrivimi su WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20sono%20un%20handler%20e%20vorrei%20un%20preventivo%20per%20il%20sito)
+*Punto Web Ferrara — Siti web per handler*

@@ -58,7 +58,7 @@ keywords:
 **Prezzi realizzazione sito web per scuderie e allevatori equini**:
 
 ### Sito Allevamento Cavalli
-**Da 900€** una tantum
+**Da 500€** una tantum
 
 - Design elegante
 - Sezione cavalli
@@ -67,27 +67,13 @@ keywords:
 - Hosting gratuito
 
 ### Sito Scuderia/Maneggio
-**Da 700€** una tantum
+**Da 1.000€** una tantum
 
 - Servizi offerti
 - Tariffe
 - Gallery
 - Contatti
 - Mappa
-
----
-
-## Richiedi Preventivo
-
-Raccontami della tua attività equestre. Preventivo personalizzato in 24 ore.
-
-[Richiedi Preventivo](/preventivo/)
-
-📞 [392 463 5584](tel:+393924635584)
-
-📧 [zonerosse@gmail.com](mailto:zonerosse@gmail.com)
-
-💬 [WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20ho%20un%20allevamento%20di%20cavalli%20e%20vorrei%20un%20preventivo)
 
 ---
 
