@@ -14,7 +14,7 @@ Ultimo aggiornamento: Dicembre 2025
 
 Punto Web Ferrara  
 Ferrara (FE)  
-Email: zonerosse@gmail.com  
+Email: zonerosse&#64;gmail&#46;com  
 Telefono: 392 463 5584
 
 ### Dati Raccolti
@@ -52,7 +52,7 @@ In conformità al GDPR (Regolamento UE 2016/679), l'utente ha diritto di:
 - Richiedere la portabilità dei dati
 - Revocare il consenso in qualsiasi momento
 
-Per esercitare i propri diritti, contattare: zonerosse@gmail.com
+Per esercitare i propri diritti, contattare: zonerosse&#64;gmail&#46;com
 
 ### Cookie
 
@@ -65,5 +65,5 @@ Ci riserviamo il diritto di modificare questa informativa. La data di ultimo agg
 ### Contatti
 
 Per qualsiasi domanda relativa alla privacy, contattare:  
-Email: zonerosse@gmail.com  
+Email: zonerosse&#64;gmail&#46;com  
 Telefono: 392 463 5584
