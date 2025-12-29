@@ -1,7 +1,7 @@
 baseURL = 'https://puntowebferrara.com/'
 languageCode = 'it'
 title = 'Punto Web Ferrara'
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 [sitemap]
   changefreq = 'weekly'
