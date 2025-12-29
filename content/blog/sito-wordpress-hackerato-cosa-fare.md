@@ -12,7 +12,7 @@ Il tuo sito reindirizza a pagine sospette. Oppure Google mostra "Questo sito pot
 
 Respira. È grave, ma si risolve.
 
-{{< cta title="Sito Hackerato Adesso?" text="Posso indicarti professionisti che fanno pulizia WordPress, oppure parliamo di soluzioni a lungo termine." link="/contatti/" button="CONTATTAMI →" >}}
+{{< cta title="Sito Hackerato Adesso?" text="Posso indicarti professionisti che fanno pulizia WordPress, oppure parliamo di soluzioni a lungo termine." link="/contatti/" button="CONTATTAMI" >}}
 
 ## Azioni Immediate (Primi 30 Minuti)
 
@@ -146,7 +146,7 @@ Il problema non è WordPress in sé. È l'ecosistema:
 - Hardening professionale
 - Supporto prioritario
 
-{{< cta type="accent" title="Stufo di Preoccuparti della Sicurezza?" text="Esiste un'alternativa: siti che non possono essere hackerati. Zero database, zero PHP, zero vulnerabilità." link="/preventivo/" button="SCOPRI COME →" >}}
+{{< cta type="accent" title="Stufo di Preoccuparti della Sicurezza?" text="Esiste un'alternativa: siti che non possono essere hackerati. Zero database, zero PHP, zero vulnerabilità." link="/preventivo/" button="SCOPRI COME" >}}
 
 ---
 
@@ -179,4 +179,4 @@ Non c'è niente da hackerare perché non c'è codice lato server, non c'è datab
 - Area utenti con login
 - Funzionalità dinamiche complesse
 
-{{< cta title="Vuoi Saperne di Più?" text="Ti spiego come funziona e se fa al caso tuo. Consulenza gratuita, zero impegno." link="/preventivo/" button="PARLIAMONE →" >}}
+{{< cta title="Vuoi Saperne di Più?" text="Ti spiego come funziona e se fa al caso tuo. Consulenza gratuita, zero impegno." link="/preventivo/" button="PARLIAMONE" >}}

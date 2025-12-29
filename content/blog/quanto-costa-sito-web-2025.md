@@ -14,7 +14,7 @@ Stai cercando di capire quanto budget serve per un sito web? Ti do i numeri real
 
 **Risposta vera:** il prezzo iniziale è solo metà della storia.
 
-{{< cta title="Vuoi un Preventivo Preciso?" text="Ti rispondo in 24 ore con un preventivo dettagliato. Zero sorprese." link="/preventivo/" button="RICHIEDI PREVENTIVO GRATUITO →" >}}
+{{< cta title="Vuoi un Preventivo Preciso?" text="Ti rispondo in 24 ore con un preventivo dettagliato. Zero sorprese." link="/preventivo/" button="RICHIEDI PREVENTIVO GRATUITO" >}}
 
 ## Prezzi per Tipo di Sito
 
@@ -62,7 +62,7 @@ Qui casca l'asino. Il sito costa X, ma poi **ogni anno** paghi:
 Un sito WordPress da 1.500€ + 5 anni di costi ricorrenti = **4.500-11.000€ totali**
 {{< /box >}}
 
-{{< cta type="accent" title="C'è un'Alternativa" text="I miei siti hanno costi ricorrenti pari a 12€/anno (solo dominio). Ti spiego come." link="/preventivo/" button="SCOPRI COME →" >}}
+{{< cta type="accent" title="C'è un'Alternativa" text="I miei siti hanno costi ricorrenti pari a 12€/anno (solo dominio). Ti spiego come." link="/preventivo/" button="SCOPRI COME" >}}
 
 ---
 
@@ -131,4 +131,4 @@ In 5 anni risparmi **3.000-5.000€** rispetto a un sito WordPress tradizionale.
 - Serve un team multidisciplinare
 - Il progetto è complesso con molte integrazioni
 
-{{< cta title="Hai 2 Minuti?" text="Dimmi cosa ti serve e ti dico quanto costa. Preventivo gratuito, zero impegno." link="/preventivo/" button="CHIEDI PREVENTIVO →" >}}
+{{< cta title="Hai 2 Minuti?" text="Dimmi cosa ti serve e ti dico quanto costa. Preventivo gratuito, zero impegno." link="/preventivo/" button="CHIEDI PREVENTIVO" >}}

@@ -12,7 +12,7 @@ Hai un sito web da anni ma non arriva nessun cliente. Oppure ne arrivano pochi, 
 
 Non sei solo. L'80% dei siti di piccole attività ha almeno uno di questi problemi. Vediamo quali sono e come risolverli.
 
-{{< cta title="Il Tuo Sito Ha Questi Problemi?" text="Analisi gratuita: ti dico cosa non funziona e come sistemarlo." link="/preventivo/" button="RICHIEDI ANALISI →" >}}
+{{< cta title="Il Tuo Sito Ha Questi Problemi?" text="Analisi gratuita: ti dico cosa non funziona e come sistemarlo." link="/preventivo/" button="RICHIEDI ANALISI" >}}
 
 ---
 
@@ -40,7 +40,7 @@ Vai su [PageSpeed Insights](https://pagespeed.web.dev/) e inserisci il tuo URL. 
 - Oppure: migrazione a sito statico
 
 {{< box type="success" title="I Miei Siti" >}}
-PageSpeed 95-100 garantito. Caricamento sotto 1 secondo. [Verifica un esempio →](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
+PageSpeed 95-100 garantito. Caricamento sotto 1 secondo. [Verifica un esempio](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
 {{< /box >}}
 
 ---
@@ -113,7 +113,7 @@ In ogni pagina deve essere **immediatamente chiaro** cosa vuoi che il visitatore
 - Ripetere la CTA in fondo alla pagina
 - Testo dei bottoni orientato all'azione ("Richiedi Preventivo", non "Invia")
 
-{{< cta type="accent" title="Il Tuo Sito Converte?" text="Analizzo il tuo sito e ti dico dove stai perdendo clienti." link="/preventivo/" button="ANALISI GRATUITA →" >}}
+{{< cta type="accent" title="Il Tuo Sito Converte?" text="Analizzo il tuo sito e ti dico dove stai perdendo clienti." link="/preventivo/" button="ANALISI GRATUITA" >}}
 
 ---
 
@@ -158,4 +158,4 @@ La soluzione non è sempre "rattoppare". A volte conviene **ripartire con tecnol
 | Rifare su WordPress | 1.500-3.000€ | Stessi problemi torneranno |
 | Rifare con tecnologia moderna | 800-2.000€ | Problema risolto alla radice |
 
-{{< cta title="Vuoi un Sito che Funziona?" text="Veloce, trovabile, bello, che converte. E che non richiede manutenzione continua." link="/preventivo/" button="RICHIEDI PREVENTIVO →" >}}
+{{< cta title="Vuoi un Sito che Funziona?" text="Veloce, trovabile, bello, che converte. E che non richiede manutenzione continua." link="/preventivo/" button="RICHIEDI PREVENTIVO" >}}

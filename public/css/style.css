@@ -1923,3 +1923,13 @@ img {
         font-size: 1.3rem;
     }
 }
+
+/* Forza colonna singola su schermi piccoli */
+@media (max-width: 600px) {
+    [style*="display:grid"],
+    [style*="display: grid"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+    }
+}

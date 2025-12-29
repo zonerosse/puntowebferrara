@@ -146,9 +146,9 @@ Il processo di **sviluppo sito web per allevamento** è semplice:
 
 Realizzo siti per allevamenti di:
 
-- **Cani** (tutte le razze) → [Scopri di più](/siti-web-allevamenti-cani/)
-- **Gatti** (tutte le razze) → [Scopri di più](/siti-web-allevamenti-gatti/)
-- **Cavalli** (salto, dressage, western) → [Scopri di più](/siti-web-allevamenti-cavalli/)
+- **Cani** (tutte le razze) [Scopri di più](/siti-web-allevamenti-cani/)
+- **Gatti** (tutte le razze) [Scopri di più](/siti-web-allevamenti-gatti/)
+- **Cavalli** (salto, dressage, western) [Scopri di più](/siti-web-allevamenti-cavalli/)
 - **Uccelli** (pappagalli, canarini, rapaci)
 - **Conigli e roditori**
 - **Rettili**

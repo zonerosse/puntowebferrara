@@ -12,7 +12,7 @@ Il tuo sito WordPress carica in 4-5 secondi. Google ti penalizza nel ranking. I 
 
 Non sei solo: **la maggioranza dei siti WordPress ha questo problema**.
 
-{{< cta title="Il Tuo Sito È Lento?" text="Analisi gratuita delle performance. Ti dico esattamente cosa non va e come sistemarlo." link="/preventivo/" button="RICHIEDI ANALISI GRATUITA →" >}}
+{{< cta title="Il Tuo Sito È Lento?" text="Analisi gratuita delle performance. Ti dico esattamente cosa non va e come sistemarlo." link="/preventivo/" button="RICHIEDI ANALISI GRATUITA" >}}
 
 ## Quanto È Lento il Tuo Sito?
 
@@ -88,7 +88,7 @@ Google Analytics, Facebook Pixel, chat widget, font Google, mappe...
 
 **La soluzione:** Carica solo quello che serve davvero. Usa lazy loading per widget non essenziali.
 
-{{< cta type="accent" title="Non Sai Da Dove Iniziare?" text="Ti faccio un'analisi completa del tuo sito e ti indico le priorità." link="/preventivo/" button="RICHIEDI ANALISI →" >}}
+{{< cta type="accent" title="Non Sai Da Dove Iniziare?" text="Ti faccio un'analisi completa del tuo sito e ti indico le priorità." link="/preventivo/" button="RICHIEDI ANALISI" >}}
 
 ---
 
@@ -145,7 +145,7 @@ Il mio sito [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it):
 - **Hosting:** gratuito (Cloudflare Pages)
 - **Manutenzione:** zero
 
-[Verifica tu stesso su PageSpeed →](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
+[Verifica tu stesso su PageSpeed](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
 
 ---
 
@@ -162,4 +162,4 @@ Il mio sito [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it):
 - Vuoi eliminare manutenzione e problemi di sicurezza
 - Vuoi azzerare i costi di hosting
 
-{{< cta title="Non Sai Cosa Scegliere?" text="Dimmi che sito hai e cosa ti serve. Ti consiglio la soluzione più adatta, senza impegno." link="/preventivo/" button="CHIEDI CONSIGLIO →" >}}
+{{< cta title="Non Sai Cosa Scegliere?" text="Dimmi che sito hai e cosa ti serve. Ti consiglio la soluzione più adatta, senza impegno." link="/preventivo/" button="CHIEDI CONSIGLIO" >}}

@@ -12,7 +12,7 @@ WordPress alimenta il 43% del web. Lo usano tutti: dalle multinazionali al risto
 
 Io no. E dopo aver letto questo articolo, capirai perché.
 
-{{< cta title="Vuoi Vedere la Differenza?" text="Ti mostro siti reali con PageSpeed 100 e hosting gratuito." link="/portfolio/" button="GUARDA I MIEI LAVORI →" >}}
+{{< cta title="Vuoi Vedere la Differenza?" text="Ti mostro siti reali con PageSpeed 100 e hosting gratuito." link="/portfolio/" button="GUARDA I MIEI LAVORI" >}}
 
 ## I Problemi di WordPress (Che Scopri Dopo)
 
@@ -95,7 +95,7 @@ Siti con **PageSpeed 95-100**, hosting gratuito per sempre, **zero manutenzione*
 | Uptime | 99% | 99.99% |
 | Costo 5 anni | 3.000-7.000€ | **60€** (solo dominio) |
 
-{{< cta type="accent" title="Vuoi Risparmiare Migliaia di Euro?" text="Ti mostro come funziona concretamente per il tuo caso." link="/preventivo/" button="PARLIAMONE →" >}}
+{{< cta type="accent" title="Vuoi Risparmiare Migliaia di Euro?" text="Ti mostro come funziona concretamente per il tuo caso." link="/preventivo/" button="PARLIAMONE" >}}
 
 ---
 
@@ -121,7 +121,7 @@ Il mio sito di allevamento cani: [delpiccolodiavolo.it](https://www.delpiccolodi
 - **Manutenzione:** zero
 - **Hack subiti:** zero (impossibile)
 
-[Verifica tu stesso su PageSpeed →](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
+[Verifica tu stesso su PageSpeed](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
 
 Non è un numero teorico. È un sito reale, online, che puoi testare adesso.
 
@@ -142,4 +142,4 @@ Non è un numero teorico. È un sito reale, online, che puoi testare adesso.
 - Siti con area utenti complessa
 - Piattaforme con contenuti generati dagli utenti
 
-{{< cta title="Fa per Te?" text="Dimmi che tipo di sito ti serve. Ti dico in 2 minuti se questa tecnologia è adatta o se WordPress è la scelta giusta." link="/preventivo/" button="CHIEDI INFO →" >}}
+{{< cta title="Fa per Te?" text="Dimmi che tipo di sito ti serve. Ti dico in 2 minuti se questa tecnologia è adatta o se WordPress è la scelta giusta." link="/preventivo/" button="CHIEDI INFO" >}}
