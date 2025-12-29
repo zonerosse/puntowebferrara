@@ -1,33 +1,52 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><span class="bolt-inline">⚡</span> Richiedi Preventivo Gratuito</h1>
-        <p>Compila il form e ricevi un preventivo dettagliato entro 24 ore.</p>
+        <h1>Richiedi un Preventivo Gratuito</h1>
+        <p>Compila il form e riceverai un preventivo dettagliato entro 24 ore</p>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <div class="features-grid" style="margin-bottom: 40px;">
-            <div class="feature-item">
-                <div class="feature-number">24h</div>
-                <h3>Risposta Garantita</h3>
-            </div>
-            <div class="feature-item">
-                <div class="feature-number">0€</div>
-                <h3>Costo Preventivo</h3>
-            </div>
-            <div class="feature-item">
-                <div class="feature-number">0</div>
-                <h3>Impegno</h3>
-            </div>
-        </div>
-        
         <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Come Funziona</h2>
+                <p>Raccontaci il tuo progetto: più dettagli ci dai, più preciso sarà il preventivo. Non ti impegna a nulla.</p>
+                
+                <div class="process-steps" style="margin-top: 32px;">
+                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                        <div class="process-number" style="flex-shrink: 0;">1</div>
+                        <div>
+                            <h4 style="margin-bottom: 4px;">Compila il form</h3>
+                            <p style="color: var(--text-light); margin: 0;">Descrivi la tua attività e cosa ti serve</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                        <div class="process-number" style="flex-shrink: 0;">2</div>
+                        <div>
+                            <h4 style="margin-bottom: 4px;">Ti ricontattiamo</h3>
+                            <p style="color: var(--text-light); margin: 0;">Entro 24 ore per eventuali chiarimenti</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                        <div class="process-number" style="flex-shrink: 0;">3</div>
+                        <div>
+                            <h4 style="margin-bottom: 4px;">Ricevi il preventivo</h3>
+                            <p style="color: var(--text-light); margin: 0;">Dettagliato, chiaro e senza impegno</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" style="margin-top: 32px;">
+                    <h3>💡 Cosa include il preventivo?</h3>
+                    <p>Descrizione dettagliata del lavoro, tempistiche, costi suddivisi per fase, cosa è incluso e cosa no. Tutto chiaro, nessuna sorpresa.</p>
+                </div>
+            </div>
+            
             <div class="contact-form">
-                <h3>Parlami del Tuo Progetto</h3>
+                <h3>Parlaci del Tuo Progetto</h3>
                 <form action="https://formspree.io/f/xwvkeobz" method="POST">
-                    <input type="hidden" name="_subject" value="Richiesta Preventivo - Paolo Boldrini Web">
+                    <input type="hidden" name="_subject" value="Richiesta Preventivo - Punto Web Ferrara">
                     
                     <div class="form-group">
                         <label for="name">Nome e Cognome *</label>
@@ -54,10 +73,11 @@
                         <select id="service" name="service" required>
                             <option value="">Seleziona...</option>
                             <option value="sito-vetrina">Sito Vetrina (da 700€)</option>
+                            <option value="sito-aziendale">Sito Aziendale (da 1.200€)</option>
                             <option value="landing-page">Landing Page (da 400€)</option>
-                            <option value="migrazione-wordpress">Migrazione da WordPress (da 500€)</option>
+                            <option value="ecommerce">E-commerce (da 2.000€)</option>
                             <option value="restyling">Restyling Sito Esistente</option>
-                            <option value="seo">SEO / Posizionamento</option>
+                            <option value="seo">Solo SEO / Posizionamento</option>
                             <option value="non-so">Non so, ho bisogno di consulenza</option>
                         </select>
                     </div>
@@ -69,7 +89,19 @@
                             <option value="sotto-500">Meno di 500€</option>
                             <option value="500-1000">500€ - 1.000€</option>
                             <option value="1000-2000">1.000€ - 2.000€</option>
-                            <option value="oltre-2000">Oltre 2.000€</option>
+                            <option value="2000-5000">2.000€ - 5.000€</option>
+                            <option value="oltre-5000">Oltre 5.000€</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deadline">Hai una scadenza?</label>
+                        <select id="deadline" name="deadline">
+                            <option value="">Nessuna urgenza</option>
+                            <option value="1-mese">Entro 1 mese</option>
+                            <option value="2-mesi">Entro 2 mesi</option>
+                            <option value="3-mesi">Entro 3 mesi</option>
+                            <option value="flessibile">Sono flessibile</option>
                         </select>
                     </div>
                     
@@ -84,44 +116,29 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="how-found">Come ci hai trovato?</label>
+                        <select id="how-found" name="how-found">
+                            <option value="">Seleziona...</option>
+                            <option value="google">Google</option>
+                            <option value="passaparola">Passaparola</option>
+                            <option value="social">Social Media</option>
+                            <option value="altro">Altro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
                         <label style="display: flex; align-items: flex-start; gap: 10px; font-weight: normal;">
                             <input type="checkbox" name="privacy" required style="width: auto; margin-top: 4px;">
                             <span>Ho letto e accetto la <a href="/privacy/" target="_blank">Privacy Policy</a> *</span>
                         </label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary form-submit" style="width: 100%;">Invia Richiesta Preventivo</button>
+                    <button type="submit" class="btn btn-primary form-submit">Invia Richiesta Preventivo</button>
                     
                     <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-light); text-align: center;">
-                        I tuoi dati sono al sicuro. Non li condivido con nessuno.
+                        🔒 I tuoi dati sono al sicuro. Non li condivideremo con nessuno.
                     </p>
                 </form>
-            </div>
-            
-            <div class="contact-info">
-                <div class="faq-item">
-                    <h3>Cosa include il preventivo?</h3>
-                    <p>Descrizione dettagliata del lavoro, tempistiche, costi suddivisi per fase, cosa è incluso e cosa no. Tutto chiaro, nessuna sorpresa.</p>
-                </div>
-
-                <div class="faq-item" style="margin-top: 24px;">
-                    <h3>I miei prezzi indicativi</h3>
-                    <ul>
-                        <li><strong>Sito Vetrina:</strong> da 700€</li>
-                        <li><strong>Landing Page:</strong> da 400€</li>
-                        <li><strong>Migrazione WordPress:</strong> da 500€</li>
-                        <li><strong>+ Hosting gratuito per sempre</strong></li>
-                    </ul>
-                </div>
-
-                <div class="faq-item" style="margin-top: 24px;">
-                    <h3>Preferisci parlare a voce?</h3>
-                    <p>Chiamami direttamente o scrivimi su WhatsApp.</p>
-                    <div style="margin-top: 16px;">
-                        <a href="tel:+393924635584" class="btn btn-outline" style="width: 100%; margin-bottom: 12px;">Chiamami: 392 463 5584</a>
-                        <a href="https://wa.me/393924635584" target="_blank" class="btn btn-outline" style="width: 100%;">Scrivi su WhatsApp</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -135,19 +152,19 @@
         <div class="faq-grid">
             <div class="faq-item">
                 <h3>Il preventivo è davvero gratuito?</h3>
-                <p>Sì, completamente gratuito e senza impegno. Analizzo le tue esigenze e ti fornisco una proposta dettagliata.</p>
+                <p>Sì, completamente gratuito e senza impegno. Analizziamo le tue esigenze e ti forniamo una proposta dettagliata.</p>
             </div>
             <div class="faq-item">
                 <h3>Quanto tempo ci vuole?</h3>
-                <p>Riceverai il preventivo entro 24 ore dalla richiesta.</p>
+                <p>Riceverai il preventivo entro 24-48 ore lavorative dalla richiesta.</p>
             </div>
             <div class="faq-item">
-                <h3>Posso chiedere modifiche?</h3>
-                <p>Certo. Il preventivo è una base di partenza. Posso adattarlo alle tue esigenze e al tuo budget.</p>
+                <h3>Posso chiedere modifiche al preventivo?</h3>
+                <p>Certo! Il preventivo è una base di partenza. Possiamo adattarlo alle tue esigenze e al tuo budget.</p>
             </div>
             <div class="faq-item">
                 <h3>Cosa succede dopo?</h3>
-                <p>Se il preventivo ti convince, si parte. Altrimenti nessun problema, nessuna pressione.</p>
+                <p>Se il preventivo ti convince, si parte! Altrimenti nessun problema, nessuna pressione. Decidi tu con calma.</p>
             </div>
         </div>
     </div>

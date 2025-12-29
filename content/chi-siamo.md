@@ -1,6 +1,6 @@
 ---
-title: "Chi Sono"
-description: "Paolo Boldrini, fondatore di Punto Web Ferrara. Realizzo siti web professionali, veloci e sicuri per aziende e professionisti di Ferrara."
+title: "Chi Siamo"
+description: "Web agency a Ferrara: passione per il web e attenzione al cliente. Realizziamo siti professionali dal design moderno e ottimizzati SEO."
 type: "page"
 layout: "chi-siamo"
 sitemap:

@@ -20,7 +20,7 @@ enableRobotsTXT = true
     url = '/servizi/'
     weight = 2
   [[menus.main]]
-    name = 'Chi Sono'
+    name = 'Chi Siamo'
     url = '/chi-siamo/'
     weight = 3
   [[menus.main]]
@@ -41,10 +41,10 @@ enableRobotsTXT = true
     weight = 7
 
 [params]
-  description = "Realizzo siti web professionali a Ferrara. Specializzato in siti statici, veloci e sicuri. Preventivo gratuito."
+  description = "Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO e posizionamento Google. Preventivo gratuito."
   telefono = "392 463 5584"
   email = "zonerosse@gmail.com"
-  indirizzo = "Ostellato (FE)"
+  indirizzo = "Ferrara (FE)"
 
 [taxonomies]
   # Disabilitate per evitare pagine extra

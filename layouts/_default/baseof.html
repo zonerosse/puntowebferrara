@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress | Hosting Gratuito{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}</title>
-    <meta name="description" content="{{ if .IsHome }}Realizzo siti web con PageSpeed 95+, impossibili da hackerare, hosting gratuito. Alternativa a WordPress senza manutenzione. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri e senza WordPress. PageSpeed 95+, hosting gratuito, zero manutenzione.{{ end }}{{ end }}">
-    <meta name="keywords" content="siti web veloci, alternativa wordpress, sito senza wordpress, quanto costa sito web, siti web sicuri, hosting gratuito">
-    <meta name="author" content="Paolo Boldrini">
+    <title>{{ if .IsHome }}Realizzazione Siti Web Ferrara | Web Agency | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}Realizziamo siti web professionali a Ferrara. Web agency specializzata in SEO, posizionamento Google e web marketing. Siti veloci, moderni e ottimizzati. Preventivo gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: realizzazione siti web, SEO e web marketing a Ferrara e provincia.{{ end }}{{ end }}">
+    <meta name="keywords" content="realizzazione siti web ferrara, web agency ferrara, seo ferrara, creazione siti internet ferrara, posizionamento google ferrara, agenzia web ferrara">
+    <meta name="author" content="Punto Web Ferrara">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ .Permalink }}">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="{{ if .IsHome }}Siti Web Veloci e Sicuri | Alternativa WordPress{{ else }}{{ .Title }} | Siti Web Professionali{{ end }}">
-    <meta property="og:description" content="{{ if .IsHome }}Siti web con PageSpeed 95+. Alternativa WordPress senza manutenzione. Hosting gratuito.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Siti web veloci, sicuri, senza WordPress. PageSpeed 95+, hosting gratuito.{{ end }}{{ end }}">
+    <meta property="og:title" content="{{ if .IsHome }}Realizzazione Siti Web Ferrara | Punto Web{{ else }}{{ .Title }} | Punto Web Ferrara{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}Web agency a Ferrara. Siti web professionali, SEO e posizionamento Google.{{ else }}{{ with .Params.description }}{{ . }}{{ else }}Punto Web Ferrara: siti web e SEO a Ferrara.{{ end }}{{ end }}">
     <meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -99,12 +99,12 @@
     .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;min-height:420px}
     .hero h1{color:var(--white);margin-bottom:24px;min-height:auto}
     .hero h1 span{color:var(--accent-light)}
-    .hero-subtitle{font-size:1.2rem;opacity:0.95;margin-bottom:32px;line-height:1.8;min-height:auto}
+    .hero-subtitle{font-size:1.2rem;color:#e0f2fe;margin-bottom:32px;line-height:1.8;min-height:auto}
     .hero-features{display:flex;gap:24px;margin-bottom:32px;flex-wrap:wrap;min-height:32px}
     .hero-feature{display:flex;align-items:center;gap:8px;font-weight:500;white-space:nowrap}
     .hero-icon{width:24px;height:24px;min-width:24px;color:var(--accent-light)}
     .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;min-height:52px}
-    .hero-note{font-size:0.9rem;opacity:0.8;min-height:24px}
+    .hero-note{font-size:0.9rem;color:#bae6fd;min-height:24px}
     .hero-visual{display:flex;justify-content:center;align-items:center;min-height:300px}
     .hero-illustration{width:100%;max-width:400px;height:auto;min-height:300px;aspect-ratio:4/3}
     
@@ -116,16 +116,25 @@
     .btn-large{padding:18px 36px;min-height:60px;font-size:1.1rem}
     
     /* SECTIONS */
-    .section{padding:80px 0}
+    .section{padding:80px 0;contain:layout style}
     .section-light{background:var(--light)}
+    .section-header{text-align:center;max-width:700px;margin:0 auto 60px}
+    .section-label{display:inline-block;background:var(--accent);color:var(--white);padding:6px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-bottom:16px}
+    .intro-text{max-width:800px;margin:0 auto;text-align:center}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+    .service-card{background:var(--white);padding:40px 32px;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid var(--border)}
+    .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+    .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+    .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+    .speed-test-box{max-width:800px;margin:0 auto 24px;background:var(--white);padding:48px;border-radius:16px}
     .page-header{min-height:280px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);padding:140px 0 60px;color:var(--white);text-align:center}
     .page-header h1{color:var(--white);margin-bottom:16px}
-    .page-header p{font-size:1.2rem;opacity:0.9;max-width:600px;margin:0 auto}
+    .page-header p{font-size:1.2rem;color:#e0f2fe;max-width:600px;margin:0 auto}
     
     /* FOOTER */
     .site-footer{background:var(--dark);color:var(--white);padding:60px 0 0}
     .footer-bottom{padding:24px 0;text-align:center}
-    .footer-bottom p{color:rgba(255,255,255,0.5);font-size:0.9rem;margin-bottom:8px}
+    .footer-bottom p{color:#9ca3af;font-size:0.9rem;margin-bottom:8px}
     
     @media(max-width:768px){
         .menu-toggle{display:block}
@@ -135,10 +144,12 @@
         .hero{min-height:auto;padding:100px 0 60px}
         .hero-grid{grid-template-columns:1fr;gap:40px}
         .hero-visual{order:-1}
-        .hero-illustration{max-width:280px;height:210px}
+        .hero-illustration{max-width:280px;min-height:210px}
         .hero-buttons{flex-direction:column}
         .page-header{min-height:200px;padding:100px 0 40px}
         .section{padding:60px 0}
+        .services-grid,.features-grid,.process-grid,.faq-grid{grid-template-columns:1fr}
+        .speed-test-box{padding:28px 20px}
     }
     </style>
     
@@ -191,7 +202,7 @@
         "@type": "WebSite",
         "name": "Punto Web Ferrara",
         "url": "https://puntowebferrara.com",
-        "description": "Realizzo siti web professionali a Ferrara con Hugo e Cloudflare. Siti veloci, sicuri e ottimizzati SEO."
+        "description": "Web agency a Ferrara - Realizziamo siti web professionali e ottimizzati SEO"
     }
     </script>
     {{ end }}
@@ -227,36 +238,36 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="/" class="logo"><div class="logo-icon">PW</div> Punto<span>Web</span></a>
-                    <p>Realizzo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti. Tecnologia Hugo + Cloudflare.</p>
+                    <p>Realizziamo siti web professionali a Ferrara. Siti veloci, moderni e ottimizzati per portarti nuovi clienti.</p>
                 </div>
                 <div class="footer-col">
                     <p class="footer-title">Servizi</p>
                     <ul>
                         <li><a href="/servizi/">Realizzazione Siti Web</a></li>
                         <li><a href="/servizi/">SEO e Posizionamento</a></li>
-                        <li><a href="/servizi/">Migrazione da WordPress</a></li>
+                        <li><a href="/servizi/">Web Marketing</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <p class="footer-title">Informazioni</p>
                     <ul>
-                        <li><a href="/chi-siamo/">Chi Sono</a></li>
+                        <li><a href="/chi-siamo/">Chi Siamo</a></li>
                         <li><a href="/portfolio/">Portfolio</a></li>
                         <li><a href="/contatti/">Contatti</a></li>
                         <li><a href="/privacy/">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <p class="footer-title">Contattami</p>
+                    <p class="footer-title">Contattaci</p>
                     <ul class="footer-contact">
-                        <li>📍 Ostellato (FE)</li>
+                        <li>📍 Ferrara (FE)</li>
                         <li>📞 <a href="tel:+393924635584">392 463 5584</a></li>
                         <li>✉️ <a href="mailto:zonerosse@gmail.com">zonerosse@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© {{ now.Year }} Punto Web Ferrara di Paolo Boldrini — Tutti i diritti riservati</p>
+                <p>© {{ now.Year }} Punto Web Ferrara — Tutti i diritti riservati</p>
                 <p style="margin-top: 8px; font-size: 0.8rem;">Attività svolta in regime di prestazione occasionale (art. 2222 c.c.)</p>
             </div>
         </div>

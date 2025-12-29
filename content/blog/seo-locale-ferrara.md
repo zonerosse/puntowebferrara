@@ -66,7 +66,7 @@ Il SEO locale non è immediato. Aspettati:
 
 ## Serve Aiuto?
 
-Il SEO locale richiede tempo e costanza. Se preferisci concentrarti sulla tua attività, [posso occuparmene io](/servizi/). 
+Il SEO locale richiede tempo e costanza. Se preferisci concentrarti sulla tua attività, [possiamo occuparcene noi](/servizi/). 
 
 [Richiedi un preventivo](/preventivo/) per una strategia SEO personalizzata.
 
