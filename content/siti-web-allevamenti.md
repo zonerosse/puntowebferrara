@@ -1,0 +1,177 @@
+---
+title: "Siti Web per Allevamenti | Cani, Gatti, Cavalli | Da Allevatore per Allevatori"
+description: "Realizzo siti web professionali per allevamenti di cani, gatti, cavalli e altri animali. Sono allevatore dal 2013 e so esattamente cosa ti serve. Veloci, ottimizzati SEO, senza WordPress."
+date: 2025-01-01
+layout: single
+url: /siti-web-allevamenti/
+keywords:
+  - siti web per allevamenti
+  - siti web per allevatori
+  - realizzazione siti allevamenti cani
+  - siti web allevamento cani
+  - siti web allevamento gatti
+  - creazione siti allevatori
+  - sito web per allevatore
+  - web design allevamenti
+---
+
+# Siti Web per Allevamenti
+
+## Da Allevatore per Allevatori
+
+Non sono il solito web designer che non sa cosa sia un pedigree. **Allevo Staffordshire Bull Terrier dal 2013** con l'affisso "Del Piccolo Diavolo". Conosco le tue esigenze perché sono le mie stesse esigenze.
+
+So cosa significa:
+- Gestire schede di cani con pedigree e genealogia
+- Aggiornare continuamente le cucciolate disponibili
+- Mostrare i risultati delle expo
+- Farsi trovare da chi cerca la TUA razza nella TUA zona
+
+---
+
+## Perché Scegliere Me?
+
+### ✅ Sono un Allevatore Come Te
+
+Non devo chiederti cosa sia un LOI, un CAC o un ROI. Non devo spiegarti perché le foto dei cuccioli devono essere perfette. **Parlo la tua lingua.**
+
+### ✅ Siti Velocissimi (PageSpeed 95+)
+
+Il 70% delle persone cerca cuccioli da smartphone. Se il tuo sito carica lento, hai già perso il cliente. I miei siti caricano in **meno di 1 secondo**.
+
+### ✅ Zero Costi di Hosting
+
+Niente canone annuale per hosting. Niente rinnovi. **Hosting gratuito per sempre** su Cloudflare.
+
+### ✅ Impossibili da Hackerare
+
+Niente WordPress = niente aggiornamenti, niente plugin vulnerabili, niente sorprese. Il tuo sito è **sempre online, sempre sicuro**.
+
+### ✅ SEO Incluso
+
+Il tuo sito sarà ottimizzato per farti trovare su Google. "Allevamento [razza] [città]" - ti posiziono dove devi essere.
+
+---
+
+## Alcuni Siti Realizzati per Allevatori
+
+Guarda cosa ho creato per altri allevatori (e per me stesso):
+
+| Sito | Razza | PageSpeed |
+|------|-------|-----------|
+| [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it) | Staffordshire Bull Terrier | 100/100 |
+| [cuccioli-staffy.it](https://www.cuccioli-staffy.it) | Staffordshire Bull Terrier | 95+/100 |
+| [thereds-stafford.com](https://thereds-stafford.com) | Staffordshire Bull Terrier | 95+/100 |
+
+[Verifica tu stesso su Google PageSpeed](https://pagespeed.web.dev/analysis?url=https://www.delpiccolodiavolo.it)
+
+---
+
+## Cosa Include il Sito per il Tuo Allevamento
+
+| Funzionalità | Incluso |
+|--------------|---------|
+| Design personalizzato per la tua razza | ✅ |
+| Sezione "I Nostri Cani" (maschi/femmine) | ✅ |
+| Schede individuali con pedigree e foto | ✅ |
+| Sezione Cucciolate (disponibili/archivio) | ✅ |
+| Gallery fotografica ottimizzata | ✅ |
+| Pagina Expo e Risultati | ✅ |
+| Chi Siamo / La Nostra Storia | ✅ |
+| Modulo Contatti con WhatsApp | ✅ |
+| Mappa Google integrata | ✅ |
+| Ottimizzazione SEO completa | ✅ |
+| Certificato SSL (https) | ✅ |
+| Responsive (perfetto su mobile) | ✅ |
+| Formazione per gestire il sito | ✅ |
+
+---
+
+## Prezzi Chiari, Senza Sorprese
+
+### Sito Allevamento Standard
+**Da 700€** una tantum
+
+- 5-7 pagine
+- Design personalizzato
+- SEO base
+- Hosting gratuito incluso
+- Formazione gestione
+
+### Sito Allevamento Premium
+**Da 1.200€** una tantum
+
+- 10+ pagine
+- Design premium
+- SEO avanzato con blog
+- Schede cani avanzate
+- Integrazione social
+- Multilingua (IT/EN)
+
+### Restyling Sito Esistente
+**Da 500€** una tantum
+
+- Migrazione da WordPress
+- Nuovo design moderno
+- Ottimizzazione velocità
+- Mantenimento SEO acquisito
+
+---
+
+## Per Quali Allevamenti?
+
+Realizzo siti per allevamenti di:
+
+- **Cani** (tutte le razze) → [Scopri di più](/siti-web-allevamenti-cani/)
+- **Gatti** (tutte le razze) → [Scopri di più](/siti-web-allevamenti-gatti/)
+- **Cavalli** (salto, dressage, western) → [Scopri di più](/siti-web-allevamenti-cavalli/)
+- **Uccelli** (pappagalli, canarini, rapaci)
+- **Conigli e roditori**
+- **Rettili**
+
+E anche per:
+- Handler professionisti
+- Educatori cinofili
+- Toelettature
+- Pensioni per animali
+- Club di razza
+- Associazioni cinofile/felinofile
+
+---
+
+## Domande Frequenti
+
+### Posso aggiornare le cucciolate da solo?
+**Sì.** Ti insegno a gestire il sito. È semplice, non serve essere tecnici.
+
+### Quanto tempo ci vuole?
+**2-3 settimane** per un sito standard. Dipende dalla quantità di contenuti e foto che mi fornisci.
+
+### Mi aiuti con le foto?
+Posso darti consigli su come fotografare i tuoi soggetti. Se sei in zona Ferrara, possiamo organizzare uno shooting.
+
+### Il dominio è incluso?
+Il primo anno sì. Dal secondo anno, il costo del dominio (.it o .com) è di circa 15€/anno.
+
+### E se ho già un sito WordPress?
+Lo migro mantenendo il posizionamento SEO acquisito. Smetti di pagare hosting e manutenzione.
+
+---
+
+## Pronto a Far Crescere il Tuo Allevamento Online?
+
+Raccontami del tuo allevamento. Ti preparo un preventivo personalizzato in 24 ore.
+
+**Senza impegno. Da allevatore ad allevatore.**
+
+[Richiedi Preventivo Gratuito](/preventivo/)
+
+📞 [Chiamami: 392 463 5584](tel:+393924635584)
+
+📧 [zonerosse@gmail.com](mailto:zonerosse@gmail.com)
+
+💬 [Scrivimi su WhatsApp](https://wa.me/393924635584?text=Ciao%20Paolo,%20ho%20un%20allevamento%20e%20vorrei%20un%20preventivo%20per%20il%20sito%20web)
+
+---
+
+*Punto Web Ferrara — Siti web per allevatori dal 2013*
