@@ -96,6 +96,7 @@
     /* HERO - dimensioni fisse per evitare CLS */
     .hero{min-height:600px;padding:140px 0 80px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:var(--white);contain:layout style}
     .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;min-height:420px}
+    .hero-content{min-height:400px}
     .hero h1{color:var(--white);margin-bottom:24px;min-height:auto}
     .hero h1 span{color:var(--accent-light)}
     .hero-subtitle{font-size:1.2rem;color:#e0f2fe;margin-bottom:32px;line-height:1.8;min-height:auto}
@@ -126,6 +127,7 @@
     .section-header{text-align:center;max-width:700px;margin:0 auto 60px}
     .section-label{display:inline-block;background:var(--accent);color:var(--white);padding:6px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-bottom:16px}
     .intro-text{max-width:800px;margin:0 auto;text-align:center}
+    .cta-box{text-align:center;max-width:600px;margin:0 auto}
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
     .service-card{background:var(--white);padding:40px 32px;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid var(--border)}
     .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
@@ -146,6 +148,12 @@
     .footer-bottom{padding:24px 0;text-align:center}
     .footer-bottom p{color:#9ca3af;font-size:0.9rem;margin-bottom:8px}
     
+    /* CTA SECTION */
+    .cta-section{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);padding:80px 0;color:var(--white);contain:layout style}
+    .cta-content{text-align:center;max-width:700px;margin:0 auto}
+    .cta-content h2{color:var(--white);margin-bottom:20px}
+    .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    
     @media(max-width:768px){
         .menu-toggle{display:block}
         .main-nav{position:fixed;top:64px;left:0;right:0;background:var(--white);padding:20px;box-shadow:0 4px 6px rgba(0,0,0,0.1);display:none}
@@ -153,6 +161,7 @@
         .main-nav ul{flex-direction:column}
         .hero{min-height:auto;padding:100px 0 60px}
         .hero-grid{grid-template-columns:1fr;gap:40px}
+        .hero-content{min-height:auto}
         .hero-visual{order:-1;min-height:224px}
         .hero-illustration{max-width:280px;min-height:210px}
         .hero-buttons{flex-direction:column}
