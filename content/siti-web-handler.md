@@ -23,7 +23,7 @@ keywords:
 ## Domande Frequenti
 
 ### Posso aggiornare il calendario expo da solo?
-**Sì.** Ti insegno a gestire il sito. Aggiungere expo, modificare disponibilità, caricare foto: tutto semplice.
+**Niente stress.** Mi mandi foto e date su WhatsApp, aggiorno io entro 24h. Modifiche semplici da 10€.
 
 ### Quanto tempo ci vuole?
 **2 settimane** per un sito standard. Dipende dalla quantità di foto e contenuti che mi fornisci.

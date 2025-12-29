@@ -92,7 +92,7 @@ Guarda alcuni esempi di **creazione siti web per allevatori** che ho realizzato 
 | Ottimizzazione SEO completa | ✅ |
 | Certificato SSL (https) | ✅ |
 | Responsive (perfetto su mobile) | ✅ |
-| Formazione per gestire il sito | ✅ |
+| Aggiornamenti rapidi via WhatsApp | ✅ |
 
 ---
 
@@ -107,7 +107,7 @@ Guarda alcuni esempi di **creazione siti web per allevatori** che ho realizzato 
 - Design personalizzato
 - SEO base
 - Hosting gratuito incluso
-- Formazione gestione
+- Aggiornamenti via WhatsApp
 
 ### Sito Allevamento Premium
 **Da 1.000€** una tantum
@@ -137,7 +137,7 @@ Il processo di **sviluppo sito web per allevamento** è semplice:
 2. **Preventivo** - Ti invio preventivo dettagliato in 24 ore
 3. **Contenuti** - Mi invii foto, testi, pedigree dei tuoi soggetti
 4. **Realizzazione** - Creo il sito in 2-3 settimane
-5. **Formazione** - Ti insegno a gestirlo in autonomia
+5. **Revisione** - Controlli e approvi
 6. **Online** - Il tuo nuovo sito professionale è live
 
 ---
@@ -166,7 +166,7 @@ E anche per:
 ## Domande Frequenti
 
 ### Posso aggiornare le cucciolate da solo?
-**Sì.** Ti insegno a gestire il sito. È semplice, non serve essere tecnici.
+**Niente stress.** Mi mandi foto e info su WhatsApp, aggiorno io entro 24h. Modifiche semplici da 10€, nuova cucciolata 20€.
 
 ### Quanto tempo ci vuole?
 **2-3 settimane** per un sito standard. Dipende dalla quantità di contenuti e foto che mi fornisci.
