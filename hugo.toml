@@ -1,7 +1,7 @@
 baseURL = 'https://puntowebferrara.com/'
 languageCode = 'it'
-title = 'Punto Web Ferrara'
-enableRobotsTXT = false
+title = 'Web Designer Ferrara | Siti Web Professionali | Punto Web'
+enableRobotsTXT = true
 
 [sitemap]
   changefreq = 'weekly'
@@ -20,35 +20,31 @@ enableRobotsTXT = false
     url = '/servizi/'
     weight = 2
   [[menus.main]]
-    name = 'Allevamenti'
-    url = '/siti-web-allevamenti/'
-    weight = 3
-  [[menus.main]]
-    name = 'Chi Sono'
+    name = 'Chi Siamo'
     url = '/chi-siamo/'
-    weight = 4
+    weight = 3
   [[menus.main]]
     name = 'Portfolio'
     url = '/portfolio/'
-    weight = 5
+    weight = 4
   [[menus.main]]
     name = 'Blog'
     url = '/blog/'
-    weight = 6
+    weight = 5
   [[menus.main]]
     name = 'Contatti'
     url = '/contatti/'
-    weight = 7
+    weight = 6
   [[menus.main]]
     name = 'Preventivo'
     url = '/preventivo/'
-    weight = 8
+    weight = 7
 
 [params]
-  description = "Realizzo siti web professionali a Ferrara. Specializzato in siti statici, veloci e sicuri. Preventivo gratuito."
+  description = "Web designer a Ferrara: realizzo siti web professionali, veloci e ottimizzati SEO. Preventivo gratuito, risposta in 24 ore."
   telefono = "392 463 5584"
   email = "zonerosse@gmail.com"
-  indirizzo = "Ostellato (FE)"
+  indirizzo = "Ferrara (FE)"
 
 [taxonomies]
   # Disabilitate per evitare pagine extra
