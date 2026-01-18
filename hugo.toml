@@ -1,6 +1,6 @@
 baseURL = 'https://puntowebferrara.com/'
 languageCode = 'it'
-title = 'Punto Web Ferrara'
+title = 'Web Designer Ferrara | Punto Web Ferrara'
 enableRobotsTXT = false
 
 [sitemap]
@@ -45,7 +45,7 @@ enableRobotsTXT = false
     weight = 8
 
 [params]
-  description = "Realizzo siti web professionali a Ferrara. Specializzato in siti statici, veloci e sicuri. Preventivo gratuito."
+  description = "Web designer a Ferrara: realizzo siti web professionali, veloci e sicuri. Specializzato in siti statici con Hugo. Preventivo gratuito."
   telefono = "392 463 5584"
   email = "zonerosse@gmail.com"
   indirizzo = "Ostellato (FE)"
