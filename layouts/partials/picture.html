@@ -1,0 +1,71 @@
+{{/*
+  picture.html — immagine responsive con WebP e fallback.
+
+  Uso:
+    {{ partial "picture.html" (dict "src" "img/portfolio/delpiccolodiavolo.png"
+                                    "alt" "Home page del sito delpiccolodiavolo.it"
+                                    "widths" (slice 400 800 1200)
+                                    "sizes" "(max-width: 768px) 100vw, 50vw"
+                                    "class" "card-shot"
+                                    "loading" "lazy") }}
+
+  Parametri:
+    src      obbligatorio — percorso dentro assets/
+    alt      obbligatorio — testo alternativo descrittivo
+    widths   opzionale    — larghezze da generare (default 400 800 1200)
+    sizes    opzionale    — attributo sizes (default "100vw")
+    class    opzionale    — classe CSS sul tag <img>
+    loading  opzionale    — "lazy" (default) o "eager" per immagini sopra la piega
+
+  Se il file non esiste in assets/, la partial non stampa nulla e il chiamante
+  può mostrare un contenuto alternativo con {{ else }}.
+  Il WebP viene generato solo con Hugo extended: con la versione standard
+  produce JPEG, così la build non fallisce mai.
+*/}}
+
+{{- $src := .src -}}
+{{- $alt := .alt | default "" -}}
+{{- $widths := .widths | default (slice 400 800 1200) -}}
+{{- $sizes := .sizes | default "100vw" -}}
+{{- $class := .class | default "" -}}
+{{- $loading := .loading | default "lazy" -}}
+
+{{- with resources.Get $src -}}
+  {{- $orig := . -}}
+  {{- $maxW := $orig.Width -}}
+
+  {{/* scarto le larghezze superiori all'originale: ingrandire degrada e basta */}}
+  {{- $useW := slice -}}
+  {{- range $widths -}}
+    {{- if le . $maxW -}}{{- $useW = $useW | append . -}}{{- end -}}
+  {{- end -}}
+  {{- if not $useW -}}{{- $useW = slice $maxW -}}{{- end -}}
+
+  {{- $fallback := $orig.Process (printf "resize %dx jpg q82" (index $useW (sub (len $useW) 1))) -}}
+
+  <picture>
+    {{- if hugo.IsExtended -}}
+      {{- $webpSet := slice -}}
+      {{- range $useW -}}
+        {{- $w := $orig.Process (printf "resize %dx webp q80" .) -}}
+        {{- $webpSet = $webpSet | append (printf "%s %dw" $w.RelPermalink $w.Width) -}}
+      {{- end }}
+    <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
+    {{- end -}}
+
+    {{- $jpgSet := slice -}}
+    {{- range $useW -}}
+      {{- $j := $orig.Process (printf "resize %dx jpg q82" .) -}}
+      {{- $jpgSet = $jpgSet | append (printf "%s %dw" $j.RelPermalink $j.Width) -}}
+    {{- end }}
+    <source type="image/jpeg" srcset="{{ delimit $jpgSet ", " }}" sizes="{{ $sizes }}">
+
+    <img src="{{ $fallback.RelPermalink }}"
+         width="{{ $fallback.Width }}"
+         height="{{ $fallback.Height }}"
+         alt="{{ $alt }}"
+         loading="{{ $loading }}"
+         {{ if eq $loading "eager" }}fetchpriority="high"{{ else }}decoding="async"{{ end }}
+         {{ with $class }}class="{{ . }}"{{ end }}>
+  </picture>
+{{- end -}}

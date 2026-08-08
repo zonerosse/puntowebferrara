@@ -1952,3 +1952,6 @@ img {
         grid-template-columns: 1fr;
     }
 }
+
+/* Screenshot portfolio */
+.shot{display:block;width:100%;height:auto;border-bottom:1px solid rgba(255,255,255,.2)}

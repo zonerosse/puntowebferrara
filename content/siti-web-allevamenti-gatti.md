@@ -1,5 +1,6 @@
 ---
 title: "Siti Web per Allevamenti di Gatti | Allevatori Felini e Gattofili"
+titleSeo: "Siti Web per Allevamenti di Gatti"
 description: "Realizzo siti web professionali per allevamenti di gatti. Schede con pedigree, cucciolate, test genetici. Veloci, ottimizzati SEO, senza WordPress."
 date: 2025-01-01
 type: page

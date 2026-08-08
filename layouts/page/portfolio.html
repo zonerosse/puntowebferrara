@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Portfolio</h1>
+        <h1><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Portfolio: Siti Web Realizzati</h1>
         <p>Siti reali. Performance verificabili su Google PageSpeed.</p>
     </div>
 </section>
@@ -20,7 +20,7 @@
             <!-- DEL PICCOLO DIAVOLO -->
             <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
                 <div style="background: linear-gradient(135deg, #0d4275 0%, #0369a1 100%); padding: 32px; text-align: center;">
-                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #0d4275;">DP</div>
+                    {{ with (partial "picture.html" (dict "src" "img/portfolio/delpiccolodiavolo.png" "alt" "Home page del sito delpiccolodiavolo.it, allevamento di Staffordshire Bull Terrier" "widths" (slice 400 800) "sizes" "(max-width: 768px) 100vw, 50vw" "class" "shot")) }}<div style="margin: -32px -32px 16px; overflow: hidden;">{{ . }}</div>{{ else }}<div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #0d4275;">DP</div>{{ end }}
                     <h3 style="color: #fff; margin: 0 0 4px;">Del Piccolo Diavolo</h3>
                     <p style="color: #bae6fd; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
                 </div>
@@ -50,7 +50,7 @@
             <!-- CUCCIOLI STAFFY -->
             <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
                 <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); padding: 32px; text-align: center;">
-                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #7c3aed;">CS</div>
+                    {{ with (partial "picture.html" (dict "src" "img/portfolio/cuccioli-staffy.png" "alt" "Home page del sito Cuccioli Staffy" "widths" (slice 400 800) "sizes" "(max-width: 768px) 100vw, 50vw" "class" "shot")) }}<div style="margin: -32px -32px 16px; overflow: hidden;">{{ . }}</div>{{ else }}<div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #7c3aed;">CS</div>{{ end }}
                     <h3 style="color: #fff; margin: 0 0 4px;">Cuccioli Staffy</h3>
                     <p style="color: #e9d5ff; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
                 </div>
@@ -80,7 +80,7 @@
             <!-- THE REDS STAFFORD -->
             <article style="background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
                 <div style="background: linear-gradient(135deg, #dc2626 0%, #f97316 100%); padding: 32px; text-align: center;">
-                    <div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #dc2626;">TR</div>
+                    {{ with (partial "picture.html" (dict "src" "img/portfolio/thereds-stafford.png" "alt" "Home page del sito thereds-stafford.com" "widths" (slice 400 800) "sizes" "(max-width: 768px) 100vw, 50vw" "class" "shot")) }}<div style="margin: -32px -32px 16px; overflow: hidden;">{{ . }}</div>{{ else }}<div style="width: 80px; height: 80px; background: #fff; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: #dc2626;">TR</div>{{ end }}
                     <h3 style="color: #fff; margin: 0 0 4px;">The Reds Stafford</h3>
                     <p style="color: #fed7aa; margin: 0; font-size: 0.9rem;">Staffordshire Bull Terrier</p>
                 </div>

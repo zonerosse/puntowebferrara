@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="page-header">
     <div class="container">
-        <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Contatti</h1>
+        <h1><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Contatta il Tuo Web Designer a Ferrara</h1>
         <p>Scegli come preferisci contattarmi. Rispondo entro 24 ore.</p>
     </div>
 </section>
@@ -37,6 +37,8 @@
         <div style="max-width: 600px; margin: 0 auto;">
             <form action="https://formspree.io/f/xwvkeobz" method="POST" class="contact-form" style="background: white; padding: 32px; border-radius: 12px;">
                 <input type="hidden" name="_subject" value="Contatto - Paolo Boldrini Web">
+                <input type="hidden" name="_next" value="https://puntowebferrara.com/grazie/">
+                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
                 
                 <div class="form-group">
                     <label for="name">Nome *</label>

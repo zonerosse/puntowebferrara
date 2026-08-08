@@ -1,0 +1,37 @@
+SCREENSHOT PORTFOLIO
+====================
+
+Metti qui i file, con questi nomi esatti:
+
+  delpiccolodiavolo.png
+  cuccioli-staffy.png
+  thereds-stafford.png
+
+Finché un file manca, la card mostra il cerchietto con le iniziali
+come adesso. Appena lo aggiungi, compare lo screenshot. Non serve
+toccare nessun layout.
+
+COME FARE LO SCREENSHOT
+-----------------------
+Chrome, sul sito da fotografare:
+  F12 -> Ctrl+Shift+M (vista dispositivo) -> imposta 1440 x 900
+  -> menu tre puntini in alto a destra del pannello
+  -> "Capture screenshot"
+
+Larghezza consigliata: 1200-1600 px. Hugo genera da solo le varianti
+da 400 e 800 px, quindi non serve ridimensionare a mano.
+
+FORMATO
+-------
+PNG o JPEG. Non convertire in WebP prima: ci pensa Hugo, e solo
+se gira in versione extended (vedi sotto).
+
+WEBP E HUGO EXTENDED
+--------------------
+Il WebP richiede Hugo "extended". Con la versione standard il sito
+si costruisce lo stesso, generando solo JPEG: nessun errore, solo
+file un po' piu' pesanti.
+
+Su Cloudflare Pages, per avere il WebP, imposta la variabile:
+  HUGO_VERSION = 0.147.7
+e verifica nel log di build che compaia "extended".

@@ -1,5 +1,6 @@
 ---
 title: "Siti Web per Handler Cinofili | Portfolio e Calendario Expo"
+titleSeo: "Siti Web per Handler Cinofili ed Expo"
 description: "Realizzo siti web professionali per handler cinofili. Portfolio risultati, calendario expo, gallery ring. Conosco il mondo delle esposizioni canine dal 2013."
 date: 2025-01-01
 type: page

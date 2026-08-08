@@ -1,5 +1,6 @@
 ---
 title: "Siti Web per Allevamenti di Cani | Cinofili e Allevatori Professionisti"
+titleSeo: "Siti Web per Allevamenti di Cani"
 description: "Realizzo siti web professionali per allevamenti di cani. Schede con pedigree, cucciolate, gallery expo. Sono allevatore cinofilo dal 2013. Veloci, SEO ottimizzati."
 date: 2025-01-01
 type: page

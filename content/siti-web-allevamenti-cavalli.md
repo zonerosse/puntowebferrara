@@ -1,5 +1,6 @@
 ---
 title: "Siti Web per Allevamenti di Cavalli | Scuderie e Allevatori Equini"
+titleSeo: "Siti Web per Allevamenti di Cavalli e Scuderie"
 description: "Realizzo siti web professionali per allevamenti di cavalli, scuderie, maneggi. Schede cavalli, pedigree, risultati gare. Veloci, SEO ottimizzati."
 date: 2025-01-01
 type: page

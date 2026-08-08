@@ -1,5 +1,6 @@
 ---
 title: "Siti Web per Allevamenti | Cani, Gatti, Cavalli | Da Allevatore per Allevatori"
+titleSeo: "Siti Web per Allevamenti: Cani, Gatti, Cavalli"
 description: "Realizzo siti web professionali per allevamenti di cani, gatti, cavalli e altri animali. Sono allevatore dal 2013 e so esattamente cosa ti serve. Veloci, ottimizzati SEO, senza WordPress."
 date: 2025-01-01
 type: page
