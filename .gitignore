@@ -1,0 +1,25 @@
+# Build Hugo — rigenerata da Cloudflare Pages a ogni deploy
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# Cache locale
+.cache/
+node_modules/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# File temporanei e backup
+*.bak
+*.tmp
+*.log

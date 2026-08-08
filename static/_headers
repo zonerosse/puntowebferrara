@@ -1,24 +1,25 @@
+# HTML e pagine: mai in cache lunga, altrimenti gli aggiornamenti
+# del sito restano invisibili ai visitatori che tornano.
 /*
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
 
-/*.html
+# Asset con nome fisso: cache breve lato browser, Cloudflare li serve
+# comunque dalla CDN. Passa a 1 anno solo con filename versionati.
+/css/*
   Cache-Control: public, max-age=3600
 
-/*.css
-  Cache-Control: public, max-age=31536000
-
-/*.js
-  Cache-Control: public, max-age=31536000
+/img/*
+  Cache-Control: public, max-age=604800
 
 /*.png
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=604800
 
 /*.svg
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=604800
 
 /*.ico
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=604800

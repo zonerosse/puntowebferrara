@@ -1,0 +1,176 @@
+{{/* JSON-LD unico, @graph. Dati da site.Params.biz in hugo.toml */}}
+{{- $biz := site.Params.biz -}}
+{{- $orgID := "https://puntowebferrara.com/#business" -}}
+{{- $siteID := "https://puntowebferrara.com/#website" -}}
+{{- $personID := "https://puntowebferrara.com/#paolo-boldrini" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": {{ $orgID }},
+      "name": {{ $biz.name }},
+      "legalName": {{ $biz.legalName }},
+      "alternateName": "Punto Web",
+      "url": "https://puntowebferrara.com/",
+      "description": {{ $biz.description }},
+      "image": "https://puntowebferrara.com/img/og-image.png",
+      "telephone": {{ $biz.phoneIntl }},
+      "email": {{ $biz.email }},
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "founder": { "@id": {{ $personID }} },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": {{ $biz.locality }},
+        "addressRegion": {{ $biz.region }},
+        "postalCode": {{ $biz.postalCode }},
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": {{ $biz.lat }},
+        "longitude": {{ $biz.lng }}
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Ferrara" },
+        { "@type": "AdministrativeArea", "name": "Provincia di Ferrara" },
+        { "@type": "AdministrativeArea", "name": "Emilia-Romagna" },
+        { "@type": "Country", "name": "Italia" }
+      ],
+      "serviceType": ["Web design", "Sviluppo siti statici", "SEO", "Migrazione WordPress"],
+      "knowsLanguage": ["it", "en"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servizi web design Ferrara",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "price": "500",
+            "priceCurrency": "EUR",
+            "url": "https://puntowebferrara.com/servizi/",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Realizzazione sito web professionale",
+              "description": "Sito vetrina statico con Hugo: design su misura, PageSpeed 95+, SEO on-page, hosting gratuito su Cloudflare Pages."
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "500",
+            "priceCurrency": "EUR",
+            "url": "https://puntowebferrara.com/servizi/",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Migrazione da WordPress a sito statico",
+              "description": "Conversione di un sito WordPress in sito statico: azzera manutenzione, costi di hosting e rischio di compromissione."
+            }
+          },
+          {
+            "@type": "Offer",
+            "price": "400",
+            "priceCurrency": "EUR",
+            "url": "https://puntowebferrara.com/servizi/",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Landing page",
+              "description": "Pagina singola ottimizzata per campagne pubblicitarie: massima conversione e caricamento istantaneo."
+            }
+          },
+          {
+            "@type": "Offer",
+            "url": "https://puntowebferrara.com/siti-web-allevamenti/",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Siti web per allevamenti",
+              "description": "Siti specializzati per allevamenti di cani, gatti e cavalli: schede riproduttori, pedigree, cucciolate, gallery expo."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ $personID }},
+      "name": "Paolo Boldrini",
+      "jobTitle": "Web Designer",
+      "url": "https://puntowebferrara.com/chi-siamo/",
+      "worksFor": { "@id": {{ $orgID }} },
+      "knowsAbout": [
+        "Hugo static site generator",
+        "Cloudflare Pages",
+        "SEO tecnica",
+        "Migrazione WordPress",
+        "Core Web Vitals",
+        "Dati strutturati Schema.org",
+        "Siti web per allevamenti cinofili"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ $siteID }},
+      "url": "https://puntowebferrara.com/",
+      "name": {{ $biz.name }},
+      "description": {{ $biz.description }},
+      "inLanguage": "it-IT",
+      "publisher": { "@id": {{ $orgID }} }
+    },
+    {
+      "@type": "WebPage",
+      "@id": {{ printf "%s#webpage" .Permalink }},
+      "url": {{ .Permalink }},
+      "name": {{ .Title }},
+      "description": {{ with .Params.description }}{{ . }}{{ else }}{{ $biz.description }}{{ end }},
+      "isPartOf": { "@id": {{ $siteID }} },
+      "about": { "@id": {{ $orgID }} },
+      "inLanguage": "it-IT"{{ if not .IsHome }},
+      "breadcrumb": { "@id": {{ printf "%s#breadcrumb" .Permalink }} }{{ end }}
+    }{{ if not .IsHome }},
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ printf "%s#breadcrumb" .Permalink }},
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://puntowebferrara.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ .Title }},
+          "item": {{ .Permalink }}
+        }
+      ]
+    }{{ end }}{{ with .Params.faq }},
+    {
+      "@type": "FAQPage",
+      "@id": {{ printf "%s#faq" $.Permalink }},
+      "isPartOf": { "@id": {{ printf "%s#webpage" $.Permalink }} },
+      "mainEntity": [
+        {{ range $i, $q := . }}{{ if $i }},{{ end }}
+        {
+          "@type": "Question",
+          "name": {{ $q.q }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ $q.a }} }
+        }{{ end }}
+      ]
+    }{{ end }}{{ if and (eq .Section "blog") .IsPage }},
+    {
+      "@type": "BlogPosting",
+      "@id": {{ printf "%s#article" .Permalink }},
+      "headline": {{ .Title }},
+      "description": {{ .Params.description }},
+      "datePublished": {{ .Date.Format "2006-01-02T15:04:05-07:00" }},
+      "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }},
+      "wordCount": {{ .WordCount }},
+      "author": { "@id": {{ $personID }} },
+      "publisher": { "@id": {{ $orgID }} },
+      "mainEntityOfPage": { "@id": {{ printf "%s#webpage" .Permalink }} },
+      "inLanguage": "it-IT"
+    }{{ end }}
+  ]
+}
+</script>
