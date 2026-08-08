@@ -1,5 +1,6 @@
 ---
 title: "5 Errori che Uccidono il Tuo Sito Web (E Come Evitarli)"
+titleSeo: "5 Errori che Uccidono il Tuo Sito Web"
 date: 2025-12-15
 description: "Il tuo sito non porta clienti? Probabilmente stai facendo uno di questi 5 errori comuni. Ecco come identificarli e risolverli."
 tags: ["errori", "sito web", "conversioni"]

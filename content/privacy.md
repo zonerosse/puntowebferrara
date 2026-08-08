@@ -8,7 +8,7 @@ sitemap:
 
 ## Informativa sulla Privacy
 
-Ultimo aggiornamento: Dicembre 2025
+Ultimo aggiornamento: Agosto 2026
 
 ### Titolare del Trattamento
 

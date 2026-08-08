@@ -1,7 +1,9 @@
 ---
-title: "Quanto Costa un Sito Web nel 2025?"
+title: "Quanto Costa un Sito Web nel 2026?"
+titleSeo: "Quanto Costa un Sito Web nel 2026?"
 date: 2025-12-27
-description: "Prezzi reali per un sito web nel 2025. Sito vetrina 500-2000€, ecommerce 2000-8000€. Attento ai costi nascosti: hosting e manutenzione possono costarti 500-1000€/anno."
+lastmod: 2026-08-08
+description: "Prezzi reali per un sito web nel 2026. Sito vetrina 500-2000€, ecommerce 2000-8000€. Attento ai costi nascosti: hosting e manutenzione possono costarti 500-1000€/anno."
 tags: ["costi", "prezzi", "sito web"]
 categories: ["Guide"]
 author: "Paolo Boldrini"

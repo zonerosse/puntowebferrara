@@ -1,5 +1,6 @@
 ---
 title: "Perché Non Uso WordPress (E Cosa Uso Invece)"
+titleSeo: "Perché Non Uso WordPress e Cosa Uso Invece"
 date: 2025-12-20
 description: "Dopo anni con WordPress sono passato a Hugo + Cloudflare. Risultato: PageSpeed 95+, hosting gratuito, zero manutenzione, impossibile da hackerare."
 tags: ["wordpress", "hugo", "cloudflare", "tecnologia"]

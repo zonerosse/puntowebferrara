@@ -1,5 +1,6 @@
 ---
 title: "Sito WordPress Hackerato: Cosa Fare e Come Prevenire"
+titleSeo: "Sito WordPress Hackerato: Cosa Fare Subito"
 date: 2025-12-25
 description: "Il tuo sito WordPress è stato hackerato? Guida completa: azioni immediate, pulizia, prevenzione. E come evitare che succeda di nuovo."
 tags: ["wordpress", "sicurezza", "hacking"]

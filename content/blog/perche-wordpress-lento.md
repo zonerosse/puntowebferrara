@@ -1,5 +1,6 @@
 ---
 title: "Sito WordPress Lento? Ecco Perché e Come Risolvere"
+titleSeo: "Sito WordPress Lento? Perché e Come Risolvere"
 date: 2025-12-26
 description: "Il tuo sito WordPress è lento? Le 7 cause principali e le soluzioni concrete. Da PageSpeed 40 a 95+ è possibile."
 tags: ["wordpress", "velocità", "performance"]

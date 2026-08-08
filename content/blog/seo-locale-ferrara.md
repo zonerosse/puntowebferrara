@@ -1,5 +1,6 @@
 ---
 title: "SEO Locale: Come Farsi Trovare su Google a Ferrara"
+titleSeo: "SEO Locale: Farsi Trovare su Google a Ferrara"
 description: "Guida pratica al SEO locale per attività di Ferrara. Come apparire nelle ricerche locali e su Google Maps."
 date: 2024-12-28
 icon: "📍"
