@@ -69,7 +69,7 @@ Guarda alcuni esempi di **creazione siti web per allevatori** che ho realizzato 
 
 | Sito | Razza | PageSpeed |
 |------|-------|-----------|
-| [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it) | Staffordshire Bull Terrier | 100/100 |
+| [Allevamento Del Piccolo Diavolo](https://delpiccolodiavolo.it/) | Staffordshire Bull Terrier | 100/100 |
 | [cuccioli-staffy.it](https://www.cuccioli-staffy.it) | Staffordshire Bull Terrier | 95+/100 |
 | [thereds-stafford.com](https://thereds-stafford.com) | Staffordshire Bull Terrier | 95+/100 |
 

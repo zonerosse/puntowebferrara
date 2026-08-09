@@ -39,7 +39,7 @@ Esempi di **realizzazione siti allevamento cani** con pedigree, cucciolate e gal
 
 | Sito | Razza | PageSpeed |
 |------|-------|-----------|
-| [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it) | Staffordshire Bull Terrier | 100/100 |
+| [Del Piccolo Diavolo, allevamento Staffordshire Bull Terrier](https://delpiccolodiavolo.it/) | Staffordshire Bull Terrier | 100/100 |
 | [cuccioli-staffy.it](https://www.cuccioli-staffy.it) | Staffordshire Bull Terrier | 95+/100 |
 | [thereds-stafford.com](https://thereds-stafford.com) | Staffordshire Bull Terrier | 95+/100 |
 

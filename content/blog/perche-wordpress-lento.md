@@ -139,7 +139,7 @@ Uso Hugo (generatore statico) + Cloudflare (hosting globale gratuito). Il risult
 
 ## Un Esempio Concreto
 
-Il mio sito [delpiccolodiavolo.it](https://www.delpiccolodiavolo.it):
+Il mio sito [delpiccolodiavolo.it, allevamento di Staffordshire Bull Terrier](https://delpiccolodiavolo.it/cuccioli-staffordshire-bull-terrier/):
 
 - **PageSpeed Mobile:** 100/100
 - **Tempo di caricamento:** 0.5 secondi
