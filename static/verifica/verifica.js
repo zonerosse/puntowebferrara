@@ -155,6 +155,13 @@ function disegna(scoperta, risultati, lighthouse) {
     catch { return false; }
   }).length;
 
+  // Pagine istituzionali: si riconoscono dall'indirizzo, in italiano e non solo.
+  const indirizzi = (scoperta.pagine || []).concat(buone.map(p => p.url)).join(' ').toLowerCase();
+  const hoPagina = (...parole) => parole.some(x => indirizzi.includes(x));
+  const privacy = hoPagina('privacy', 'informativa', 'datenschutz');
+  const legale = hoPagina('note-legali', 'legal', 'impressum', 'termini', 'condizioni', 'cookie');
+  const contatti = hoPagina('contatt', 'contact', 'kontakt', 'preventivo');
+
   const perPagina = {};
   for (const k of Object.keys(buone[0].flag || {})) {
     const n = buone.filter(p => p.flag && p.flag[k]).length;
@@ -171,6 +178,8 @@ function disegna(scoperta, risultati, lighthouse) {
     sitemap: { quota: scoperta.sitemapTrovate ? 1 : 0 },
     llms: { quota: scoperta.llmsPresente ? 1 : 0 },
     nap: { quota: ['via', 'cap', 'coordinate', 'telefono'].every(k => valori(k).length <= 1) ? 1 : 0 },
+    paginePolicy: { quota: (privacy ? 0.5 : 0) + (legale ? 0.5 : 0) },
+    paginaContatti: { quota: contatti ? 1 : 0 },
     titoliUnici: { quota: (titoliDoppi + descrDoppie) === 0 ? 1 : Math.max(0, 1 - (titoliDoppi + descrDoppie) / buone.length) },
     canonicalCoerente: { quota: 1 - canonicalFuori / buone.length },
     quattroZeroQuattro: { quota: scoperta.quattroZeroQuattro === 404 ? 1 : scoperta.quattroZeroQuattro == null ? null : 0 },
@@ -205,6 +214,9 @@ function disegna(scoperta, risultati, lighthouse) {
       c.nome + ' è escluso dal robots.txt: ' + c.chi + ' non può leggere il sito');
   if (!scoperta.sitemapTrovate) agg('Indicizzazione', 'alto', 'Nessuna sitemap trovata');
   if (!scoperta.llmsPresente) agg('Motori IA', 'basso', 'Manca il file llms.txt');
+  if (!privacy) agg('E-E-A-T', 'alto', 'Nessuna pagina di privacy policy trovata: è un obbligo di legge e un segnale di affidabilità');
+  if (!legale) agg('E-E-A-T', 'medio', 'Nessuna pagina di note legali o termini trovata');
+  if (!contatti) agg('E-E-A-T', 'alto', 'Nessuna pagina di contatti trovata: chi valuta il sito non sa come raggiungerti');
   if (scoperta.quattroZeroQuattro != null && scoperta.quattroZeroQuattro !== 404)
     agg('Configurazione', 'alto', 'Un indirizzo inesistente risponde ' + scoperta.quattroZeroQuattro +
       ' invece di 404: i motori indicizzeranno pagine fantasma');
@@ -311,7 +323,10 @@ function disegna(scoperta, risultati, lighthouse) {
         (liv === 'nota' ? '<p class="rifinitura">Superato su ' + (v._tot ? v._n + ' pagine su ' + v._tot : 'quasi tutte le pagine') +
           '. Non è un problema, ma se vuoi chiudere il cerchio è qui che si interviene.</p>' : '') +
         '<p><b>Perché conta</b>' + T(v.perche) + '</p>' +
-        '<p><b>Come si sistema</b>' + T(v.come) + '</p></div></details>');
+        '<p><b>Come si sistema</b>' + T(v.come) + '</p>' +
+        (v.fonte ? '<p class="fonte"><b>Fonte</b><a href="' + T(v.fonte.u) +
+          '" target="_blank" rel="noopener nofollow">' + T(v.fonte.n) + '</a></p>' : '') +
+        '</div></details>');
     }
   }
 

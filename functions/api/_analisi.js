@@ -216,8 +216,68 @@ export function analizzaPagina(html, url, intestazioni) {
   // risposta e rimuove l'intestazione content-encoding, quindi risulterebbe
   // sempre assente. Il controllo lo fa Lighthouse, che vede la pagina davvero.
 
+  // ------------------------------------------------------------ segnali E-E-A-T
+  // Non sono una misura di E-E-A-T: sono gli elementi verificabili che la
+  // documentazione di Google associa a esperienza, competenza, autorevolezza
+  // e affidabilità. Il giudizio resta umano, questi sono gli appigli.
+  let autoreSchema = false, sameAs = 0, dataModifica = false, nomeAutore = '';
+  const reLd2 = new RegExp(RE_LD.source, 'gi');
+  let m2;
+  while ((m2 = reLd2.exec(html)) !== null) {
+    let dato;
+    try { dato = JSON.parse(m2[1]); } catch (e) { continue; }
+    const lista = Array.isArray(dato) ? dato : (dato['@graph'] || [dato]);
+    for (const o of lista) {
+      if (!o || typeof o !== 'object') continue;
+      if (o.author) {
+        autoreSchema = true;
+        const a = Array.isArray(o.author) ? o.author[0] : o.author;
+        if (a && a.name) nomeAutore = String(a.name);
+      }
+      const t2 = o['@type'];
+      const tt2 = Array.isArray(t2) ? t2 : [t2];
+      if (tt2.includes('Person') && o.name) { autoreSchema = true; nomeAutore = nomeAutore || String(o.name); }
+      if (Array.isArray(o.sameAs)) sameAs = Math.max(sameAs, o.sameAs.length);
+      if (o.dateModified || o.datePublished) dataModifica = true;
+    }
+  }
+
+  const firmaVisibile = !!(nomeAutore && visibile.includes(nomeAutore))
+    || /<time[^>]+datetime=/i.test(corpo)
+    || /(aggiornato il|pubblicato il|ultimo aggiornamento|scritto da|di\s+[A-Z][a-z]+\s+[A-Z])/i.test(visibile.slice(0, 4000));
+
+  // collegamenti in uscita verso fonti: segnale di contenuto documentato
+  const AUTOREVOLI = /(wikipedia\.org|\.gov|\.edu|\.gov\.it|europa\.eu|schema\.org|w3\.org|developers\.google|web\.dev|mozilla\.org|istat\.it|iso\.org|nih\.gov)/i;
+  let citazioni = 0, ancoreVaghe = 0;
+  const VAGHE = /^(clicca qui|qui|leggi|leggi di pi\u00f9|scopri|scopri di pi\u00f9|continua|vai|link|read more|click here|more)$/i;
+  for (const t of linkTag) {
+    const href = attr(t, 'href') || '';
+    if (AUTOREVOLI.test(href)) citazioni++;
+  }
+  for (const mm of (corpo.match(/<a\s[^>]*>([\s\S]{0,80}?)<\/a>/gi) || [])) {
+    const testoAncora = pulisci(mm.replace(/<a[^>]*>/i, '').replace(/<\/a>/i, ''));
+    if (testoAncora && VAGHE.test(testoAncora)) ancoreVaghe++;
+  }
+  if (ancoreVaghe > 2) segnala('Collegamenti', 'basso',
+    ancoreVaghe + ' collegamenti con testo generico tipo "clicca qui": non dicono dove portano');
+
+  // risorse in chiaro dentro una pagina sicura
+  const misto = https ? (corpo.match(/(?:src|href)=["']http:\/\/[^"']+["']/gi) || []).length : 0;
+  if (misto) segnala('Sicurezza', 'alto',
+    misto + ' risorse caricate in HTTP dentro una pagina HTTPS: il browser le blocca o avvisa');
+
+  const favicon = /<link[^>]+rel=["'][^"']*icon/i.test(html);
+
   // ------------------------------------------------------------ esiti
   const flag = {
+    firmaVisibile: firmaVisibile,
+    autoreSchema: autoreSchema,
+    dataModifica: dataModifica,
+    sameAs: sameAs >= 2,
+    citazioni: citazioni >= 1 || parole < 400,
+    ancoreDescrittive: ancoreVaghe <= 2,
+    contenutoSicuro: misto === 0,
+    favicon: favicon,
     h1unico: h1.length === 1,
     titoliOrdinati: !salta,
     haH2: haH2 || parole < 300,
@@ -263,6 +323,7 @@ export function analizzaPagina(html, url, intestazioni) {
     blocchiJsonLd: blocchi, jsonLdInvalidi: invalidi,
     tipiSchema: Array.from(new Set(tipi)),
     scriptEsterni, scriptBloccanti, cssEsterni, peso: html.length,
+    citazioni, ancoreVaghe, sameAs, nomeAutore, misto,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
   };

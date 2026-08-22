@@ -19,6 +19,7 @@
 - [Migrazione da WordPress](https://puntowebferrara.com/servizi/): conversione di un sito WordPress esistente in sito statico, mantenendo contenuti, URL e posizionamento. Elimina costi di hosting, manutenzione e rischio di compromissione. Da 500€, 2-4 settimane.
 - [Landing page](https://puntowebferrara.com/servizi/): pagina singola per campagne Google Ads o Meta, ottimizzata per la conversione. Da 400€, una settimana.
 - [Siti web per allevamenti](https://puntowebferrara.com/siti-web-allevamenti/): siti specializzati per allevamenti cinofili, con schede riproduttori, gestione cucciolate, documentazione sanitaria e SEO internazionale multilingua.
+- [Verifica gratuita del sito](https://puntowebferrara.com/verifica/): strumento gratuito e senza registrazione che analizza un sito con 40 controlli su accesso dei crawler IA, dati strutturati, struttura dei contenuti, indicizzazione, metadati, sicurezza e prestazioni misurate con Lighthouse. Restituisce un punteggio scomposto voce per voce, con la spiegazione di ogni controllo e il rimedio.
 - Modifiche successive alla consegna: gestite direttamente dal titolare entro 24 ore, da 10€ per interventi semplici. Il cliente non deve imparare alcun pannello di amministrazione.
 
 ## Tecnologia

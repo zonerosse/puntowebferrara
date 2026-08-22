@@ -32,17 +32,21 @@ enableRobotsTXT = false
     url = '/portfolio/'
     weight = 5
   [[menus.main]]
+    name = 'Verifica sito'
+    url = '/verifica/'
+    weight = 6
+  [[menus.main]]
     name = 'Blog'
     url = '/blog/'
-    weight = 6
+    weight = 7
   [[menus.main]]
     name = 'Contatti'
     url = '/contatti/'
-    weight = 7
+    weight = 8
   [[menus.main]]
     name = 'Preventivo'
     url = '/preventivo/'
-    weight = 8
+    weight = 9
 
 [params]
   description = "Web designer a Ferrara: realizzo siti web professionali, veloci e sicuri. Specializzato in siti statici con Hugo. Preventivo gratuito."
