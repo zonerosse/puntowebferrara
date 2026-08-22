@@ -171,6 +171,31 @@
 .strumento #perche p{max-width:66ch;margin-bottom:.9rem;color:#3d4b47}
 .strumento #perche em{font-style:italic}
 .strumento #perche strong{color:var(--inchiostro)}
+.strumento /* --- schede dei contenuti --- */
+  .contenuto{background:var(--carta);border:1px solid var(--linea);border-radius:8px;
+    margin-bottom:6px;overflow:hidden}
+.strumento .contenuto>summary{cursor:pointer;padding:.6rem .8rem;display:flex;align-items:center;
+    gap:.5rem;flex-wrap:wrap;list-style:none}
+.strumento .contenuto>summary::-webkit-details-marker{display:none}
+.strumento .contenuto>summary:hover{background:var(--fondo)}
+.strumento .contenuto .dove{font-family:var(--mono);font-size:.8rem;flex:1;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--inchiostro)}
+.strumento .contenuto .pill{font-family:var(--mono);font-size:.68rem;padding:.12rem .4rem;
+    border-radius:4px;background:var(--fondo);white-space:nowrap}
+.strumento .contenuto .dentro{padding:.2rem .8rem .9rem;border-top:1px solid var(--linea)}
+.strumento .campo{margin-top:.8rem}
+.strumento .campo>b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--grafite);margin-bottom:.2rem;font-weight:600}
+.strumento .campo .testo{display:block;font-size:.92rem;line-height:1.45}
+.strumento .campo .testo.mono{font-family:var(--mono);font-size:.78rem;word-break:break-all}
+.strumento .campo .misura{display:block;font-size:.76rem;color:var(--grafite);margin-top:.15rem}
+.strumento .campo .misura.mono{font-family:var(--mono);word-break:break-all}
+.strumento .scaletta{margin-top:.3rem;border-left:2px solid var(--linea);padding-left:.2rem}
+.strumento .riga-h{font-size:.84rem;padding-top:.16rem;padding-bottom:.16rem;line-height:1.35}
+.strumento .riga-h .liv{font-family:var(--mono);font-size:.68rem;color:var(--grafite);
+    display:inline-block;min-width:1.9rem}
+.strumento .riga-h.salto{background:#fdf6e8;border-radius:3px}
+.strumento .riga-h .avviso{font-size:.7rem;color:var(--giallo);margin-left:.4rem}
 @media print{.strumento{background:#fff}
 .strumento .modulo, .strumento .avanzamento, .strumento .azioni, .strumento button, .strumento .briciole{display:none !important}
 .strumento .foglio{max-width:none;padding:0}

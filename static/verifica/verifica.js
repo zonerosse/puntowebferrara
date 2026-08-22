@@ -609,6 +609,78 @@ function disegna(scoperta, risultati, lighthouse) {
     }
   }
 
+  // ---- contenuto pagina per pagina: cosa c'è scritto davvero
+  // Un punteggio dice se una cosa manca. Questa sezione fa vedere com'è fatta,
+  // che è l'unico modo per accorgersi di un titolo presente ma scritto male.
+  p.push('<h2>Cosa c\'è scritto, pagina per pagina</h2>');
+  p.push('<p class="nota" style="margin:-.5rem 0 1rem">Titoli, descrizioni, scaletta dei ' +
+    'sottotitoli, dati strutturati e collegamenti in uscita di ogni pagina letta. ' +
+    'Apri una voce per vederne il contenuto.</p>');
+
+  const perLunghezza = (n, min, max) =>
+    n === 0 ? 'rosso' : (n < min || n > max) ? 'giallo' : 'ok';
+
+  for (const q of buone.slice(0, 60)) {
+    const percorso = q.url.replace(scoperta.sito, '') || '/';
+    const tl = (q.titolo || '').length, dl = (q.descrizione || '').length;
+    p.push('<details class="contenuto"><summary><span class="dove">' + T(percorso) + '</span>' +
+      '<span class="pill liv-' + perLunghezza(tl, 30, 60) + '">title ' + tl + '</span>' +
+      '<span class="pill liv-' + perLunghezza(dl, 70, 160) + '">descr ' + dl + '</span>' +
+      '<span class="pill liv-' + (q.h1 === 1 ? 'ok' : 'rosso') + '">H1 ' + q.h1 + '</span>' +
+      '</summary><div class="dentro">');
+
+    p.push('<div class="campo"><b>Titolo per Google</b><span class="testo">' +
+      (q.titolo ? T(q.titolo) : '<em>assente</em>') + '</span>' +
+      '<span class="misura">' + tl + ' caratteri' +
+      (tl > 60 ? ' \u2014 oltre i 60, viene troncato nei risultati' :
+       (tl && tl < 30) ? ' \u2014 sotto i 30, spreca spazio utile' : '') + '</span></div>');
+
+    p.push('<div class="campo"><b>Descrizione</b><span class="testo">' +
+      (q.descrizione ? T(q.descrizione) : '<em>assente</em>') + '</span>' +
+      '<span class="misura">' + dl + ' caratteri' +
+      (dl > 160 ? ' \u2014 oltre i 160, viene troncata' :
+       (dl && dl < 70) ? ' \u2014 sotto i 70, poco informativa' : '') + '</span></div>');
+
+    if (q.og && (q.og.titolo || q.og.immagine)) {
+      const diverso = q.og.titolo && q.titolo && q.og.titolo !== q.titolo;
+      p.push('<div class="campo"><b>Come appare se condivisa</b><span class="testo">' +
+        T(q.og.titolo || q.titolo || '') + '</span>' +
+        (diverso ? '<span class="misura">diverso dal titolo per Google: pu\u00f2 essere voluto, ' +
+          'ma verifica che lo sia</span>' : '') +
+        (q.og.immagine ? '<span class="misura mono">' + T(q.og.immagine) + '</span>' : '') +
+        '</div>');
+    }
+
+    if (q.scaletta && q.scaletta.length) {
+      p.push('<div class="campo"><b>Scaletta dei titoli</b><div class="scaletta">');
+      let precedente = 0;
+      for (const t of q.scaletta) {
+        const salta = precedente && t.l > precedente + 1;
+        p.push('<div class="riga-h' + (salta ? ' salto' : '') + '" style="padding-left:' +
+          ((t.l - 1) * 14) + 'px"><span class="liv">H' + t.l + '</span>' + T(t.t) +
+          (salta ? '<span class="avviso">salta un livello</span>' : '') + '</div>');
+        precedente = t.l;
+      }
+      p.push('</div></div>');
+    }
+
+    if (q.tipiSchema && q.tipiSchema.length)
+      p.push('<div class="campo"><b>Dati strutturati</b><span class="testo mono">' +
+        q.tipiSchema.map(T).join(' \u00b7 ') + '</span>' +
+        '<span class="misura">' + q.blocchiJsonLd + ' blocchi JSON-LD' +
+        (q.jsonLdInvalidi ? ', di cui ' + q.jsonLdInvalidi + ' non validi' : ', tutti validi') +
+        '</span></div>');
+
+    p.push('<div class="campo"><b>Collegamenti in uscita</b>' +
+      (q.domini && q.domini.length
+        ? '<span class="testo mono">' + q.domini.map(T).join(' \u00b7 ') + '</span>'
+        : '<span class="testo"><em>nessuno: la pagina non rimanda a nulla fuori dal sito</em></span>') +
+      '<span class="misura">' + q.linkInterni + ' collegamenti interni, ' +
+      q.linkEsterni + ' esterni</span></div>');
+
+    p.push('</div></details>');
+  }
+
   // ---- pagina per pagina
   p.push('<h2>Pagina per pagina</h2><table><tr><th>Pagina</th>' +
     '<th style="text-align:right">Parole</th><th style="text-align:right">Schema</th>' +

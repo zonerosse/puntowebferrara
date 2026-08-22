@@ -441,6 +441,15 @@ export function analizzaPagina(html, url, intestazioni) {
     tipiSchema: Array.from(new Set(tipi)),
     scriptEsterni, scriptBloccanti, cssEsterni, peso: html.length,
     citazioni, ancoreVaghe, sameAs, nomeAutore, misto,
+    // Materiale per il rapporto: non serve ai controlli, serve a far vedere
+    // com'è fatta la pagina invece di limitarsi a promuoverla o bocciarla.
+    scaletta: titoli.slice(0, 60).map(t => ({ l: t.livello, t: t.testo.slice(0, 110) })),
+    domini: [...domini].slice(0, 30),
+    og: {
+      titolo: prop(html, 'og:title') || null,
+      descrizione: prop(html, 'og:description') || null,
+      immagine: prop(html, 'og:image') || null,
+    },
     tecnologie, generatore,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
