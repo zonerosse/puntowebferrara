@@ -271,8 +271,20 @@ function disegna(scoperta, risultati, lighthouse) {
 
   // controlli che si vedono solo confrontando le pagine fra loro
   const conta = (lista) => { const c = {}; for (const x of lista) if (x) c[x] = (c[x] || 0) + 1; return c; };
-  const titoliDoppi = Object.values(conta(buone.map(p => p.titolo))).filter(n => n > 1).length;
-  const descrDoppie = Object.values(conta(buone.map(p => p.descrizione))).filter(n => n > 1).length;
+  // Una pagina italiana e la sua traduzione inglese possono avere lo stesso
+  // titolo — "Privacy Policy" si scrive uguale — senza che sia un errore: sono
+  // collegate da hreflang e i motori le trattano come versioni, non come copie.
+  // Il confronto si fa quindi dentro ogni lingua, non fra lingue diverse.
+  const perLingua = {};
+  for (const q of buone) {
+    const l = q.lang || '?';
+    (perLingua[l] = perLingua[l] || []).push(q);
+  }
+  let titoliDoppi = 0, descrDoppie = 0;
+  for (const gruppo of Object.values(perLingua)) {
+    titoliDoppi += Object.values(conta(gruppo.map(x => x.titolo))).filter(n => n > 1).length;
+    descrDoppie += Object.values(conta(gruppo.map(x => x.descrizione))).filter(n => n > 1).length;
+  }
   const canonicalFuori = buone.filter(p => {
     if (!p.canonical) return false;
     try { return new URL(p.canonical).pathname.replace(/\/$/, '') !== new URL(p.url).pathname.replace(/\/$/, ''); }
@@ -620,7 +632,10 @@ function disegna(scoperta, risultati, lighthouse) {
   const perLunghezza = (n, min, max) =>
     n === 0 ? 'rosso' : (n < min || n > max) ? 'giallo' : 'ok';
 
-  for (const q of buone.slice(0, 60)) {
+  // Tutte le pagine lette, ordinate per indirizzo: così le lingue restano
+  // raggruppate e si ritrova la pagina che si sta cercando.
+  const perContenuto = buone.slice().sort((a, b) => a.url.localeCompare(b.url));
+  for (const q of perContenuto) {
     const percorso = q.url.replace(scoperta.sito, '') || '/';
     const tl = (q.titolo || '').length, dl = (q.descrizione || '').length;
     p.push('<details class="contenuto"><summary><span class="dove">' + T(percorso) + '</span>' +
@@ -714,7 +729,7 @@ function disegna(scoperta, risultati, lighthouse) {
     '<th style="text-align:right">Link</th><th style="text-align:right">Controlli</th></tr>');
   const ordinate = buone.slice().sort((a, b) =>
     Object.values(a.flag || {}).filter(Boolean).length - Object.values(b.flag || {}).filter(Boolean).length);
-  for (const q of ordinate.slice(0, 40)) {
+  for (const q of ordinate) {
     const tot = Object.keys(q.flag || {}).length;
     const ok = Object.values(q.flag || {}).filter(Boolean).length;
     p.push('<tr><td class="percorso">' + T(percorso(q.url)) + '</td>' +
@@ -723,7 +738,7 @@ function disegna(scoperta, risultati, lighthouse) {
       '<td class="num liv-' + livello(ok / tot) + '" style="font-weight:700">' + ok + '/' + tot + '</td></tr>');
   }
   p.push('</table>');
-  if (buone.length > 40) p.push('<p class="nota">Mostrate le 40 pagine con più controlli non superati.</p>');
+  p.push('<p class="nota">In cima le pagine con più controlli non superati.</p>');
 
   // ---- chiusura
   const c = ['<div class="chiusura"><h2>' + (gravi.length ? 'Queste cose le sistemo io' : 'Il sito è già messo bene') + '</h2>'];
