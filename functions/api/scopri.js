@@ -17,9 +17,10 @@ const INTESTAZIONI = {
   'Accept-Encoding': 'gzip, deflate, br',
   'Upgrade-Insecure-Requests': '1',
 };
-const MAX_SITEMAP = 4;      // quante sitemap figlie seguire
+const MAX_SITEMAP = 10;      // quante sitemap figlie seguire
 const SCADENZA = 6000;      // nessuna chiamata può durare più di sei secondi
-const MAX_URL = 60;         // tetto pubblico: protegge il piano gratuito
+const MAX_URL = 200;        // tetto di sicurezza: oltre, il sito è troppo grande
+const MAX_XML_LETTURA = 900000;
 
 // I crawler dei motori IA, divisi per importanza.
 const CRAWLER = [
@@ -176,7 +177,7 @@ function leggiRobots(testoIntero) {
 // Le sitemap dei siti grossi arrivano a decine di megabyte: analizzarle intere
 // sfora i 10 millisecondi di CPU del piano gratuito e il Worker viene interrotto.
 // Si legge solo la porzione iniziale, che basta e avanza per un campione.
-const MAX_XML = 300000;
+const MAX_XML = 900000;
 
 // Il robots.txt autorizza questo strumento? Si guarda il blocco dedicato al
 // nostro nome e, se non c'è, quello generico User-agent: *.
@@ -320,7 +321,7 @@ async function scopri(context) {
     const indirizzoSitemap = daVisitare.shift();
     if (viste.has(indirizzoSitemap)) continue;
     viste.add(indirizzoSitemap);
-    const documento = await prendi(indirizzoSitemap, 'application/xml', 300000);
+    const documento = await prendi(indirizzoSitemap, 'application/xml', 900000);
     if (!documento.ok) continue;
     sitemapTrovate++;
     const trovati = estraiUrl(documento.testo);
