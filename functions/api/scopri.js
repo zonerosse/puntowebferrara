@@ -217,7 +217,7 @@ function permessoPerNoi(testo) {
 function estraiUrl(xml) {
   const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
-  const re = /<(?:[a-z0-9]+:)?loc>\s*([^<\s]+)\s*<\/(?:[a-z0-9]+:)?loc>/gi;
+  const re = /<(?:[a-z0-9]+:)?loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/(?:[a-z0-9]+:)?loc>/gi;
   let m;
   while ((m = re.exec(testo)) !== null) {
     fuori.push(m[1]);
