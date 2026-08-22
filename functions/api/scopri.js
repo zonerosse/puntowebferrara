@@ -217,7 +217,7 @@ function permessoPerNoi(testo) {
 function estraiUrl(xml) {
   const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
-  const re = /<loc>\s*([^<\s]+)\s*<\/loc>/gi;
+  const re = /<(?:[a-z0-9]+:)?loc>\s*([^<\s]+)\s*<\/(?:[a-z0-9]+:)?loc>/gi;
   let m;
   while ((m = re.exec(testo)) !== null) {
     fuori.push(m[1]);
@@ -322,9 +322,11 @@ async function scopri(context) {
     : { crawler: CRAWLER.map(([nome, chi, livello]) => ({ nome, chi, livello, ammesso: true, esplicito: false })), sitemap: [], userAgentDichiarati: 0 };
 
   // 4. sitemap: prima quelle dichiarate in robots, poi il percorso classico
-  const candidate = robots.sitemap.length
-    ? robots.sitemap.slice(0, 6)
-    : SITEMAP_PROBABILI.map(x => radice + x);
+  // Le sitemap dichiarate vengono per prime, ma si provano comunque anche gli
+  // indirizzi standard: un robots.txt può dichiarare un file vuoto o obsoleto.
+  const candidate = robots.sitemap.slice(0, 6)
+    .concat(SITEMAP_PROBABILI.map(x => radice + x)
+      .filter(x => !robots.sitemap.includes(x)));
   let pagine = [];
   let sitemapTrovate = 0;
   const daVisitare = [...candidate];
