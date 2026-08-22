@@ -131,20 +131,8 @@ modulo.addEventListener('submit', async e => {
     }
     if (scoperta.errore) throw new Error(scoperta.errore);
   } catch (err) {
-    // Il codice non si può leggere, ma la velocità sì: Google misura la pagina
-    // con i propri sistemi, che i firewall raramente bloccano. Meglio metà
-    // analisi che nessuna.
     const vietato = /robots\.txt/i.test(err.message);
     const bloccato = !vietato && /403|401/.test(err.message);
-    passo.textContent = 'Codice non leggibile. Provo a misurare almeno la velocità…';
-    let ripiego = null;
-    try {
-      const r = await fetch('/api/lighthouse?url=' + encodeURIComponent(normalizza(indirizzo) + '/'));
-      ripiego = JSON.parse(await r.text());
-    } catch (e) { /* niente da fare */ }
-
-    avanzamento.classList.remove('attivo');
-    bottone.disabled = false;
 
     const spiegazione = vietato
       ? '<b>Il robots.txt di questo sito vieta la scansione automatica.</b> Non è un ostacolo tecnico: è ' +
@@ -152,20 +140,44 @@ modulo.addEventListener('submit', async e => {
         'quel file, oppure scrivimi e lo guardo a mano.'
       : bloccato
       ? '<b>Questo sito rifiuta le analisi automatiche.</b> Ha risposto con un codice 403, che significa ' +
-        '"accesso negato": un firewall o una protezione anti-bot lascia passare solo i browser. Non è un ' +
-        'difetto del sito e non è un errore di questo strumento — è una scelta di chi lo gestisce, e la ' +
-        'rispetto invece di aggirarla.'
+        '"accesso negato": una protezione anti-bot lascia passare solo i browser. La richiesta è stata ' +
+        'inviata con un nome dichiarato e con tutte le intestazioni di un browser normale, ma non è ' +
+        'bastato. Non è un difetto del sito e non è un errore di questo strumento.'
       : '<b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
         '<br><br>Le cause più frequenti sono tre: l\'indirizzo è scritto male, il sito blocca i programmi ' +
         'automatici, oppure è talmente grande che l\'analisi si interrompe prima di finire.';
 
+    // La spiegazione compare subito: aspettare la misura lascerebbe l'utente
+    // davanti a una riga di testo per mezzo minuto.
+    avanzamento.classList.remove('attivo');
+    bottone.disabled = false;
     zonaErrore.innerHTML = '<div class="errore">' + spiegazione +
       '<br><br>Se il sito è tuo, <a href="/contatti/">scrivimi</a>: l\'analisi la faccio a mano e ti mando ' +
       'il risultato completo.</div>';
 
+    if (vietato) return;
+
+    // La velocità però si può misurare lo stesso: la rileva Google con i propri
+    // sistemi, che i firewall raramente bloccano. Ci mette qualche decina di
+    // secondi, quindi si mostra l'attesa e si aggiunge il risultato quando arriva.
+    esito.innerHTML = '<h2>Quello che si può misurare lo stesso</h2>' +
+      '<div class="grigio" id="attesaVelocita">Il codice non è accessibile, ma sto chiedendo a Google di ' +
+      'misurare la velocità della home. Ci vogliono dai venti ai quaranta secondi: puoi lasciare la ' +
+      'pagina aperta.</div>';
+    esito.classList.add('attivo');
+
+    let ripiego = null;
+    try {
+      const r = await fetch('/api/lighthouse?url=' + encodeURIComponent(indirizzo + '/'));
+      ripiego = JSON.parse(await r.text());
+    } catch (e) { /* niente da fare */ }
+
     if (ripiego && ripiego.disponibile) {
-      esito.innerHTML = resaLighthouse(ripiego, normalizza(indirizzo));
-      esito.classList.add('attivo');
+      esito.innerHTML = resaLighthouse(ripiego, indirizzo);
+    } else {
+      const attesa = document.getElementById('attesaVelocita');
+      if (attesa) attesa.textContent = 'Non è stato possibile misurare nemmeno la velocità: ' +
+        ((ripiego && ripiego.motivo) || 'Google non ha risposto in tempo') + '.';
     }
     return;
   }
@@ -192,7 +204,8 @@ modulo.addEventListener('submit', async e => {
   }
   await Promise.all([operaio(), operaio(), operaio(), operaio()]);
 
-  avanza(pagine.length, pagine.length + 1, 'Misuro la velocità con Lighthouse…');
+  avanza(pagine.length, pagine.length + 1,
+    'Pagine lette. Aspetto la misura di velocità da Google (venti-quaranta secondi)…');
   const lighthouse = await misura;
 
   avanzamento.classList.remove('attivo');

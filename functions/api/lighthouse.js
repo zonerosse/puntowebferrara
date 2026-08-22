@@ -20,9 +20,23 @@ const RIMEDI = {
   'render-blocking-resources': 'Sposta CSS e JavaScript non essenziali fuori dal percorso critico, o aggiungi defer agli script.',
   'modern-image-formats': 'Converti le immagini in AVIF o WebP: pesano circa la metà a parità di qualità.',
   'uses-responsive-images': 'Servi immagini della dimensione in cui vengono mostrate, non più grandi.',
-  'unused-javascript': 'Rimuovi il JavaScript che non viene eseguito: spesso sono plugin o librerie non usate.',
+  'offscreen-images': 'Carica con loading="lazy" le immagini che stanno sotto la prima schermata.',
+  'uses-optimized-images': 'Comprimi le immagini: molte arrivano dal fotografo o dallo smartphone senza alcuna riduzione.',
+  'unused-javascript': 'Rimuovi il JavaScript che non viene eseguito: spesso sono plugin o librerie non più usate.',
+  'unused-css-rules': 'Elimina le regole CSS che nessun elemento usa: nei temi pronti sono spesso la maggior parte.',
+  'unminified-javascript': 'Minifica il JavaScript: è un passaggio automatico che toglie spazi e commenti.',
+  'unminified-css': 'Minifica il CSS.',
+  'legacy-javascript': 'Stai servendo codice compatibile con browser che non usa più nessuno: pesa e rallenta.',
+  'duplicated-javascript': 'La stessa libreria è caricata più volte: capita quando i plugin includono le proprie copie.',
   'uses-text-compression': 'Attiva la compressione Brotli o gzip sul server.',
   'server-response-time': 'Il server impiega troppo a rispondere: valuta una cache o un sito statico.',
+  'total-byte-weight': 'La pagina pesa troppo in totale: quasi sempre sono le immagini.',
+  'third-party-summary': 'Gli script di terze parti — analitiche, chat, mappe, pubblicità — occupano il browser a lungo.',
+  'largest-contentful-paint-element': "È l'elemento che ci mette più tempo a comparire: da lì si parte.",
+  'prioritize-lcp-image': "Dichiara l'immagine principale come prioritaria con fetchpriority=\"high\".",
+  'uses-rel-preconnect': 'Anticipa la connessione ai domini esterni da cui carichi risorse.',
+  'font-display': 'Con font-display: swap il testo compare subito con un carattere di riserva.',
+  'redirects': 'Ci sono reindirizzamenti a catena: ogni salto aggiunge un giro di rete.',
 };
 
 const NOMI = {
@@ -59,6 +73,7 @@ async function lighthouse(context) {
     + '?url=' + encodeURIComponent(indirizzo)
     + '&strategy=' + dispositivo
     + '&category=performance&category=accessibility&category=best-practices&category=seo'
+    + '&locale=it'
     + '&key=' + encodeURIComponent(chiave);
 
   // Prima con la risposta abbreviata, che pesa molto meno. Se Google non la
@@ -110,10 +125,28 @@ async function lighthouse(context) {
       spiegazione: 'Quanto in fretta la pagina sembra completa a chi guarda.' },
     { id: 'server-response-time', nome: 'Risposta del server',
       spiegazione: 'Quanto ci mette il server a mandare la prima riga di HTML. Sotto 600 millisecondi è buono.' },
-  ].map(x => ({ ...x, valore: val(x.id), esito: punti(x.id) })).filter(x => x.valore);
+  ].map(x => {
+    let valore = val(x.id);
+    // Alcune voci restano in inglese anche chiedendo l'italiano: si riscrivono.
+    if (valore) {
+      const m = String(valore).match(/^Root document took\s+([\d.,]+)\s*(ms|s)$/i);
+      if (m) valore = m[1] + ' ' + m[2];
+    }
+    return { ...x, valore, esito: punti(x.id) };
+  }).filter(x => x.valore);
 
+  // Molte diagnosi di Lighthouse non hanno un punteggio ma indicano comunque
+  // quanto tempo o quanti byte si risparmierebbero: vanno mostrate lo stesso.
+  const risparmio = a => (a.details && (a.details.overallSavingsMs || a.details.overallSavingsBytes)) || 0;
   const rallentamenti = Object.keys(RIMEDI)
-    .filter(k => audit[k] && typeof audit[k].score === 'number' && audit[k].score < 0.9)
+    .filter(k => {
+      const a = audit[k];
+      if (!a) return false;
+      if (typeof a.score === 'number' && a.score < 0.9) return true;
+      return a.score === null && (!!a.displayValue || risparmio(a) > 0);
+    })
+    .sort((x, y) => risparmio(audit[y]) - risparmio(audit[x]))
+    .slice(0, 8)
     .map(k => ({
       nome: (audit[k].title || k),
       quanto: audit[k].displayValue || '',
