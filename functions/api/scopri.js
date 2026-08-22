@@ -17,7 +17,18 @@ const INTESTAZIONI = {
   'Accept-Encoding': 'gzip, deflate, br',
   'Upgrade-Insecure-Requests': '1',
 };
-const MAX_SITEMAP = 10;      // quante sitemap figlie seguire
+const MAX_SITEMAP = 10;
+// Quando il robots.txt non dichiara la sitemap, non basta provare un indirizzo:
+// i plugin WordPress la mettono altrove, e leggere la sola home produce un
+// punteggio che non descrive il sito.
+const SITEMAP_PROBABILI = [
+  '/sitemap.xml',
+  '/sitemap_index.xml',   // Yoast, Rank Math, All in One SEO
+  '/wp-sitemap.xml',      // WordPress dalla 5.5
+  '/sitemap-index.xml',
+  '/sitemap/sitemap-index.xml',
+  '/post-sitemap.xml',
+];      // quante sitemap figlie seguire
 const SCADENZA = 6000;      // nessuna chiamata può durare più di sei secondi
 const MAX_URL = 200;        // tetto di sicurezza: oltre, il sito è troppo grande
 const MAX_XML_LETTURA = 900000;
@@ -311,13 +322,17 @@ async function scopri(context) {
     : { crawler: CRAWLER.map(([nome, chi, livello]) => ({ nome, chi, livello, ammesso: true, esplicito: false })), sitemap: [], userAgentDichiarati: 0 };
 
   // 4. sitemap: prima quelle dichiarate in robots, poi il percorso classico
-  const candidate = robots.sitemap.length ? robots.sitemap.slice(0, 3) : [radice + '/sitemap.xml'];
+  const candidate = robots.sitemap.length
+    ? robots.sitemap.slice(0, 6)
+    : SITEMAP_PROBABILI.map(x => radice + x);
   let pagine = [];
   let sitemapTrovate = 0;
   const daVisitare = [...candidate];
   const viste = new Set();
 
-  while (daVisitare.length && sitemapTrovate < MAX_SITEMAP && pagine.length < MAX_URL) {
+  let tentativi = 0;
+  while (daVisitare.length && tentativi < 20 && sitemapTrovate < MAX_SITEMAP && pagine.length < MAX_URL) {
+    tentativi++;
     const indirizzoSitemap = daVisitare.shift();
     if (viste.has(indirizzoSitemap)) continue;
     viste.add(indirizzoSitemap);
