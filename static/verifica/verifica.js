@@ -177,6 +177,7 @@ function disegna(scoperta, risultati, lighthouse) {
       const e = esiti[v.id];
       if (!e || e.quota == null) { v._stato = 'assente'; continue; }
       v._stato = 'misurato'; v._quota = e.quota; v._valore = e.valore || null;
+      v._n = e.n; v._tot = e.tot;
       v._punti = Math.round(v.punti * e.quota);
       g._punti += v._punti; g._max += v.punti;
     }
@@ -265,8 +266,8 @@ function disegna(scoperta, risultati, lighthouse) {
     '<div class="legenda">' +
     '<span class="liv-ok">' + SEGNI.ok + 'superato ovunque</span>' +
     '<span class="liv-nota">' + SEGNI.nota + 'suggerimento</span>' +
-    '<span class="liv-giallo">' + SEGNI.giallo + 'da rivedere</span>' +
-    '<span class="liv-arancio">' + SEGNI.arancio + 'su parte delle pagine</span>' +
+    '<span class="liv-giallo">' + SEGNI.giallo + 'manca su poche pagine</span>' +
+    '<span class="liv-arancio">' + SEGNI.arancio + 'manca su molte pagine</span>' +
     '<span class="liv-rosso">' + SEGNI.rosso + 'non superato</span>' +
     '<span class="liv-grigio">' + SEGNI.grigio + 'non misurato</span></div>');
   for (const g of CONTROLLI) {
@@ -282,16 +283,22 @@ function disegna(scoperta, risultati, lighthouse) {
       else if (v._valore) etichetta = v._valore;
       else if (v._quota >= 0.999) etichetta = 'superato';
       else if (v._quota <= 0.001) etichetta = 'non superato';
-      else if (liv === 'nota') etichetta = 'suggerimento';
-      else etichetta = Math.round(v._quota * 100) + '% delle pagine';
+      else if (v._tot) {
+        // Il numero che serve è sempre quello delle pagine da sistemare.
+        // Il verbo cambia perché sotto la metà la riga è già in negativo.
+        const daSistemare = v._tot - v._n;
+        const parola = daSistemare === 1 ? ' pagina' : ' pagine';
+        etichetta = (v._quota < 0.5 && v.no ? 'su ' : 'manca su ') + daSistemare + parola;
+      }
+      else etichetta = 'manca sul ' + Math.round((1 - v._quota) * 100) + '%';
       const punti = assente ? '—' : v._punti + ' / ' + v.punti;
       p.push('<details class="controllo liv-' + liv + '"><summary>' +
         '<span class="che"><span class="liv-' + liv + '">' + segno(liv) + '</span>' + T(nome) + '</span>' +
         '<span class="val">' + pill(liv, etichetta) +
         ' <span class="punti-voce">' + punti + '</span></span></summary>' +
         '<div class="spiega">' +
-        (liv === 'nota' ? '<p class="rifinitura">Superato su quasi tutte le pagine: manca su circa il ' +
-          Math.round((1 - v._quota) * 100) + '%. Non è un problema, ma se vuoi chiudere il cerchio è qui che si interviene.</p>' : '') +
+        (liv === 'nota' ? '<p class="rifinitura">Superato su ' + (v._tot ? v._n + ' pagine su ' + v._tot : 'quasi tutte le pagine') +
+          '. Non è un problema, ma se vuoi chiudere il cerchio è qui che si interviene.</p>' : '') +
         '<p><b>Perché conta</b>' + T(v.perche) + '</p>' +
         '<p><b>Come si sistema</b>' + T(v.come) + '</p></div></details>');
     }
