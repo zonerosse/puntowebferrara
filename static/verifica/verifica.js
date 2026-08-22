@@ -68,6 +68,36 @@ function resaLighthouse(lh, sito) {
   return p.join('');
 }
 
+// Un 403 non è sempre la stessa cosa. Le intestazioni e il corpo della risposta
+// dicono chi ha rifiutato e perché, e da lì dipende se si può fare qualcosa.
+function spiegaRifiuto(err) {
+  const i = err.indizi || {};
+  const corpo = (err.assaggio || '').toLowerCase();
+  const sfida = !!i['cf-mitigated'] || /attention required|checking your browser|just a moment|captcha/.test(corpo);
+  const prodotto = i['x-sucuri-id'] || i['x-sucuri-block'] ? 'Sucuri'
+    : i['x-iinfo'] ? 'Imperva Incapsula'
+    : /mod_security|modsecurity/.test(corpo) ? 'ModSecurity' : null;
+  const origine = /<center>\s*(nginx|apache)/.test(corpo) || /^403 forbidden$/.test(corpo.trim());
+
+  if (sfida) return '<b>Questo sito richiede un test del browser.</b> Prima di mostrare le pagine ' +
+    'presenta una verifica che si supera solo eseguendo JavaScript, cosa che un analizzatore non fa. ' +
+    'Non è un blocco rivolto a te: è la protezione anti-bot attiva su tutto il traffico automatico.';
+
+  if (prodotto) return '<b>Questo sito è protetto da ' + T(prodotto) + '.</b> Il firewall ha respinto la ' +
+    'richiesta prima che arrivasse al sito. Chi lo gestisce può inserire un permesso per le analisi, ' +
+    'ma dall\'esterno non c\'è modo di procedere.';
+
+  if (origine) return '<b>Il blocco è sul server del sito, non sul suo firewall.</b> La risposta è la ' +
+    'pagina di errore predefinita di nginx, quindi non è un sistema anti-bot: è una regola che rifiuta ' +
+    'le richieste in base a <em>da dove</em> arrivano. Questo strumento gira sulla rete di Cloudflare, e ' +
+    'molti server escludono per prudenza gli indirizzi dei datacenter — sia quelli dei robot sia quelli ' +
+    'degli strumenti legittimi. Con la stringa di un browser è già stato riprovato: il risultato non cambia, ' +
+    'perché il filtro non guarda quella.';
+
+  return '<b>Questo sito ha rifiutato la richiesta con un codice 403.</b> La richiesta è stata inviata ' +
+    'con tutte le intestazioni di un browser normale e ripetuta una seconda volta, senza esito.';
+}
+
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
@@ -144,10 +174,7 @@ modulo.addEventListener('submit', async e => {
         'una richiesta esplicita di chi lo gestisce, e viene rispettata. Se il sito è tuo puoi modificare ' +
         'quel file, oppure scrivimi e lo guardo a mano.'
       : bloccato
-      ? '<b>Questo sito rifiuta le analisi automatiche.</b> Ha risposto con un codice 403, che significa ' +
-        '"accesso negato": una protezione anti-bot lascia passare solo i browser. La richiesta è stata ' +
-        'inviata con un nome dichiarato e con tutte le intestazioni di un browser normale, ma non è ' +
-        'bastato. Non è un difetto del sito e non è un errore di questo strumento.'
+      ? spiegaRifiuto(err)
       : '<b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
         '<br><br>Le cause più frequenti sono tre: l\'indirizzo è scritto male, il sito blocca i programmi ' +
         'automatici, oppure è talmente grande che l\'analisi si interrompe prima di finire.';
@@ -164,8 +191,9 @@ modulo.addEventListener('submit', async e => {
         (err.assaggio ? '<br><br>' + T(err.assaggio) : '') + '</div></details>';
     }
     zonaErrore.innerHTML = '<div class="errore">' + spiegazione +
-      '<br><br>Se il sito è tuo, <a href="/contatti/">scrivimi</a>: l\'analisi la faccio a mano e ti mando ' +
-      'il risultato completo.' + tracce + '</div>';
+      '<br><br>Se il sito è tuo puoi togliere quel blocco per il tempo dell\'analisi, oppure ' +
+      '<a href="/contatti/">scrivimi</a>: la faccio a mano e ti mando il risultato completo. ' +
+      'La velocità, intanto, è misurata qui sotto.' + tracce + '</div>';
 
     if (vietato) return;
 
