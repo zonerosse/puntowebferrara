@@ -169,7 +169,11 @@ export function analizzaPagina(html, url) {
     jsonLdValido: blocchi > 0 && invalidi === 0,
     schemaEntita: tipi.some(t => ['Organization', 'LocalBusiness', 'Person'].includes(t)),
     schemaSito: tipi.includes('WebSite'),
-    schemaContenuto: tipi.some(t => ['Article', 'FAQPage', 'Product', 'Recipe', 'Event', 'Service'].includes(t)),
+    schemaContenuto: tipi.some(t => [
+      'Article', 'BlogPosting', 'NewsArticle', 'FAQPage', 'QAPage', 'HowTo',
+      'Product', 'Recipe', 'Event', 'Service', 'JobPosting',
+      'CollectionPage', 'ItemList', 'AboutPage', 'ContactPage', 'ProfilePage', 'WebPage',
+    ].includes(t)),
     briciole: tipi.includes('BreadcrumbList'),
     domandeCoperte: !(domande.length >= 3 && !tipi.includes('FAQPage')),
     immaginiConAlt: immagini.length === 0 || senzaAlt === 0,
