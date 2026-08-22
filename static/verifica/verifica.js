@@ -651,6 +651,33 @@ function disegna(scoperta, risultati, lighthouse) {
         '</div>');
     }
 
+    if (q.meta) {
+      const m = q.meta;
+      const righe = [
+        ['charset', m.charset, 'la codifica dei caratteri: senza, gli accenti escono sbagliati'],
+        ['lang', m.lang, 'la lingua dichiarata della pagina'],
+        ['canonical', m.canonical, 'l\'indirizzo che la pagina indica come proprio'],
+        ['robots', m.robots || 'non dichiarato', m.robots && /noindex/i.test(m.robots)
+          ? 'questa pagina chiede di NON essere indicizzata' : 'senza direttiva vale index, follow'],
+        ['viewport', m.viewport, 'come la pagina si adatta allo schermo del telefono'],
+        ['og:type', m.ogTipo, 'che tipo di contenuto dichiara di essere quando viene condivisa'],
+        ['og:locale', m.ogLingua, null],
+        ['og:site_name', m.ogSito, null],
+        ['twitter:card', m.twitter, 'il formato dell\'anteprima su X e su altri servizi'],
+        ['author', m.autore, null],
+        ['theme-color', m.tema, 'il colore della barra del browser su telefono'],
+        ['hreflang', (m.lingue && m.lingue.length) ? m.lingue.join(', ') : null,
+          'le altre lingue collegate a questa pagina'],
+        ['favicon', m.favicon ? 'dichiarata' : null, 'l\'icona che compare nei risultati di Google'],
+      ].filter(r => r[1]);
+
+      p.push('<div class="campo"><b>Meta tag</b><table class="meta">');
+      for (const [nome, valore, spiega] of righe)
+        p.push('<tr><td class="chiave">' + T(nome) + '</td><td class="valore">' + T(valore) +
+          (spiega ? '<span class="spiegam">' + T(spiega) + '</span>' : '') + '</td></tr>');
+      p.push('</table></div>');
+    }
+
     if (q.scaletta && q.scaletta.length) {
       p.push('<div class="campo"><b>Scaletta dei titoli</b><div class="scaletta">');
       let precedente = 0;

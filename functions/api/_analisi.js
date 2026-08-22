@@ -450,6 +450,24 @@ export function analizzaPagina(html, url, intestazioni) {
       descrizione: prop(html, 'og:description') || null,
       immagine: prop(html, 'og:image') || null,
     },
+    // I meta tag così come sono scritti: serve vederli, non solo sapere che ci sono.
+    meta: {
+      charset: (html.match(/<meta[^>]+charset=["']?([\w-]+)/i) || [, null])[1],
+      lang: lang,
+      viewport: meta(html, 'viewport') || null,
+      robots: meta(html, 'robots') || null,
+      canonical: (html.match(/<link[^>]+rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)
+        || html.match(/<link[^>]+href=["']([^"']+)["'][^>]*rel=["']canonical["']/i) || [, null])[1],
+      autore: meta(html, 'author') || null,
+      tema: meta(html, 'theme-color') || null,
+      twitter: meta(html, 'twitter:card') || null,
+      ogTipo: prop(html, 'og:type') || null,
+      ogSito: prop(html, 'og:site_name') || null,
+      ogLingua: prop(html, 'og:locale') || null,
+      favicon: /<link[^>]+rel=["'][^"']*icon/i.test(html),
+      lingue: (html.match(/<link[^>]+hreflang=["']([^"']+)["']/gi) || [])
+        .map(t => (t.match(/hreflang=["']([^"']+)["']/i) || [, ''])[1]).slice(0, 12),
+    },
     tecnologie, generatore,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
