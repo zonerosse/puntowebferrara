@@ -17,7 +17,7 @@ faq:
   - q: "Perché il punteggio è scomposto?"
     a: "Perché un numero da solo non dice cosa fare. Ogni controllo mostra quanto pesa, perché conta e come si sistema. Se vuoi sapere da dove viene il tuo punteggio, apri le voci: c'è scritto."
   - q: "Perché su alcuni siti l'analisi non parte?"
-    a: "Per due motivi diversi. Il primo è il robots.txt: se vieta la scansione, lo strumento si ferma e te lo dice, perché quel file è il modo in cui un sito dichiara chi può leggerlo e va rispettato. Il secondo è una protezione anti-bot che risponde 403 a qualunque richiesta non provenga da un browser. In quel caso la richiesta viene comunque inviata con tutte le intestazioni che un browser manda normalmente e con un nome dichiarato — VerificaSitoBot — ma se il firewall insiste, l'analisi del codice si ferma lì. La velocità viene misurata lo stesso, perché la rileva Google con i propri sistemi. Per il resto scrivimi: se il sito è tuo, l'analisi la faccio a mano."
+    a: "Il criterio è uno solo: il robots.txt. È il file con cui un sito dichiara chi può scansionarlo. Se vieta la scansione, lo strumento si ferma e te lo dice — anche se tecnicamente potrebbe proseguire."
   - q: "Cosa non riesce a controllare?"
     a: "I siti che costruiscono i contenuti con JavaScript dopo il caricamento, perché viene letto il codice servito dal server. E la visibilità effettiva su ChatGPT o Perplexity, che richiederebbe di interrogare i modelli a pagamento. Meglio dirlo prima che scoprirlo dopo."
 ---

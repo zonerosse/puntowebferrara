@@ -336,6 +336,12 @@ function disegna(scoperta, risultati, lighthouse) {
     : voto >= 50 ? 'Ci sono problemi concreti che limitano quanto Google e i motori IA capiscono del sito.'
     : 'Il sito ha carenze tecniche importanti: gran parte di quello che pubblichi non arriva ai motori.';
 
+  if (scoperta.ripiegoUA)
+    p.push('<div class="grigio" style="margin-bottom:1rem">Questo sito ha rifiutato la prima richiesta. ' +
+      'Il suo robots.txt però consente la scansione, quindi l\'analisi è stata completata presentandosi ' +
+      'come un normale browser. È una scelta dichiarata, non un aggiramento: il robots.txt resta il ' +
+      'criterio, e quando vieta la scansione lo strumento si ferma.</div>');
+
   p.push('<h2>Risultato</h2><div class="punteggio"><div class="quadrante">' +
     '<svg width="112" height="112" viewBox="0 0 112 112">' +
     '<circle cx="56" cy="56" r="' + R + '" fill="none" stroke="var(--linea)" stroke-width="9"/>' +

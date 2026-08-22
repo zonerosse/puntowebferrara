@@ -2,6 +2,13 @@
 // Una sola invocazione, poche chiamate esterne (limite del piano gratuito: 50).
 
 const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+// Alcune protezioni rifiutano qualunque richiesta il cui User-Agent non sia un
+// browser noto. È un filtro grossolano, non un controllo di accesso: il
+// consenso lo esprime il robots.txt, che viene sempre rispettato per primo.
+// Se il robots permette la scansione e il firewall rifiuta lo stesso, si
+// riprova una volta con la stringa di un browser.
+const UA_BROWSER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+  + '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 // Un browser manda sempre queste intestazioni. Ometterle fa scattare le regole
 // dei firewall anche su siti che non hanno nessuna intenzione di bloccare.
 const INTESTAZIONI = {
@@ -69,7 +76,7 @@ async function corpoLimitato(risposta, limite) {
   return new TextDecoder('utf-8', { fatal: false }).decode(insieme);
 }
 
-async function prendi(url, tipo, limite) {
+async function prendi(url, tipo, limite, secondoGiro) {
   try {
     const risposta = await fetch(url, {
       headers: Object.assign({}, INTESTAZIONI, { 'Accept': tipo || '*/*' }),
@@ -79,6 +86,23 @@ async function prendi(url, tipo, limite) {
     });
     if (!risposta.ok) {
       if (risposta.body) { try { await risposta.body.cancel(); } catch (e) {} }
+      // Rifiuto tipico dei filtri anti-bot: un secondo tentativo, uno solo.
+      if (!secondoGiro && [401, 403, 405, 406, 429].includes(risposta.status)) {
+        const ritenta = await fetch(url, {
+          headers: Object.assign({}, INTESTAZIONI, {
+            'User-Agent': UA_BROWSER,
+            'Accept': tipo || 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          }),
+          redirect: 'follow',
+          signal: AbortSignal.timeout(SCADENZA),
+          cf: { cacheTtl: 300, cacheEverything: true },
+        }).catch(() => null);
+        if (ritenta && ritenta.ok) {
+          const testo2 = await corpoLimitato(ritenta, limite === undefined ? 120000 : limite);
+          return { ok: true, stato: ritenta.status, intestazioni: ritenta.headers, testo: testo2, ripiego: true };
+        }
+        if (ritenta && ritenta.body) { try { await ritenta.body.cancel(); } catch (e) {} }
+      }
       return { ok: false, stato: risposta.status };
     }
     const testo = await corpoLimitato(risposta, limite === undefined ? 120000 : limite);
@@ -210,13 +234,19 @@ async function scopri(context) {
   // In fila, su un sito lento, la somma delle attese superava il tempo massimo
   // concesso alla richiesta e la connessione cadeva prima della risposta.
   const soloStato = async (url, seguire) => {
-    try {
+    const chiama = async (intestazioni) => {
       const r = await fetch(url, {
-        headers: INTESTAZIONI,
+        headers: intestazioni,
         redirect: seguire ? 'follow' : 'manual',
         signal: AbortSignal.timeout(SCADENZA),
       });
       if (r.body) { try { await r.body.cancel(); } catch (e) {} }
+      return r;
+    };
+    try {
+      const r = await chiama(INTESTAZIONI);
+      if ([401, 403, 405, 406, 429].includes(r.status))
+        return await chiama(Object.assign({}, INTESTAZIONI, { 'User-Agent': UA_BROWSER })).catch(() => r);
       return r;
     } catch (err) { return null; }
   };
@@ -296,6 +326,7 @@ async function scopri(context) {
 
   return risposta({
     sito: radice,
+    ripiegoUA: !!home.ripiego,
     quattroZeroQuattro,
     alternativo,
     intestazioniHome,

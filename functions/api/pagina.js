@@ -5,6 +5,8 @@
 import { analizzaPagina } from './_analisi.js';
 
 const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+const UA_BROWSER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+  + '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 const INTESTAZIONI = {
   'User-Agent': UA,
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -39,6 +41,18 @@ async function pagina(context) {
     });
   } catch (err) {
     return risposta({ url: indirizzo, errore: 'Pagina irraggiungibile', dettaglio: String(err).slice(0, 120) }, 200);
+  }
+
+  if (!recupero.ok && [401, 403, 405, 406, 429].includes(recupero.status)) {
+    // Il permesso è già stato verificato sul robots.txt prima di arrivare qui:
+    // questo è solo un filtro sulla stringa del browser.
+    if (recupero.body) { try { await recupero.body.cancel(); } catch (e) {} }
+    recupero = await fetch(indirizzo, {
+      headers: Object.assign({}, INTESTAZIONI, { 'User-Agent': UA_BROWSER }),
+      redirect: 'follow',
+      signal: AbortSignal.timeout(8000),
+      cf: { cacheTtl: 300, cacheEverything: true },
+    }).catch(() => recupero);
   }
 
   if (!recupero.ok) {

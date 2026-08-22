@@ -223,14 +223,16 @@
       <p>Perché un numero da solo non dice cosa fare. Ogni controllo mostra quanto pesa, perché conta e come si
       sistema. Se vuoi sapere da dove viene il tuo punteggio, apri le voci: c'è scritto.</p></details>
     <details class="faq"><summary>Perché su alcuni siti l'analisi non parte?</summary>
-      <p>Per due motivi diversi. Il primo è il robots.txt: se vieta la scansione, lo strumento si ferma
-      e te lo dice, perché quel file è il modo in cui un sito dichiara chi può leggerlo e va rispettato.
-      Il secondo è una protezione anti-bot che risponde 403 a qualunque richiesta non provenga da un
-      browser. In quel caso la richiesta viene comunque inviata con tutte le intestazioni che un browser
-      manda normalmente e con un nome dichiarato — <code>VerificaSitoBot</code> — ma se il firewall
-      insiste, l'analisi del codice si ferma lì. La velocità viene misurata lo stesso, perché la rileva
-      Google con i propri sistemi. Per il resto <a href="/contatti/">scrivimi</a>: se il sito è tuo,
-      l'analisi la faccio a mano.</p></details>
+      <p>Il criterio è uno solo: il <strong>robots.txt</strong>. È il file con cui un sito dichiara chi può
+      scansionarlo. Se vieta la scansione, lo strumento si ferma e te lo dice — anche se tecnicamente
+      potrebbe proseguire.</p>
+      <p>Diverso è il caso di una protezione anti-bot che risponde 403 a qualunque richiesta il cui
+      User-Agent non sia un browser conosciuto. Quello non è un controllo di accesso ma un filtro
+      grossolano su una stringa informativa, e se il robots.txt consente la scansione l'analisi prosegue
+      presentandosi come un browser. Quando succede il report lo scrive in cima, perché è una scelta e
+      va dichiarata.</p>
+      <p>Se nemmeno così si passa — capita quando il blocco è sull'origine della richiesta — la velocità
+      viene misurata lo stesso da Google, e per il resto <a href="/contatti/">scrivimi</a>.</p></details>
 
     <details class="faq"><summary>Cosa non riesce a controllare?</summary>
       <p>I siti che costruiscono i contenuti con JavaScript dopo il caricamento, perché viene letto il codice
