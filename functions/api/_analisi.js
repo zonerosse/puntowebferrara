@@ -139,9 +139,23 @@ export function analizzaPagina(html, url, intestazioni) {
   if (tipi.filter(t => t === 'FAQPage').length > 1)
     segnala('Dati strutturati', 'alto', 'Due o pi\u00f9 blocchi FAQPage sulla stessa pagina: rischiano di essere ignorati entrambi');
 
-  const domande = titoli
-    .filter(t => t.livello >= 2 && t.testo.endsWith('?') && t.testo.length > 12)
-    .filter(t => !/^(vuoi|hai bisogno|want|do you|m\u00f6chten)/i.test(t.testo));
+  // Una domanda vale come FAQ solo se sotto c'è una risposta vera. I richiami
+  // pubblicitari sono scritti col punto interrogativo ma seguiti da una riga e
+  // un pulsante: contarli come domande produrrebbe uno schema falso.
+  const domande = [];
+  const reDomanda = /<h([23])[^>]*>([^<]*\?)<\/h\1>([\s\S]{0,1800}?)(?=<h[1-6][^>]*>|$)/gi;
+  let d;
+  while ((d = reDomanda.exec(corpo)) !== null) {
+    const testoDomanda = pulisci(d[2]);
+    if (testoDomanda.length <= 12) continue;
+    if (/^(vuoi|hai bisogno|pronto|scopri|want|do you|ready|m\u00f6chten)/i.test(testoDomanda)) continue;
+    const sotto = d[3] || '';
+    // un blocco con un pulsante e poche righe è una chiamata all'azione
+    if (/class=["'][^"']*\bbtn\b/i.test(sotto)) continue;
+    if (pulisci(sotto).length < 100) continue;
+    domande.push({ testo: testoDomanda });
+    if (domande.length > 60) break;
+  }
   if (domande.length >= 3 && !tipi.includes('FAQPage'))
     segnala('FAQ', 'medio', domande.length + ' domande nei titoli senza schema FAQPage: i motori non le riconoscono come domande');
 
