@@ -325,13 +325,24 @@ export function analizzaPagina(html, url, intestazioni) {
     || /(aggiornato il|pubblicato il|ultimo aggiornamento|scritto da|di\s+[A-Z][a-z]+\s+[A-Z])/i.test(visibile.slice(0, 4000));
 
   // collegamenti in uscita verso fonti: segnale di contenuto documentato
-  const AUTOREVOLI = /(wikipedia\.org|\.gov|\.edu|\.gov\.it|europa\.eu|schema\.org|w3\.org|developers\.google|web\.dev|mozilla\.org|istat\.it|iso\.org|nih\.gov)/i;
+  // Una citazione è un collegamento a una fonte esterna dentro il contenuto.
+  // Non contano i profili social né i recapiti, e non conta il piè di pagina:
+  // un link ripetuto su tutte le pagine è arredamento, non una fonte.
+  const SOCIAL = /(facebook|instagram|youtube|twitter\.com|x\.com|linkedin|tiktok|pinterest|wa\.me|whatsapp|t\.me|maps\.app\.goo\.gl|google\.[a-z.]+\/maps|mailto:|tel:)/i;
+  const contenuto = corpo
+    .replace(/<footer[\s\S]*?<\/footer>/gi, ' ')
+    .replace(/<nav[\s\S]*?<\/nav>/gi, ' ');
   let citazioni = 0, ancoreVaghe = 0;
-  const VAGHE = /^(clicca qui|qui|leggi|leggi di pi\u00f9|scopri|scopri di pi\u00f9|continua|vai|link|read more|click here|more)$/i;
-  for (const t of linkTag) {
+  const domini = new Set();
+  for (const t of (contenuto.match(/<a\s[^>]*href=["'][^"']+["'][^>]*>/gi) || [])) {
     const href = attr(t, 'href') || '';
-    if (AUTOREVOLI.test(href)) citazioni++;
+    if (!/^https?:\/\//i.test(href)) continue;
+    if (dominio && href.startsWith(dominio)) continue;
+    if (SOCIAL.test(href)) continue;
+    try { domini.add(new URL(href).hostname.replace(/^www\./, '')); } catch (e) {}
   }
+  citazioni = domini.size;
+  const VAGHE = /^(clicca qui|qui|leggi|leggi di pi\u00f9|scopri|scopri di pi\u00f9|continua|vai|link|read more|click here|more)$/i;
   for (const mm of (corpo.match(/<a\s[^>]*>([\s\S]{0,80}?)<\/a>/gi) || [])) {
     const testoAncora = pulisci(mm.replace(/<a[^>]*>/i, '').replace(/<\/a>/i, ''));
     if (testoAncora && VAGHE.test(testoAncora)) ancoreVaghe++;
