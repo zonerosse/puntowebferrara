@@ -87,7 +87,7 @@ export function analizzaPagina(html, url, intestazioni) {
 
   const robots = (meta(html, 'robots') || '').toLowerCase();
   const noindex = /noindex/.test(robots);
-  if (noindex) segnala('Indicizzazione', 'basso', 'Pagina esclusa dagli indici (noindex)');
+  if (noindex) segnala('Indicizzazione', 'basso', 'Pagina esclusa dagli indici con noindex: se \u00e8 voluto va bene cos\u00ec');
   if (/nofollow/.test(robots)) segnala('Indicizzazione', 'medio', 'La pagina blocca il passaggio di autorit\u00e0 con nofollow');
 
   const hreflang = (html.match(/hreflang=["'][^"']+["']/gi) || []).length;

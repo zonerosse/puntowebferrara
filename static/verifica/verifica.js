@@ -10,10 +10,15 @@ const SEGNI = {
   arancio: '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2.6l7.6 13.2H2.4z" stroke-linejoin="round"/><path d="M10 8v3.6" stroke-linecap="round"/><circle cx="10" cy="14" r="1" fill="currentColor" stroke="none"/></svg>',
   rosso:   '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M7.2 7.2l5.6 5.6M12.8 7.2l-5.6 5.6" stroke-linecap="round"/></svg>',
   grigio:  '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8" stroke-dasharray="2.5 2.5"/><path d="M6.5 10h7" stroke-linecap="round"/></svg>',
+  nota:    '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 2.6a5 5 0 0 0-3 9v1.6h6V11.6a5 5 0 0 0-3-9z" stroke-linejoin="round"/><path d="M8 16.4h4M8.6 18.2h2.8" stroke-linecap="round"/></svg>',
 };
+// Cinque livelli. Quello in mezzo, "nota", è la differenza fra un problema e
+// una rifinitura: sopra il 95% delle pagine il controllo resta verde e accanto
+// compare un suggerimento, non un avviso.
 function livello(quota) {
   if (quota == null) return 'grigio';
   if (quota >= 0.999) return 'ok';
+  if (quota >= 0.95) return 'nota';
   if (quota >= 0.75) return 'giallo';
   if (quota >= 0.35) return 'arancio';
   return 'rosso';
@@ -24,7 +29,7 @@ const pill = (liv, testo) => '<span class="pill liv-' + liv + '">' + segno(liv) 
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
-  ['basso', 'Rifiniture', 'giallo'],
+  ['basso', 'Suggerimenti', 'nota'],
 ];
 
 const $ = id => document.getElementById(id);
@@ -216,8 +221,8 @@ function disegna(scoperta, risultati, lighthouse) {
   const p = [];
   const R = 50, C = 2 * Math.PI * R;
   const livVoto = livello(voto / 100 >= 0.999 ? 1 : voto / 100);
-  const colore = { ok:'var(--verde)', giallo:'var(--giallo)', arancio:'var(--arancio)',
-                   rosso:'var(--rosso)', grigio:'#98a5a1' }[livVoto];
+  const colore = { ok:'var(--verde)', nota:'var(--verde)', giallo:'var(--giallo)',
+                   arancio:'var(--arancio)', rosso:'var(--rosso)', grigio:'#98a5a1' }[livVoto];
   const giudizio = voto >= 90 ? 'Il sito è in ottimo stato: quello che manca è rifinitura.'
     : voto >= 75 ? 'Buona base, con qualche punto da sistemare.'
     : voto >= 50 ? 'Ci sono problemi concreti che limitano quanto Google e i motori IA capiscono del sito.'
@@ -259,7 +264,8 @@ function disegna(scoperta, risultati, lighthouse) {
     '<p class="nota" style="margin:-.5rem 0 .6rem">Apri una voce per leggere perché conta e come si sistema.</p>' +
     '<div class="legenda">' +
     '<span class="liv-ok">' + SEGNI.ok + 'superato ovunque</span>' +
-    '<span class="liv-giallo">' + SEGNI.giallo + 'quasi ovunque</span>' +
+    '<span class="liv-nota">' + SEGNI.nota + 'suggerimento</span>' +
+    '<span class="liv-giallo">' + SEGNI.giallo + 'da rivedere</span>' +
     '<span class="liv-arancio">' + SEGNI.arancio + 'su parte delle pagine</span>' +
     '<span class="liv-rosso">' + SEGNI.rosso + 'non superato</span>' +
     '<span class="liv-grigio">' + SEGNI.grigio + 'non misurato</span></div>');
@@ -273,13 +279,17 @@ function disegna(scoperta, risultati, lighthouse) {
       else if (v._valore) etichetta = v._valore;
       else if (v._quota >= 0.999) etichetta = 'superato';
       else if (v._quota <= 0.001) etichetta = 'non superato';
+      else if (liv === 'nota') etichetta = 'suggerimento';
       else etichetta = Math.round(v._quota * 100) + '% delle pagine';
       const punti = assente ? '—' : v._punti + ' / ' + v.punti;
       p.push('<details class="controllo liv-' + liv + '"><summary>' +
         '<span class="che"><span class="liv-' + liv + '">' + segno(liv) + '</span>' + T(v.nome) + '</span>' +
         '<span class="val">' + pill(liv, etichetta) +
         ' <span class="punti-voce">' + punti + '</span></span></summary>' +
-        '<div class="spiega"><p><b>Perché conta</b>' + T(v.perche) + '</p>' +
+        '<div class="spiega">' +
+        (liv === 'nota' ? '<p class="rifinitura">Superato su quasi tutte le pagine: manca su circa il ' +
+          Math.round((1 - v._quota) * 100) + '%. Non è un problema, ma se vuoi chiudere il cerchio è qui che si interviene.</p>' : '') +
+        '<p><b>Perché conta</b>' + T(v.perche) + '</p>' +
         '<p><b>Come si sistema</b>' + T(v.come) + '</p></div></details>');
     }
   }

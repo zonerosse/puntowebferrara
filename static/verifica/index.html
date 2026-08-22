@@ -7,13 +7,13 @@
 <meta name="description" content="Analisi tecnica gratuita del tuo sito: 40 controlli su dati strutturati, accesso dei crawler IA, struttura, sicurezza e prestazioni reali. Ogni punto spiegato, con il rimedio.">
 <link rel="canonical" href="https://puntowebferrara.com/verifica/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Verifica gratuita del sito: SEO, prestazioni e motori IA">
+<meta property="og:title" content="Cosa vedono Google e le AI quando leggono il tuo sito">
 <meta property="og:description" content="Quaranta controlli sul tuo sito. Ogni punto del punteggio è spiegato, con scritto come si sistema. Gratis, senza registrazione.">
 <meta property="og:url" content="https://puntowebferrara.com/verifica/">
 <meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
 <meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Verifica gratuita del sito: SEO, prestazioni e motori IA">
+<meta name="twitter:title" content="Cosa vedono Google e le AI quando leggono il tuo sito">
 <meta name="twitter:description" content="Quaranta controlli sul tuo sito, ognuno spiegato e con il rimedio.">
 <meta name="twitter:image" content="https://puntowebferrara.com/img/og-image.png">
 <meta name="robots" content="index,follow">
@@ -153,6 +153,8 @@
   .spiega p:last-child{margin-bottom:0}
   .spiega b{color:var(--inchiostro);font-weight:700;font-size:.78rem;letter-spacing:.05em;
             text-transform:uppercase;display:block;margin-bottom:.15rem}
+  .spiega .rifinitura{color:var(--verde);background:var(--verde-chiaro);border-radius:3px;
+                      padding:.5rem .7rem;font-size:.87rem}
 
   .crawler{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
            background:var(--linea);border:1px solid var(--linea);border-radius:4px;overflow:hidden}
@@ -198,6 +200,7 @@
   .liv-ok{color:var(--verde)} .liv-giallo{color:var(--giallo)}
   .liv-arancio{color:var(--arancio)} .liv-rosso{color:var(--rosso)}
   .liv-grigio{color:#98a5a1}
+  .liv-nota{color:var(--verde)}
   .pill{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--mono);font-size:.7rem;
         letter-spacing:.04em;padding:.2rem .5rem;border-radius:999px;white-space:nowrap;font-weight:600}
   .pill.liv-ok{background:var(--verde-chiaro)}
@@ -205,6 +208,7 @@
   .pill.liv-arancio{background:var(--arancio-chiaro)}
   .pill.liv-rosso{background:var(--rosso-chiaro)}
   .pill.liv-grigio{background:#eef1f0}
+  .pill.liv-nota{background:var(--verde-chiaro);color:var(--verde)}
   .punti-voce{font-family:var(--mono);font-size:.74rem;color:var(--grafite);white-space:nowrap}
 
   .controllo>summary{align-items:center}
@@ -213,9 +217,10 @@
   .controllo.liv-arancio{border-left:3px solid var(--arancio)}
   .controllo.liv-giallo{border-left:3px solid var(--giallo)}
   .controllo.liv-ok{border-left:3px solid var(--verde)}
+  .controllo.liv-nota{border-left:3px solid var(--verde)}
   .controllo.liv-grigio{border-left:3px solid #cdd6d3}
 
-  .gruppi i em.liv-ok{background:var(--verde)} .gruppi i em.liv-giallo{background:var(--giallo)}
+  .gruppi i em.liv-ok{background:var(--verde)} .gruppi i em.liv-nota{background:var(--verde)} .gruppi i em.liv-giallo{background:var(--giallo)}
   .gruppi i em.liv-arancio{background:var(--arancio)} .gruppi i em.liv-rosso{background:var(--rosso)}
 
   .voce.alto{border-left-color:var(--rosso);background:linear-gradient(90deg,var(--rosso-chiaro) 0,var(--foglio) 90px)}
@@ -244,7 +249,7 @@
   <nav class="briciole"><a href="/">Punto Web Ferrara</a> › Verifica sito</nav>
 
   <p class="occhiello">Strumento gratuito · 40 controlli</p>
-  <h1>Cosa vede Google quando legge il tuo sito. E cosa vede ChatGPT.</h1>
+  <h1>Cosa vedono Google e le AI quando leggono il tuo sito</h1>
   <p class="tesi">Incolla l'indirizzo. Lo strumento scarica le pagine, legge il codice, misura la velocità
   reale con Lighthouse e ti dice cosa c'è e cosa manca. <b>Ogni punto del punteggio è spiegato:</b> perché
   quel controllo conta e come si sistema. Niente registrazione, niente email.</p>
