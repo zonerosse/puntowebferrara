@@ -225,8 +225,10 @@ function disegna(scoperta, risultati, lighthouse) {
   // ---- Lighthouse
   p.push('<h2>Velocità misurata</h2>');
   if (!lh) {
-    p.push('<div class="grigio">' + T((lighthouse && lighthouse.motivo) || 'Misura non disponibile') +
-      ' Il resto dell\'analisi non ne risente: i punti di questo gruppo sono esclusi dal totale.</div>');
+    const motivo = (lighthouse && lighthouse.motivo) || 'Misura non disponibile.';
+    p.push('<div class="grigio"><b>' + T(motivo) + '</b><br>' +
+      "Il resto dell'analisi non ne risente: i dieci punti di questo gruppo sono esclusi dal totale, " +
+      'non contati come zero.</div>');
   } else {
     p.push('<table><tr><th>Metrica</th><th style="text-align:right">Valore</th></tr>');
     for (const m of lh.metriche)

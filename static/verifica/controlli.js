@@ -112,13 +112,10 @@ export const CONTROLLI = [
 ]},
 
 { gruppo: 'Peso e codice', peso: 8, voci: [
-  { id:'compressione', punti:2, nome:'Le pagine viaggiano compresse',
-    perche:'La compressione taglia il peso del testo di circa il settanta per cento. È gratis e si attiva con una spunta.',
-    come:'Attiva Brotli o gzip nella configurazione del server, o passa da Cloudflare che lo fa da solo.' },
-  { id:'pesoPagina', punti:2, nome:'Le pagine non sono troppo pesanti',
+  { id:'pesoPagina', punti:3, nome:'Le pagine non sono troppo pesanti',
     perche:'Oltre i 250 KB di solo HTML la pagina è lenta da scaricare e faticosa da leggere per i motori, che a volte la troncano.',
     come:'Sposta il CSS in un file esterno invece che dentro la pagina, e togli il codice generato che non serve.' },
-  { id:'scriptNonBloccanti', punti:2, nome:'Gli script non bloccano il disegno della pagina',
+  { id:'scriptNonBloccanti', punti:3, nome:'Gli script non bloccano il disegno della pagina',
     perche:'Ogni script senza defer ferma il browser finché non è stato scaricato ed eseguito. È la causa più comune di pagine bianche per due secondi.',
     come:'Aggiungi defer agli script che non servono subito, e togli quelli che non usi più.' },
   { id:'immaginiConMisure', punti:1, nome:'Le immagini dichiarano le proprie misure',

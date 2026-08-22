@@ -198,8 +198,9 @@ export function analizzaPagina(html, url, intestazioni) {
     'Manca HSTS: il primo accesso pu\u00f2 ancora passare in chiaro');
   if (conIntestazioni && sicurezza < 3) segnala('Sicurezza', 'medio',
     'Solo ' + sicurezza + ' intestazioni di sicurezza su 4');
-  if (conIntestazioni && !compresso) segnala('Prestazioni', 'medio',
-    'La pagina non viaggia compressa: molti byte in pi\u00f9 a ogni visita');
+  // Nota: la compressione non è verificabile da qui. Cloudflare decomprime la
+  // risposta e rimuove l'intestazione content-encoding, quindi risulterebbe
+  // sempre assente. Il controllo lo fa Lighthouse, che vede la pagina davvero.
 
   // ------------------------------------------------------------ esiti
   const flag = {
@@ -235,7 +236,6 @@ export function analizzaPagina(html, url, intestazioni) {
     https: https,
     hsts: !conIntestazioni || hsts,
     intestazioniSicurezza: !conIntestazioni || sicurezza >= 3,
-    compressione: !conIntestazioni || compresso,
     scriptNonBloccanti: scriptBloccanti <= 3,
     pesoPagina: html.length <= 250000,
   };

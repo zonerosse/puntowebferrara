@@ -13,23 +13,7 @@
 //
 // Quota gratuita: 25.000 chiamate al giorno. Ogni analisi ne usa una o due.
 
-const CAMPI = [
-  'lighthouseResult/categories',
-  'lighthouseResult/audits/first-contentful-paint',
-  'lighthouseResult/audits/largest-contentful-paint',
-  'lighthouseResult/audits/cumulative-layout-shift',
-  'lighthouseResult/audits/total-blocking-time',
-  'lighthouseResult/audits/speed-index',
-  'lighthouseResult/audits/interactive',
-  'lighthouseResult/audits/server-response-time',
-  'lighthouseResult/audits/uses-responsive-images',
-  'lighthouseResult/audits/unused-javascript',
-  'lighthouseResult/audits/render-blocking-resources',
-  'lighthouseResult/audits/modern-image-formats',
-  'lighthouseResult/audits/uses-text-compression',
-  'loadingExperience/metrics',
-  'loadingExperience/overall_category',
-].join(',');
+const CAMPI = 'lighthouseResult(categories,audits),loadingExperience(overall_category)';
 
 // Le voci che il report mostra come "cosa rallenta la pagina".
 const RIMEDI = {
@@ -63,21 +47,34 @@ export async function onRequest(context) {
       motivo: 'Misura delle prestazioni non configurata: manca la chiave PageSpeed Insights.',
     });
 
-  const richiesta = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
+  const base = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
     + '?url=' + encodeURIComponent(indirizzo)
     + '&strategy=' + dispositivo
     + '&category=performance&category=accessibility&category=best-practices&category=seo'
-    + '&fields=' + encodeURIComponent(CAMPI)
     + '&key=' + encodeURIComponent(chiave);
+
+  // Prima con la risposta abbreviata, che pesa molto meno. Se Google non la
+  // gradisce, si ripiega sulla risposta intera: meglio lenta che assente.
+  async function chiedi(url) {
+    const r = await fetch(url, { cf: { cacheTtl: 900, cacheEverything: true } });
+    if (r.ok) return { ok: true, dati: await r.json() };
+    let messaggio = '';
+    try {
+      const errore = await r.json();
+      messaggio = (errore.error && errore.error.message) || '';
+    } catch (e) { /* la risposta non era JSON */ }
+    return { ok: false, stato: r.status, messaggio: messaggio.slice(0, 180) };
+  }
 
   let dati;
   try {
-    const r = await fetch(richiesta, { cf: { cacheTtl: 900, cacheEverything: true } });
-    if (!r.ok) {
-      const testo = (await r.text()).slice(0, 200);
-      return risposta({ disponibile: false, motivo: 'Google ha risposto ' + r.status, dettaglio: testo });
-    }
-    dati = await r.json();
+    let esito = await chiedi(base + '&fields=' + encodeURIComponent(CAMPI));
+    if (!esito.ok) esito = await chiedi(base);
+    if (!esito.ok) return risposta({
+      disponibile: false,
+      motivo: 'Google ha risposto ' + esito.stato + (esito.messaggio ? ': ' + esito.messaggio : ''),
+    });
+    dati = esito.dati;
   } catch (err) {
     return risposta({ disponibile: false, motivo: 'Misura non riuscita', dettaglio: String(err).slice(0, 120) });
   }
