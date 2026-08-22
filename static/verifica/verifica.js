@@ -26,6 +26,17 @@ function livello(quota) {
 const segno = liv => SEGNI[liv] || SEGNI.grigio;
 const pill = (liv, testo) => '<span class="pill liv-' + liv + '">' + segno(liv) + T(testo) + '</span>';
 
+// In un elenco di cose da sistemare ogni voce deve descrivere il difetto, non
+// lo stato: "I livelli dei titoli non saltano" fra le cose da fare non si legge.
+function difetto(v) {
+  const testo = v.no || v.nome;
+  if (v._tot && v._quota > 0.001) {
+    const quante = v._tot - v._n;
+    return testo + ' \u2014 ' + quante + (quante === 1 ? ' pagina' : ' pagine');
+  }
+  return testo;
+}
+
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
@@ -214,7 +225,7 @@ function disegna(scoperta, risultati, lighthouse) {
   const gravi = segnalazioni.filter(s => s.gravita === 'alto');
   const perse = [];
   for (const g of CONTROLLI) for (const v of g.voci)
-    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: (v._quota < 0.5 && v.no) ? v.no : v.nome, persi: v.punti - v._punti, come: v.come, quota: v._quota });
+    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: difetto(v), persi: v.punti - v._punti, come: v.come, quota: v._quota });
   perse.sort((a, b) => b.persi - a.persi);
   const principali = perse.filter(x => x.persi > 0).slice(0, 3);
 
