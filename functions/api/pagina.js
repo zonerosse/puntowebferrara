@@ -5,7 +5,7 @@
 import { analizzaPagina } from './_analisi.js';
 
 const UA = 'VerificaSito/1.0 (strumento di analisi SEO e GEO)';
-const MAX_BYTE = 900000; // oltre questa soglia la pagina viene troncata
+const MAX_BYTE = 500000; // oltre questa soglia la pagina viene troncata
 
 export async function onRequest(context) {
   try {
@@ -49,9 +49,35 @@ async function pagina(context) {
     if (v) intestazioni[nome] = v;
   }
 
-  let html = await recupero.text();
-  const troncata = html.length > MAX_BYTE;
-  if (troncata) html = html.slice(0, MAX_BYTE);
+  // Si legge solo la porzione che serve: decodificare una pagina da più
+  // megabyte costerebbe più CPU di quanta ne concede il piano gratuito.
+  let html = '';
+  let troncata = false;
+  if (recupero.body) {
+    const lettore = recupero.body.getReader();
+    const pezzi = [];
+    let presi = 0;
+    try {
+      while (presi < MAX_BYTE) {
+        const { done, value } = await lettore.read();
+        if (done) break;
+        pezzi.push(value);
+        presi += value.length;
+      }
+      troncata = presi >= MAX_BYTE;
+    } finally {
+      try { await lettore.cancel(); } catch (e) { /* già chiuso */ }
+    }
+    const insieme = new Uint8Array(Math.min(presi, MAX_BYTE));
+    let posizione = 0;
+    for (const pezzo of pezzi) {
+      if (posizione >= insieme.length) break;
+      const quanto = Math.min(pezzo.length, insieme.length - posizione);
+      insieme.set(pezzo.subarray(0, quanto), posizione);
+      posizione += quanto;
+    }
+    html = new TextDecoder('utf-8', { fatal: false }).decode(insieme);
+  }
 
   const esito = analizzaPagina(html, recupero.url || indirizzo, intestazioni);
   esito.peso = html.length;

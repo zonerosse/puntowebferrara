@@ -103,8 +103,10 @@ modulo.addEventListener('submit', async e => {
     avanzamento.classList.remove('attivo');
     bottone.disabled = false;
     zonaErrore.innerHTML = '<div class="errore"><b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
-      " Controlla che l'indirizzo sia completo, con https:// davanti. Se il sito è protetto da un firewall " +
-      'che blocca i programmi automatici, l\'analisi non passa: scrivimi e lo guardo a mano.</div>';
+      '<br><br>Le cause più frequenti sono tre: l\'indirizzo è scritto male, il sito è protetto da un ' +
+      'firewall che blocca i programmi automatici, oppure è talmente grande che l\'analisi si interrompe ' +
+      'prima di finire. In tutti e tre i casi <a href="/contatti/">scrivimi</a>: lo guardo a mano e ti ' +
+      'mando il risultato.</div>';
     return;
   }
 

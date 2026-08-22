@@ -23,15 +23,48 @@ const CRAWLER = [
   ['cohere-ai', 'Cohere', 3],
 ];
 
-async function prendi(url, tipo) {
+// Legge al massimo "limite" byte del corpo, poi chiude il flusso. Scaricare e
+// decodificare un file intero per usarne le prime righe è lo spreco che fa
+// sforare i 10 millisecondi di CPU sui siti grandi.
+async function corpoLimitato(risposta, limite) {
+  if (!limite || !risposta.body) return '';
+  const lettore = risposta.body.getReader();
+  const pezzi = [];
+  let presi = 0;
+  try {
+    while (presi < limite) {
+      const { done, value } = await lettore.read();
+      if (done) break;
+      pezzi.push(value);
+      presi += value.length;
+    }
+  } finally {
+    try { await lettore.cancel(); } catch (e) { /* già chiuso */ }
+  }
+  const insieme = new Uint8Array(Math.min(presi, limite));
+  let posizione = 0;
+  for (const pezzo of pezzi) {
+    if (posizione >= insieme.length) break;
+    const quanto = Math.min(pezzo.length, insieme.length - posizione);
+    insieme.set(pezzo.subarray(0, quanto), posizione);
+    posizione += quanto;
+  }
+  return new TextDecoder('utf-8', { fatal: false }).decode(insieme);
+}
+
+async function prendi(url, tipo, limite) {
   try {
     const risposta = await fetch(url, {
       headers: { 'User-Agent': UA, 'Accept': tipo || '*/*' },
       redirect: 'follow',
       cf: { cacheTtl: 300, cacheEverything: true },
     });
-    if (!risposta.ok) return { ok: false, stato: risposta.status };
-    return { ok: true, stato: risposta.status, intestazioni: risposta.headers, testo: await risposta.text() };
+    if (!risposta.ok) {
+      if (risposta.body) { try { await risposta.body.cancel(); } catch (e) {} }
+      return { ok: false, stato: risposta.status };
+    }
+    const testo = await corpoLimitato(risposta, limite === undefined ? 120000 : limite);
+    return { ok: true, stato: risposta.status, intestazioni: risposta.headers, testo };
   } catch (err) {
     return { ok: false, errore: String(err).slice(0, 120) };
   }
@@ -123,7 +156,7 @@ async function scopri(context) {
   const radice = base.origin;
 
   // 1. la home deve rispondere
-  const home = await prendi(radice + '/');
+  const home = await prendi(radice + '/', null, 0);
   if (!home.ok) return risposta({ errore: 'Il sito non risponde (stato ' + (home.stato || '?') + ')' }, 502);
 
   // 1b. Come si comporta con un indirizzo inesistente (404 finto = pagine fantasma indicizzate)
@@ -133,6 +166,7 @@ async function scopri(context) {
       headers: { 'User-Agent': UA }, redirect: 'follow',
     });
     quattroZeroQuattro = finta.status;
+    if (finta.body) { try { await finta.body.cancel(); } catch (e) {} }
   } catch (err) { /* non blocca l'analisi */ }
 
   // 1c. Coerenza fra indirizzo con e senza www
@@ -142,6 +176,7 @@ async function scopri(context) {
       ? base.origin.replace('://www.', '://')
       : base.origin.replace('://', '://www.');
     const r = await fetch(altro + '/', { headers: { 'User-Agent': UA }, redirect: 'manual' });
+    if (r.body) { try { await r.body.cancel(); } catch (e) {} }
     alternativo = {
       indirizzo: altro,
       stato: r.status,
@@ -151,13 +186,13 @@ async function scopri(context) {
   } catch (err) { /* alcuni domini non hanno il gemello: normale */ }
 
   // 2. robots.txt
-  const robotsGrezzo = await prendi(radice + '/robots.txt');
+  const robotsGrezzo = await prendi(radice + '/robots.txt', 'text/plain', 60000);
   const robots = robotsGrezzo.ok
     ? leggiRobots(robotsGrezzo.testo)
     : { crawler: CRAWLER.map(([nome, chi, livello]) => ({ nome, chi, livello, ammesso: true, esplicito: false })), sitemap: [], userAgentDichiarati: 0 };
 
   // 3. llms.txt
-  const llms = await prendi(radice + '/llms.txt');
+  const llms = await prendi(radice + '/llms.txt', 'text/plain', 40000);
 
   // 4. sitemap: prima quelle dichiarate in robots, poi il percorso classico
   const candidate = robots.sitemap.length ? robots.sitemap.slice(0, 3) : [radice + '/sitemap.xml'];
@@ -170,7 +205,7 @@ async function scopri(context) {
     const indirizzoSitemap = daVisitare.shift();
     if (viste.has(indirizzoSitemap)) continue;
     viste.add(indirizzoSitemap);
-    const documento = await prendi(indirizzoSitemap, 'application/xml');
+    const documento = await prendi(indirizzoSitemap, 'application/xml', 300000);
     if (!documento.ok) continue;
     sitemapTrovate++;
     const trovati = estraiUrl(documento.testo);
