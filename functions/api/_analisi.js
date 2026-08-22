@@ -29,6 +29,84 @@ const attr = (tag, nome) => {
   return m ? m[1] : null;
 };
 
+
+// ---------------------------------------------------------------- tecnologie
+// Riconoscimento per firme: tag generator, percorsi dei file, intestazioni.
+// È un'euristica, non una certezza: si dichiarano solo le cose che lasciano
+// tracce inequivocabili.
+const FIRME = [
+  // piattaforme
+  ['WordPress', 'piattaforma', /wp-content\/|wp-includes\/|<link[^>]+wp-json|name=["']generator["'][^>]+WordPress/i],
+  ['Joomla', 'piattaforma', /name=["']generator["'][^>]+Joomla|\/media\/jui\//i],
+  ['Drupal', 'piattaforma', /name=["']generator["'][^>]+Drupal|drupal-settings-json|\/sites\/default\/files/i],
+  ['PrestaShop', 'piattaforma', /prestashop|\/modules\/ps_/i],
+  ['Magento', 'piattaforma', /Mage\.Cookies|\/static\/version\d+\/frontend\//i],
+  ['Shopify', 'piattaforma', /cdn\.shopify\.com|Shopify\.theme/i],
+  ['Wix', 'piattaforma', /static\.wixstatic\.com|wix-warmup-data/i],
+  ['Squarespace', 'piattaforma', /squarespace\.com\/universal|static1\.squarespace\.com/i],
+  ['Webflow', 'piattaforma', /assets\.website-files\.com|data-wf-page|assets-global\.website-files/i],
+  ['Ghost', 'piattaforma', /name=["']generator["'][^>]+Ghost/i],
+  ['Hugo', 'piattaforma', /name=["']generator["'][^>]+Hugo/i],
+  ['Jekyll', 'piattaforma', /name=["']generator["'][^>]+Jekyll/i],
+  ['Astro', 'piattaforma', /name=["']generator["'][^>]+Astro/i],
+  ['Next.js', 'piattaforma', /__NEXT_DATA__|\/_next\/static/i],
+  ['Nuxt', 'piattaforma', /__NUXT__|\/_nuxt\//i],
+  ['Gatsby', 'piattaforma', /___gatsby|\/page-data\//i],
+  ['GoDaddy Website Builder', 'piattaforma', /img1\.wsimg\.com|websitebuilder/i],
+  ['Aruba WebSite Creator', 'piattaforma', /aruba\.it\/.*sitebuilder|websitecreator/i],
+
+  // costruttori e temi WordPress
+  ['Elementor', 'costruttore', /elementor-page|\/elementor\/assets\//i],
+  ['Divi', 'costruttore', /et_pb_|\/themes\/Divi\//i],
+  ['WPBakery', 'costruttore', /vc_row|js_composer/i],
+  ['Beaver Builder', 'costruttore', /fl-builder/i],
+  ['Gutenberg', 'costruttore', /wp-block-|\/wp-includes\/css\/dist\/block-library/i],
+  ['WooCommerce', 'negozio', /woocommerce|wc-block/i],
+
+  // librerie e stili
+  ['jQuery', 'libreria', /jquery[.-][\d.]*(min\.)?js/i],
+  ['React', 'libreria', /data-reactroot|_reactListening|react-dom/i],
+  ['Vue', 'libreria', /data-v-[0-9a-f]{6,}|vue(\.runtime)?(\.min)?\.js/i],
+  ['Angular', 'libreria', /ng-version=|angular(\.min)?\.js/i],
+  ['Bootstrap', 'stili', /bootstrap[.-][\d.]*(min\.)?css|class=["'][^"']*\b(col-md-|navbar-expand)/i],
+  ['Tailwind', 'stili', /tailwind|class=["'][^"']*\b(flex items-center|text-gray-\d00)/i],
+  ['Font Awesome', 'stili', /font-?awesome/i],
+  ['Google Fonts', 'stili', /fonts\.googleapis\.com|fonts\.gstatic\.com/i],
+
+  // misurazione e marketing
+  ['Google Analytics 4', 'misurazione', /gtag\/js\?id=G-|googletagmanager\.com\/gtag/i],
+  ['Google Tag Manager', 'misurazione', /googletagmanager\.com\/gtm\.js|GTM-[A-Z0-9]{5,}/],
+  ['Meta Pixel', 'misurazione', /connect\.facebook\.net\/[^"']*fbevents/i],
+  ['Hotjar', 'misurazione', /static\.hotjar\.com/i],
+  ['Microsoft Clarity', 'misurazione', /clarity\.ms/i],
+  ['Matomo', 'misurazione', /matomo\.js|piwik\.js/i],
+
+  // consensi
+  ['Iubenda', 'consensi', /iubenda/i],
+  ['Cookiebot', 'consensi', /consent\.cookiebot/i],
+  ['CookieYes', 'consensi', /cookieyes|cky-/i],
+  ['Complianz', 'consensi', /complianz/i],
+
+  // chat e prenotazioni
+  ['WhatsApp', 'contatto', /wa\.me\/|api\.whatsapp\.com/i],
+  ['Tawk.to', 'contatto', /embed\.tawk\.to/i],
+  ['Calendly', 'contatto', /calendly\.com/i],
+];
+
+const FIRME_INTESTAZIONI = [
+  ['Cloudflare', 'rete', 'server', /cloudflare/i],
+  ['Fastly', 'rete', 'server', /fastly/i],
+  ['Akamai', 'rete', 'server', /akamai/i],
+  ['Amazon CloudFront', 'rete', 'via', /cloudfront/i],
+  ['Vercel', 'rete', 'server', /vercel/i],
+  ['Netlify', 'rete', 'server', /netlify/i],
+  ['GitHub Pages', 'rete', 'server', /github\.com/i],
+  ['nginx', 'server', 'server', /nginx/i],
+  ['Apache', 'server', 'server', /apache/i],
+  ['LiteSpeed', 'server', 'server', /litespeed/i],
+  ['Microsoft IIS', 'server', 'server', /iis/i],
+];
+
 export function analizzaPagina(html, url, intestazioni) {
   const H = intestazioni || {};
   const problemi = [];
@@ -268,6 +346,30 @@ export function analizzaPagina(html, url, intestazioni) {
 
   const favicon = /<link[^>]+rel=["'][^"']*icon/i.test(html);
 
+  // ------------------------------------------------------------ tecnologie
+  const tecnologie = [];
+  const campione = html.length > 400000 ? html.slice(0, 400000) : html;
+  // Le firme si cercano nel codice, non nel testo: un articolo che parla di
+  // WooCommerce non significa che il sito lo usi. Si tengono i tag e il
+  // contenuto degli script, si butta la prosa.
+  const perFirme = campione.length > 180000 ? campione.slice(0, 180000) : campione;
+  const marcatura = perFirme.replace(/>[^<]*</g, '><');
+  const dentroScript = (perFirme.match(/<script[^>]*>[\s\S]{0,800}?<\/script>/gi) || [])
+    .slice(0, 20).join(' ');
+  const tecnico = marcatura + ' ' + dentroScript;
+  for (const [nome, tipo, prova] of FIRME) {
+    if (prova.test(tecnico)) tecnologie.push({ nome, tipo });
+    if (tecnologie.length > 40) break;
+  }
+  for (const [nome, tipo, intestazione, prova] of FIRME_INTESTAZIONI) {
+    const v = String(H[intestazione] || '');
+    if (v && prova.test(v)) tecnologie.push({ nome, tipo });
+  }
+  // la versione di PHP, quando il server la dichiara: è un dato di sicurezza
+  const php = String(H['x-powered-by'] || '').match(/PHP\/([\d.]+)/i);
+  if (php) tecnologie.push({ nome: 'PHP ' + php[1], tipo: 'server' });
+  const generatore = (html.match(/<meta[^>]+name=["']generator["'][^>]+content=["']([^"']+)["']/i) || [, null])[1];
+
   // ------------------------------------------------------------ esiti
   const flag = {
     firmaVisibile: firmaVisibile,
@@ -324,6 +426,7 @@ export function analizzaPagina(html, url, intestazioni) {
     tipiSchema: Array.from(new Set(tipi)),
     scriptEsterni, scriptBloccanti, cssEsterni, peso: html.length,
     citazioni, ancoreVaghe, sameAs, nomeAutore, misto,
+    tecnologie, generatore,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
   };

@@ -365,6 +365,33 @@ function disegna(scoperta, risultati, lighthouse) {
   perse.sort((a, b) => b.persi - a.persi);
   const principali = perse.filter(x => x.persi > 0).slice(0, 3);
 
+  // ---- con cosa è fatto il sito: serve subito, va in cima al report
+  const contaTec = {};
+  for (const q of buone) for (const t of (q.tecnologie || [])) {
+    const chiave = t.nome + '|' + t.tipo;
+    contaTec[chiave] = (contaTec[chiave] || 0) + 1;
+  }
+  const trovate = Object.entries(contaTec)
+    .map(([k, n]) => { const [nome, tipo] = k.split('|'); return { nome, tipo, n }; })
+    .filter(t => t.n >= Math.max(1, Math.floor(buone.length * 0.2)))
+    .sort((a, b) => b.n - a.n);
+  const generatore = (buone.find(q => q.generatore) || {}).generatore;
+
+  // Frase in chiaro: piattaforma, con il costruttore di pagine se c'è.
+  const piattaforma = trovate.find(t => t.tipo === 'piattaforma');
+  const costruttore = trovate.find(t => t.tipo === 'costruttore');
+  const negozio = trovate.find(t => t.tipo === 'negozio');
+  let conCosa = '';
+  if (piattaforma) {
+    conCosa = piattaforma.nome;
+    const aggiunte = [costruttore, negozio].filter(Boolean).map(x => x.nome);
+    if (aggiunte.length === 1) conCosa += ', con ' + aggiunte[0];
+    else if (aggiunte.length > 1) conCosa += ', con ' + aggiunte.slice(0, -1).join(', ') + ' e ' + aggiunte[aggiunte.length - 1];
+  } else if (generatore) {
+    // il tag generator è spesso prolisso: si tiene solo il nome
+    conCosa = generatore.split(/[-–—(]/)[0].trim().replace(/!$/, '');
+  }
+
   // ---- resa
   const p = [];
   const R = 50, C = 2 * Math.PI * R;
@@ -389,7 +416,9 @@ function disegna(scoperta, risultati, lighthouse) {
     'stroke-linecap="round" stroke-dasharray="' + C + '" stroke-dashoffset="' + (C * (1 - voto / 100)) + '"/>' +
     '</svg><b>' + voto + '</b></div><div class="parole">' +
     '<div class="dominio">' + T(scoperta.sito) + ' · ' + buone.length + ' pagine lette' +
-    (lh ? ' · velocità misurata su ' + T(lh.dispositivo) : '') + '</div><p>' + T(giudizio) + '</p></div></div>');
+    (lh ? ' · velocità misurata su ' + T(lh.dispositivo) : '') + '</div>' +
+    (conCosa ? '<p class="conCosa">Il sito è stato creato con <b>' + T(conCosa) + '</b></p>' : '') +
+    '<p>' + T(giudizio) + '</p></div></div>');
 
   p.push('<div class="gruppi">');
   for (const g of CONTROLLI) {
@@ -508,6 +537,44 @@ function disegna(scoperta, risultati, lighthouse) {
     p.push('<table><tr><th>Tipo</th><th style="text-align:right">Pagine</th></tr>');
     for (const [n, q] of elenco) p.push('<tr><td>' + T(n) + '</td><td class="num">' + q + '</td></tr>');
     p.push('</table>');
+  }
+
+  // ---- tabella completa delle tecnologie
+  if (trovate.length) {
+    const ORDINE = ['piattaforma', 'costruttore', 'negozio', 'server', 'rete',
+                    'libreria', 'stili', 'misurazione', 'consensi', 'contatto'];
+    const ETICHETTE = {
+      piattaforma: 'Piattaforma', costruttore: 'Costruttore di pagine', negozio: 'Commercio elettronico',
+      server: 'Server', rete: 'Rete di distribuzione', libreria: 'Librerie',
+      stili: 'Fogli di stile e caratteri', misurazione: 'Misurazione', consensi: 'Gestione dei consensi',
+      contatto: 'Contatto e prenotazioni',
+    };
+    p.push('<h2>Con cosa è fatto il sito</h2>');
+    p.push('<p class="nota" style="margin:-.5rem 0 1rem">Riconoscimento per firme lasciate nel codice: ' +
+      'è un\'indicazione attendibile ma non una certezza.' +
+      (generatore ? ' Il sito dichiara di essere generato da <b>' + T(generatore) + '</b>.' : '') + '</p>');
+    p.push('<table><tr><th>Categoria</th><th>Rilevato</th></tr>');
+    for (const tipo of ORDINE) {
+      const gruppo = trovate.filter(t => t.tipo === tipo);
+      if (!gruppo.length) continue;
+      p.push('<tr><td>' + T(ETICHETTE[tipo] || tipo) + '</td><td class="dato">' +
+        gruppo.map(t => T(t.nome)).join(' · ') + '</td></tr>');
+    }
+    p.push('</table>');
+
+    // Una nota utile invece di un elenco muto
+    const php = trovate.find(t => /^PHP /.test(t.nome));
+    const note = [];
+    if (piattaforma && /WordPress|Joomla|Drupal|PrestaShop|Magento/.test(piattaforma.nome))
+      note.push('Una piattaforma con database e plugin richiede aggiornamenti periodici e resta esposta ' +
+        'alle vulnerabilità dei componenti che monta.');
+    if (php) note.push('Il server dichiara pubblicamente la versione di ' + T(php.nome) +
+      ': è un\'informazione che conviene nascondere, e se la versione non è più supportata va aggiornata.');
+    const misure = trovate.filter(t => t.tipo === 'misurazione').length;
+    const consensi = trovate.filter(t => t.tipo === 'consensi').length;
+    if (misure && !consensi) note.push('Ci sono ' + misure + ' strumenti di misurazione ma nessun sistema ' +
+      'di raccolta del consenso rilevato: in Europa i cookie di misurazione richiedono il consenso preventivo.');
+    for (const n of note) p.push('<div class="voce basso">' + n + '</div>');
   }
 
   // ---- segnalazioni
