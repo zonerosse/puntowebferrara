@@ -37,6 +37,37 @@ function difetto(v) {
   return testo;
 }
 
+// Resa della sola sezione velocità: serve quando il codice non è leggibile ma
+// Google riesce comunque a misurare la pagina.
+function resaLighthouse(lh, sito) {
+  const p = ['<h2>Quello che si può misurare lo stesso</h2>',
+    '<p class="nota" style="margin:-.5rem 0 1rem">Il codice non è accessibile, ma la velocità di ' +
+    T(sito) + ' la misura Google con i propri sistemi.</p>',
+    '<div class="gruppi">'];
+  for (const c of lh.categorie) {
+    const liv = livello(c.punteggio / 100);
+    p.push('<div><b class="liv-' + liv + '">' + c.punteggio +
+      '<span style="font-size:.8rem;color:var(--grafite);font-weight:400">/100</span></b>' +
+      '<span>' + T(c.nome) + '</span><i><em class="liv-' + liv +
+      '" style="width:' + c.punteggio + '%"></em></i></div>');
+  }
+  p.push('</div>');
+  if (lh.metriche && lh.metriche.length) {
+    p.push('<table style="margin-top:1rem"><tr><th>Metrica</th><th style="text-align:right">Valore</th></tr>');
+    for (const m of lh.metriche)
+      p.push('<tr><td>' + T(m.nome) + '<div class="dove" style="font-family:inherit;color:var(--grafite)">' +
+        T(m.spiegazione) + '</div></td><td class="num">' + pill(livello(m.esito), m.valore) + '</td></tr>');
+    p.push('</table>');
+  }
+  if (lh.rallentamenti && lh.rallentamenti.length) {
+    p.push('<h3>Cosa rallenta la pagina</h3>');
+    for (const r of lh.rallentamenti)
+      p.push('<div class="voce medio"><b>' + T(r.nome) + '</b> ' + T(r.quanto) +
+        '<div class="dove" style="font-family:inherit;font-size:.86rem">' + T(r.rimedio) + '</div></div>');
+  }
+  return p.join('');
+}
+
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
@@ -100,13 +131,42 @@ modulo.addEventListener('submit', async e => {
     }
     if (scoperta.errore) throw new Error(scoperta.errore);
   } catch (err) {
+    // Il codice non si può leggere, ma la velocità sì: Google misura la pagina
+    // con i propri sistemi, che i firewall raramente bloccano. Meglio metà
+    // analisi che nessuna.
+    const vietato = /robots\.txt/i.test(err.message);
+    const bloccato = !vietato && /403|401/.test(err.message);
+    passo.textContent = 'Codice non leggibile. Provo a misurare almeno la velocità…';
+    let ripiego = null;
+    try {
+      const r = await fetch('/api/lighthouse?url=' + encodeURIComponent(normalizza(indirizzo) + '/'));
+      ripiego = JSON.parse(await r.text());
+    } catch (e) { /* niente da fare */ }
+
     avanzamento.classList.remove('attivo');
     bottone.disabled = false;
-    zonaErrore.innerHTML = '<div class="errore"><b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
-      '<br><br>Le cause più frequenti sono tre: l\'indirizzo è scritto male, il sito è protetto da un ' +
-      'firewall che blocca i programmi automatici, oppure è talmente grande che l\'analisi si interrompe ' +
-      'prima di finire. In tutti e tre i casi <a href="/contatti/">scrivimi</a>: lo guardo a mano e ti ' +
-      'mando il risultato.</div>';
+
+    const spiegazione = vietato
+      ? '<b>Il robots.txt di questo sito vieta la scansione automatica.</b> Non è un ostacolo tecnico: è ' +
+        'una richiesta esplicita di chi lo gestisce, e viene rispettata. Se il sito è tuo puoi modificare ' +
+        'quel file, oppure scrivimi e lo guardo a mano.'
+      : bloccato
+      ? '<b>Questo sito rifiuta le analisi automatiche.</b> Ha risposto con un codice 403, che significa ' +
+        '"accesso negato": un firewall o una protezione anti-bot lascia passare solo i browser. Non è un ' +
+        'difetto del sito e non è un errore di questo strumento — è una scelta di chi lo gestisce, e la ' +
+        'rispetto invece di aggirarla.'
+      : '<b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
+        '<br><br>Le cause più frequenti sono tre: l\'indirizzo è scritto male, il sito blocca i programmi ' +
+        'automatici, oppure è talmente grande che l\'analisi si interrompe prima di finire.';
+
+    zonaErrore.innerHTML = '<div class="errore">' + spiegazione +
+      '<br><br>Se il sito è tuo, <a href="/contatti/">scrivimi</a>: l\'analisi la faccio a mano e ti mando ' +
+      'il risultato completo.</div>';
+
+    if (ripiego && ripiego.disponibile) {
+      esito.innerHTML = resaLighthouse(ripiego, normalizza(indirizzo));
+      esito.classList.add('attivo');
+    }
     return;
   }
 

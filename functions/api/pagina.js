@@ -4,7 +4,14 @@
 
 import { analizzaPagina } from './_analisi.js';
 
-const UA = 'VerificaSito/1.0 (strumento di analisi SEO e GEO)';
+const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+const INTESTAZIONI = {
+  'User-Agent': UA,
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'Accept-Language': 'it-IT,it;q=0.9,en;q=0.8',
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Upgrade-Insecure-Requests': '1',
+};
 const MAX_BYTE = 500000; // oltre questa soglia la pagina viene troncata
 
 export async function onRequest(context) {
@@ -25,7 +32,7 @@ async function pagina(context) {
   let recupero;
   try {
     recupero = await fetch(indirizzo, {
-      headers: { 'User-Agent': UA, 'Accept': 'text/html,application/xhtml+xml' },
+      headers: INTESTAZIONI,
       redirect: 'follow',
       signal: AbortSignal.timeout(8000),
       cf: { cacheTtl: 300, cacheEverything: true },

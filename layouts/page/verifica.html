@@ -222,6 +222,16 @@
     <details class="faq"><summary>Perché il punteggio è scomposto?</summary>
       <p>Perché un numero da solo non dice cosa fare. Ogni controllo mostra quanto pesa, perché conta e come si
       sistema. Se vuoi sapere da dove viene il tuo punteggio, apri le voci: c'è scritto.</p></details>
+    <details class="faq"><summary>Perché su alcuni siti l'analisi non parte?</summary>
+      <p>Per due motivi diversi. Il primo è il robots.txt: se vieta la scansione, lo strumento si ferma
+      e te lo dice, perché quel file è il modo in cui un sito dichiara chi può leggerlo e va rispettato.
+      Il secondo è una protezione anti-bot che risponde 403 a qualunque richiesta non provenga da un
+      browser. In quel caso la richiesta viene comunque inviata con tutte le intestazioni che un browser
+      manda normalmente e con un nome dichiarato — <code>VerificaSitoBot</code> — ma se il firewall
+      insiste, l'analisi del codice si ferma lì. La velocità viene misurata lo stesso, perché la rileva
+      Google con i propri sistemi. Per il resto <a href="/contatti/">scrivimi</a>: se il sito è tuo,
+      l'analisi la faccio a mano.</p></details>
+
     <details class="faq"><summary>Cosa non riesce a controllare?</summary>
       <p>I siti che costruiscono i contenuti con JavaScript dopo il caricamento, perché viene letto il codice
       servito dal server. E la visibilità effettiva su ChatGPT o Perplexity, che richiederebbe di interrogare i

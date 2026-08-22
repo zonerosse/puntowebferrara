@@ -1,7 +1,15 @@
 // scopri.js — primo passaggio: robots.txt, llms.txt, sitemap ed elenco pagine.
 // Una sola invocazione, poche chiamate esterne (limite del piano gratuito: 50).
 
-const UA = 'VerificaSito/1.0 (strumento di analisi SEO e GEO)';
+const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+// Un browser manda sempre queste intestazioni. Ometterle fa scattare le regole
+// dei firewall anche su siti che non hanno nessuna intenzione di bloccare.
+const INTESTAZIONI = {
+  'User-Agent': UA,
+  'Accept-Language': 'it-IT,it;q=0.9,en;q=0.8',
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Upgrade-Insecure-Requests': '1',
+};
 const MAX_SITEMAP = 4;      // quante sitemap figlie seguire
 const SCADENZA = 6000;      // nessuna chiamata può durare più di sei secondi
 const MAX_URL = 60;         // tetto pubblico: protegge il piano gratuito
@@ -64,7 +72,7 @@ async function corpoLimitato(risposta, limite) {
 async function prendi(url, tipo, limite) {
   try {
     const risposta = await fetch(url, {
-      headers: { 'User-Agent': UA, 'Accept': tipo || '*/*' },
+      headers: Object.assign({}, INTESTAZIONI, { 'Accept': tipo || '*/*' }),
       redirect: 'follow',
       signal: AbortSignal.timeout(SCADENZA),
       cf: { cacheTtl: 300, cacheEverything: true },
@@ -133,6 +141,30 @@ function leggiRobots(testoIntero) {
 // Si legge solo la porzione iniziale, che basta e avanza per un campione.
 const MAX_XML = 300000;
 
+// Il robots.txt autorizza questo strumento? Si guarda il blocco dedicato al
+// nostro nome e, se non c'è, quello generico User-agent: *.
+function permessoPerNoi(testo) {
+  const righe = (testo || '').slice(0, 60000).split(/\r?\n/);
+  let dentro = false, generico = false, vietaNoi = false, vietaTutti = false;
+  for (let riga of righe) {
+    riga = riga.replace(/#.*$/, '').trim();
+    if (!riga) continue;
+    const punto = riga.indexOf(':');
+    if (punto < 0) continue;
+    const campo = riga.slice(0, punto).trim().toLowerCase();
+    const valore = riga.slice(punto + 1).trim();
+    if (campo === 'user-agent') {
+      const v = valore.toLowerCase();
+      dentro = v.includes('verificasito');
+      generico = v === '*';
+    } else if (campo === 'disallow' && valore === '/') {
+      if (dentro) vietaNoi = true;
+      else if (generico) vietaTutti = true;
+    }
+  }
+  return vietaNoi ? false : !vietaTutti;
+}
+
 function estraiUrl(xml) {
   const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
@@ -180,7 +212,7 @@ async function scopri(context) {
   const soloStato = async (url, seguire) => {
     try {
       const r = await fetch(url, {
-        headers: { 'User-Agent': UA },
+        headers: INTESTAZIONI,
         redirect: seguire ? 'follow' : 'manual',
         signal: AbortSignal.timeout(SCADENZA),
       });
@@ -193,11 +225,23 @@ async function scopri(context) {
     ? base.origin.replace('://www.', '://')
     : base.origin.replace('://', '://www.');
 
+  // Prima di leggere qualsiasi cosa si chiede il permesso: il robots.txt è il
+  // luogo in cui un sito dichiara chi può scansionarlo. Va rispettato anche da
+  // chi lo sta analizzando.
+  const robotsPrima = await prendi(radice + '/robots.txt', 'text/plain', 60000);
+  if (robotsPrima.ok) {
+    const permesso = permessoPerNoi(robotsPrima.testo);
+    if (!permesso) return risposta({
+      errore: 'Il robots.txt di questo sito vieta la scansione automatica. Non procedo.',
+      vietatoDaRobots: true,
+    }, 200);
+  }
+
   const [home, finta, altroSito, robotsGrezzo, llms] = await Promise.all([
     prendi(radice + '/', null, 0),
     soloStato(radice + '/pagina-che-non-esiste-verifica-' + Date.now() + '/', true),
     soloStato(gemello + '/', false),
-    prendi(radice + '/robots.txt', 'text/plain', 60000),
+    Promise.resolve(robotsPrima),
     prendi(radice + '/llms.txt', 'text/plain', 40000),
   ]);
 
