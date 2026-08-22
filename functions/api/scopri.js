@@ -38,7 +38,8 @@ async function prendi(url, tipo) {
 }
 
 // Legge robots.txt e stabilisce, per ciascun crawler, se la radice è accessibile.
-function leggiRobots(testo) {
+function leggiRobots(testoIntero) {
+  const testo = testoIntero.length > 60000 ? testoIntero.slice(0, 60000) : testoIntero;
   const righe = testo.split(/\r?\n/);
   const blocchi = [];
   let corrente = null;
@@ -84,15 +85,34 @@ function leggiRobots(testo) {
   };
 }
 
+// Le sitemap dei siti grossi arrivano a decine di megabyte: analizzarle intere
+// sfora i 10 millisecondi di CPU del piano gratuito e il Worker viene interrotto.
+// Si legge solo la porzione iniziale, che basta e avanza per un campione.
+const MAX_XML = 300000;
+
 function estraiUrl(xml) {
+  const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
   const re = /<loc>\s*([^<\s]+)\s*<\/loc>/gi;
   let m;
-  while ((m = re.exec(xml)) !== null) fuori.push(m[1]);
+  while ((m = re.exec(testo)) !== null) {
+    fuori.push(m[1]);
+    if (fuori.length >= MAX_URL) break;
+  }
   return fuori;
 }
 
 export async function onRequest(context) {
+  try {
+    return await scopri(context);
+  } catch (err) {
+    return risposta({
+      errore: 'Analisi interrotta su questo sito: ' + String(err && err.message || err).slice(0, 140),
+    }, 200);
+  }
+}
+
+async function scopri(context) {
   const parametri = new URL(context.request.url).searchParams;
   let indirizzo = (parametri.get('url') || '').trim();
   if (!indirizzo) return risposta({ errore: 'Manca il parametro url' }, 400);

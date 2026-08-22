@@ -33,6 +33,14 @@ const NOMI = {
 };
 
 export async function onRequest(context) {
+  try {
+    return await lighthouse(context);
+  } catch (err) {
+    return risposta({ errore: 'Analisi non riuscita', dettaglio: String(err && err.message || err).slice(0, 140) }, 200);
+  }
+}
+
+async function lighthouse(context) {
   const chiave = context.env && context.env.PSI_KEY;
   const parametri = new URL(context.request.url).searchParams;
   const indirizzo = (parametri.get('url') || '').trim();

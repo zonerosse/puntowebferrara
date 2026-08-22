@@ -91,7 +91,13 @@ modulo.addEventListener('submit', async e => {
   let scoperta;
   try {
     const r = await fetch('/api/scopri?url=' + encodeURIComponent(indirizzo));
-    scoperta = await r.json();
+    const grezzo = await r.text();
+    try { scoperta = JSON.parse(grezzo); }
+    catch (e) {
+      // Se al posto del JSON arriva una pagina HTML, la richiesta è stata
+      // interrotta prima di completarsi: capita sui siti molto grandi.
+      throw new Error('il server ha interrotto l\'analisi di questo sito.');
+    }
     if (scoperta.errore) throw new Error(scoperta.errore);
   } catch (err) {
     avanzamento.classList.remove('attivo');
@@ -106,7 +112,8 @@ modulo.addEventListener('submit', async e => {
 
   // La misura Lighthouse parte subito e viaggia in parallelo: è la più lenta.
   const misura = fetch('/api/lighthouse?url=' + encodeURIComponent(scoperta.sito + '/'))
-    .then(r => r.json()).catch(() => ({ disponibile: false, motivo: 'Misura non riuscita' }));
+    .then(r => r.text()).then(t => JSON.parse(t))
+    .catch(() => ({ disponibile: false, motivo: 'Misura delle prestazioni non riuscita.' }));
 
   const risultati = [];
   let fatte = 0;
@@ -114,8 +121,10 @@ modulo.addEventListener('submit', async e => {
   async function operaio() {
     while (coda.length) {
       const u = coda.shift();
-      try { risultati.push(await (await fetch('/api/pagina?url=' + encodeURIComponent(u))).json()); }
-      catch { risultati.push({ url: u, errore: 'Analisi non riuscita' }); }
+      try {
+        const grezzo = await (await fetch('/api/pagina?url=' + encodeURIComponent(u))).text();
+        risultati.push(JSON.parse(grezzo));
+      } catch { risultati.push({ url: u, errore: 'Pagina non analizzabile' }); }
       avanza(++fatte, pagine.length + 1, 'Lette ' + fatte + ' pagine su ' + pagine.length);
     }
   }
