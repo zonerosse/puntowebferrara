@@ -100,9 +100,9 @@ export const CONTROLLI = [
     come:'Nel blocco Organization aggiungi un array sameAs con gli indirizzi completi dei tuoi profili. Devono essere profili attivi e riconducibili con evidenza alla stessa attività: elencarne di altrui o abbandonati non aiuta.',
     fonte:{n:'schema.org — proprietà sameAs',u:'https://schema.org/sameAs'} },
 
-  { id:'citazioni', punti:2, nome:'I contenuti citano fonti esterne verificabili',
-    no:'I contenuti non citano nessuna fonte esterna',
-    perche:'Un testo che afferma senza mai rimandare a una fonte è indistinguibile da un\u2019opinione. I collegamenti a documentazione ufficiale, normative, enciclopedie o studi sono il segnale più diretto che dietro c\u2019è una verifica, e i motori generativi tendono a citare volentieri le pagine che a loro volta citano.',
+  { id:'citazioni', punti:2, nome:'Le guide e gli articoli citano fonti esterne',
+    no:'Le guide e gli articoli non citano fonti esterne',
+    perche:'Il controllo riguarda solo le pagine informative — guide, articoli, FAQ — perché una pagina contatti o un elenco non ha nulla da citare. Un testo che afferma senza mai rimandare a una fonte è indistinguibile da un\u2019opinione. I collegamenti a documentazione ufficiale, normative, enciclopedie o studi sono il segnale più diretto che dietro c\u2019è una verifica, e i motori generativi tendono a citare volentieri le pagine che a loro volta citano.',
     come:'Quando affermi un dato, un limite di legge o una specifica tecnica, collega la fonte originale. Meglio la documentazione ufficiale del produttore o l\u2019atto normativo che un articolo di terzi che li riassume.',
     fonte:{n:'Google — Creare contenuti utili e affidabili',u:'https://developers.google.com/search/docs/fundamentals/creating-helpful-content'} },
 

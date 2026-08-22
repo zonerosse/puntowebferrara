@@ -387,7 +387,11 @@ export function analizzaPagina(html, url, intestazioni) {
     autoreSchema: autoreSchema,
     dataModifica: dataModifica,
     sameAs: sameAs >= 2,
-    citazioni: citazioni >= 1 || parole < 400,
+    // Si citano le fonti in una guida o in un articolo, non in una pagina
+    // contatti né in un elenco: il controllo vale solo dove ci sono
+    // affermazioni da sostenere.
+    citazioni: citazioni >= 1 || parole < 400
+      || !tipi.some(t => ['Article', 'BlogPosting', 'NewsArticle', 'FAQPage', 'QAPage', 'HowTo'].includes(t)),
     ancoreDescrittive: ancoreVaghe <= 2,
     contenutoSicuro: misto === 0,
     favicon: favicon,
