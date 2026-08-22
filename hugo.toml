@@ -67,6 +67,13 @@ enableRobotsTXT = false
   postalCode  = "44020"
   lat         = 44.7461
   lng         = 11.9436
+  # Profili esterni riconducibili all'attività: finiscono nel sameAs dello
+  # schema. Vanno tenuti solo se attivi e verificabili — elencarne di
+  # abbandonati non aiuta, e dichiararne di altrui è peggio.
+  profili     = [
+    "https://github.com/zonerosse",
+    "https://www.google.com/search?kgmid=/g/11mt52q40c"
+  ]
 
 [taxonomies]
   # Disabilitate per evitare pagine extra

@@ -21,6 +21,7 @@
       "priceRange": "€€",
       "currenciesAccepted": "EUR",
       "founder": { "@id": {{ $personID }} },
+      {{ with $biz.profili }}"sameAs": [{{ range $i, $u := . }}{{ if $i }}, {{ end }}{{ $u }}{{ end }}],{{ end }}
       "address": {
         "@type": "PostalAddress",
         "addressLocality": {{ $biz.locality }},
@@ -124,6 +125,10 @@
       "description": {{ with .Params.description }}{{ . }}{{ else }}{{ $biz.description }}{{ end }},
       "isPartOf": { "@id": {{ $siteID }} },
       "about": { "@id": {{ $orgID }} },
+      "author": { "@id": {{ $personID }} },
+      "publisher": { "@id": {{ $orgID }} },
+      "datePublished": {{ (cond .Date.IsZero (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }},
+      "dateModified": {{ .Lastmod.Format "2006-01-02" }},
       "inLanguage": "it-IT"{{ if not .IsHome }},
       "breadcrumb": { "@id": {{ printf "%s#breadcrumb" .Permalink }} }{{ end }}
     }{{ if not .IsHome }},
