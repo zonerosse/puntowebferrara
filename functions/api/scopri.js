@@ -330,6 +330,7 @@ async function scopri(context) {
   const daVisitare = [...candidate];
   const viste = new Set();
 
+  const giaViste = new Set();
   let tentativi = 0;
   while (daVisitare.length && tentativi < 20 && sitemapTrovate < MAX_SITEMAP && pagine.length < MAX_URL) {
     tentativi++;
@@ -341,7 +342,11 @@ async function scopri(context) {
     sitemapTrovate++;
     const trovati = estraiUrl(documento.testo);
     if (/<sitemapindex/i.test(documento.testo)) {
-      for (const u of trovati) if (daVisitare.length < MAX_SITEMAP) daVisitare.push(u);
+      // Le figlie hanno la precedenza sui candidati ancora da tentare: in coda
+      // rischiavano di non essere mai raggiunte.
+      const nuove = trovati.filter(u => !giaViste.has(u));
+      for (const u of nuove) giaViste.add(u);
+      daVisitare.unshift(...nuove.slice(0, 15));
     } else {
       for (const u of trovati) if (pagine.length < MAX_URL) pagine.push(u);
     }
