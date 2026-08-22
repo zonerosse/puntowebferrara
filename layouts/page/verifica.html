@@ -204,6 +204,17 @@
     white-space:nowrap;width:1%;padding-right:.9rem}
 .strumento table.meta .valore{word-break:break-word}
 .strumento table.meta .spiegam{display:block;font-size:.74rem;color:var(--grafite);margin-top:.1rem}
+.strumento /* --- richiamo all'estensione --- */
+  .blocco-estensione{background:var(--verde);color:#fff;border-radius:12px;
+    padding:1.6rem 1.5rem;margin:2.5rem 0 1rem}
+.strumento .blocco-estensione .etichetta{display:block;font-family:var(--mono);font-size:.7rem;
+    letter-spacing:.09em;text-transform:uppercase;opacity:.75;margin-bottom:.4rem}
+.strumento .blocco-estensione h2{color:#fff;font-size:1.25rem;margin:0 0 .5rem}
+.strumento .blocco-estensione p{max-width:60ch;opacity:.92;font-size:.95rem;margin-bottom:1rem}
+.strumento .bottone-estensione{display:inline-block;background:#fff;color:var(--verde);
+    text-decoration:none;font-weight:600;padding:.6rem 1.2rem;border-radius:8px}
+.strumento .bottone-estensione:hover{background:var(--carta)}
+.strumento .blocco-estensione .minuta{display:block;font-size:.78rem;opacity:.72;margin-top:.6rem}
 @media print{.strumento{background:#fff}
 .strumento .modulo, .strumento .avanzamento, .strumento .azioni, .strumento button, .strumento .briciole{display:none !important}
 .strumento .foglio{max-width:none;padding:0}
@@ -273,6 +284,20 @@
       <p>I siti che costruiscono i contenuti con JavaScript dopo il caricamento, perché viene letto il codice
       servito dal server. E la visibilità effettiva su ChatGPT o Perplexity, che richiederebbe di interrogare i
       modelli a pagamento. Meglio dirlo prima che scoprirlo dopo.</p></details>
+  </section>
+
+
+  <section class="blocco-estensione">
+    <div>
+      <span class="etichetta">Anche come estensione del browser</span>
+      <h2>Analizza una pagina mentre la stai guardando</h2>
+      <p>Stesse verifiche, ma partendo dal tuo browser: legge anche i contenuti generati
+      da JavaScript, i siti che rifiutano le analisi automatiche e le pagine dietro login.
+      Un clic sull'icona e vedi punteggio, meta tag, scaletta dei titoli e dati strutturati
+      della pagina che hai davanti.</p>
+      <a href="/estensione/" class="bottone-estensione">Installa l'estensione</a>
+      <span class="minuta">Gratuita, per Chrome, Edge e Brave. Installazione manuale, due minuti.</span>
+    </div>
   </section>
 
   <section id="perche">
@@ -348,7 +373,8 @@
     che vedresti aprendo Lighthouse nel tuo browser, ma confrontabili fra siti diversi.</p>
 
     <h2>E se il punteggio esce basso</h2>
-    <p>Buona parte di quello che il report segnala si sistema da soli, seguendo le istruzioni di ogni voce.
+    <p>Buona parte di quello che il report segnala puoi sistemarla da solo, seguendo le
+    istruzioni di ogni voce.
     Le intestazioni di sicurezza sono quattro righe di configurazione, i livelli dei titoli si correggono
     nel template, la sitemap la genera il tuo CMS se sai dove spuntarla.</p>
 
