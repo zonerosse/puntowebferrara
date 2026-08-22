@@ -41,10 +41,29 @@ function avanza(fatte, totale, testo) {
   passo.textContent = testo;
 }
 
+// Accetta quello che la gente scrive davvero: esempio.it, www.esempio.it,
+// http://esempio.it, o l'indirizzo copiato dalla barra del browser.
+function normalizza(scritto) {
+  let v = scritto.trim().replace(/\s+/g, '');
+  if (!v) return null;
+  v = v.replace(/^https?:\/\//i, m => m.toLowerCase());
+  if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+  let u;
+  try { u = new URL(v); } catch { return null; }
+  if (!u.hostname.includes('.') || u.hostname.endsWith('.')) return null;
+  return u.origin;
+}
+
 modulo.addEventListener('submit', async e => {
   e.preventDefault();
-  const indirizzo = campo.value.trim();
-  if (!indirizzo) return;
+  const indirizzo = normalizza(campo.value);
+  if (!indirizzo) {
+    zonaErrore.innerHTML = '<div class="errore"><b>Non riconosco questo indirizzo.</b> ' +
+      'Scrivi il dominio, per esempio <code>iltuosito.it</code>. Il resto lo aggiungo io.</div>';
+    campo.focus();
+    return;
+  }
+  campo.value = indirizzo;
 
   bottone.disabled = true;
   zonaErrore.innerHTML = '';

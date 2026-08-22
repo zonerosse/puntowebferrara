@@ -85,7 +85,7 @@
 
   .modulo{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:1.25rem}
   .campo{display:flex;gap:.6rem;flex-wrap:wrap}
-  input[type=url]{flex:1 1 250px;min-width:0;font-family:var(--mono);font-size:.95rem;padding:.85rem .9rem;
+  input[type=text]{flex:1 1 250px;min-width:0;font-family:var(--mono);font-size:.95rem;padding:.85rem .9rem;
                   border:1px solid var(--linea);border-radius:3px;background:var(--carta);color:inherit}
   input:focus,button:focus-visible,summary:focus-visible{outline:2px solid var(--verde);outline-offset:1px}
   button{font-size:.85rem;font-weight:700;padding:.9rem 1.6rem;border:0;border-radius:3px;
@@ -93,6 +93,7 @@
   button:hover{background:#0a5646}
   button[disabled]{opacity:.45;cursor:default}
   .nota{font-size:.82rem;color:var(--grafite);margin-top:.75rem}
+  code{font-family:var(--mono);font-size:.92em;background:var(--carta);padding:.1rem .3rem;border-radius:3px}
 
   .avanzamento{margin-top:1.25rem;display:none}
   .avanzamento.attivo{display:block}
@@ -250,11 +251,13 @@
 
   <form class="modulo" id="modulo">
     <div class="campo">
-      <input type="url" id="indirizzo" placeholder="https://iltuosito.it" required autocomplete="url" spellcheck="false">
+      <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+             inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
       <button type="submit" id="avvia">Verifica il sito</button>
     </div>
-    <p class="nota">L'analisi legge fino a 60 pagine dalla sitemap e misura la velocità della home.
-    Dura da venti secondi a un minuto. Non salvo nulla: quando chiudi la pagina, il risultato sparisce.</p>
+    <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge fino a 60 pagine dalla
+    sitemap e misura la velocità della home. Dura da venti secondi a un minuto. Non salvo nulla: quando
+    chiudi la pagina, il risultato sparisce.</p>
   </form>
 
   <div class="avanzamento" id="avanzamento">
