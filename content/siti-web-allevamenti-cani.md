@@ -21,6 +21,13 @@ keywords:
   - web designer per allevatori cani
   - sito con pedigree cani
   - sito cucciolate disponibili
+faq:
+  - q: "Sei un Handler?"
+    a: "Non solo allevatori. Realizzo siti anche per handler cinofili professionisti. Portfolio risultati, calendario expo, gallery ring."
+  - q: "Quanto Costa un Sito per Allevamento Cani?"
+    a: "Prezzi creazione sito web allevatore cinofilo - tutto incluso, nessun costo nascosto:"
+  - q: "Hai un Allevamento di Cani?"
+    a: "Preventivo gratuito in 24 ore. Da allevatore ad allevatore."
 ---
 
 ## Razze per cui Realizzo Siti

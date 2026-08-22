@@ -19,6 +19,21 @@ keywords:
   - sito risultati esposizioni canine
   - web designer per handler
   - sito professionale handler
+faq:
+  - q: "Quanto Costa?"
+    a: "Prezzi chiari, pagamento una tantum, hosting gratuito per sempre."
+  - q: "Posso aggiornare il calendario expo da solo?"
+    a: "Niente stress. Mi mandi foto e date su WhatsApp, aggiorno io entro 24h. Modifiche semplici da 10€."
+  - q: "Quanto tempo ci vuole?"
+    a: "2 settimane per un sito standard. Dipende dalla quantità di foto e contenuti che mi fornisci."
+  - q: "Mi serve per forza il multilingua?"
+    a: "No, ma se lavori anche all&rsquo;estero è consigliato. Il Premium include IT/EN, altre lingue su richiesta."
+  - q: "Il dominio è incluso?"
+    a: "Primo anno sì. Dal secondo anno circa 15€/anno per .it o .com."
+  - q: "Posso avere una sezione &ldquo;Cani in affidamento&rdquo;?"
+    a: "Certo, possiamo aggiungere qualsiasi sezione ti serva: cani che segui abitualmente, collaborazioni con allevamenti, corsi di handling."
+  - q: "Sei un Handler?"
+    a: "Web designer a Ferrara. Realizzo siti web professionali, veloci, moderni e ottimizzati per portarti nuovi clienti. Tecnologia Hugo + Cloudflare."
 ---
 
 ## Domande Frequenti

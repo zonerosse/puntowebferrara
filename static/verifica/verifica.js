@@ -213,7 +213,7 @@ function disegna(scoperta, risultati, lighthouse) {
   const gravi = segnalazioni.filter(s => s.gravita === 'alto');
   const perse = [];
   for (const g of CONTROLLI) for (const v of g.voci)
-    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: v.nome, persi: v.punti - v._punti, come: v.come, quota: v._quota });
+    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: (v._quota < 0.5 && v.no) ? v.no : v.nome, persi: v.punti - v._punti, come: v.come, quota: v._quota });
   perse.sort((a, b) => b.persi - a.persi);
   const principali = perse.filter(x => x.persi > 0).slice(0, 3);
 
@@ -274,6 +274,9 @@ function disegna(scoperta, risultati, lighthouse) {
     for (const v of g.voci) {
       const assente = v._stato === 'assente';
       const liv = assente ? 'grigio' : livello(v._quota);
+      // Sotto la metà delle pagine l'affermazione sarebbe falsa: si usa la
+      // forma negativa, così la riga dice quello che il colore già mostra.
+      const nome = (!assente && v._quota < 0.5 && v.no) ? v.no : v.nome;
       let etichetta;
       if (assente) etichetta = 'non misurato';
       else if (v._valore) etichetta = v._valore;
@@ -283,7 +286,7 @@ function disegna(scoperta, risultati, lighthouse) {
       else etichetta = Math.round(v._quota * 100) + '% delle pagine';
       const punti = assente ? '—' : v._punti + ' / ' + v.punti;
       p.push('<details class="controllo liv-' + liv + '"><summary>' +
-        '<span class="che"><span class="liv-' + liv + '">' + segno(liv) + '</span>' + T(v.nome) + '</span>' +
+        '<span class="che"><span class="liv-' + liv + '">' + segno(liv) + '</span>' + T(nome) + '</span>' +
         '<span class="val">' + pill(liv, etichetta) +
         ' <span class="punti-voce">' + punti + '</span></span></summary>' +
         '<div class="spiega">' +

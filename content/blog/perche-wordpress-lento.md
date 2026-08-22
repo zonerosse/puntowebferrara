@@ -7,6 +7,15 @@ tags: ["wordpress", "velocità", "performance"]
 categories: ["Guide"]
 author: "Paolo Boldrini"
 slug: "perche-wordpress-lento"
+faq:
+  - q: "Il Tuo Sito È Lento?"
+    a: "Analisi gratuita delle performance. Ti dico esattamente cosa non va e come sistemarlo."
+  - q: "Quanto È Lento il Tuo Sito?"
+    a: "Prima di tutto, misura. Vai su PageSpeed Insights e inserisci il tuo URL."
+  - q: "Non Sai Da Dove Iniziare?"
+    a: "Ti faccio un'analisi completa del tuo sito e ti indico le priorità."
+  - q: "Non Sai Cosa Scegliere?"
+    a: "Dimmi che sito hai e cosa ti serve. Ti consiglio la soluzione più adatta, senza impegno."
 ---
 
 Il tuo sito WordPress carica in 4-5 secondi. Google ti penalizza nel ranking. I visitatori abbandonano prima ancora di vedere cosa offri.

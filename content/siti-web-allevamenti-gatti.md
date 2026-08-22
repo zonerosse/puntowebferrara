@@ -21,6 +21,13 @@ keywords:
   - sito con pedigree gatti
   - sito gattini disponibili
   - realizzazione siti gattofili
+faq:
+  - q: "Per Quali Razze?"
+    a: "Realizzo siti per allevamenti di tutte le razze feline riconosciute."
+  - q: "Quanto Costa un Sito per Allevamento Gatti?"
+    a: "Prezzi realizzazione sito web allevatore felino - tutto incluso:"
+  - q: "Hai un Allevamento di Gatti?"
+    a: "Web designer a Ferrara. Realizzo siti web professionali, veloci, moderni e ottimizzati per portarti nuovi clienti. Tecnologia Hugo + Cloudflare."
 ---
 
 ## Funzionalità per Allevatori Felini

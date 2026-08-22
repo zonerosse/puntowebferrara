@@ -1,7 +1,7 @@
 ---
 title: "Siti Web per Allevamenti | Cani, Gatti, Cavalli | Da Allevatore per Allevatori"
 titleSeo: "Siti Web per Allevamenti: Cani, Gatti, Cavalli"
-description: "Realizzo siti web professionali per allevamenti di cani, gatti, cavalli e altri animali. Sono allevatore dal 2013 e so esattamente cosa ti serve. Veloci, ottimizzati SEO, senza WordPress."
+description: "Realizzo siti web professionali per allevamenti di cani, gatti, cavalli e altri animali. Sono allevatore dal 2013 e so esattamente cosa ti serve."
 date: 2025-01-01
 type: page
 layout: siti-web-allevamenti
@@ -23,6 +23,27 @@ keywords:
   - web design per allevatori
   - sito professionale allevamento
   - quanto costa sito allevamento
+faq:
+  - q: "Che Tipo di Allevamento Hai?"
+    a: "Clicca sulla tua categoria per vedere esempi e funzionalità specifiche."
+  - q: "Sei un Handler?"
+    a: "Il tuo sito è il tuo biglietto da visita. Portfolio risultati, calendario expo, gallery ring. Fatti trovare dagli allevatori che cercano un handler."
+  - q: "Perché Scegliere un Allevatore?"
+    a: "Non sono il solito web designer che non sa cosa sia un pedigree."
+  - q: "Perché Scegliere Me per il Sito del Tuo Allevamento?"
+    a: "Cerchi un web designer per allevatori che capisca le tue esigenze? Ecco perché la creazione del sito per il tuo allevamento è in buone mani:"
+  - q: "Quanto Costa un Sito Web per Allevamento?"
+    a: "Prezzi chiari per la realizzazione del sito del tuo allevamento , senza sorprese e senza costi nascosti."
+  - q: "Posso aggiornare le cucciolate da solo?"
+    a: "Niente stress. Mi mandi foto e info su WhatsApp, aggiorno io entro 24h. Modifiche semplici da 10€, nuova cucciolata 20€."
+  - q: "Quanto tempo ci vuole?"
+    a: "2-3 settimane per un sito standard. Dipende dalla quantità di contenuti e foto che mi fornisci."
+  - q: "Mi aiuti con le foto?"
+    a: "Posso darti consigli su come fotografare i tuoi soggetti. Se sei in zona Ferrara, possiamo organizzare uno shooting."
+  - q: "Il dominio è incluso?"
+    a: "Il primo anno sì. Dal secondo anno, il costo del dominio (.it o .com) è di circa 15€/anno."
+  - q: "E se ho già un sito WordPress?"
+    a: "Lo migro mantenendo il posizionamento SEO acquisito. Smetti di pagare hosting e manutenzione."
 ---
 
 ## Da Allevatore per Allevatori

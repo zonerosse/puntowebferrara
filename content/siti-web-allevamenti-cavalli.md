@@ -21,6 +21,13 @@ keywords:
   - sito cavalli in vendita
   - realizzazione siti centri ippici
   - sito web centro equestre
+faq:
+  - q: "Che Tipo di Struttura Hai?"
+    a: "Siti personalizzati per ogni esigenza del mondo equestre."
+  - q: "Quanto Costa un Sito per Allevamento Cavalli?"
+    a: "Prezzi realizzazione sito web per scuderie e allevatori equini :"
+  - q: "Hai una Struttura Equestre?"
+    a: "Web designer a Ferrara. Realizzo siti web professionali, veloci, moderni e ottimizzati per portarti nuovi clienti. Tecnologia Hugo + Cloudflare."
 ---
 
 ## Discipline e Razze
