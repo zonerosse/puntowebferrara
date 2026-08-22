@@ -371,11 +371,24 @@ function disegna(scoperta, risultati, lighthouse) {
     const chiave = t.nome + '|' + t.tipo;
     contaTec[chiave] = (contaTec[chiave] || 0) + 1;
   }
+  // La piattaforma è una sola per tutto il sito e a volte lascia tracce su una
+  // pagina soltanto — il tag generator, per esempio, spesso sta solo in home.
+  // Per quelle categorie basta una pagina; per librerie e strumenti di terze
+  // parti serve una presenza diffusa, altrimenti si scambia un'eccezione per
+  // una scelta tecnologica.
+  const SEMPRE = ['piattaforma', 'costruttore', 'negozio', 'server', 'rete'];
+  const sogliaDiffusa = Math.max(2, Math.floor(buone.length * 0.2));
   const trovate = Object.entries(contaTec)
     .map(([k, n]) => { const [nome, tipo] = k.split('|'); return { nome, tipo, n }; })
-    .filter(t => t.n >= Math.max(1, Math.floor(buone.length * 0.2)))
+    .filter(t => SEMPRE.includes(t.tipo) ? t.n >= 1 : t.n >= sogliaDiffusa)
     .sort((a, b) => b.n - a.n);
+
   const generatore = (buone.find(q => q.generatore) || {}).generatore;
+  // Se il generatore è dichiarato ma nessuna firma lo conferma, vale comunque
+  // come piattaforma: è il sito stesso a dirlo.
+  if (generatore && !trovate.some(t => t.tipo === 'piattaforma')) {
+    trovate.unshift({ nome: generatore.split(/[-–—(]/)[0].trim().replace(/!$/, ''), tipo: 'piattaforma', n: 1 });
+  }
 
   // Frase in chiaro: piattaforma, con il costruttore di pagine se c'è.
   const piattaforma = trovate.find(t => t.tipo === 'piattaforma');
