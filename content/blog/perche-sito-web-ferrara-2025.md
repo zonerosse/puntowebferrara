@@ -12,7 +12,7 @@ sitemap:
   changefreq: monthly
 ---
 
-Se hai un'attività a Ferrara e non hai ancora un sito web, stai perdendo clienti ogni giorno. Non è un'esagerazione: **il 97% delle persone cerca online** prima di scegliere un professionista o un'azienda.
+Se hai un'attività a Ferrara e non hai ancora un sito web, stai perdendo clienti ogni giorno. Non è un'esagerazione: **il [97% delle persone](https://www.brightlocal.com/research/local-consumer-review-survey/ "BrightLocal — Local Consumer Review Survey") cerca online** prima di scegliere un professionista o un'azienda.
 
 ## La Realtà del Mercato Locale
 

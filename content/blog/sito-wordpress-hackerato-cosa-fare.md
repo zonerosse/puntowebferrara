@@ -109,7 +109,7 @@ Pulizia + clienti persi + posizionamento Google danneggiato + tempo perso = faci
 
 Numeri che fanno riflettere:
 
-- **43% dei siti web** usa WordPress (fonte: W3Techs)
+- **43% dei siti web** usa WordPress ([fonte: W3Techs](https://w3techs.com/technologies/overview/content_management "W3Techs — statistiche di utilizzo dei sistemi di gestione dei contenuti"))
 - È il **bersaglio numero 1** per gli hacker
 - **90% degli hack** deriva da plugin o temi non aggiornati
 - **8%** da password deboli
