@@ -31,7 +31,7 @@ async function prendi(url, tipo) {
       cf: { cacheTtl: 300, cacheEverything: true },
     });
     if (!risposta.ok) return { ok: false, stato: risposta.status };
-    return { ok: true, stato: risposta.status, testo: await risposta.text() };
+    return { ok: true, stato: risposta.status, intestazioni: risposta.headers, testo: await risposta.text() };
   } catch (err) {
     return { ok: false, errore: String(err).slice(0, 120) };
   }
@@ -106,6 +106,30 @@ export async function onRequest(context) {
   const home = await prendi(radice + '/');
   if (!home.ok) return risposta({ errore: 'Il sito non risponde (stato ' + (home.stato || '?') + ')' }, 502);
 
+  // 1b. Come si comporta con un indirizzo inesistente (404 finto = pagine fantasma indicizzate)
+  let quattroZeroQuattro = null;
+  try {
+    const finta = await fetch(radice + '/pagina-che-non-esiste-verifica-' + Date.now() + '/', {
+      headers: { 'User-Agent': UA }, redirect: 'follow',
+    });
+    quattroZeroQuattro = finta.status;
+  } catch (err) { /* non blocca l'analisi */ }
+
+  // 1c. Coerenza fra indirizzo con e senza www
+  let alternativo = null;
+  try {
+    const altro = base.hostname.startsWith('www.')
+      ? base.origin.replace('://www.', '://')
+      : base.origin.replace('://', '://www.');
+    const r = await fetch(altro + '/', { headers: { 'User-Agent': UA }, redirect: 'manual' });
+    alternativo = {
+      indirizzo: altro,
+      stato: r.status,
+      reindirizza: r.status >= 300 && r.status < 400,
+      versoDoveDice: r.headers.get('location') || null,
+    };
+  } catch (err) { /* alcuni domini non hanno il gemello: normale */ }
+
   // 2. robots.txt
   const robotsGrezzo = await prendi(radice + '/robots.txt');
   const robots = robotsGrezzo.ok
@@ -139,8 +163,18 @@ export async function onRequest(context) {
 
   pagine = Array.from(new Set(pagine)).filter(u => u.startsWith(radice));
 
+  const intestazioniHome = {};
+  for (const nome of ['content-encoding','strict-transport-security','x-content-type-options',
+                      'x-frame-options','referrer-policy','content-security-policy','server']) {
+    const v = home.intestazioni && home.intestazioni.get(nome);
+    if (v) intestazioniHome[nome] = v;
+  }
+
   return risposta({
     sito: radice,
+    quattroZeroQuattro,
+    alternativo,
+    intestazioniHome,
     robotsPresente: robotsGrezzo.ok,
     robots,
     llmsPresente: llms.ok,

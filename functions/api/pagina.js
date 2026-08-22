@@ -32,11 +32,20 @@ export async function onRequest(context) {
   if (!/html/i.test(tipo))
     return risposta({ url: indirizzo, errore: 'Non è una pagina HTML (' + tipo.split(';')[0] + ')' }, 200);
 
+  // Le intestazioni servono ai controlli di sicurezza e compressione.
+  const intestazioni = {};
+  for (const nome of ['content-encoding','content-type','strict-transport-security',
+                      'x-content-type-options','x-frame-options','referrer-policy',
+                      'content-security-policy','cache-control','server']) {
+    const v = recupero.headers.get(nome);
+    if (v) intestazioni[nome] = v;
+  }
+
   let html = await recupero.text();
   const troncata = html.length > MAX_BYTE;
   if (troncata) html = html.slice(0, MAX_BYTE);
 
-  const esito = analizzaPagina(html, indirizzo);
+  const esito = analizzaPagina(html, recupero.url || indirizzo, intestazioni);
   esito.peso = html.length;
   esito.troncata = troncata;
   esito.millisecondi = Date.now() - inizio;

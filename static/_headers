@@ -27,3 +27,7 @@
 # Le chiamate dello strumento di verifica non vanno mai in cache
 /api/*
   Cache-Control: no-store
+
+# I moduli JavaScript dello strumento devono essere serviti come tali
+/verifica/*.js
+  Content-Type: text/javascript; charset=utf-8
