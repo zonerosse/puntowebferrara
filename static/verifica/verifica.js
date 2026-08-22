@@ -1,7 +1,31 @@
 // verifica.js — orchestrazione dell'analisi e resa del report.
 import { CONTROLLI } from './controlli.js';
 
-const GRAVITA = [['alto', 'Da sistemare'], ['medio', 'Da valutare'], ['basso', 'Rifiniture']];
+// --- semaforo -------------------------------------------------------------
+// Quattro livelli invece di due: un controllo superato sul 70% delle pagine
+// non è "fallito", ed è utile vederlo a colpo d'occhio.
+const SEGNI = {
+  ok:      '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.4 2.4 4.6-5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  giallo:  '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M10 6v5" stroke-linecap="round"/><circle cx="10" cy="14.2" r="1" fill="currentColor" stroke="none"/></svg>',
+  arancio: '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2.6l7.6 13.2H2.4z" stroke-linejoin="round"/><path d="M10 8v3.6" stroke-linecap="round"/><circle cx="10" cy="14" r="1" fill="currentColor" stroke="none"/></svg>',
+  rosso:   '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"/><path d="M7.2 7.2l5.6 5.6M12.8 7.2l-5.6 5.6" stroke-linecap="round"/></svg>',
+  grigio:  '<svg class="segno" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8" stroke-dasharray="2.5 2.5"/><path d="M6.5 10h7" stroke-linecap="round"/></svg>',
+};
+function livello(quota) {
+  if (quota == null) return 'grigio';
+  if (quota >= 0.999) return 'ok';
+  if (quota >= 0.75) return 'giallo';
+  if (quota >= 0.35) return 'arancio';
+  return 'rosso';
+}
+const segno = liv => SEGNI[liv] || SEGNI.grigio;
+const pill = (liv, testo) => '<span class="pill liv-' + liv + '">' + segno(liv) + T(testo) + '</span>';
+
+const GRAVITA = [
+  ['alto', 'Da sistemare', 'rosso'],
+  ['medio', 'Da valutare', 'arancio'],
+  ['basso', 'Rifiniture', 'giallo'],
+];
 
 const $ = id => document.getElementById(id);
 const modulo = $('modulo'), campo = $('indirizzo'), bottone = $('avvia');
@@ -165,14 +189,16 @@ function disegna(scoperta, risultati, lighthouse) {
   const gravi = segnalazioni.filter(s => s.gravita === 'alto');
   const perse = [];
   for (const g of CONTROLLI) for (const v of g.voci)
-    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: v.nome, persi: v.punti - v._punti, come: v.come });
+    if (v._stato === 'misurato' && v._quota < 0.999) perse.push({ nome: v.nome, persi: v.punti - v._punti, come: v.come, quota: v._quota });
   perse.sort((a, b) => b.persi - a.persi);
   const principali = perse.filter(x => x.persi > 0).slice(0, 3);
 
   // ---- resa
   const p = [];
   const R = 50, C = 2 * Math.PI * R;
-  const colore = voto >= 85 ? 'var(--verde)' : voto >= 60 ? 'var(--ambra)' : 'var(--rosso)';
+  const livVoto = livello(voto / 100 >= 0.999 ? 1 : voto / 100);
+  const colore = { ok:'var(--verde)', giallo:'var(--giallo)', arancio:'var(--arancio)',
+                   rosso:'var(--rosso)', grigio:'#98a5a1' }[livVoto];
   const giudizio = voto >= 90 ? 'Il sito è in ottimo stato: quello che manca è rifinitura.'
     : voto >= 75 ? 'Buona base, con qualche punto da sistemare.'
     : voto >= 50 ? 'Ci sono problemi concreti che limitano quanto Google e i motori IA capiscono del sito.'
@@ -191,32 +217,49 @@ function disegna(scoperta, risultati, lighthouse) {
   for (const g of CONTROLLI) {
     if (!g._max) continue;
     const q = Math.round(g._punti / g._max * 100);
-    p.push('<div><b>' + g._punti + '<span style="font-size:.8rem;color:var(--grafite)">/' + g._max + '</span></b>' +
-      '<span>' + T(g.gruppo) + '</span><i><em style="width:' + q + '%"></em></i></div>');
+    const liv = livello(g._punti / g._max);
+    p.push('<div><b class="liv-' + liv + '">' + g._punti +
+      '<span style="font-size:.8rem;color:var(--grafite);font-weight:400">/' + g._max + '</span></b>' +
+      '<span>' + T(g.gruppo) + '</span>' +
+      '<i><em class="liv-' + liv + '" style="width:' + q + '%"></em></i></div>');
   }
   p.push('</div>');
 
   if (principali.length) {
     p.push('<h2>Le tre cose che pesano di più</h2>');
-    for (const v of principali)
-      p.push('<div class="voce alto"><b>−' + v.persi + ' punti</b> — ' + T(v.nome) +
-        '<div class="dove" style="font-family:inherit;font-size:.86rem">' + T(v.come) + '</div></div>');
+    for (const v of principali) {
+      const liv = livello(v.quota);
+      p.push('<div class="voce ' + (liv === 'rosso' ? 'alto' : liv === 'arancio' ? 'medio' : 'basso') + '">' +
+        '<span class="cat liv-' + liv + '">' + segno(liv) + '−' + v.persi + ' punti</span> ' + T(v.nome) +
+        '<div class="dove" style="font-family:inherit;font-size:.87rem;color:var(--grafite)">' +
+        T(v.come) + '</div></div>');
+    }
   }
 
   p.push('<h2>Tutti i controlli, uno per uno</h2>' +
-    '<p class="nota" style="margin:-.5rem 0 1rem">Apri una voce per leggere perché conta e come si sistema.</p>');
+    '<p class="nota" style="margin:-.5rem 0 .6rem">Apri una voce per leggere perché conta e come si sistema.</p>' +
+    '<div class="legenda">' +
+    '<span class="liv-ok">' + SEGNI.ok + 'superato ovunque</span>' +
+    '<span class="liv-giallo">' + SEGNI.giallo + 'quasi ovunque</span>' +
+    '<span class="liv-arancio">' + SEGNI.arancio + 'su parte delle pagine</span>' +
+    '<span class="liv-rosso">' + SEGNI.rosso + 'non superato</span>' +
+    '<span class="liv-grigio">' + SEGNI.grigio + 'non misurato</span></div>');
   for (const g of CONTROLLI) {
     p.push('<h3>' + T(g.gruppo) + (g._max ? ' — ' + g._punti + ' su ' + g._max : '') + '</h3>');
     for (const v of g.voci) {
-      let stato;
-      if (v._stato === 'assente') stato = '<span style="color:var(--grafite)">non misurato</span>';
-      else if (v._valore) stato = '<span class="' + (v._quota >= .9 ? 'si' : v._quota >= .5 ? 'parziale' : 'no') + '">' + T(v._valore) + '</span>';
-      else if (v._quota >= 0.999) stato = '<span class="si">superato</span>';
-      else if (v._quota <= 0.001) stato = '<span class="no">non superato</span>';
-      else stato = '<span class="parziale">' + Math.round(v._quota * 100) + '% delle pagine</span>';
-      const punti = v._stato === 'assente' ? '—' : v._punti + '/' + v.punti;
-      p.push('<details class="controllo"><summary><span class="che">' + T(v.nome) + '</span>' +
-        '<span class="val">' + stato + ' · ' + punti + '</span></summary>' +
+      const assente = v._stato === 'assente';
+      const liv = assente ? 'grigio' : livello(v._quota);
+      let etichetta;
+      if (assente) etichetta = 'non misurato';
+      else if (v._valore) etichetta = v._valore;
+      else if (v._quota >= 0.999) etichetta = 'superato';
+      else if (v._quota <= 0.001) etichetta = 'non superato';
+      else etichetta = Math.round(v._quota * 100) + '% delle pagine';
+      const punti = assente ? '—' : v._punti + ' / ' + v.punti;
+      p.push('<details class="controllo liv-' + liv + '"><summary>' +
+        '<span class="che"><span class="liv-' + liv + '">' + segno(liv) + '</span>' + T(v.nome) + '</span>' +
+        '<span class="val">' + pill(liv, etichetta) +
+        ' <span class="punti-voce">' + punti + '</span></span></summary>' +
         '<div class="spiega"><p><b>Perché conta</b>' + T(v.perche) + '</p>' +
         '<p><b>Come si sistema</b>' + T(v.come) + '</p></div></details>');
     }
@@ -230,11 +273,19 @@ function disegna(scoperta, risultati, lighthouse) {
       "Il resto dell'analisi non ne risente: i dieci punti di questo gruppo sono esclusi dal totale, " +
       'non contati come zero.</div>');
   } else {
+    p.push('<div class="gruppi" style="margin-bottom:1rem">');
+    for (const c of lh.categorie) {
+      const liv = livello(c.punteggio / 100);
+      p.push('<div><b class="liv-' + liv + '">' + c.punteggio +
+        '<span style="font-size:.8rem;color:var(--grafite);font-weight:400">/100</span></b>' +
+        '<span>' + T(c.nome) + '</span><i><em class="liv-' + liv +
+        '" style="width:' + c.punteggio + '%"></em></i></div>');
+    }
+    p.push('</div>');
     p.push('<table><tr><th>Metrica</th><th style="text-align:right">Valore</th></tr>');
     for (const m of lh.metriche)
-      p.push('<tr><td>' + T(m.nome) + '<div class="dove" style="font-family:inherit">' + T(m.spiegazione) +
-        '</div></td><td class="num ' + (m.esito >= .9 ? 'si' : m.esito >= .5 ? 'parziale' : 'no') + '">' +
-        T(m.valore) + '</td></tr>');
+      p.push('<tr><td>' + T(m.nome) + '<div class="dove" style="font-family:inherit;color:var(--grafite)">' +
+        T(m.spiegazione) + '</div></td><td class="num">' + pill(livello(m.esito), m.valore) + '</td></tr>');
     p.push('</table>');
     if (lh.rallentamenti.length) {
       p.push('<h3>Cosa rallenta la pagina</h3>');
@@ -265,11 +316,13 @@ function disegna(scoperta, risultati, lighthouse) {
   }
 
   // ---- segnalazioni
-  if (!segnalazioni.length) p.push('<h2>Segnalazioni</h2><div class="pulito">Nessun problema rilevato.</div>');
-  else for (const [chiave, etichetta] of GRAVITA) {
+  if (!segnalazioni.length) p.push('<h2>Segnalazioni</h2><div class="pulito">' + SEGNI.ok +
+    ' Nessun problema rilevato sulle pagine analizzate.</div>');
+  else for (const [chiave, etichetta, colore] of GRAVITA) {
     const gruppo = segnalazioni.filter(s => s.gravita === chiave);
     if (!gruppo.length) continue;
-    p.push('<h2>' + etichetta + ' — ' + gruppo.length + '</h2>');
+    p.push('<h2><span class="liv-' + colore + '">' + segno(colore) + '</span> ' +
+      etichetta + ' — ' + gruppo.length + '</h2>');
     const raggruppate = {};
     for (const s of gruppo) (raggruppate[s.categoria + '||' + s.messaggio] ||= []).push(s.url);
     for (const [k, indirizzi] of Object.entries(raggruppate)) {
@@ -293,7 +346,7 @@ function disegna(scoperta, risultati, lighthouse) {
     p.push('<tr><td class="percorso">' + T(percorso(q.url)) + '</td>' +
       '<td class="num">' + (q.parole || 0) + '</td><td class="num">' + (q.blocchiJsonLd || 0) + '</td>' +
       '<td class="num">' + (q.linkInterni || 0) + '</td>' +
-      '<td class="num ' + (ok === tot ? 'si' : ok >= tot - 2 ? 'parziale' : 'no') + '">' + ok + '/' + tot + '</td></tr>');
+      '<td class="num liv-' + livello(ok / tot) + '" style="font-weight:700">' + ok + '/' + tot + '</td></tr>');
   }
   p.push('</table>');
   if (buone.length > 40) p.push('<p class="nota">Mostrate le 40 pagine con più controlli non superati.</p>');
