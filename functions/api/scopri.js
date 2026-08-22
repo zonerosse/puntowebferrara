@@ -101,7 +101,20 @@ async function prendi(url, tipo, limite, secondoGiro) {
           const testo2 = await corpoLimitato(ritenta, limite === undefined ? 120000 : limite);
           return { ok: true, stato: ritenta.status, intestazioni: ritenta.headers, testo: testo2, ripiego: true };
         }
-        if (ritenta && ritenta.body) { try { await ritenta.body.cancel(); } catch (e) {} }
+        if (ritenta) {
+          // Rifiuto confermato: si raccolgono le tracce di chi sta bloccando,
+          // perché con quelle si capisce se il problema è aggirabile o no.
+          const indizi = {};
+          for (const nome of ['server', 'cf-mitigated', 'cf-ray', 'x-sucuri-id', 'x-sucuri-block',
+                              'x-powered-by', 'x-iinfo', 'x-cdn', 'x-cache', 'via', 'set-cookie']) {
+            const v = ritenta.headers.get(nome);
+            if (v) indizi[nome] = String(v).slice(0, 120);
+          }
+          let assaggio = '';
+          try { assaggio = (await corpoLimitato(ritenta, 1500)).replace(/\s+/g, ' ').slice(0, 300); }
+          catch (e) { try { await ritenta.body.cancel(); } catch (e2) {} }
+          return { ok: false, stato: ritenta.status, indizi, assaggio };
+        }
       }
       return { ok: false, stato: risposta.status };
     }
@@ -279,6 +292,9 @@ async function scopri(context) {
     errore: home.errore
       ? 'Il sito non risponde in tempo utile'
       : 'Il sito ha risposto ' + (home.stato || '?'),
+    stato: home.stato || null,
+    indizi: home.indizi || null,
+    assaggio: home.assaggio || null,
   }, 200);
 
   const quattroZeroQuattro = finta ? finta.status : null;

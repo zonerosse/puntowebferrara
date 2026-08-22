@@ -129,7 +129,12 @@ modulo.addEventListener('submit', async e => {
       // interrotta prima di completarsi: capita sui siti molto grandi.
       throw new Error('il server ha interrotto l\'analisi di questo sito.');
     }
-    if (scoperta.errore) throw new Error(scoperta.errore);
+    if (scoperta.errore) {
+      const e = new Error(scoperta.errore);
+      e.indizi = scoperta.indizi;
+      e.assaggio = scoperta.assaggio;
+      throw e;
+    }
   } catch (err) {
     const vietato = /robots\.txt/i.test(err.message);
     const bloccato = !vietato && /403|401/.test(err.message);
@@ -151,9 +156,16 @@ modulo.addEventListener('submit', async e => {
     // davanti a una riga di testo per mezzo minuto.
     avanzamento.classList.remove('attivo');
     bottone.disabled = false;
+    let tracce = '';
+    if (err.indizi && Object.keys(err.indizi).length) {
+      tracce = '<details style="margin-top:.8rem"><summary style="cursor:pointer;font-size:.85rem">' +
+        'Dettagli tecnici del rifiuto</summary><div class="dove" style="margin-top:.5rem">' +
+        Object.entries(err.indizi).map(([k, v]) => T(k) + ': ' + T(v)).join('<br>') +
+        (err.assaggio ? '<br><br>' + T(err.assaggio) : '') + '</div></details>';
+    }
     zonaErrore.innerHTML = '<div class="errore">' + spiegazione +
       '<br><br>Se il sito è tuo, <a href="/contatti/">scrivimi</a>: l\'analisi la faccio a mano e ti mando ' +
-      'il risultato completo.</div>';
+      'il risultato completo.' + tracce + '</div>';
 
     if (vietato) return;
 
