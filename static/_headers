@@ -23,3 +23,7 @@
 
 /*.ico
   Cache-Control: public, max-age=604800
+
+# Le chiamate dello strumento di verifica non vanno mai in cache
+/api/*
+  Cache-Control: no-store

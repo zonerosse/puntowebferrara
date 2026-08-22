@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verifica gratuita del sito: SEO e motori IA | Punto Web Ferrara</title>
+<meta name="description" content="Analisi tecnica gratuita del tuo sito: dati strutturati, accesso dei crawler IA come ChatGPT e Perplexity, struttura delle pagine e metadati. Punteggio scomposto controllo per controllo, senza registrazione.">
+<link rel="canonical" href="https://puntowebferrara.com/verifica/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Verifica gratuita del sito: SEO e motori IA">
+<meta property="og:description" content="Incolla l'indirizzo e scopri cosa vedono Google e i motori IA quando leggono il tuo sito. Gratis, senza registrazione.">
+<meta property="og:url" content="https://puntowebferrara.com/verifica/">
+<meta property="og:image" content="https://puntowebferrara.com/img/og-image.png">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Verifica gratuita del sito: SEO e motori IA">
+<meta name="twitter:description" content="Incolla l'indirizzo e scopri cosa vedono Google e i motori IA quando leggono il tuo sito.">
+<meta name="twitter:image" content="https://puntowebferrara.com/img/og-image.png">
+<meta name="robots" content="index,follow">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://puntowebferrara.com/#website",
+  "url": "https://puntowebferrara.com/",
+  "name": "Punto Web Ferrara",
+  "inLanguage": "it",
+  "publisher": { "@id": "https://puntowebferrara.com/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["Organization", "ProfessionalService"],
+  "@id": "https://puntowebferrara.com/#organization",
+  "name": "Punto Web Ferrara",
+  "url": "https://puntowebferrara.com/",
+  "areaServed": [{ "@type": "Place", "name": "Ferrara" }, { "@type": "Country", "name": "Italy" }],
+  "founder": { "@type": "Person", "name": "Paolo Boldrini", "jobTitle": "Web designer" },
+  "knowsAbout": ["realizzazione siti web", "SEO tecnica", "dati strutturati", "migrazione da WordPress a sito statico"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Verifica sito — SEO e motori IA",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Browser",
+  "url": "https://puntowebferrara.com/verifica/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "publisher": { "@id": "https://puntowebferrara.com/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://puntowebferrara.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Verifica sito", "item": "https://puntowebferrara.com/verifica/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "it",
+  "mainEntity": [
+    { "@type": "Question", "name": "La verifica è davvero gratuita?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sì. Nessuna registrazione, nessuna email, nessun limite di prova. Lo strumento scarica le pagine del tuo sito, legge il codice e mostra il risultato. Se poi vuoi che sistemi io i problemi trovati, quello è un lavoro a pagamento, ma la verifica resta gratis." } },
+    { "@type": "Question", "name": "Che cosa controlla esattamente?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Quali crawler dei motori IA possono leggere il sito, quali dati strutturati sono presenti e se sono validi, la struttura dei titoli, i metadati per Google e per le condivisioni social, le immagini senza testo alternativo e la coerenza di indirizzo, telefono e coordinate su tutte le pagine." } },
+    { "@type": "Question", "name": "Perché il punteggio è scomposto?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Perché un numero da solo non dice cosa fare. Accanto al totale trovi l'elenco dei controlli, quanto pesa ciascuno e quali sono stati superati. Così sai esattamente da dove viene il punteggio e cosa cambierebbe se sistemassi una certa cosa." } },
+    { "@type": "Question", "name": "Cosa non riesce a controllare?",
+      "acceptedAnswer": { "@type": "Answer", "text": "La velocità reale di caricamento, perché servirebbe un browser completo. I siti che costruiscono i contenuti con JavaScript dopo il caricamento, perché viene letto il codice servito. E la visibilità effettiva su ChatGPT o Perplexity, che richiede di interrogare i modelli a pagamento." } }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --carta:#f4f6f5; --foglio:#fff; --inchiostro:#11201d; --grafite:#5b6b66; --linea:#dbe2df;
+    --verde:#0d6b58; --verde-chiaro:#e7f2ee; --rosso:#a32338; --ambra:#8f6205;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+    --testo:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--carta);color:var(--inchiostro);font-family:var(--testo);line-height:1.6;
+       -webkit-font-smoothing:antialiased}
+  .foglio{max-width:900px;margin:0 auto;padding:2rem 1.25rem 4rem}
+  a{color:var(--verde)}
+
+  .briciole{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--grafite);margin-bottom:1.5rem}
+  .briciole a{color:var(--grafite);text-decoration:none}
+  .briciole a:hover{text-decoration:underline}
+
+  h1{font-size:clamp(1.75rem,5vw,2.5rem);font-weight:700;letter-spacing:-.025em;line-height:1.12;
+     margin-bottom:.85rem;max-width:20ch}
+  .occhiello{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+             color:var(--verde);margin-bottom:.9rem}
+  .tesi{font-size:1.05rem;color:var(--grafite);max-width:56ch;margin-bottom:1.9rem}
+  .tesi b{color:var(--inchiostro);font-weight:600}
+
+  .modulo{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:1.25rem;
+          box-shadow:0 1px 2px rgba(17,32,29,.04)}
+  .campo{display:flex;gap:.6rem;flex-wrap:wrap}
+  input[type=url]{flex:1 1 250px;min-width:0;font-family:var(--mono);font-size:.95rem;padding:.85rem .9rem;
+                  border:1px solid var(--linea);border-radius:3px;background:var(--carta);color:var(--inchiostro)}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--verde);outline-offset:1px}
+  button{font-size:.85rem;letter-spacing:.05em;font-weight:700;padding:.9rem 1.6rem;border:0;border-radius:3px;
+         background:var(--verde);color:#fff;cursor:pointer}
+  button:hover{background:#0a5646}
+  button[disabled]{opacity:.45;cursor:default}
+  .nota{font-size:.82rem;color:var(--grafite);margin-top:.75rem}
+
+  .avanzamento{margin-top:1.25rem;display:none}
+  .avanzamento.attivo{display:block}
+  .barra{height:3px;background:var(--linea);overflow:hidden;border-radius:2px}
+  .barra i{display:block;height:100%;width:0;background:var(--verde);transition:width .25s}
+  .passo{font-family:var(--mono);font-size:.78rem;color:var(--grafite);margin-top:.5rem;
+         white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .errore{background:#fdf1f3;border:1px solid #edccd3;border-left:3px solid var(--rosso);
+          padding:1rem 1.15rem;margin-top:1.25rem;font-size:.94rem;border-radius:3px}
+
+  .esito{margin-top:2.5rem;display:none}
+  .esito.attivo{display:block}
+  h2{font-size:1.25rem;font-weight:700;letter-spacing:-.015em;margin:2.8rem 0 1rem}
+  h2:first-child{margin-top:0}
+  h3{font-size:1rem;font-weight:700;margin:0 0 .4rem}
+
+  /* punteggio */
+  .punteggio{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:1.5rem;
+             display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap}
+  .quadrante{position:relative;width:112px;height:112px;flex-shrink:0}
+  .quadrante svg{transform:rotate(-90deg)}
+  .quadrante b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+               font-size:2rem;font-weight:700;letter-spacing:-.04em}
+  .punteggio .parole{flex:1 1 260px;min-width:0}
+  .punteggio .dominio{font-family:var(--mono);font-size:.78rem;color:var(--grafite);word-break:break-all;
+                      margin-bottom:.35rem}
+  .punteggio p{font-size:1rem}
+
+  table{width:100%;border-collapse:collapse;background:var(--foglio);border:1px solid var(--linea);
+        font-size:.9rem;border-radius:4px;overflow:hidden}
+  th,td{padding:.55rem .85rem;text-align:left;border-bottom:1px solid var(--linea)}
+  tr:last-child td{border-bottom:0}
+  th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--grafite);font-weight:600;background:#f8faf9}
+  td.num{font-family:var(--mono);text-align:right;white-space:nowrap}
+  td.percorso{font-family:var(--mono);font-size:.8rem;word-break:break-all}
+  .si{color:var(--verde);font-weight:700}
+  .no{color:var(--rosso);font-weight:700}
+  .parziale{color:var(--ambra);font-weight:700}
+
+  .crawler{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;
+           background:var(--linea);border:1px solid var(--linea);border-radius:4px;overflow:hidden}
+  .bot{background:var(--foglio);padding:.6rem .85rem;display:flex;justify-content:space-between;
+       align-items:baseline;gap:.75rem}
+  .bot .nome{font-family:var(--mono);font-size:.83rem}
+  .bot .chi{display:block;font-size:.75rem;color:var(--grafite)}
+  .bot .esito-bot{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;white-space:nowrap}
+
+  .voce{background:var(--foglio);border:1px solid var(--linea);border-left:3px solid var(--grafite);
+        border-radius:0 4px 4px 0;padding:.8rem 1rem;margin-bottom:.5rem}
+  .voce.alto{border-left-color:var(--rosso)}
+  .voce.medio{border-left-color:var(--ambra)}
+  .voce.basso{border-left-color:var(--grafite)}
+  .voce .cat{font-family:var(--mono);font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;
+             color:var(--grafite);margin-right:.5rem}
+  .voce .dove{font-family:var(--mono);font-size:.75rem;color:var(--grafite);margin-top:.3rem;
+              word-break:break-all}
+  .pulito{background:var(--verde-chiaro);border:1px solid #cbe3db;border-left:3px solid var(--verde);
+          padding:1.1rem 1.25rem;color:var(--verde);font-weight:600;border-radius:0 4px 4px 0}
+
+  /* riquadro finale */
+  .chiusura{margin-top:3rem;background:var(--inchiostro);color:#eef3f1;border-radius:4px;padding:1.9rem 1.75rem}
+  .chiusura h2{color:#fff;margin:0 0 .8rem}
+  .chiusura p{color:#c3d0cc;margin-bottom:1rem;max-width:58ch}
+  .chiusura ol{margin:0 0 1.25rem 1.1rem;color:#eef3f1}
+  .chiusura li{margin-bottom:.35rem}
+  .chiusura .listino{font-size:.88rem;color:#9fb0ab;margin-top:1rem}
+  .azioni{display:flex;gap:.7rem;flex-wrap:wrap}
+  .azioni a{display:inline-block;background:#fff;color:var(--inchiostro);text-decoration:none;
+            font-weight:700;font-size:.88rem;padding:.8rem 1.4rem;border-radius:3px}
+  .azioni a.vuoto{background:transparent;color:#fff;border:1px solid #4a5b57}
+
+  details{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:.85rem 1rem;
+          margin-bottom:.5rem}
+  summary{cursor:pointer;font-weight:600;font-size:.95rem}
+  details p{margin-top:.6rem;color:var(--grafite);font-size:.92rem}
+
+  .piede{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--linea);font-size:.82rem;
+         color:var(--grafite)}
+
+  @media print{
+    body{background:#fff}
+    .modulo,.avanzamento,.azioni,button,.briciole{display:none !important}
+    .foglio{max-width:none;padding:0}
+    .chiusura{background:#fff;color:#000;border:1px solid #000}
+    .chiusura h2,.chiusura p,.chiusura ol,.chiusura li{color:#000}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<main class="foglio">
+
+  <nav class="briciole"><a href="/">Punto Web Ferrara</a> › Verifica sito</nav>
+
+  <p class="occhiello">Strumento gratuito</p>
+  <h1>Cosa vede Google quando legge il tuo sito. E cosa vede ChatGPT.</h1>
+  <p class="tesi">Incolla l'indirizzo. Lo strumento scarica le pagine, legge il codice e ti dice cosa c'è
+  e cosa manca. Il punteggio è <b>scomposto controllo per controllo</b>: vedi da dove viene ogni punto,
+  invece di un numero e basta. Niente registrazione, niente email.</p>
+
+  <form class="modulo" id="modulo">
+    <div class="campo">
+      <input type="url" id="indirizzo" placeholder="https://iltuosito.it" required autocomplete="url" spellcheck="false">
+      <button type="submit" id="avvia">Verifica il sito</button>
+    </div>
+    <p class="nota">L'analisi dura da dieci secondi a un minuto e legge fino a 60 pagine, prese dalla sitemap.
+    Non salvo nulla: quando chiudi la pagina, il risultato sparisce.</p>
+  </form>
+
+  <div class="avanzamento" id="avanzamento">
+    <div class="barra"><i id="riempimento"></i></div>
+    <div class="passo" id="passo">In attesa…</div>
+  </div>
+
+  <div id="zonaErrore"></div>
+  <section class="esito" id="esito"></section>
+
+  <section id="spiegazioni">
+    <h2>Domande frequenti</h2>
+    <details><summary>La verifica è davvero gratuita?</summary>
+      <p>Sì. Nessuna registrazione, nessuna email, nessun limite di prova. Se poi vuoi che sistemi io i
+      problemi trovati, quello è un lavoro a pagamento — ma la verifica resta gratis.</p></details>
+    <details><summary>Che cosa controlla esattamente?</summary>
+      <p>Quali crawler dei motori IA possono leggere il sito, quali dati strutturati sono presenti e se sono
+      validi, la struttura dei titoli, i metadati per Google e per le condivisioni social, le immagini senza
+      testo alternativo, e la coerenza di indirizzo, telefono e coordinate su tutte le pagine.</p></details>
+    <details><summary>Perché il punteggio è scomposto?</summary>
+      <p>Perché un numero da solo non dice cosa fare. Accanto al totale trovi l'elenco dei controlli, quanto
+      pesa ciascuno e quali sono stati superati. Così sai da dove viene il punteggio e cosa cambierebbe
+      sistemando una certa cosa.</p></details>
+    <details><summary>Cosa non riesce a controllare?</summary>
+      <p>La velocità reale di caricamento, perché servirebbe un browser completo. I siti che costruiscono i
+      contenuti con JavaScript dopo il caricamento, perché viene letto il codice servito. E la visibilità
+      effettiva su ChatGPT o Perplexity, che richiede di interrogare i modelli a pagamento. Meglio dirlo
+      prima che scoprirlo dopo.</p></details>
+  </section>
+
+  <footer class="piede">
+    Punto Web Ferrara — siti web veloci e senza manutenzione. Analisi eseguita sul codice HTML servito dal sito.
+  </footer>
+</main>
+
+<script>
+/* ------------------------------------------------------------------ punteggio
+   Ogni controllo vale dei punti dichiarati. Il totale è la somma.
+   Nessuna formula nascosta: la tabella dei controlli è mostrata all'utente. */
+const CONTROLLI = [
+  { gruppo:'Accesso dei motori IA', voci:[
+    { id:'botPrimari', nome:'I crawler principali (ChatGPT, Claude, Perplexity) possono entrare', punti:12 },
+    { id:'botSecondari', nome:'I crawler di Google, Bing e Apple possono entrare', punti:5 },
+    { id:'sitemap', nome:'Il sito dichiara una sitemap', punti:5 },
+    { id:'llms', nome:'È presente il file llms.txt per gli agenti IA', punti:3 },
+  ]},
+  { gruppo:'Dati strutturati', voci:[
+    { id:'jsonLd', nome:'Le pagine contengono dati strutturati JSON-LD', punti:9 },
+    { id:'jsonLdValido', nome:'I dati strutturati sono tutti validi', punti:6 },
+    { id:'schemaEntita', nome:"È dichiarata l'attività (Organization o LocalBusiness)", punti:5 },
+    { id:'schemaContenuto', nome:'I contenuti sono tipizzati (Article, FAQPage, Product…)', punti:3 },
+    { id:'briciole', nome:'È presente il percorso di navigazione (BreadcrumbList)', punti:2 },
+  ]},
+  { gruppo:'Struttura dei contenuti', voci:[
+    { id:'h1unico', nome:'Ogni pagina ha un solo titolo principale', punti:6 },
+    { id:'titoliOrdinati', nome:'I livelli dei titoli non saltano', punti:4 },
+    { id:'haH2', nome:'I contenuti sono divisi in sezioni', punti:4 },
+    { id:'testoSufficiente', nome:'Le pagine hanno abbastanza testo per essere citate', punti:4 },
+    { id:'domandeCoperte', nome:'Le domande nel testo sono marcate come FAQ', punti:2 },
+  ]},
+  { gruppo:'Indicizzazione', voci:[
+    { id:'canonical', nome:'Ogni pagina dichiara il proprio indirizzo canonico', punti:6 },
+    { id:'lang', nome:'È dichiarata la lingua della pagina', punti:3 },
+    { id:'hreflangOk', nome:'Le versioni in altre lingue sono collegate correttamente', punti:3 },
+    { id:'nap', nome:'Indirizzo, telefono e coordinate coincidono su tutte le pagine', punti:3 },
+  ]},
+  { gruppo:'Metadati e immagini', voci:[
+    { id:'titleOk', nome:'I titoli per Google sono di lunghezza corretta', punti:5 },
+    { id:'descrizioneOk', nome:'Le descrizioni per Google sono di lunghezza corretta', punti:4 },
+    { id:'openGraph', nome:'Le condivisioni social mostrano titolo e immagine', punti:3 },
+    { id:'immaginiConAlt', nome:'Le immagini hanno il testo alternativo', punti:3 },
+  ]},
+];
+
+const GRAVITA = [['alto','Da sistemare'],['medio','Da valutare'],['basso','Rifiniture']];
+
+const $ = id => document.getElementById(id);
+const modulo = $('modulo'), campo = $('indirizzo'), bottone = $('avvia');
+const avanzamento = $('avanzamento'), riempimento = $('riempimento'), passo = $('passo');
+const esito = $('esito'), zonaErrore = $('zonaErrore');
+
+const T = s => String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const percorso = u => { try { return new URL(u).pathname; } catch { return u; } };
+
+function avanza(fatte, totale, testo){
+  riempimento.style.width = (totale ? Math.round(fatte/totale*100) : 0) + '%';
+  passo.textContent = testo;
+}
+
+modulo.addEventListener('submit', async e => {
+  e.preventDefault();
+  const indirizzo = campo.value.trim();
+  if (!indirizzo) return;
+
+  bottone.disabled = true;
+  zonaErrore.innerHTML = '';
+  esito.classList.remove('attivo');
+  esito.innerHTML = '';
+  avanzamento.classList.add('attivo');
+  avanza(0, 1, 'Cerco robots.txt e sitemap…');
+
+  let scoperta;
+  try {
+    const r = await fetch('/api/scopri?url=' + encodeURIComponent(indirizzo));
+    scoperta = await r.json();
+    if (scoperta.errore) throw new Error(scoperta.errore);
+  } catch (err) {
+    avanzamento.classList.remove('attivo');
+    bottone.disabled = false;
+    zonaErrore.innerHTML = '<div class="errore"><b>Non riesco a leggere questo sito.</b> ' + T(err.message) +
+      ' Controlla che l\'indirizzo sia completo, con https:// davanti. Se il sito è protetto da un firewall ' +
+      'che blocca i programmi, l\'analisi automatica non passa: scrivimi e lo guardo a mano.</div>';
+    return;
+  }
+
+  let pagine = scoperta.pagine && scoperta.pagine.length ? scoperta.pagine : [scoperta.sito + '/'];
+  const risultati = [];
+  let fatte = 0;
+  const coda = pagine.slice();
+
+  async function operaio(){
+    while (coda.length) {
+      const u = coda.shift();
+      try { risultati.push(await (await fetch('/api/pagina?url=' + encodeURIComponent(u))).json()); }
+      catch { risultati.push({ url:u, errore:'Analisi non riuscita' }); }
+      avanza(++fatte, pagine.length, 'Lette ' + fatte + ' pagine su ' + pagine.length);
+    }
+  }
+  await Promise.all([operaio(),operaio(),operaio(),operaio()]);
+
+  avanzamento.classList.remove('attivo');
+  bottone.disabled = false;
+  disegna(scoperta, risultati);
+  esito.classList.add('attivo');
+  esito.scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+function disegna(scoperta, risultati){
+  const buone = risultati.filter(r => !r.errore);
+  const rotte = risultati.filter(r => r.errore);
+  if (!buone.length) {
+    zonaErrore.innerHTML = '<div class="errore"><b>Nessuna pagina leggibile.</b> Il sito potrebbe bloccare ' +
+      'i programmi automatici, oppure costruire i contenuti con JavaScript. Scrivimi e lo guardo a mano.</div>';
+    return;
+  }
+
+  /* --- esiti dei controlli: una voce è superata se lo è su tutte le pagine --- */
+  const crawler = scoperta.robots.crawler || [];
+  const primari = crawler.filter(c => c.livello === 1);
+  const secondari = crawler.filter(c => c.livello === 2);
+  const contatti = k => Array.from(new Set(buone.map(p => p.contatti && p.contatti[k]).filter(Boolean)));
+  const napCoerente = ['via','cap','coordinate','telefono'].every(k => contatti(k).length <= 1);
+
+  const perPagina = {};
+  for (const chiave of Object.keys(buone[0].flag || {})) {
+    const passate = buone.filter(p => p.flag && p.flag[chiave]).length;
+    perPagina[chiave] = { passate, totale: buone.length, quota: passate / buone.length };
+  }
+
+  const esiti = Object.assign({}, perPagina, {
+    botPrimari:{ quota: primari.length ? primari.filter(c=>c.ammesso).length/primari.length : 1 },
+    botSecondari:{ quota: secondari.length ? secondari.filter(c=>c.ammesso).length/secondari.length : 1 },
+    sitemap:{ quota: scoperta.sitemapTrovate ? 1 : 0 },
+    llms:{ quota: scoperta.llmsPresente ? 1 : 0 },
+    nap:{ quota: napCoerente ? 1 : 0 },
+  });
+
+  let totale = 0, massimo = 0;
+  for (const g of CONTROLLI) for (const v of g.voci) {
+    const quota = esiti[v.id] ? esiti[v.id].quota : 0;
+    v._quota = quota;
+    v._punti = Math.round(v.punti * quota);
+    totale += v._punti; massimo += v.punti;
+  }
+  const voto = Math.round(totale / massimo * 100);
+
+  /* --- segnalazioni --- */
+  const segnalazioni = [];
+  for (const p of buone) for (const q of (p.problemi||[])) segnalazioni.push({...q, url:p.url});
+  const insieme = (categoria,gravita,messaggio) => segnalazioni.push({categoria,gravita,messaggio,url:''});
+  for (const c of crawler.filter(c=>!c.ammesso))
+    insieme('Motori IA', c.livello===1?'alto':'medio',
+      c.nome + ' è escluso dal robots.txt: ' + c.chi + ' non può leggere il sito');
+  if (!scoperta.sitemapTrovate) insieme('Indicizzazione','alto','Nessuna sitemap trovata');
+  if (!scoperta.llmsPresente) insieme('Motori IA','basso','Manca il file llms.txt');
+  for (const p of rotte) insieme('Collegamenti','alto','Pagina in sitemap ma irraggiungibile: ' + p.errore);
+  for (const k of ['via','cap','coordinate','telefono']) {
+    const v = contatti(k);
+    if (v.length > 1) insieme('Coerenza dei contatti','alto',
+      'Il sito dichiara ' + v.length + ' valori diversi per ' + k + ' — ' + v.join('  ·  '));
+  }
+
+  const gravi = segnalazioni.filter(s=>s.gravita==='alto');
+  const medi  = segnalazioni.filter(s=>s.gravita==='medio');
+
+  /* --- i tre problemi che pesano di più: le voci di punteggio perse --- */
+  const perse = [];
+  for (const g of CONTROLLI) for (const v of g.voci)
+    if (v._quota < 0.999) perse.push({ nome:v.nome, persi:v.punti - v._punti, gruppo:g.gruppo, quota:v._quota });
+  perse.sort((a,b)=>b.persi-a.persi);
+  const principali = perse.filter(p=>p.persi>0).slice(0,3);
+
+  /* --- costruzione --- */
+  const p = [];
+  const raggio = 50, circonferenza = 2*Math.PI*raggio;
+  const colore = voto>=85 ? 'var(--verde)' : voto>=60 ? 'var(--ambra)' : 'var(--rosso)';
+  const giudizio = voto>=90 ? 'Il sito è in ottimo stato: quello che manca è rifinitura.'
+    : voto>=75 ? 'Buona base, con qualche punto da sistemare.'
+    : voto>=50 ? 'Ci sono problemi concreti che limitano quanto Google e i motori IA capiscono del sito.'
+    : 'Il sito ha carenze tecniche importanti: gran parte di quello che pubblichi non arriva ai motori.';
+
+  p.push('<h2>Risultato</h2><div class="punteggio">' +
+    '<div class="quadrante"><svg width="112" height="112" viewBox="0 0 112 112">' +
+    '<circle cx="56" cy="56" r="'+raggio+'" fill="none" stroke="var(--linea)" stroke-width="9"/>' +
+    '<circle cx="56" cy="56" r="'+raggio+'" fill="none" stroke="'+colore+'" stroke-width="9" ' +
+    'stroke-linecap="round" stroke-dasharray="'+circonferenza+'" ' +
+    'stroke-dashoffset="'+(circonferenza*(1-voto/100))+'"/></svg><b>'+voto+'</b></div>' +
+    '<div class="parole"><div class="dominio">'+T(scoperta.sito)+' · '+buone.length+' pagine lette</div>' +
+    '<p>'+T(giudizio)+'</p></div></div>');
+
+  if (principali.length) {
+    p.push('<h2>Le tre cose che pesano di più</h2><table><tr><th>Cosa manca</th><th>Punti persi</th></tr>');
+    for (const v of principali)
+      p.push('<tr><td>'+T(v.nome)+'</td><td class="num no">−'+v.persi+'</td></tr>');
+    p.push('</table>');
+  }
+
+  p.push('<h2>Da dove viene il punteggio</h2>');
+  for (const g of CONTROLLI) {
+    p.push('<h3>'+T(g.gruppo)+'</h3><table style="margin-bottom:1.1rem">' +
+      '<tr><th>Controllo</th><th style="text-align:right">Esito</th><th style="text-align:right">Punti</th></tr>');
+    for (const v of g.voci) {
+      const stato = v._quota >= 0.999 ? '<span class="si">superato</span>'
+        : v._quota <= 0.001 ? '<span class="no">non superato</span>'
+        : '<span class="parziale">' + Math.round(v._quota*100) + '% delle pagine</span>';
+      p.push('<tr><td>'+T(v.nome)+'</td><td class="num">'+stato+'</td>' +
+        '<td class="num">'+v._punti+' / '+v.punti+'</td></tr>');
+    }
+    p.push('</table>');
+  }
+
+  p.push('<h2>Chi può leggere il sito</h2><div class="crawler">');
+  for (const c of crawler)
+    p.push('<div class="bot"><div><span class="nome">'+T(c.nome)+'</span>' +
+      '<span class="chi">'+T(c.chi)+'</span></div><span class="esito-bot ' +
+      (c.ammesso?'si">entra':'no">bloccato')+'</span></div>');
+  p.push('</div>');
+
+  const tipi = {};
+  for (const q of buone) for (const t of (q.tipiSchema||[])) tipi[t] = (tipi[t]||0)+1;
+  const elenco = Object.entries(tipi).sort((a,b)=>b[1]-a[1]);
+  p.push('<h2>Dati strutturati trovati</h2>');
+  if (!elenco.length) p.push('<div class="errore">Nessun dato strutturato su nessuna pagina analizzata.</div>');
+  else {
+    p.push('<table><tr><th>Tipo</th><th style="text-align:right">Pagine</th></tr>');
+    for (const [n,q] of elenco) p.push('<tr><td>'+T(n)+'</td><td class="num">'+q+'</td></tr>');
+    p.push('</table>');
+  }
+
+  if (!segnalazioni.length) {
+    p.push('<h2>Segnalazioni</h2><div class="pulito">Nessun problema rilevato.</div>');
+  } else {
+    for (const [chiave,etichetta] of GRAVITA) {
+      const gruppo = segnalazioni.filter(s=>s.gravita===chiave);
+      if (!gruppo.length) continue;
+      p.push('<h2>'+etichetta+' — '+gruppo.length+'</h2>');
+      const raggruppate = {};
+      for (const s of gruppo) (raggruppate[s.categoria+'||'+s.messaggio] ||= []).push(s.url);
+      for (const [k,indirizzi] of Object.entries(raggruppate)) {
+        const [categoria,messaggio] = k.split('||');
+        const validi = indirizzi.filter(Boolean);
+        const dove = validi.length
+          ? '<div class="dove">'+validi.slice(0,5).map(u=>T(percorso(u))).join('  ·  ') +
+            (validi.length>5 ? '  · e altre '+(validi.length-5) : '')+'</div>' : '';
+        p.push('<div class="voce '+chiave+'"><span class="cat">'+T(categoria)+'</span>' +
+          T(messaggio)+dove+'</div>');
+      }
+    }
+  }
+
+  p.push('<h2>Pagina per pagina</h2><table>' +
+    '<tr><th>Pagina</th><th style="text-align:right">Parole</th><th style="text-align:right">Schema</th>' +
+    '<th style="text-align:right">Controlli</th></tr>');
+  const ordinate = buone.slice().sort((a,b)=>
+    Object.values(a.flag||{}).filter(Boolean).length - Object.values(b.flag||{}).filter(Boolean).length);
+  for (const q of ordinate.slice(0,40)) {
+    const tot = Object.keys(q.flag||{}).length;
+    const ok = Object.values(q.flag||{}).filter(Boolean).length;
+    const classe = ok===tot ? 'si' : ok >= tot-2 ? 'parziale' : 'no';
+    p.push('<tr><td class="percorso">'+T(percorso(q.url))+'</td><td class="num">'+(q.parole||0)+'</td>' +
+      '<td class="num">'+(q.blocchiJsonLd||0)+'</td>' +
+      '<td class="num '+classe+'">'+ok+'/'+tot+'</td></tr>');
+  }
+  p.push('</table>');
+  if (buone.length > 40) p.push('<p class="nota">Mostrate le 40 pagine con più controlli non superati.</p>');
+
+  /* --- chiusura commerciale, costruita sui problemi trovati --- */
+  const chiusura = [];
+  chiusura.push('<div class="chiusura"><h2>');
+  chiusura.push(gravi.length ? 'Queste cose le sistemo io' : 'Il sito è già messo bene');
+  chiusura.push('</h2>');
+  if (principali.length) {
+    chiusura.push('<p>Sul tuo sito, in ordine di peso, partirei da qui:</p><ol>');
+    for (const v of principali) chiusura.push('<li>'+T(v.nome)+'</li>');
+    chiusura.push('</ol>');
+  }
+  chiusura.push('<p>Sono Paolo Boldrini, lavoro da Ferrara. Rispondo io, entro 24 ore, e il preventivo ' +
+    'è dettagliato prima di cominciare: il prezzo concordato è quello finale.</p>');
+  chiusura.push('<div class="azioni">' +
+    '<a href="/contatti/">Chiedimi un preventivo</a>' +
+    '<a class="vuoto" href="#" onclick="window.print();return false">Salva questo report in PDF</a></div>');
+  chiusura.push('<p class="listino">Sito vetrina da 500 € · Landing page da 400 € · ' +
+    'Migrazione da WordPress a sito statico da 500 €, senza più manutenzione né aggiornamenti.</p></div>');
+
+  esito.innerHTML = p.join('') + chiusura.join('');
+}
+</script>
+</body>
+</html>
