@@ -27,18 +27,23 @@ async function pagina(context) {
     recupero = await fetch(indirizzo, {
       headers: { 'User-Agent': UA, 'Accept': 'text/html,application/xhtml+xml' },
       redirect: 'follow',
+      signal: AbortSignal.timeout(8000),
       cf: { cacheTtl: 300, cacheEverything: true },
     });
   } catch (err) {
     return risposta({ url: indirizzo, errore: 'Pagina irraggiungibile', dettaglio: String(err).slice(0, 120) }, 200);
   }
 
-  if (!recupero.ok)
+  if (!recupero.ok) {
+    if (recupero.body) { try { await recupero.body.cancel(); } catch (e) {} }
     return risposta({ url: indirizzo, errore: 'Il server ha risposto ' + recupero.status, stato: recupero.status }, 200);
+  }
 
   const tipo = recupero.headers.get('content-type') || '';
-  if (!/html/i.test(tipo))
+  if (!/html/i.test(tipo)) {
+    if (recupero.body) { try { await recupero.body.cancel(); } catch (e) {} }
     return risposta({ url: indirizzo, errore: 'Non è una pagina HTML (' + tipo.split(';')[0] + ')' }, 200);
+  }
 
   // Le intestazioni servono ai controlli di sicurezza e compressione.
   const intestazioni = {};

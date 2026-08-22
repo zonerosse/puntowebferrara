@@ -64,7 +64,7 @@ async function lighthouse(context) {
   // Prima con la risposta abbreviata, che pesa molto meno. Se Google non la
   // gradisce, si ripiega sulla risposta intera: meglio lenta che assente.
   async function chiedi(url) {
-    const r = await fetch(url, { cf: { cacheTtl: 900, cacheEverything: true } });
+    const r = await fetch(url, { signal: AbortSignal.timeout(45000), cf: { cacheTtl: 900, cacheEverything: true } });
     if (r.ok) return { ok: true, dati: await r.json() };
     let messaggio = '';
     try {
