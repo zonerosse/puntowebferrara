@@ -12,6 +12,37 @@
   .strumento .marchio-sottosopra span em{font-style:normal;color:#f59e0b}
   @media (max-width:430px){.strumento .marchio-sottosopra span{letter-spacing:.08em}}
 
+  /* Apertura della pagina. Nel codice l'ordine e' quello del telefono:
+     marchio, titolo, modulo, riquadro dell'estensione. Sul monitor la griglia
+     riporta il riquadro accanto al marchio senza spostare nulla nel DOM. */
+  .strumento .riquadro-estensione{background:var(--foglio);border:1px solid var(--linea);
+    border-left:3px solid #0d4275;border-radius:4px;padding:1.1rem 1.2rem;margin-top:1.6rem}
+  .strumento .riquadro-estensione .insegna{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem}
+  .strumento .riquadro-estensione .insegna svg{flex:0 0 auto;width:26px;height:26px}
+  .strumento .riquadro-estensione .insegna span{font-weight:800;font-size:.95rem;
+    letter-spacing:-.01em;line-height:1;color:#0d4275}
+  .strumento .riquadro-estensione .insegna span i{font-style:normal;color:#f59e0b}
+  @media (min-width:701px){
+    .strumento .apertura{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,310px);
+      column-gap:clamp(1.5rem,4vw,2.5rem)}
+    .strumento .apertura>.marchio-sottosopra{grid-column:1;grid-row:1;align-self:center}
+    .strumento .apertura>.riquadro-estensione{grid-column:2;grid-row:1;align-self:center;
+      margin-top:0}
+    .strumento .apertura>.occhiello,
+    .strumento .apertura>h1,
+    .strumento .apertura>.tesi,
+    .strumento .apertura>.modulo{grid-column:1/-1}
+  }
+  .strumento .riquadro-estensione b{display:block;font-size:.92rem;font-weight:400;line-height:1.45;
+    margin-bottom:.85rem;color:var(--grafite)}
+  .strumento .riquadro-estensione a{display:inline-block;background:transparent;color:#0d4275;
+    border:1px solid #0d4275;text-decoration:none;font-weight:600;font-size:.85rem;
+    padding:.45rem .95rem;border-radius:3px}
+  .strumento .riquadro-estensione a:hover{background:#0d4275;color:#fff}
+  .strumento .riquadro-estensione .minuta{display:block;font-size:.73rem;color:var(--grafite);
+    margin-top:.55rem}
+
+
   :root{
     --carta:#f4f6f5; --foglio:#fff; --inchiostro:#11201d; --grafite:#5b6b66; --linea:#dbe2df;
     --verde:#0d6b58; --verde-chiaro:#e7f2ee;
@@ -25,16 +56,17 @@
        font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 /* l'intestazione del sito è position:fixed e alta 64px: senza questo spazio
    copre le prime righe della pagina, marchio compreso */
-.strumento .foglio{max-width:900px;margin:0 auto;padding:calc(64px + 2rem) 1.25rem 4rem}
+.strumento .foglio{max-width:1180px;margin:0 auto;padding:calc(64px + 2rem) clamp(1.25rem,3vw,2rem) 4rem}
 .strumento a{color:var(--verde)}
 .strumento .briciole{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
             color:var(--grafite);margin-bottom:1.5rem}
 .strumento .briciole a{color:var(--grafite);text-decoration:none}
 .strumento .occhiello{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
              color:var(--verde);margin-bottom:.9rem}
-.strumento h1{font-size:clamp(1.7rem,5vw,2.4rem);font-weight:700;letter-spacing:-.025em;line-height:1.12;
-     margin-bottom:.85rem;max-width:21ch}
-.strumento .tesi{font-size:1.03rem;color:var(--grafite);max-width:58ch;margin-bottom:1.9rem}
+.strumento h1{font-size:clamp(1.6rem,3.7vw,2.55rem);font-weight:700;letter-spacing:-.025em;
+     line-height:1.15;margin-bottom:1rem;max-width:none;text-align:center}
+.strumento .tesi{font-size:clamp(1.03rem,1.35vw,1.18rem);color:var(--grafite);
+     max-width:none;margin-bottom:1.9rem}
 .strumento .tesi b{color:var(--inchiostro);font-weight:600}
 .strumento .modulo{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:1.25rem}
 .strumento .campo{display:flex;gap:.6rem;flex-wrap:wrap}
@@ -317,6 +349,8 @@
 
 <div class="strumento">
   <div class="foglio">
+  <div class="apertura">
+
     <div class="marchio-sottosopra">
       <img src="/img/marchio/simbolo.svg" width="108" height="108" alt="" loading="eager">
       <div>
@@ -325,23 +359,40 @@
       </div>
     </div>
 
+    <p class="occhiello">Strumento gratuito · 40 controlli</p>
+    <h1>Cosa vedono Google e le AI quando leggono il tuo sito</h1>
+    <p class="tesi">Incolla l'indirizzo. Lo strumento scarica le pagine, legge il codice, misura la velocità
+    reale con Lighthouse e ti dice cosa c'è e cosa manca. <b>Ogni punto del punteggio è spiegato:</b> perché
+    quel controllo conta e come si sistema. Niente registrazione, niente email.</p>
 
-  <p class="occhiello">Strumento gratuito · 40 controlli</p>
-  <h1>Cosa vedono Google e le AI quando leggono il tuo sito</h1>
-  <p class="tesi">Incolla l'indirizzo. Lo strumento scarica le pagine, legge il codice, misura la velocità
-  reale con Lighthouse e ti dice cosa c'è e cosa manca. <b>Ogni punto del punteggio è spiegato:</b> perché
-  quel controllo conta e come si sistema. Niente registrazione, niente email.</p>
+    <form class="modulo" id="modulo">
+      <div class="campo">
+        <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+               inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+        <button type="submit" id="avvia">Verifica il sito</button>
+      </div>
+      <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,
+      e misura la velocità della home. Dura da venti secondi a un minuto. Non salvo nulla: quando
+      chiudi la pagina, il risultato sparisce.</p>
+    </form>
 
-  <form class="modulo" id="modulo">
-    <div class="campo">
-      <input type="text" id="indirizzo" placeholder="iltuosito.it" required
-             inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
-      <button type="submit" id="avvia">Verifica il sito</button>
+    <div class="riquadro-estensione">
+      <div class="insegna">
+        <svg viewBox="0 0 64 64" role="img" aria-label="Sottosopra">
+          <circle cx="32" cy="32" r="29" fill="#0d4275"/>
+          <path d="M23 21v20m0 0l-5.5-6.5M23 41l5.5-6.5" stroke="#8fbde8" stroke-width="3.6"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M41 43V23m0 0l-5.5 6.5M41 23l5.5 6.5" stroke="#f59e0b" stroke-width="3.6"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span>Sotto<i>sopra</i> per il browser</span>
+      </div>
+      <b>Analizza una pagina mentre la stai guardando</b>
+      <a href="/estensione/">Scarica l'estensione</a>
+      <span class="minuta">Gratuita, per Chrome, Edge e Brave.</span>
     </div>
-    <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,
-    e misura la velocità della home. Dura da venti secondi a un minuto. Non salvo nulla: quando
-    chiudi la pagina, il risultato sparisce.</p>
-  </form>
+
+  </div>
 
   <div class="avanzamento" id="avanzamento">
     <div class="barra"><i id="riempimento"></i></div>
