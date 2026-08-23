@@ -381,6 +381,14 @@ export function analizzaPagina(html, url, intestazioni) {
   if (php) tecnologie.push({ nome: 'PHP ' + php[1], tipo: 'server' });
   const generatore = (html.match(/<meta[^>]+name=["']generator["'][^>]+content=["']([^"']+)["']/i) || [, null])[1];
 
+  // Un sito in HTML scritto a mano si riconosce per assenza: nessun generatore
+  // dichiarato, nessuna firma di piattaforma, pochi script. È una deduzione,
+  // non una prova, e va detta come tale.
+  const piattaformaNota = tecnologie.some(t => t.tipo === 'piattaforma');
+  const staticoSemplice = !piattaformaNota && !generatore
+    && scriptEsterni <= 3
+    && !/wp-content|wp-includes|\/_next\/|__NUXT__|data-reactroot|ng-version/i.test(campione);
+
   // ------------------------------------------------------------ esiti
   const flag = {
     firmaVisibile: firmaVisibile,
@@ -468,7 +476,7 @@ export function analizzaPagina(html, url, intestazioni) {
       lingue: (html.match(/<link[^>]+hreflang=["']([^"']+)["']/gi) || [])
         .map(t => (t.match(/hreflang=["']([^"']+)["']/i) || [, ''])[1]).slice(0, 12),
     },
-    tecnologie, generatore,
+    tecnologie, generatore, staticoSemplice,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
   };

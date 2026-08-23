@@ -98,6 +98,87 @@ function spiegaRifiuto(err) {
     'con tutte le intestazioni di un browser normale e ripetuta una seconda volta, senza esito.';
 }
 
+// Cerchio di completamento accanto al titolo di ogni gruppo.
+// Il punteggio è su cento, così i gruppi si confrontano fra loro; accanto
+// restano i punti veri, che ricordano quanto ciascuno pesa sul totale.
+function cerchioGruppo(presi, totali, nome) {
+  if (!totali) return '';
+  const q = presi / totali;
+  const liv = livello(q);
+  const R = 17, C = 2 * Math.PI * R;
+  const cento = Math.round(q * 100);
+  return '<svg class="cerchio-gruppo liv-' + liv + '" width="46" height="46" viewBox="0 0 46 46" ' +
+    'role="img" aria-label="' + T(nome) + ': ' + cento + ' su 100">' +
+    '<circle cx="23" cy="23" r="' + R + '" fill="none" stroke="var(--linea)" stroke-width="4"/>' +
+    (q > 0 ? '<circle cx="23" cy="23" r="' + R + '" fill="none" stroke="currentColor" stroke-width="4" ' +
+      'stroke-linecap="round" stroke-dasharray="' + (C * q).toFixed(1) + ' ' + C.toFixed(1) +
+      '" transform="rotate(-90 23 23)"/>' : '') +
+    '<text x="23" y="27.5" text-anchor="middle" fill="currentColor" ' +
+    'style="font-size:13px;font-weight:600">' + cento + '</text></svg>';
+}
+
+
+// Ragnatela dei punteggi, affiancata ai riquadri dei gruppi.
+// I due elementi si dividono il lavoro: il grafico mostra la forma dello
+// squilibrio — quale lato del sito cede — i riquadri danno i numeri esatti.
+// Insieme stanno in una schermata; uno sotto l'altro ne occupavano due.
+
+const SIGLE = {
+  'Accesso dei motori IA': 'Motori IA',
+  'Dati strutturati': 'Dati strutturati',
+  'Segnali E-E-A-T': 'E-E-A-T',
+  'Struttura dei contenuti': 'Struttura',
+  'Indicizzazione': 'Indicizzazione',
+  'Metadati e condivisione': 'Metadati',
+  'Sicurezza e configurazione': 'Sicurezza',
+  'Peso della pagina': 'Peso pagina',
+  'Velocità misurata': 'Velocità',
+};
+
+function ragnatela(gruppi) {
+  const validi = gruppi.filter(g => g.totali > 0);
+  if (validi.length < 3) return '';
+
+  const L = 500, C = L / 2, R = 138, n = validi.length;
+  const ang = (i) => (Math.PI * 2 * i) / n - Math.PI / 2;
+  const pt = (i, q) => [C + Math.cos(ang(i)) * R * q, C + Math.sin(ang(i)) * R * q];
+  const quote = validi.map(g => g.presi / g.totali);
+
+  const p = ['<svg class="ragnatela" viewBox="0 0 ' + L + ' ' + L + '" role="img" ' +
+    'aria-label="Punteggio per gruppo di controlli">'];
+
+  for (const v of [0.25, 0.5, 0.75, 1])
+    p.push('<polygon points="' + validi.map((_, i) => pt(i, v).map(x => x.toFixed(1)).join(',')).join(' ') +
+      '" fill="none" stroke="var(--linea)"' + (v === 1 ? '' : ' stroke-dasharray="2 4"') + '/>');
+
+  for (let i = 0; i < n; i++) {
+    const [x, y] = pt(i, 1);
+    p.push('<line x1="' + C + '" y1="' + C + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) +
+      '" stroke="var(--linea)"/>');
+  }
+
+  p.push('<polygon points="' +
+    validi.map((_, i) => pt(i, Math.max(quote[i], 0.02)).map(x => x.toFixed(1)).join(',')).join(' ') +
+    '" fill="var(--verde)" fill-opacity="0.14" stroke="var(--verde)" stroke-width="2.5" ' +
+    'stroke-linejoin="round"/>');
+
+  for (let i = 0; i < n; i++) {
+    const liv = livello(quote[i]);
+    const [x, y] = pt(i, Math.max(quote[i], 0.02));
+    p.push('<circle class="liv-' + liv + '" cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) +
+      '" r="4.5" fill="currentColor"/>');
+    const a = ang(i);
+    const lx = C + Math.cos(a) * (R + 26);
+    const ly = C + Math.sin(a) * (R + 26) + 4;
+    const anc = Math.abs(Math.cos(a)) < 0.3 ? 'middle' : (Math.cos(a) > 0 ? 'start' : 'end');
+    p.push('<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anc +
+      '" class="et-nome">' + T(SIGLE[validi[i].gruppo] || validi[i].gruppo) + '</text>');
+  }
+
+  p.push('</svg>');
+  return p.join('');
+}
+
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
@@ -445,17 +526,23 @@ function disegna(scoperta, risultati, lighthouse) {
     (conCosa ? '<p class="conCosa">Il sito è stato creato con <b>' + T(conCosa) + '</b></p>' : '') +
     '<p>' + T(giudizio) + '</p></div></div>');
 
+  // Grafico e riquadri affiancati: la forma d'insieme a sinistra, i numeri a destra.
+  const perGrafico = CONTROLLI.filter(g => g._max)
+    .map(g => ({ gruppo: g.gruppo, presi: g._punti, totali: g._max }));
+
+  p.push('<div class="testata-gruppi">');
+  p.push('<div class="lato-grafico">' + ragnatela(perGrafico) + '</div>');
   p.push('<div class="gruppi">');
   for (const g of CONTROLLI) {
     if (!g._max) continue;
     const q = Math.round(g._punti / g._max * 100);
     const liv = livello(g._punti / g._max);
     p.push('<div><b class="liv-' + liv + '">' + g._punti +
-      '<span style="font-size:.8rem;color:var(--grafite);font-weight:400">/' + g._max + '</span></b>' +
+      '<span style="font-size:.72rem;color:var(--grafite);font-weight:400">/' + g._max + '</span></b>' +
       '<span>' + T(g.gruppo) + '</span>' +
       '<i><em class="liv-' + liv + '" style="width:' + q + '%"></em></i></div>');
   }
-  p.push('</div>');
+  p.push('</div></div>');
 
   if (principali.length) {
     p.push('<h2>Le tre cose che pesano di più</h2>');
@@ -478,7 +565,9 @@ function disegna(scoperta, risultati, lighthouse) {
     '<span class="liv-rosso">' + SEGNI.rosso + 'non superato</span>' +
     '<span class="liv-grigio">' + SEGNI.grigio + 'non misurato</span></div>');
   for (const g of CONTROLLI) {
-    p.push('<h3>' + T(g.gruppo) + (g._max ? ' — ' + g._punti + ' su ' + g._max : '') + '</h3>');
+    p.push('<h3 class="titolo-gruppo">' + cerchioGruppo(g._punti, g._max, g.gruppo) +
+      '<span class="nome">' + T(g.gruppo) + '</span>' +
+      '<span class="punti">' + g._punti + ' punti su ' + g._max + '</span></h3>');
     for (const v of g.voci) {
       const assente = v._stato === 'assente';
       const liv = assente ? 'grigio' : livello(v._quota);

@@ -253,7 +253,7 @@ export const CONTROLLI = [
     come:'Configura il server perché gli URL non trovati restituiscano davvero il codice 404, o 410 se la pagina è stata rimossa apposta. La pagina di errore può essere bella quanto vuoi, ma il codice di stato deve dire la verità.' },
 ]},
 
-{ gruppo:'Peso e codice', peso:7, voci:[
+{ gruppo:'Peso della pagina', peso:7, voci:[
   { id:'pesoPagina', punti:1, nome:'Le pagine non sono troppo pesanti',
     fonte:{n:'Google — Errori HTTP e di rete',u:'https://developers.google.com/search/docs/crawling-indexing/http-network-errors'},
     no:'Le pagine sono troppo pesanti',
@@ -285,7 +285,7 @@ export const CONTROLLI = [
     come:'Converti le immagini in AVIF, con WebP come riserva e il formato originale come ultima spiaggia, usando l\u2019elemento picture con più source. Aggiungi srcset per servire dimensioni diverse a schermi diversi invece di rimpicciolire un file enorme via CSS.' },
 ]},
 
-{ gruppo:'Prestazioni misurate (Lighthouse)', peso:8, lighthouse:true, voci:[
+{ gruppo:'Velocità misurata', peso:8, lighthouse:true, voci:[
   { id:'lhPerformance', punti:3, nome:'Punteggio prestazioni',
     fonte:{n:'web.dev — Formati immagine moderni',u:'https://web.dev/articles/serve-images-webp'},
     fonte:{n:'web.dev — Formati immagine moderni',u:'https://web.dev/articles/serve-images-webp'},

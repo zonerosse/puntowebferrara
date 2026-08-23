@@ -215,6 +215,32 @@
     text-decoration:none;font-weight:600;padding:.6rem 1.2rem;border-radius:8px}
 .strumento .bottone-estensione:hover{background:var(--carta)}
 .strumento .blocco-estensione .minuta{display:block;font-size:.78rem;opacity:.72;margin-top:.6rem}
+.strumento /* --- testata: grafico e riquadri affiancati --- */
+  .testata-gruppi{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:1rem;align-items:center;background:var(--carta);border:1px solid var(--linea);
+    border-radius:12px;padding:1rem;margin-bottom:1.5rem}
+.strumento .testata-gruppi .gruppi{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin:0}
+.strumento .testata-gruppi .gruppi>div{background:var(--fondo);border:0;border-radius:7px;
+    padding:.5rem .6rem}
+.strumento .testata-gruppi .gruppi b{display:block;font-size:1.05rem;line-height:1.1}
+.strumento .testata-gruppi .gruppi>div>span{font-size:.72rem;color:var(--grafite);
+    line-height:1.25;display:block;margin-top:.1rem}
+.strumento .testata-gruppi .gruppi i{display:block;height:3px;background:var(--linea);
+    margin-top:.35rem;border-radius:2px}
+.strumento .testata-gruppi .gruppi i em{display:block;height:100%;border-radius:2px}
+.strumento .ragnatela{display:block;width:100%;height:auto}
+.strumento .ragnatela .et-nome{font-size:12px;font-weight:600;fill:var(--inchiostro);font-family:inherit}
+@media (max-width:640px){.strumento .testata-gruppi{grid-template-columns:1fr}
+.strumento .lato-grafico{max-width:340px;margin:0 auto}}
+.strumento /* --- cerchio nel titolo di gruppo --- */
+  .titolo-gruppo{display:flex;align-items:center;gap:.7rem;margin:1.8rem 0 .6rem;
+    font-size:1rem;font-weight:600}
+.strumento .titolo-gruppo .nome{flex:1}
+.strumento .titolo-gruppo .punti{font-family:var(--mono);font-size:.75rem;color:var(--grafite);
+    font-weight:400;white-space:nowrap}
+.strumento .cerchio-gruppo{flex-shrink:0;display:block}
+@media (max-width:520px){.strumento .titolo-gruppo{font-size:.92rem;gap:.5rem}
+.strumento .titolo-gruppo .punti{display:none}}
 @media print{.strumento{background:#fff}
 .strumento .modulo, .strumento .avanzamento, .strumento .azioni, .strumento button, .strumento .briciole{display:none !important}
 .strumento .foglio{max-width:none;padding:0}
