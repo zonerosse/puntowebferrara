@@ -4,7 +4,7 @@
 
 import { analizzaPagina } from './_analisi.js';
 
-const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/sottosopra/)';
 const UA_BROWSER = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
   + '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 const INTESTAZIONI = {

@@ -42,7 +42,7 @@ Le informazioni pubblicate hanno carattere divulgativo e non sostituiscono una v
 
 ### Strumento di verifica gratuito
 
-Lo [strumento di verifica](/verifica/) analizza il codice HTML pubblicamente accessibile del sito indicato. Non salva né gli indirizzi analizzati né i risultati: quando la pagina viene chiusa, il rapporto sparisce. La misura della velocità è fornita dall'API PageSpeed Insights di Google, alla quale viene trasmesso l'indirizzo da analizzare.
+Lo [strumento di verifica](/sottosopra/) analizza il codice HTML pubblicamente accessibile del sito indicato. Non salva né gli indirizzi analizzati né i risultati: quando la pagina viene chiusa, il rapporto sparisce. La misura della velocità è fornita dall'API PageSpeed Insights di Google, alla quale viene trasmesso l'indirizzo da analizzare.
 
 Il rapporto prodotto è il risultato di controlli automatici sul codice servito dal sito. Non costituisce una consulenza, non garantisce alcun risultato di posizionamento e non sostituisce una verifica professionale.
 

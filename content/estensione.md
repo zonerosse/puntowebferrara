@@ -19,7 +19,7 @@ faq:
 
 ## Estensione per il browser
 
-Fa le stesse verifiche dello [strumento online](/verifica/) — gli stessi 48 controlli, le stesse spiegazioni — ma partendo dal tuo browser invece che da un server. Il che cambia tre cose concrete.
+Fa le stesse verifiche dello [strumento online](/sottosopra/) — gli stessi 48 controlli, le stesse spiegazioni — ma partendo dal tuo browser invece che da un server. Il che cambia tre cose concrete.
 
 ### Legge quello che vede il browser, non quello che manda il server
 

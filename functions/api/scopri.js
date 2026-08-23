@@ -1,7 +1,7 @@
 // scopri.js — primo passaggio: robots.txt, llms.txt, sitemap ed elenco pagine.
 // Una sola invocazione, poche chiamate esterne (limite del piano gratuito: 50).
 
-const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/verifica/)';
+const UA = 'VerificaSitoBot/1.0 (+https://puntowebferrara.com/sottosopra/)';
 // Alcune protezioni rifiutano qualunque richiesta il cui User-Agent non sia un
 // browser noto. È un filtro grossolano, non un controllo di accesso: il
 // consenso lo esprime il robots.txt, che viene sempre rispettato per primo.

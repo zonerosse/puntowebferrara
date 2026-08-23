@@ -32,8 +32,8 @@ enableRobotsTXT = false
     url = '/portfolio/'
     weight = 5
   [[menus.main]]
-    name = 'Verifica sito'
-    url = '/verifica/'
+    name = 'Sottosopra'
+    url = '/sottosopra/'
     weight = 6
   [[menus.main]]
     name = 'Blog'
