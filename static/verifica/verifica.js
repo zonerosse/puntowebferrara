@@ -55,8 +55,10 @@ function resaLighthouse(lh, sito) {
   if (lh.metriche && lh.metriche.length) {
     p.push('<table style="margin-top:1rem"><tr><th>Metrica</th><th style="text-align:right">Valore</th></tr>');
     for (const m of lh.metriche)
-      p.push('<tr><td>' + T(m.nome) + '<div class="dove" style="font-family:inherit;color:var(--grafite)">' +
-        T(m.spiegazione) + '</div></td><td class="num">' + pill(livello(m.esito), m.valore) + '</td></tr>');
+      p.push('<tr><td class="metrica"><span class="segno liv-' + livello(m.esito) + '">\u25CF</span>' +
+        '<span><b>' + T(m.nome) + '</b><div class="dove" style="font-family:inherit;color:var(--grafite)">' +
+        T(m.spiegazione) + '</div></span></td><td class="num">' +
+        pill(livello(m.esito), m.valore) + '</td></tr>');
     p.push('</table>');
   }
   if (lh.rallentamenti && lh.rallentamenti.length) {
@@ -177,6 +179,15 @@ function ragnatela(gruppi) {
 
   p.push('</svg>');
   return p.join('');
+}
+
+// Un'ancora stabile per ogni gruppo: serve a collegare i riquadri in cima alla
+// sezione corrispondente più in basso. Ricavata dal nome, senza accenti né
+// spazi, così resta la stessa fra un'analisi e l'altra.
+function ancora(nome) {
+  return 'g-' + String(nome).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 const GRAVITA = [
@@ -537,10 +548,11 @@ function disegna(scoperta, risultati, lighthouse) {
     if (!g._max) continue;
     const q = Math.round(g._punti / g._max * 100);
     const liv = livello(g._punti / g._max);
-    p.push('<div><b class="liv-' + liv + '">' + g._punti +
+    p.push('<a class="riquadro-gruppo" href="#' + ancora(g.gruppo) + '">' +
+      '<b class="liv-' + liv + '">' + g._punti +
       '<span style="font-size:.72rem;color:var(--grafite);font-weight:400">/' + g._max + '</span></b>' +
       '<span>' + T(g.gruppo) + '</span>' +
-      '<i><em class="liv-' + liv + '" style="width:' + q + '%"></em></i></div>');
+      '<i><em class="liv-' + liv + '" style="width:' + q + '%"></em></i></a>');
   }
   p.push('</div></div>');
 
@@ -565,7 +577,8 @@ function disegna(scoperta, risultati, lighthouse) {
     '<span class="liv-rosso">' + SEGNI.rosso + 'non superato</span>' +
     '<span class="liv-grigio">' + SEGNI.grigio + 'non misurato</span></div>');
   for (const g of CONTROLLI) {
-    p.push('<h3 class="titolo-gruppo">' + cerchioGruppo(g._punti, g._max, g.gruppo) +
+    p.push('<h3 class="titolo-gruppo" id="' + ancora(g.gruppo) + '">' +
+      cerchioGruppo(g._punti, g._max, g.gruppo) +
       '<span class="nome">' + T(g.gruppo) + '</span>' +
       '<span class="punti">' + g._punti + ' punti su ' + g._max + '</span></h3>');
     for (const v of g.voci) {
@@ -611,19 +624,18 @@ function disegna(scoperta, risultati, lighthouse) {
       "Il resto dell'analisi non ne risente: i dieci punti di questo gruppo sono esclusi dal totale, " +
       'non contati come zero.</div>');
   } else {
-    p.push('<div class="gruppi" style="margin-bottom:1rem">');
-    for (const c of lh.categorie) {
-      const liv = livello(c.punteggio / 100);
-      p.push('<div><b class="liv-' + liv + '">' + c.punteggio +
-        '<span style="font-size:.8rem;color:var(--grafite);font-weight:400">/100</span></b>' +
-        '<span>' + T(c.nome) + '</span><i><em class="liv-' + liv +
-        '" style="width:' + c.punteggio + '%"></em></i></div>');
-    }
+    // Gli stessi cerchi dei gruppi: il punteggio Lighthouse è già su cento.
+    p.push('<div class="cerchi-velocita">');
+    for (const c of lh.categorie)
+      p.push('<div>' + cerchioGruppo(c.punteggio, 100, c.nome) +
+        '<span>' + T(c.nome) + '</span></div>');
     p.push('</div>');
     p.push('<table><tr><th>Metrica</th><th style="text-align:right">Valore</th></tr>');
     for (const m of lh.metriche)
-      p.push('<tr><td>' + T(m.nome) + '<div class="dove" style="font-family:inherit;color:var(--grafite)">' +
-        T(m.spiegazione) + '</div></td><td class="num">' + pill(livello(m.esito), m.valore) + '</td></tr>');
+      p.push('<tr><td class="metrica"><span class="segno liv-' + livello(m.esito) + '">\u25CF</span>' +
+        '<span><b>' + T(m.nome) + '</b><div class="dove" style="font-family:inherit;color:var(--grafite)">' +
+        T(m.spiegazione) + '</div></span></td><td class="num">' +
+        pill(livello(m.esito), m.valore) + '</td></tr>');
     p.push('</table>');
     if (lh.rallentamenti.length) {
       p.push('<h3>Cosa rallenta la pagina</h3>');
