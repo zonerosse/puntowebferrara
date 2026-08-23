@@ -130,12 +130,14 @@ export function analizzaPagina(html, url, intestazioni) {
   if (h1.length === 1 && h1[0].testo.length > 70)
     segnala('Struttura', 'basso', 'H1 di ' + h1[0].testo.length + ' caratteri: troppo lungo per fare da titolo');
 
-  let prec = 0, salta = false;
+  let prec = 0, salta = false, primoSalto = null;
   for (const t of titoli) {
     if (prec && t.livello > prec + 1) {
       segnala('Struttura', 'medio', 'Salto di livello: H' + t.livello + ' dopo H' + prec +
         ' \u2014 "' + t.testo.slice(0, 45) + '"');
-      salta = true; break;
+      salta = true;
+      primoSalto = { livello: t.livello, dopo: prec, testo: t.testo };
+      break;
     }
     prec = t.livello;
   }
@@ -389,6 +391,37 @@ export function analizzaPagina(html, url, intestazioni) {
     && scriptEsterni <= 3
     && !/wp-content|wp-includes|\/_next\/|__NUXT__|data-reactroot|ng-version/i.test(campione);
 
+  // ------------------------------------------------------------ valori misurati
+  // Il numero che ha fatto passare o fallire ciascun controllo su questa pagina.
+  // Serve al rapporto per scrivere il difetto con i dati veri invece che con una
+  // formula generica. Assente dove il controllo è binario per natura.
+  const valori = {
+    titleOk: titolo ? titolo.length + ' caratteri' : 'title assente',
+    descrizioneOk: descr ? descr.length + ' caratteri' : 'description assente',
+    h1unico: h1.length + (h1.length === 1 ? ' titolo principale' : ' titoli principali'),
+    haH2: titoli.filter(t => t.livello === 2).length + ' sezioni H2',
+    testoSufficiente: parole + ' parole',
+    domandeCoperte: domande.length + (domande.length === 1 ? ' domanda nel testo' : ' domande nel testo'),
+    collegata: interni + ' collegamenti interni',
+    citazioni: citazioni + (citazioni === 1 ? ' fonte esterna citata' : ' fonti esterne citate'),
+    ancoreDescrittive: ancoreVaghe + ' collegamenti con testo generico',
+    immaginiConAlt: senzaAlt + ' immagini su ' + immagini.length + ' senza testo alternativo',
+    immaginiConMisure: senzaMisure + ' immagini su ' + immagini.length + ' senza width e height',
+    immaginiLeggere: pesanti + ' immagini su ' + immagini.length + ' in JPG o PNG',
+    pesoPagina: Math.round(html.length / 1024) + ' KB',
+    scriptNonBloccanti: scriptBloccanti + ' script che bloccano il disegno',
+    jsonLd: blocchi + (blocchi === 1 ? ' blocco JSON-LD' : ' blocchi JSON-LD'),
+    jsonLdValido: invalidi + ' blocchi non validi su ' + blocchi,
+    canonical: canonicalUrl ? 'dichiarato' : 'assente',
+    lang: lang ? 'lang="' + lang + '"' : 'non dichiarata',
+    hreflangOk: hreflang + ' dichiarazioni hreflang',
+    sameAs: sameAs + ' profili esterni dichiarati',
+    contenutoSicuro: misto + ' risorse caricate in HTTP',
+    titoliOrdinati: primoSalto
+      ? 'H' + primoSalto.livello + ' dopo H' + primoSalto.dopo + ' \u2014 "' + primoSalto.testo.slice(0, 60) + '"'
+      : 'nessun salto',
+  };
+
   // ------------------------------------------------------------ esiti
   const flag = {
     firmaVisibile: firmaVisibile,
@@ -476,7 +509,7 @@ export function analizzaPagina(html, url, intestazioni) {
       lingue: (html.match(/<link[^>]+hreflang=["']([^"']+)["']/gi) || [])
         .map(t => (t.match(/hreflang=["']([^"']+)["']/i) || [, ''])[1]).slice(0, 12),
     },
-    tecnologie, generatore, staticoSemplice,
+    tecnologie, generatore, staticoSemplice, valori,
     intestazioniSicurezza: sicurezza, compresso, hsts,
     contatti,
   };

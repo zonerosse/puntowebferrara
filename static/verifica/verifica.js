@@ -190,6 +190,57 @@ function ancora(nome) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+
+// L'elenco delle pagine su cui un controllo non passa, con il valore misurato
+// accanto a ciascuna. Fino a cinque righe resta aperto: aprire una tendina per
+// leggere tre righe è un clic sprecato. Dalla sesta si chiude, ma l'elenco è
+// sempre completo — nessun "e altre N".
+function dovManca(v, pagine, radice) {
+  if (!v || !v.id || !pagine || !pagine.length) return '';
+  const ko = pagine.filter(q => q.flag && q.flag[v.id] === false);
+  if (!ko.length) return '';
+
+  const riga = (q) => {
+    const misura = q.valori && q.valori[v.id];
+    return '<span class="riga-dove"><a href="' + T(q.url) + '" target="_blank" rel="noopener">' +
+      T(q.url.replace(radice, '') || '/') + '</a>' +
+      (misura ? '<em>' + T(misura) + '</em>' : '') + '</span>';
+  };
+
+  const corpo = ko.map(riga).join('');
+  const titolo = ko.length === 1 ? 'Dove manca \u2014 1 pagina'
+    : 'Dove manca \u2014 ' + ko.length + ' pagine';
+
+  if (ko.length <= 5)
+    return '<div class="dove-manca"><b>' + titolo + '</b>' + corpo + '</div>';
+
+  return '<details class="dove-manca chiusa"><summary><b>' + titolo + '</b>' +
+    '<span class="apri">mostra l\'elenco</span></summary>' + corpo + '</details>';
+}
+
+// Il difetto scritto con i numeri di questo sito, non con una formula.
+function difettoConcreto(v, pagine) {
+  if (!v.id || !pagine || !pagine.length) return '';
+  const ko = pagine.filter(q => q.flag && q.flag[v.id] === false);
+  if (!ko.length) return '';
+  const misure = ko.map(q => q.valori && q.valori[v.id]).filter(Boolean);
+  if (!misure.length) return '';
+  // se il valore è lo stesso ovunque lo si dice una volta; altrimenti si dà
+  // l'intervallo, che è l'informazione che serve per capire quanto è grave
+  const distinti = [...new Set(misure)];
+  if (distinti.length === 1)
+    return '<p class="difetto"><b>Su questo sito</b>' + T(distinti[0]) + '</p>';
+  const numeri = misure.map(x => parseFloat(String(x))).filter(x => !isNaN(x));
+  if (numeri.length === misure.length) {
+    const min = Math.min(...numeri), max = Math.max(...numeri);
+    const unita = String(misure[0]).replace(/^[\d.,]+\s*/, '');
+    if (min !== max)
+      return '<p class="difetto"><b>Su questo sito</b>da ' + min + ' a ' + max + ' ' + T(unita) + '</p>';
+  }
+  return '<p class="difetto"><b>Su questo sito</b>' + T(distinti[0]) +
+    (distinti.length > 1 ? ' e altri valori' : '') + '</p>';
+}
+
 const GRAVITA = [
   ['alto', 'Da sistemare', 'rosso'],
   ['medio', 'Da valutare', 'arancio'],
@@ -608,8 +659,10 @@ function disegna(scoperta, risultati, lighthouse) {
         '<div class="spiega">' +
         (liv === 'nota' ? '<p class="rifinitura">Superato su ' + (v._tot ? v._n + ' pagine su ' + v._tot : 'quasi tutte le pagine') +
           '. Non è un problema, ma se vuoi chiudere il cerchio è qui che si interviene.</p>' : '') +
-        '<p><b>Perché conta</b>' + T(v.perche) + '</p>' +
+        difettoConcreto(v, buone) +
+        dovManca(v, buone, scoperta.sito) +
         '<p><b>Come si sistema</b>' + T(v.come) + '</p>' +
+        '<p><b>Perché conta</b>' + T(v.perche) + '</p>' +
         (v.fonte ? '<p class="fonte"><b>Fonte</b><a href="' + T(v.fonte.u) +
           '" target="_blank" rel="noopener nofollow">' + T(v.fonte.n) + '</a></p>' : '') +
         '</div></details>');
@@ -736,8 +789,16 @@ function disegna(scoperta, risultati, lighthouse) {
   // Tutte le pagine lette, ordinate per indirizzo: così le lingue restano
   // raggruppate e si ritrova la pagina che si sta cercando.
   const perContenuto = buone.slice().sort((a, b) => a.url.localeCompare(b.url));
+  // Prime dieci schede visibili, il resto dietro una tendina: su un sito da
+  // duecento pagine l'elenco intero stanca prima di essere utile.
+  let contate = 0;
   for (const q of perContenuto) {
-    const percorso = q.url.replace(scoperta.sito, '') || '/';
+    if (contate === 10)
+      p.push('<details class="altre-schede"><summary>Mostra le altre ' +
+        (perContenuto.length - 10) + ' pagine</summary>');
+    contate++;
+    const percorso
+ = q.url.replace(scoperta.sito, '') || '/';
     const tl = (q.titolo || '').length, dl = (q.descrizione || '').length;
     p.push('<details class="contenuto"><summary><span class="dove">' + T(percorso) + '</span>' +
       '<span class="pill liv-' + perLunghezza(tl, 30, 60) + '">title ' + tl + '</span>' +
@@ -823,6 +884,7 @@ function disegna(scoperta, risultati, lighthouse) {
 
     p.push('</div></details>');
   }
+  if (perContenuto.length > 10) p.push('</details>');
 
   // ---- pagina per pagina
   p.push('<h2>Pagina per pagina</h2><table><tr><th>Pagina</th>' +

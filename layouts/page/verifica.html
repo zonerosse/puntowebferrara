@@ -232,6 +232,29 @@
 .strumento .ragnatela .et-nome{font-size:12px;font-weight:600;fill:var(--inchiostro);font-family:inherit}
 @media (max-width:640px){.strumento .testata-gruppi{grid-template-columns:1fr}
 .strumento .lato-grafico{max-width:340px;margin:0 auto}}
+.strumento /* --- dove manca: elenco delle pagine con il valore --- */
+  .dove-manca{margin:.7rem 0;padding-top:.6rem;border-top:1px solid var(--linea)}
+.strumento .dove-manca>b, .strumento .dove-manca>summary>b{display:block;font-size:.72rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--grafite);margin-bottom:.35rem}
+.strumento .dove-manca.chiusa>summary{cursor:pointer;list-style:none;display:flex;
+    align-items:baseline;gap:.5rem;margin-bottom:.3rem}
+.strumento .dove-manca.chiusa>summary::-webkit-details-marker{display:none}
+.strumento .dove-manca.chiusa>summary .apri{font-size:.76rem;color:var(--verde);text-decoration:underline;
+    text-underline-offset:2px;margin-left:auto}
+.strumento .dove-manca.chiusa[open]>summary .apri::after{content:" (chiudi)"}
+.strumento .riga-dove{display:flex;gap:.6rem;align-items:baseline;padding:.14rem 0;
+    border-bottom:1px solid var(--linea)}
+.strumento .riga-dove:last-child{border-bottom:0}
+.strumento .riga-dove a{font-family:var(--mono);font-size:.76rem;color:var(--verde);
+    text-decoration:none;word-break:break-all;flex:1}
+.strumento .riga-dove a:hover{text-decoration:underline}
+.strumento .riga-dove em{font-style:normal;font-size:.76rem;color:var(--grafite);white-space:nowrap}
+.strumento .difetto{background:var(--fondo);border-radius:6px;padding:.5rem .7rem;margin:.2rem 0 .5rem}
+.strumento .difetto b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--grafite);margin-bottom:.15rem}
+.strumento .altre-schede>summary{cursor:pointer;padding:.6rem .8rem;background:var(--carta);
+    border:1px solid var(--linea);border-radius:8px;font-size:.86rem;color:var(--verde);
+    margin-bottom:.4rem}
 .strumento /* --- velocità: cerchi e pallini --- */
   .cerchi-velocita{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
     gap:.6rem;margin:0 0 1rem;background:var(--carta);border:1px solid var(--linea);
