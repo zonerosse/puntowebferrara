@@ -333,6 +333,7 @@ async function scopri(context) {
   const viste = new Set();
 
   const giaViste = new Set();
+  const malformati = [];
   let tentativi = 0;
   while (daVisitare.length && tentativi < 20 && sitemapTrovate < MAX_SITEMAP && pagine.length < MAX_URL) {
     tentativi++;
@@ -350,7 +351,17 @@ async function scopri(context) {
       for (const u of nuove) giaViste.add(u);
       daVisitare.unshift(...nuove.slice(0, 15));
     } else {
-      for (const u of trovati) if (pagine.length < MAX_URL) pagine.push(u);
+      // Un indirizzo malformato nella sitemap è un difetto del file, non un
+      // errore di rete: va scartato qui e contato a parte.
+      for (const u of trovati) {
+        if (pagine.length >= MAX_URL) break;
+        try {
+          const url = new URL(u, radice);
+          if (/^https?:$/.test(url.protocol) && url.hostname === new URL(radice).hostname)
+            pagine.push(url.href);
+          else malformati.push(u);
+        } catch (e) { malformati.push(u); }
+      }
     }
   }
 
@@ -365,6 +376,7 @@ async function scopri(context) {
 
   return risposta({
     sito: radice,
+    malformati: malformati.slice(0, 60),
     ripiegoUA: !!home.ripiego,
     quattroZeroQuattro,
     alternativo,
