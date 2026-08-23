@@ -757,6 +757,23 @@ function disegna(scoperta, risultati, lighthouse) {
   }
 
   // ---- segnalazioni
+  // ---- indirizzi dichiarati nella sitemap che non sono pagine
+  const malformati = scoperta.malformati || [];
+  if (malformati.length) {
+    p.push('<h2>La sitemap dichiara indirizzi che non sono validi</h2>');
+    p.push('<div class="voce alto"><b>' + malformati.length +
+      (malformati.length === 1 ? ' voce non è un indirizzo valido' : ' voci non sono indirizzi validi') +
+      '</b> \u2014 righe scritte male dentro il file: indirizzi relativi malformati, spazi non ' +
+      'codificati, o testo finito dentro un tag loc. Un motore le scarta, ma il file resta ' +
+      'segnalato come non conforme. Rigenera la sitemap dal plugin, o correggila se è scritta a mano.</div>');
+    const righe = malformati.map(u =>
+      '<span class="riga-dove"><code>' + T(u) + '</code></span>').join('');
+    p.push(malformati.length <= 5
+      ? '<div class="dove-manca"><b>Quali</b>' + righe + '</div>'
+      : '<details class="dove-manca chiusa"><summary><b>Quali \u2014 ' + malformati.length +
+        ' voci</b><span class="apri">mostra l\'elenco</span></summary>' + righe + '</details>');
+  }
+
   if (!segnalazioni.length) p.push('<h2>Segnalazioni</h2><div class="pulito">' + SEGNI.ok +
     ' Nessun problema rilevato sulle pagine analizzate.</div>');
   else for (const [chiave, etichetta, colore] of GRAVITA) {
