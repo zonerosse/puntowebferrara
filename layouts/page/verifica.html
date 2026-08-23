@@ -1,16 +1,5 @@
 {{ define "main" }}
 <style>
-  .strumento .marchio-sottosopra{display:flex;align-items:center;
-    gap:clamp(.9rem,2.5vw,1.5rem);margin-bottom:2rem}
-  .strumento .marchio-sottosopra img{flex-shrink:0;width:clamp(76px,12vw,108px);height:auto}
-  .strumento .marchio-sottosopra b{display:block;font-size:clamp(2.1rem,6.5vw,3.5rem);
-    font-weight:800;letter-spacing:-.03em;color:#0d4275;line-height:1}
-  .strumento .marchio-sottosopra b i{font-style:normal;color:#f59e0b}
-  .strumento .marchio-sottosopra span{display:block;font-size:clamp(.7rem,1.55vw,.88rem);
-    font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--grafite);
-    margin-top:.45rem}
-  .strumento .marchio-sottosopra span em{font-style:normal;color:#f59e0b}
-  @media (max-width:430px){.strumento .marchio-sottosopra span{letter-spacing:.08em}}
 
   :root{
     --carta:#f4f6f5; --foglio:#fff; --inchiostro:#11201d; --grafite:#5b6b66; --linea:#dbe2df;
@@ -23,8 +12,7 @@
 .strumento *{margin:0;padding:0;box-sizing:border-box}
 .strumento{background:var(--carta);color:var(--inchiostro);line-height:1.6;
        font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-/* l'intestazione del sito è position:fixed e alta 64px: senza questo spazio
-   copre le prime righe della pagina, marchio compreso */
+/* l'intestazione del sito è fixed e alta 64px: senza questo spazio copre le prime righe */
 .strumento .foglio{max-width:900px;margin:0 auto;padding:calc(64px + 2rem) 1.25rem 4rem}
 .strumento a{color:var(--verde)}
 .strumento .briciole{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
@@ -56,14 +44,6 @@
 .strumento .errore{background:#fdf1f3;border:1px solid #edccd3;border-left:3px solid var(--rosso);
           padding:1rem 1.15rem;margin-top:1.25rem;font-size:.94rem;border-radius:3px}
 .strumento .esito{margin-top:2.5rem;display:none;scroll-margin-top:calc(64px + 1rem)}
-.strumento .testata-esito{background:var(--foglio);border:1px solid var(--linea);
-    border-left:4px solid #0d4275;border-radius:4px;
-    padding:clamp(1rem,2.5vw,1.4rem) clamp(1.1rem,3vw,1.5rem);margin-bottom:1.6rem}
-.strumento .testata-esito b{display:block;font-size:clamp(1.3rem,4vw,1.75rem);font-weight:800;
-    letter-spacing:-.03em;color:#0d4275;line-height:1.1}
-.strumento .testata-esito b i{font-style:normal;color:#f59e0b}
-.strumento .testata-esito span{display:block;font-family:var(--mono);font-size:.76rem;
-    color:var(--grafite);word-break:break-all;margin-top:.4rem}
 .strumento .esito.attivo{display:block}
 .strumento h2{font-size:1.22rem;font-weight:700;letter-spacing:-.015em;margin:2.6rem 0 1rem}
 .strumento h2:first-child{margin-top:0}
@@ -317,13 +297,6 @@
 
 <div class="strumento">
   <div class="foglio">
-    <div class="marchio-sottosopra">
-      <img src="/img/marchio/simbolo.svg" width="108" height="108" alt="" loading="eager">
-      <div>
-        <b>Sotto<i>sopra</i></b>
-        <span>Prima sotto. <em>Poi sopra nelle SERP.</em></span>
-      </div>
-    </div>
 
 
   <p class="occhiello">Strumento gratuito · 40 controlli</p>
@@ -503,11 +476,11 @@
   "name": "Verifica sito — SEO, prestazioni e motori IA",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Browser",
-  "url": "https://puntowebferrara.com/sottosopra/",
+  "url": "https://puntowebferrara.com/verifica/",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "publisher": { "@id": "https://puntowebferrara.com/#organization" }
 }
 </script>
 
-<script type="module" src="/sottosopra/verifica.js"></script>
+<script type="module" src="/verifica/verifica.js"></script>
 {{ end }}

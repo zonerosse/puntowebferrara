@@ -577,10 +577,6 @@ function disegna(scoperta, risultati, lighthouse) {
       'come un normale browser. È una scelta dichiarata, non un aggiramento: il robots.txt resta il ' +
       'criterio, e quando vieta la scansione lo strumento si ferma.</div>');
 
-  p.push('<div class="testata-esito">' +
-    '<b>Rapporto <i>Sottosopra</i></b>' +
-    '<span>' + T(scoperta.sito) + '</span></div>');
-
   p.push('<h2>Risultato</h2><div class="punteggio"><div class="quadrante">' +
     '<svg width="112" height="112" viewBox="0 0 112 112">' +
     '<circle cx="56" cy="56" r="' + R + '" fill="none" stroke="var(--linea)" stroke-width="9"/>' +
