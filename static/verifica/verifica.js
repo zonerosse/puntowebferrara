@@ -909,16 +909,30 @@ function disegna(scoperta, risultati, lighthouse) {
     '<th style="text-align:right">Link</th><th style="text-align:right">Controlli</th></tr>');
   const ordinate = buone.slice().sort((a, b) =>
     Object.values(a.flag || {}).filter(Boolean).length - Object.values(b.flag || {}).filter(Boolean).length);
-  for (const q of ordinate) {
+  // Le prime dieci sono quelle con più controlli non superati: le uniche su cui
+  // si interviene. Il resto va dietro una tendina, altrimenti su un sito grande
+  // la tabella diventa un muro che nessuno legge.
+  const riga = (q) => {
     const tot = Object.keys(q.flag || {}).length;
     const ok = Object.values(q.flag || {}).filter(Boolean).length;
-    p.push('<tr><td class="percorso">' + T(percorso(q.url)) + '</td>' +
+    return '<tr><td class="percorso">' + T(percorso(q.url)) + '</td>' +
       '<td class="num">' + (q.parole || 0) + '</td><td class="num">' + (q.blocchiJsonLd || 0) + '</td>' +
       '<td class="num">' + (q.linkInterni || 0) + '</td>' +
-      '<td class="num liv-' + livello(ok / tot) + '" style="font-weight:700">' + ok + '/' + tot + '</td></tr>');
-  }
+      '<td class="num liv-' + livello(ok / tot) + '" style="font-weight:700">' + ok + '/' + tot + '</td></tr>';
+  };
+  for (const q of ordinate.slice(0, 10)) p.push(riga(q));
   p.push('</table>');
   p.push('<p class="nota">In cima le pagine con più controlli non superati.</p>');
+
+  if (ordinate.length > 10) {
+    p.push('<details class="altre-pagine"><summary>Mostra le altre ' +
+      (ordinate.length - 10) + ' pagine</summary><table>' +
+      '<tr><th>Pagina</th><th style="text-align:right">Parole</th>' +
+      '<th style="text-align:right">Schema</th><th style="text-align:right">Link</th>' +
+      '<th style="text-align:right">Controlli</th></tr>');
+    for (const q of ordinate.slice(10)) p.push(riga(q));
+    p.push('</table></details>');
+  }
 
   // ---- chiusura
   const c = ['<div class="chiusura"><h2>' + (gravi.length ? 'Queste cose le sistemo io' : 'Il sito è già messo bene') + '</h2>'];

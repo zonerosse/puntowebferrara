@@ -254,9 +254,6 @@
 .strumento .difetto{background:var(--fondo);border-radius:6px;padding:.5rem .7rem;margin:.2rem 0 .5rem}
 .strumento .difetto b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
     color:var(--grafite);margin-bottom:.15rem}
-.strumento .altre-schede>summary{cursor:pointer;padding:.6rem .8rem;background:var(--carta);
-    border:1px solid var(--linea);border-radius:8px;font-size:.86rem;color:var(--verde);
-    margin-bottom:.4rem}
 .strumento /* --- velocità: cerchi e pallini --- */
   .cerchi-velocita{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
     gap:.6rem;margin:0 0 1rem;background:var(--carta);border:1px solid var(--linea);
@@ -282,6 +279,12 @@
 .strumento .cerchio-gruppo{flex-shrink:0;display:block}
 @media (max-width:520px){.strumento .titolo-gruppo{font-size:.92rem;gap:.5rem}
 .strumento .titolo-gruppo .punti{display:none}}
+.strumento .altre-pagine>summary, .strumento .altre-schede>summary{cursor:pointer;padding:.6rem .9rem;
+    background:var(--carta);border:1px solid var(--linea);border-radius:8px;font-size:.88rem;
+    color:var(--verde);margin:.5rem 0}
+.strumento .altre-pagine>summary:hover, .strumento .altre-schede>summary:hover{border-color:var(--verde)}
+.strumento .altre-pagine[open]>summary::after, .strumento .altre-schede[open]>summary::after{content:" — chiudi";
+    color:var(--grafite)}
 @media print{.strumento{background:#fff}
 .strumento .modulo, .strumento .avanzamento, .strumento .azioni, .strumento button, .strumento .briciole{display:none !important}
 .strumento .foglio{max-width:none;padding:0}
