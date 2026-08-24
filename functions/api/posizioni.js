@@ -204,6 +204,9 @@ async function posizioni(context) {
         presente: mappe.length > 0,
         dentro: mioNelleMappe >= 0,
         posizione: mioNelleMappe >= 0 ? mioNelleMappe + 1 : null,
+        // Il totale va contato su TUTTE le schede, non sulle tre che mi porto
+        // dietro per mostrarle: altrimenti chi è quarto risulta "4° su 3".
+        totale: mappe.length,
         chi: mappe.slice(0, 3).map(v => (v.title || '').slice(0, 60)),
       },
     };

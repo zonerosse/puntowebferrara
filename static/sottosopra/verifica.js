@@ -1042,7 +1042,7 @@ function bloccoPosizioni(dati) {
         const m = lato.mappe;
         h += m.dentro
           ? '<li class="dentro">' + T(dove) + ': ci sei, ' + m.posizione + '\u00b0 su ' +
-            (m.chi.length || 3) + '</li>'
+            (m.totale || m.posizione) + '</li>'
           : '<li class="fuori">' + T(dove) + ': compare, ma tu non ci sei' +
             (m.chi.length ? ' \u2014 ' + T(m.chi.join(', ')) : '') + '</li>';
       }
