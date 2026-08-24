@@ -22,20 +22,22 @@
 // QUANTO COSTA. Si paga a consumo. L'unità fatturata è una SERP da 10
 // risultati: con PROFONDITA a 20 ogni interrogazione costa due unità.
 // In modalità live l'unità sta intorno a 0,002 dollari, quindi:
-//   tre parole chiave, sola Italia      → 6 unità  ≈ 0,012 $
-//   tre parole chiave, Italia + città   → 12 unità ≈ 0,024 $
-// Cioè due centesimi e mezzo per l'analisi più cara. Cento analisi complete:
-// meno di tre dollari. Alzare PROFONDITA a 100 quintuplica tutto: prima di
+//   due parole chiave, sola Italia      → 10 unità ≈ 0,020 $
+//   due parole chiave, Italia + città   → 20 unità ≈ 0,040 $
+// Cioè quattro centesimi per l'analisi più cara. Cento analisi complete:
+// quattro dollari. PROFONDITA è il moltiplicatore: a 20 si spendeva un
+// centesimo e mezzo, a 100 si arriva a otto centesimi. È l'unico numero da
+// toccare se un giorno il consumo diventa un problema. Alzare PROFONDITA a 100 quintuplica tutto: prima di
 // toccarlo, fare il conto su quante analisi al giorno ci si aspetta.
 //
 // ATTENZIONE ALL'ABUSO. Questo endpoint spende soldi veri a ogni chiamata.
-// Il tetto qui sotto (tre parole chiave, due località) limita il danno per
+// Il tetto qui sotto (due parole chiave, due località) limita il danno per
 // richiesta, ma non il numero di richieste: quello va limitato con una regola
 // di rate limiting di Cloudflare sul percorso /api/posizioni. Senza quella
 // regola, chiunque con un ciclo può prosciugare il credito in una notte.
 
-const MAX_PAROLE = 3;
-const PROFONDITA = 20;        // quanti risultati guardare: 20 = due unità fatturate
+const MAX_PAROLE = 2;
+const PROFONDITA = 50;        // quanti risultati guardare: si fattura ogni 10, quindi 50 = cinque unità
 const NAZIONE = 'Italy';
 const LINGUA = 'it';
 
@@ -96,42 +98,53 @@ async function posizioni(context) {
       motivo: 'Controllo posizioni non configurato: mancano le credenziali del fornitore di dati SERP.',
     });
 
-  // Un compito per ogni combinazione parola × località. Il fornitore accetta
-  // un array e li esegue in parallelo: si aspetta una volta sola.
+  // UNA RICHIESTA PER COMPITO. La modalità live del fornitore accetta un solo
+  // compito per chiamata: mandarne due nello stesso array li fa fallire
+  // entrambi, con un errore che sembra un problema di credenziali o di
+  // località. Quindi si spara una richiesta per ogni combinazione parola ×
+  // luogo, tutte in parallelo: stesso costo, stessa attesa.
   const luoghi = [NAZIONE];
   if (citta) luoghi.push(citta);
 
-  const compiti = [];
+  const combinazioni = [];
   for (const parola of parole)
     for (const luogo of luoghi)
-      compiti.push({
-        keyword: parola,
-        location_name: luogo,
+      combinazioni.push({ parola: parola, luogo: luogo });
+
+  const chiamate = combinazioni.map(c =>
+    fetch('https://api.dataforseo.com/v3/serp/google/organic/live/advanced', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + basic,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([{
+        keyword: c.parola,
+        location_name: c.luogo,
         language_code: LINGUA,
         device: 'desktop',
         depth: PROFONDITA,
-      });
+      }]),
+      signal: AbortSignal.timeout(40000),
+    })
+      .then(async r => {
+        if (!r.ok) return { http: r.status };
+        const j = await r.json();
+        return { compito: (j.tasks && j.tasks[0]) || null };
+      })
+      .catch(err => ({ rete: String(err && err.message || err).slice(0, 120) }))
+  );
 
-  const r = await fetch('https://api.dataforseo.com/v3/serp/google/organic/live/advanced', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + basic,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(compiti),
-    signal: AbortSignal.timeout(40000),
-  });
+  const risposte = await Promise.all(chiamate);
 
-  if (!r.ok) {
-    const dettaglio = r.status === 401
-      ? 'Il fornitore ha rifiutato le credenziali (401). Controlla che DFS_BASIC contenga la ' +
-        'stringa "Base64 Format" copiata dal pannello, oppure che DFS_LOGIN sia l\'API login ' +
-        'esatto e non un indirizzo email diverso. Verifica anche che l\'account sia attivato.'
-      : 'Il fornitore di dati ha risposto ' + r.status + '.';
-    return risposta({ disponibile: false, motivo: dettaglio });
-  }
-
-  const dati = await r.json();
+  // Se tutte hanno preso 401, il problema sono le credenziali: vale la pena
+  // dirlo una volta sola e chiaro, invece di ripeterlo su ogni riga.
+  if (risposte.length && risposte.every(x => x.http === 401))
+    return risposta({
+      disponibile: false,
+      motivo: 'Il fornitore ha rifiutato le credenziali (401). Controlla che DFS_BASIC contenga la ' +
+              'stringa "Base64 Format" copiata dal pannello, e che l\'account sia attivato.',
+    });
 
   // Rimetto insieme i risultati per parola chiave. Se la città non viene
   // riconosciuta dal fornitore fallisce solo metà dei compiti: la nazionale
@@ -140,12 +153,18 @@ async function posizioni(context) {
   for (const parola of parole) perParola.set(parola, { parola: parola, nazionale: null, locale: null });
   let cittaFallita = false;
 
-  for (const compito of (dati.tasks || [])) {
-    const richiesta = (compito.data && compito.data.keyword) || '';
-    const dove = (compito.data && compito.data.location_name) || '';
-    const chiave = (citta && dove === citta) ? 'locale' : 'nazionale';
-    const riga = perParola.get(richiesta);
+  for (let i = 0; i < risposte.length; i++) {
+    const atteso = combinazioni[i];
+    const chiave = (citta && atteso.luogo === citta) ? 'locale' : 'nazionale';
+    const riga = perParola.get(atteso.parola);
     if (!riga) continue;
+
+    const esito = risposte[i];
+    if (esito.http) { riga[chiave] = { errore: 'HTTP ' + esito.http }; continue; }
+    if (esito.rete) { riga[chiave] = { errore: 'rete: ' + esito.rete }; continue; }
+
+    const compito = esito.compito;
+    if (!compito) { riga[chiave] = { errore: 'risposta vuota dal fornitore' }; continue; }
 
     if (compito.status_code >= 40000) {
       if (chiave === 'locale' && /location/i.test(compito.status_message || '')) cittaFallita = true;
@@ -159,8 +178,20 @@ async function posizioni(context) {
     const organici = voci.filter(v => v.type === 'organic');
     const mio = organici.find(v => stessoDominio(v.domain, dominio));
 
+    // Posizione FRA I SOLI ORGANICI (rank_group), non quella assoluta sulla
+    // pagina. L'assoluta conta anche mappe, annunci e riquadri, quindi può
+    // dire 27 quando fra i link blu sei quattordicesimo: un numero corretto
+    // ma incoerente con la frase "primi N risultati" che gli sta accanto.
+    const posizione = mio ? (mio.rank_group || mio.rank_absolute) : null;
+
+    // Il riquadro delle mappe. Per un'attività locale conta spesso più
+    // dell'organico: occupa mezzo schermo e sta sopra tutti i link blu.
+    // Arriva nella stessa risposta, quindi non costa una chiamata in più.
+    const mappe = voci.filter(v => v.type === 'local_pack');
+    const mioNelleMappe = mappe.findIndex(v => stessoDominio(v.domain, dominio));
+
     riga[chiave] = {
-      posizione: mio ? mio.rank_absolute : null,
+      posizione: posizione,
       oltre: !mio,
       indirizzo: mio ? mio.url : null,
       // Chi sta davanti serve più del numero: se in cima ci sono tre portali
@@ -169,6 +200,12 @@ async function posizioni(context) {
         dominio: v.domain,
         titolo: (v.title || '').slice(0, 90),
       })),
+      mappe: {
+        presente: mappe.length > 0,
+        dentro: mioNelleMappe >= 0,
+        posizione: mioNelleMappe >= 0 ? mioNelleMappe + 1 : null,
+        chi: mappe.slice(0, 3).map(v => (v.title || '').slice(0, 60)),
+      },
     };
   }
 

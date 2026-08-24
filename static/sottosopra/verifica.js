@@ -980,9 +980,17 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
 
 
 // --- Posizioni su Google -----------------------------------------------
-// Due colonne quando l'utente ha scelto una città: Italia e locale affiancate.
-// Il confronto e' il punto: sedicesimo in Italia e terzo a Ferrara non e' una
-// brutta notizia, e' un'indicazione su dove giocarsela.
+// Una scheda per parola chiave, con le caselle Italia e città affiancate.
+// Il colore segue l'altezza: verde primi tre, blu prima pagina, arancione
+// seconda, grigio fuori. Serve a far capire la situazione prima ancora di
+// leggere i numeri.
+function fasciaPosizione(p) {
+  if (!p) return 'fuori';
+  if (p <= 3) return 'alto';
+  if (p <= 10) return 'medio';
+  return 'basso';
+}
+
 function bloccoPosizioni(dati) {
   if (!dati.disponibile)
     return '<h2>Posizioni su Google</h2><p class="posizioni-nota">' +
@@ -991,53 +999,85 @@ function bloccoPosizioni(dati) {
   const conCitta = !!dati.citta;
   const nomeCitta = conCitta ? dati.citta.split(',')[0] : '';
 
-  const cella = (dove, esito) => {
-    if (!esito) return '';
+  const casella = (dove, esito) => {
+    if (!esito)
+      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
+             '<span class="fuori">non richiesta</span></div>';
     if (esito.errore)
-      return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="numero fuori" title="' + T(esito.errore) + '">non riuscita</span></span>';
+      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
+             '<span class="fuori" title="' + T(esito.errore) + '">non riuscita</span></div>';
     if (esito.oltre)
-      return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="numero fuori">oltre i ' + dati.profondita + '</span></span>';
-    return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
-           '<span class="numero' + (esito.posizione <= 3 ? ' top' : '') + '">' +
-           esito.posizione + '</span></span>';
+      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
+             '<span class="fuori">oltre i primi ' + dati.profondita + '</span></div>';
+
+    const liv = fasciaPosizione(esito.posizione);
+    const pagina = esito.posizione <= 10 ? 'prima pagina' : 'seconda pagina';
+    return '<div class="casella ' + liv + '"><span class="dove">' + T(dove) + '</span>' +
+           '<span class="numero">' + esito.posizione + '</span>' +
+           '<span class="pagina">' + pagina + '</span></div>';
   };
 
-  const righe = dati.esiti.map(e => {
+  const schede = dati.esiti.map(e => {
     const naz = e.nazionale, loc = e.locale;
-    let riga = '<div class="riga"><span class="parola">' + T(e.parola) + '</span>' +
-               cella('Italia', naz) + (conCitta ? cella(nomeCitta, loc) : '');
 
-    // Chi sta davanti si prende dalla ricerca nazionale, che c'e' sempre.
+    // Il bordo della scheda segue il risultato migliore fra i due: e' quello
+    // che descrive davvero come sta messo il sito su quella ricerca.
+    const punti = [naz, loc]
+      .filter(x => x && !x.errore && !x.oltre && x.posizione)
+      .map(x => x.posizione);
+    const migliore = punti.length ? Math.min.apply(null, punti) : null;
+
+    let h = '<div class="scheda-parola ' + fasciaPosizione(migliore) + '">' +
+            '<span class="parola">' + T(e.parola) + '</span>' +
+            '<div class="caselle">' + casella('Italia', naz) +
+            (conCitta ? casella(nomeCitta, loc) : '') + '</div>';
+
+    // Il riquadro mappe: si mostra solo se in almeno una delle due ricerche
+    // compare davvero. Dove non c'e', non c'e' niente da dire.
+    const lati = conCitta ? [['Italia', naz], [nomeCitta, loc]] : [['Italia', naz]];
+    const conMappe = lati.filter(x => x[1] && x[1].mappe && x[1].mappe.presente);
+    if (conMappe.length) {
+      h += '<p class="davanti"><b>Riquadro mappe:</b></p><ul class="mappe">';
+      for (const [dove, lato] of conMappe) {
+        const m = lato.mappe;
+        h += m.dentro
+          ? '<li class="dentro">' + T(dove) + ': ci sei, ' + m.posizione + '\u00b0 su ' +
+            (m.chi.length || 3) + '</li>'
+          : '<li class="fuori">' + T(dove) + ': compare, ma tu non ci sei' +
+            (m.chi.length ? ' \u2014 ' + T(m.chi.join(', ')) : '') + '</li>';
+      }
+      h += '</ul>';
+    }
+
     if (naz && naz.primi && naz.primi.length && (!naz.posizione || naz.posizione > 3))
-      riga += '<p class="davanti">In cima in Italia: ' +
-              naz.primi.map(v => T(v.dominio)).join(' · ') + '</p>';
+      h += '<p class="davanti"><b>In cima in Italia:</b></p><ul class="concorrenti">' +
+           naz.primi.map(v => '<li>' + T(v.dominio) + '</li>').join('') + '</ul>';
 
-    // La riga che spiega il confronto, quando c'e' qualcosa da spiegare.
     if (conCitta && naz && loc && !naz.errore && !loc.errore) {
       const n = naz.oltre ? null : naz.posizione;
       const l = loc.oltre ? null : loc.posizione;
       if (n && l && l < n - 2)
-        riga += '<p class="scarto">Sul territorio vai molto meglio che sulla ricerca ' +
-                'nazionale: qui il posizionamento locale e\u2019 la tua forza, e va difeso.</p>';
+        h += '<p class="scarto">Sul territorio vai molto meglio che sulla ricerca nazionale: ' +
+             'su questa parola la tua forza e\u2019 il locale, e va difesa.</p>';
       else if (!n && l)
-        riga += '<p class="scarto">In Italia non compari, a ' + T(nomeCitta) +
-                ' s\u00ec: la partita nazionale su questa ricerca non e\u2019 la tua.</p>';
+        h += '<p class="scarto">In Italia non compari, a ' + T(nomeCitta) + ' s\u00ec. ' +
+             'La partita nazionale su questa ricerca non e\u2019 la tua: punta sul territorio.</p>';
       else if (n && !l)
-        riga += '<p class="scarto">Compari in Italia ma non a ' + T(nomeCitta) +
-                ': su questa ricerca il locale te lo stanno portando via.</p>';
+        h += '<p class="scarto attenzione">Compari in Italia ma non a ' + T(nomeCitta) + '. ' +
+             'Su questa ricerca il locale te lo stanno portando via.</p>';
+      else if (n && l && n < l - 2)
+        h += '<p class="scarto attenzione">Vai meglio a livello nazionale che a ' + T(nomeCitta) +
+             ': strano per un\u2019attivit\u00e0 locale, e vale la pena capire perche\u0301.</p>';
     }
-    return riga + '</div>';
+    return h + '</div>';
   }).join('');
 
-  // Se qualcosa e' fallito, il messaggio del fornitore vale piu' di mille
-  // supposizioni: si mostra in chiaro invece di nasconderlo dietro
-  // "non riuscita". Uno solo per tipo, non uno per riga.
+  // I messaggi del fornitore, quando qualcosa fallisce, valgono piu\u2019 di
+  // mille supposizioni: si mostrano in chiaro. Uno per tipo, non uno per riga.
   const guasti = [];
   for (const e of dati.esiti)
     for (const lato of [e.nazionale, e.locale])
-      if (lato && lato.errore && !guasti.includes(lato.errore)) guasti.push(lato.errore);
+      if (lato && lato.errore && guasti.indexOf(lato.errore) === -1) guasti.push(lato.errore);
 
   let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
              ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
@@ -1048,10 +1088,10 @@ function bloccoPosizioni(dati) {
             'riconosciuto la citt\u00e0, resta valida solo quella nazionale.';
 
   const spiegazione = guasti.length
-    ? '<p class="posizioni-nota"><b>Il fornitore di dati ha risposto:</b> ' +
-      guasti.map(g => T(g)).join(' · ') + '</p>'
+    ? '<p class="posizioni-nota guasto"><b>Il fornitore di dati ha risposto:</b> ' +
+      guasti.map(g => T(g)).join(' \u00b7 ') + '</p>'
     : '';
 
-  return '<h2>Posizioni su Google</h2><div class="posizioni">' + righe + '</div>' +
+  return '<h2>Posizioni su Google</h2><div class="posizioni">' + schede + '</div>' +
          spiegazione + '<p class="posizioni-nota">' + nota + '</p>';
 }

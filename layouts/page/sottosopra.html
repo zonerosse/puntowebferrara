@@ -59,28 +59,72 @@
 .strumento .parole-chiave select{width:100%;font-size:.92rem;padding:.7rem .8rem;
     border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
     margin-bottom:.9rem;color:var(--inchiostro)}
+.strumento .parole-chiave .aiuto{font-size:.79rem;color:var(--grafite);margin:-.55rem 0 .95rem;
+    line-height:1.5}
 .strumento .parole-chiave .minuta{font-size:.78rem;color:var(--grafite);margin:0}
 
-/* --- blocco delle posizioni nel rapporto --- */
-.strumento .posizioni{margin:1.5rem 0}
-.strumento .posizioni .riga{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
-    padding:.85rem 0;border-bottom:1px solid var(--linea)}
-.strumento .posizioni .riga:last-child{border-bottom:0}
-.strumento .posizioni .parola{font-weight:600;flex:1 1 220px;min-width:0}
-.strumento .posizioni .cella{flex:0 0 auto;text-align:center;min-width:88px}
-.strumento .posizioni .dove{display:block;font-family:var(--mono);font-size:.62rem;
-    letter-spacing:.09em;text-transform:uppercase;color:var(--grafite);margin-bottom:.15rem}
-.strumento .posizioni .numero{font-family:var(--mono);font-weight:700;font-size:1.35rem;
-    color:#0d4275;display:block;line-height:1}
-.strumento .posizioni .numero.fuori{color:var(--grafite);font-size:.8rem;font-weight:400;
-    letter-spacing:0}
-.strumento .posizioni .numero.top{color:#0d6b58}
-.strumento .posizioni .davanti{flex:1 1 100%;font-size:.8rem;color:var(--grafite);margin:.1rem 0 0}
-.strumento .posizioni .scarto{flex:1 1 100%;font-size:.82rem;color:var(--inchiostro);margin:.35rem 0 0}
-.strumento .posizioni-nota{font-size:.82rem;color:var(--grafite);margin:.2rem 0 0}
-@media (max-width:520px){
-  .strumento .posizioni .parola{flex:1 1 100%}
-  .strumento .posizioni .cella{min-width:0;flex:1 1 0;text-align:left}
+/* --- blocco delle posizioni nel rapporto ---------------------------------
+   Il colore qui non è decorazione: dice a che altezza sei. Verde primi tre,
+   blu prima pagina, arancione seconda pagina, grigio fuori. Chi guarda capisce
+   la situazione prima di leggere i numeri. */
+.strumento .posizioni{margin:1.5rem 0;display:grid;gap:.9rem}
+
+.strumento .scheda-parola{background:var(--foglio);border:1px solid var(--linea);
+    border-left:4px solid var(--linea);border-radius:4px;padding:1rem 1.1rem 1.05rem}
+.strumento .scheda-parola.alto{border-left-color:#0d6b58}
+.strumento .scheda-parola.medio{border-left-color:#0d4275}
+.strumento .scheda-parola.basso{border-left-color:#f59e0b}
+
+.strumento .scheda-parola .parola{display:block;font-weight:700;font-size:1.02rem;
+    letter-spacing:-.01em;margin:0 0 .8rem;word-break:break-word}
+
+.strumento .caselle{display:flex;gap:.7rem;flex-wrap:wrap}
+.strumento .casella{flex:1 1 140px;min-width:0;border:1px solid var(--linea);border-radius:4px;
+    background:var(--carta);padding:.75rem .6rem;text-align:center}
+.strumento .casella .dove{display:block;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);margin-bottom:.35rem}
+.strumento .casella .numero{display:block;font-family:var(--mono);font-weight:700;
+    font-size:2.1rem;line-height:1;color:var(--grafite)}
+.strumento .casella .fuori{display:block;font-size:.82rem;font-weight:600;line-height:1.35;
+    color:var(--grafite);padding:.35rem 0}
+.strumento .casella .pagina{display:block;font-size:.68rem;color:var(--grafite);margin-top:.3rem}
+
+.strumento .casella.alto{background:rgba(13,107,88,.07);border-color:rgba(13,107,88,.35)}
+.strumento .casella.alto .numero{color:#0d6b58}
+.strumento .casella.medio{background:rgba(13,66,117,.06);border-color:rgba(13,66,117,.3)}
+.strumento .casella.medio .numero{color:#0d4275}
+.strumento .casella.basso{background:rgba(245,158,11,.09);border-color:rgba(245,158,11,.45)}
+.strumento .casella.basso .numero{color:#b3730a}
+
+.strumento .scheda-parola .davanti{font-size:.8rem;color:var(--grafite);margin:.85rem 0 0}
+.strumento .scheda-parola .davanti b{color:var(--inchiostro);font-weight:600}
+.strumento .scheda-parola .concorrenti{display:flex;flex-wrap:wrap;gap:.35rem;margin:.4rem 0 0;
+    padding:0;list-style:none}
+.strumento .scheda-parola .concorrenti li{font-family:var(--mono);font-size:.72rem;
+    background:var(--carta);border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;
+    color:var(--grafite)}
+
+.strumento .scheda-parola .mappe{list-style:none;margin:.4rem 0 0;padding:0;display:grid;
+    gap:.3rem}
+.strumento .scheda-parola .mappe li{font-size:.82rem;padding:.4rem .6rem;border-radius:3px;
+    border-left:3px solid var(--linea);background:var(--carta)}
+.strumento .scheda-parola .mappe li.dentro{border-left-color:#0d6b58;
+    background:rgba(13,107,88,.07)}
+.strumento .scheda-parola .mappe li.fuori{border-left-color:#f59e0b;
+    background:rgba(245,158,11,.09)}
+
+.strumento .scheda-parola .scarto{font-size:.85rem;line-height:1.5;margin:.85rem 0 0;
+    padding:.6rem .75rem;border-radius:3px;background:rgba(13,66,117,.05);
+    border-left:3px solid #0d4275;color:var(--inchiostro)}
+.strumento .scheda-parola .scarto.attenzione{background:rgba(245,158,11,.09);
+    border-left-color:#f59e0b}
+
+.strumento .posizioni-nota{font-size:.8rem;color:var(--grafite);margin:.9rem 0 0;line-height:1.55}
+.strumento .posizioni-nota.guasto{color:#b3730a}
+
+@media (max-width:480px){
+  .strumento .casella{flex:1 1 100%}
+  .strumento .casella .numero{font-size:1.8rem}
 }
 .strumento code{font-family:var(--mono);font-size:.92em;background:var(--carta);padding:.1rem .3rem;border-radius:3px}
 .strumento .avanzamento{margin-top:1.25rem;display:none}
@@ -374,9 +418,12 @@
         <button type="submit" id="avvia">Verifica il sito</button>
       </div>
       <div class="parole-chiave">
-        <label for="parole">Parole chiave <em>(facoltativo, massimo tre, separate da virgola)</em></label>
+        <label for="parole">Parole chiave <em>(facoltativo, massimo due)</em></label>
         <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
                autocomplete="off" spellcheck="false">
+        <p class="aiuto">Due ricerche al massimo, <b>separate da una virgola</b>. Scrivile come le
+        scriverebbe un cliente su Google, non come le chiami tu: <code>idraulico ferrara</code>,
+        non <code>servizi idraulici professionali</code>.</p>
         <label for="luogo">Confronta anche con una città <em>(la ricerca su tutta Italia si fa sempre)</em></label>
         <select id="luogo">
           <option value="">Solo Italia</option>
@@ -414,10 +461,10 @@
           <option value="Verona,Veneto,Italy">Verona</option>
           <option value="Vicenza,Veneto,Italy">Vicenza</option>
         </select>
-        <p class="minuta">Se compili le parole chiave, il rapporto dice a che posizione stai su
-        Google per quelle ricerche e chi ti sta davanti. Scegliendo una città vedi le due
-        posizioni affiancate: la differenza fra nazionale e locale è spesso la cosa più utile.
-        Lascia le parole vuote per saltare il controllo.</p>
+        <p class="minuta">Il rapporto dirà a che posizione sei su Google per quelle ricerche e chi
+        ti sta davanti. Con una città scelta vedi le due posizioni affiancate: la differenza fra
+        nazionale e locale è spesso la cosa più utile di tutta l'analisi. Campo vuoto = controllo
+        saltato.</p>
       </div>
 
       <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,
