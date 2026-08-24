@@ -995,7 +995,7 @@ function bloccoPosizioni(dati) {
     if (!esito) return '';
     if (esito.errore)
       return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="numero fuori">non riuscita</span></span>';
+             '<span class="numero fuori" title="' + T(esito.errore) + '">non riuscita</span></span>';
     if (esito.oltre)
       return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
              '<span class="numero fuori">oltre i ' + dati.profondita + '</span></span>';
@@ -1031,6 +1031,14 @@ function bloccoPosizioni(dati) {
     return riga + '</div>';
   }).join('');
 
+  // Se qualcosa e' fallito, il messaggio del fornitore vale piu' di mille
+  // supposizioni: si mostra in chiaro invece di nasconderlo dietro
+  // "non riuscita". Uno solo per tipo, non uno per riga.
+  const guasti = [];
+  for (const e of dati.esiti)
+    for (const lato of [e.nazionale, e.locale])
+      if (lato && lato.errore && !guasti.includes(lato.errore)) guasti.push(lato.errore);
+
   let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
              ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
              'Le posizioni cambiano di giorno in giorno e da persona a persona: ' +
@@ -1039,6 +1047,11 @@ function bloccoPosizioni(dati) {
     nota += ' La ricerca locale non e\u2019 andata a buon fine: il fornitore non ha ' +
             'riconosciuto la citt\u00e0, resta valida solo quella nazionale.';
 
+  const spiegazione = guasti.length
+    ? '<p class="posizioni-nota"><b>Il fornitore di dati ha risposto:</b> ' +
+      guasti.map(g => T(g)).join(' · ') + '</p>'
+    : '';
+
   return '<h2>Posizioni su Google</h2><div class="posizioni">' + righe + '</div>' +
-         '<p class="posizioni-nota">' + nota + '</p>';
+         spiegazione + '<p class="posizioni-nota">' + nota + '</p>';
 }

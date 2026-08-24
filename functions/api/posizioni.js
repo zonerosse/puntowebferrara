@@ -149,7 +149,9 @@ async function posizioni(context) {
 
     if (compito.status_code >= 40000) {
       if (chiave === 'locale' && /location/i.test(compito.status_message || '')) cittaFallita = true;
-      riga[chiave] = { errore: (compito.status_message || 'non riuscita').slice(0, 120) };
+      riga[chiave] = {
+        errore: (compito.status_code + ' ' + (compito.status_message || 'non riuscita')).slice(0, 160),
+      };
       continue;
     }
 
