@@ -50,6 +50,13 @@
 
 /* --- campi per le parole chiave --- */
 .strumento .parole-chiave{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--linea)}
+.strumento .parole-chiave .apertura-facoltativa{display:flex;align-items:baseline;flex-wrap:wrap;
+    gap:.5rem;font-size:.9rem;line-height:1.55;color:var(--inchiostro);
+    background:var(--carta);border:1px solid var(--linea);border-left:3px solid var(--verde);
+    border-radius:3px;padding:.7rem .85rem;margin:0 0 1.1rem}
+.strumento .parole-chiave .bollino{flex:0 0 auto;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.11em;text-transform:uppercase;color:#fff;background:var(--verde);
+    border-radius:3px;padding:.22rem .5rem}
 .strumento .parole-chiave label{display:block;font-family:var(--mono);font-size:.68rem;
     letter-spacing:.09em;text-transform:uppercase;color:var(--grafite);margin:0 0 .35rem}
 .strumento .parole-chiave label em{font-style:normal;text-transform:none;letter-spacing:0}
@@ -138,6 +145,10 @@
 .strumento .errore{background:#fdf1f3;border:1px solid #edccd3;border-left:3px solid var(--rosso);
           padding:1rem 1.15rem;margin-top:1.25rem;font-size:.94rem;border-radius:3px}
 .strumento .esito{margin-top:2.5rem;display:none;scroll-margin-top:calc(64px + 1rem)}
+.strumento .campione-magro{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.5);
+    border-left:4px solid #f59e0b;border-radius:4px;padding:.9rem 1.1rem;margin:0 0 1.4rem;
+    font-size:.9rem;line-height:1.55}
+.strumento .campione-magro b{color:#8a5808}
 .strumento .testata-esito{background:var(--foglio);border:1px solid var(--linea);
     border-left:4px solid #0d4275;border-radius:4px;
     padding:clamp(1rem,2.5vw,1.4rem) clamp(1.1rem,3vw,1.5rem);margin-bottom:1.6rem}
@@ -420,7 +431,12 @@
         <button type="submit" id="avvia">Verifica il sito</button>
       </div>
       <div class="parole-chiave">
-        <label for="parole">Parole chiave <em>(facoltativo, massimo due)</em></label>
+        <p class="apertura-facoltativa">
+          <span class="bollino">Facoltativo</span>
+          Vuoi solo l'analisi del sito? <b>Lascia i campi qui sotto vuoti e premi Verifica.</b>
+          Compilali solo se vuoi sapere anche a che posizione sei su Google.
+        </p>
+        <label for="parole">Parole chiave <em>(massimo due)</em></label>
         <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
                autocomplete="off" spellcheck="false">
         <p class="aiuto">Due ricerche al massimo, <b>separate da una virgola</b>. Scrivile come le
@@ -463,10 +479,10 @@
           <option value="Verona,Veneto,Italy">Verona</option>
           <option value="Vicenza,Veneto,Italy">Vicenza</option>
         </select>
-        <p class="minuta">Il rapporto dirà a che posizione sei su Google per quelle ricerche e chi
-        ti sta davanti. Con una città scelta vedi le due posizioni affiancate: la differenza fra
-        nazionale e locale è spesso la cosa più utile di tutta l'analisi. Campo vuoto = controllo
-        saltato.</p>
+        <p class="minuta">Se le compili, il rapporto dirà a che posizione sei su Google per quelle
+        ricerche, chi ti sta davanti e se compari nel riquadro delle mappe. Con una città scelta
+        vedi le due posizioni affiancate: la differenza fra nazionale e locale è spesso la cosa più
+        utile di tutta l'analisi.</p>
       </div>
 
       <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,

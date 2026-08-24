@@ -597,6 +597,18 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
 
   if (posizioni) p.push(bloccoPosizioni(posizioni));
 
+  // Un voto complessivo calcolato su una o due pagine non vale niente: e' lo
+  // stesso difetto che questo strumento rimprovera agli altri. Quando il
+  // campione e' minuscolo lo si dice prima del numero, non in una riga di
+  // servizio sotto.
+  if (buone.length <= 2)
+    p.push('<div class="campione-magro"><b>Attenzione: ' +
+      (buone.length === 1 ? 'è stata letta una sola pagina' : 'sono state lette due pagine') +
+      '.</b> Il punteggio qui sotto vale per quelle, non per il sito. ' +
+      'Di solito succede quando la sitemap manca, è irraggiungibile o elenca indirizzi ' +
+      'di un altro dominio: in quel caso l\u2019analisi ripiega sulla sola pagina iniziale. ' +
+      'Prima di trarre conclusioni, guarda la sezione sulla sitemap più in basso.</div>');
+
   p.push('<h2>Risultato</h2><div class="punteggio"><div class="quadrante">' +
     '<svg width="112" height="112" viewBox="0 0 112 112">' +
     '<circle cx="56" cy="56" r="' + R + '" fill="none" stroke="var(--linea)" stroke-width="9"/>' +
@@ -780,12 +792,13 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
   // ---- indirizzi dichiarati nella sitemap che non sono pagine
   const malformati = scoperta.malformati || [];
   if (malformati.length) {
-    p.push('<h2>La sitemap dichiara indirizzi che non sono validi</h2>');
+    p.push('<h2>La sitemap dichiara indirizzi che non appartengono a questo sito</h2>');
     p.push('<div class="voce alto"><b>' + malformati.length +
-      (malformati.length === 1 ? ' voce non è un indirizzo valido' : ' voci non sono indirizzi validi') +
-      '</b> \u2014 righe scritte male dentro il file: indirizzi relativi malformati, spazi non ' +
-      'codificati, o testo finito dentro un tag loc. Un motore le scarta, ma il file resta ' +
-      'segnalato come non conforme. Rigenera la sitemap dal plugin, o correggila se è scritta a mano.</div>');
+      (malformati.length === 1 ? ' voce scartata' : ' voci scartate') +
+      '</b> \u2014 o sono righe scritte male (indirizzi relativi malformati, spazi non codificati, ' +
+      'testo finito dentro un tag loc), oppure puntano a un dominio diverso da quello analizzato. ' +
+      'Un motore le scarta. Controlla l\'elenco qui sotto prima di intervenire: se sono indirizzi ' +
+      'di un altro sito tuo, non è un errore del file.</div>');
     const righe = malformati.map(u =>
       '<span class="riga-dove"><code>' + T(u) + '</code></span>').join('');
     p.push(malformati.length <= 5

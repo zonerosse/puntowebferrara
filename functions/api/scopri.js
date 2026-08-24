@@ -214,6 +214,16 @@ function permessoPerNoi(testo) {
   return vietaNoi ? false : !vietaTutti;
 }
 
+// Confronto fra host che tratta www.sito.it e sito.it come lo stesso sito.
+function stessoSito(host, radice) {
+  try {
+    const nudo = h => String(h || '').replace(/^www\./i, '').toLowerCase();
+    return nudo(host) === nudo(new URL(radice).hostname);
+  } catch (e) {
+    return false;
+  }
+}
+
 function estraiUrl(xml) {
   const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
@@ -357,7 +367,11 @@ async function scopri(context) {
         if (pagine.length >= MAX_URL) break;
         try {
           const url = new URL(u, radice);
-          if (/^https?:$/.test(url.protocol) && url.hostname === new URL(radice).hostname)
+          // www.sito.it e sito.it sono lo stesso sito. Confrontare gli host
+          // alla lettera scartava OGNI indirizzo dei siti la cui sitemap usa
+          // la forma opposta a quella digitata dall'utente: l'analisi finiva
+          // con zero pagine e il file veniva accusato di essere scritto male.
+          if (/^https?:$/.test(url.protocol) && stessoSito(url.hostname, radice))
             pagine.push(url.href);
           else malformati.push(u);
         } catch (e) { malformati.push(u); }
@@ -365,7 +379,9 @@ async function scopri(context) {
     }
   }
 
-  pagine = Array.from(new Set(pagine)).filter(u => u.startsWith(radice));
+  pagine = Array.from(new Set(pagine)).filter(u => {
+    try { return stessoSito(new URL(u).hostname, radice); } catch (e) { return false; }
+  });
 
   const intestazioniHome = {};
   for (const nome of ['content-encoding','strict-transport-security','x-content-type-options',
