@@ -30,5 +30,5 @@
   Cache-Control: no-store
 
 # I moduli JavaScript dello strumento devono essere serviti come tali
-/verifica/*.js
+/sottosopra/*.js
   Content-Type: text/javascript; charset=utf-8
