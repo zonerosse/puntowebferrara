@@ -32,11 +32,27 @@
 .strumento .briciole a{color:var(--grafite);text-decoration:none}
 .strumento .occhiello{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
              color:var(--verde);margin-bottom:.9rem}
+.strumento .occhiello b{color:#0d4275;font-weight:700}
 .strumento h1{font-size:clamp(1.6rem,3.7vw,2.55rem);font-weight:700;letter-spacing:-.025em;
      line-height:1.15;margin-bottom:1rem;max-width:none;text-align:center}
 .strumento .tesi{font-size:clamp(1.03rem,1.35vw,1.18rem);color:var(--grafite);
      max-width:none;margin-bottom:1.9rem}
 .strumento .tesi b{color:var(--inchiostro);font-weight:600}
+
+/* Le tre cose che lo strumento fa, dette prima che uno decida se usarlo.
+   Il terzo riquadro è l'unico con il filetto arancione: è la funzione che
+   gli altri strumenti fanno pagare, e vale la pena che si veda. */
+.strumento .pilastri{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:.9rem;margin:0 0 1.9rem}
+.strumento .pilastro{background:var(--foglio);border:1px solid var(--linea);
+    border-top:3px solid var(--linea);border-radius:4px;padding:1rem 1.1rem}
+.strumento .pilastro.nuovo{border-top-color:#f59e0b}
+.strumento .pilastro .titolo{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+    font-weight:700;font-size:1rem;margin:0 0 .35rem;color:var(--inchiostro)}
+.strumento .pilastro .nuovo-bollino{font-family:var(--mono);font-size:.58rem;letter-spacing:.11em;
+    text-transform:uppercase;color:#11201d;background:#f59e0b;border-radius:3px;padding:.18rem .42rem}
+.strumento .pilastro p{font-size:.85rem;color:var(--grafite);line-height:1.5;margin:0}
+.strumento .pilastro p b{color:var(--inchiostro);font-weight:600}
 .strumento .modulo{background:var(--foglio);border:1px solid var(--linea);border-radius:4px;padding:1.25rem}
 .strumento .campo{display:flex;gap:.6rem;flex-wrap:wrap}
 .strumento input[type=text]{flex:1 1 250px;min-width:0;font-family:var(--mono);font-size:.95rem;padding:.85rem .9rem;
@@ -418,11 +434,29 @@
       </div>
     </div>
 
-    <p class="occhiello">Strumento gratuito · 40 controlli</p>
+    <p class="occhiello">Strumento gratuito · 40 controlli · <b>posizioni su Google</b></p>
     <h1>Cosa vedono Google e le AI quando leggono il tuo sito</h1>
     <p class="tesi">Incolla l'indirizzo. Lo strumento scarica le pagine, legge il codice, misura la velocità
     reale con Lighthouse e ti dice cosa c'è e cosa manca. <b>Ogni punto del punteggio è spiegato:</b> perché
     quel controllo conta e come si sistema. Niente registrazione, niente email.</p>
+
+    <div class="pilastri">
+      <div class="pilastro">
+        <p class="titolo">40 controlli tecnici</p>
+        <p>Dati strutturati, struttura dei titoli, indicizzazione, sicurezza, e quali crawler delle
+        AI possono leggerti davvero.</p>
+      </div>
+      <div class="pilastro">
+        <p class="titolo">Velocità misurata</p>
+        <p>Non stimata: eseguita con Lighthouse sui server di Google, gli stessi numeri che vedrebbe
+        un tecnico sul tuo sito.</p>
+      </div>
+      <div class="pilastro nuovo">
+        <p class="titolo">Posizioni su Google <span class="nuovo-bollino">nuovo</span></p>
+        <p>A che posizione sei per le tue parole chiave, <b>in Italia e nella tua città</b>, chi ti
+        sta davanti e se compari nel riquadro delle mappe.</p>
+      </div>
+    </div>
 
     <form class="modulo" id="modulo">
       <div class="campo">
