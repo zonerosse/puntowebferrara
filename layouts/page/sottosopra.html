@@ -47,6 +47,41 @@
 .strumento button:hover{background:#0a5646}
 .strumento button[disabled]{opacity:.45;cursor:default}
 .strumento .nota{font-size:.82rem;color:var(--grafite);margin-top:.75rem}
+
+/* --- campi per le parole chiave --- */
+.strumento .parole-chiave{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--linea)}
+.strumento .parole-chiave label{display:block;font-family:var(--mono);font-size:.68rem;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--grafite);margin:0 0 .35rem}
+.strumento .parole-chiave label em{font-style:normal;text-transform:none;letter-spacing:0}
+.strumento .parole-chiave input{width:100%;font-family:var(--mono);font-size:.9rem;
+    padding:.7rem .8rem;border:1px solid var(--linea);border-radius:3px;background:var(--carta);
+    margin-bottom:.9rem}
+.strumento .parole-chiave select{width:100%;font-size:.92rem;padding:.7rem .8rem;
+    border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
+    margin-bottom:.9rem;color:var(--inchiostro)}
+.strumento .parole-chiave .minuta{font-size:.78rem;color:var(--grafite);margin:0}
+
+/* --- blocco delle posizioni nel rapporto --- */
+.strumento .posizioni{margin:1.5rem 0}
+.strumento .posizioni .riga{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
+    padding:.85rem 0;border-bottom:1px solid var(--linea)}
+.strumento .posizioni .riga:last-child{border-bottom:0}
+.strumento .posizioni .parola{font-weight:600;flex:1 1 220px;min-width:0}
+.strumento .posizioni .cella{flex:0 0 auto;text-align:center;min-width:88px}
+.strumento .posizioni .dove{display:block;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--grafite);margin-bottom:.15rem}
+.strumento .posizioni .numero{font-family:var(--mono);font-weight:700;font-size:1.35rem;
+    color:#0d4275;display:block;line-height:1}
+.strumento .posizioni .numero.fuori{color:var(--grafite);font-size:.8rem;font-weight:400;
+    letter-spacing:0}
+.strumento .posizioni .numero.top{color:#0d6b58}
+.strumento .posizioni .davanti{flex:1 1 100%;font-size:.8rem;color:var(--grafite);margin:.1rem 0 0}
+.strumento .posizioni .scarto{flex:1 1 100%;font-size:.82rem;color:var(--inchiostro);margin:.35rem 0 0}
+.strumento .posizioni-nota{font-size:.82rem;color:var(--grafite);margin:.2rem 0 0}
+@media (max-width:520px){
+  .strumento .posizioni .parola{flex:1 1 100%}
+  .strumento .posizioni .cella{min-width:0;flex:1 1 0;text-align:left}
+}
 .strumento code{font-family:var(--mono);font-size:.92em;background:var(--carta);padding:.1rem .3rem;border-radius:3px}
 .strumento .avanzamento{margin-top:1.25rem;display:none}
 .strumento .avanzamento.attivo{display:block}
@@ -338,6 +373,53 @@
                inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
         <button type="submit" id="avvia">Verifica il sito</button>
       </div>
+      <div class="parole-chiave">
+        <label for="parole">Parole chiave <em>(facoltativo, massimo tre)</em></label>
+        <input type="text" id="parole" placeholder="allevamento staffordshire bull terrier, cuccioli staffy"
+               autocomplete="off" spellcheck="false">
+        <label for="luogo">Confronta anche con una città <em>(la ricerca su tutta Italia si fa sempre)</em></label>
+        <select id="luogo">
+          <option value="">Solo Italia</option>
+          <option value="Ancona,Marche,Italy">Ancona</option>
+          <option value="Bari,Apulia,Italy">Bari</option>
+          <option value="Bergamo,Lombardy,Italy">Bergamo</option>
+          <option value="Bologna,Emilia-Romagna,Italy">Bologna</option>
+          <option value="Bolzano,Trentino-South Tyrol,Italy">Bolzano</option>
+          <option value="Brescia,Lombardy,Italy">Brescia</option>
+          <option value="Cagliari,Sardinia,Italy">Cagliari</option>
+          <option value="Catania,Sicily,Italy">Catania</option>
+          <option value="Ferrara,Emilia-Romagna,Italy">Ferrara</option>
+          <option value="Florence,Tuscany,Italy">Firenze</option>
+          <option value="Genoa,Liguria,Italy">Genova</option>
+          <option value="Livorno,Tuscany,Italy">Livorno</option>
+          <option value="Milan,Lombardy,Italy">Milano</option>
+          <option value="Modena,Emilia-Romagna,Italy">Modena</option>
+          <option value="Naples,Campania,Italy">Napoli</option>
+          <option value="Padua,Veneto,Italy">Padova</option>
+          <option value="Palermo,Sicily,Italy">Palermo</option>
+          <option value="Parma,Emilia-Romagna,Italy">Parma</option>
+          <option value="Perugia,Umbria,Italy">Perugia</option>
+          <option value="Pescara,Abruzzo,Italy">Pescara</option>
+          <option value="Ravenna,Emilia-Romagna,Italy">Ravenna</option>
+          <option value="Reggio Emilia,Emilia-Romagna,Italy">Reggio Emilia</option>
+          <option value="Rimini,Emilia-Romagna,Italy">Rimini</option>
+          <option value="Rome,Lazio,Italy">Roma</option>
+          <option value="Salerno,Campania,Italy">Salerno</option>
+          <option value="Taranto,Apulia,Italy">Taranto</option>
+          <option value="Turin,Piedmont,Italy">Torino</option>
+          <option value="Trento,Trentino-South Tyrol,Italy">Trento</option>
+          <option value="Trieste,Friuli-Venezia Giulia,Italy">Trieste</option>
+          <option value="Udine,Friuli-Venezia Giulia,Italy">Udine</option>
+          <option value="Venice,Veneto,Italy">Venezia</option>
+          <option value="Verona,Veneto,Italy">Verona</option>
+          <option value="Vicenza,Veneto,Italy">Vicenza</option>
+        </select>
+        <p class="minuta">Se compili le parole chiave, il rapporto dice a che posizione stai su
+        Google per quelle ricerche e chi ti sta davanti. Scegliendo una città vedi le due
+        posizioni affiancate: la differenza fra nazionale e locale è spesso la cosa più utile.
+        Lascia le parole vuote per saltare il controllo.</p>
+      </div>
+
       <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,
       e misura la velocità della home. Dura da venti secondi a un minuto. Non salvo nulla: quando
       chiudi la pagina, il risultato sparisce.</p>

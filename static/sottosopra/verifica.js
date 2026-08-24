@@ -249,6 +249,7 @@ const GRAVITA = [
 
 const $ = id => document.getElementById(id);
 const modulo = $('modulo'), campo = $('indirizzo'), bottone = $('avvia');
+const campoParole = $('parole'), campoLuogo = $('luogo');
 const avanzamento = $('avanzamento'), riempimento = $('riempimento'), passo = $('passo');
 const esito = $('esito'), zonaErrore = $('zonaErrore');
 
@@ -372,6 +373,19 @@ modulo.addEventListener('submit', async e => {
     .then(r => r.text()).then(t => JSON.parse(t))
     .catch(() => ({ disponibile: false, motivo: 'Misura delle prestazioni non riuscita.' }));
 
+  // Le posizioni su Google: solo se l'utente ha scritto delle parole chiave.
+  // Parte anche questa in parallelo — costa soldi veri, quindi niente chiamata
+  // quando il campo è vuoto.
+  const paroleScritte = (campoParole && campoParole.value || '').trim();
+  const cittaScelta = (campoLuogo && campoLuogo.value || '').trim();
+  const classifica = paroleScritte
+    ? fetch('/api/posizioni?sito=' + encodeURIComponent(scoperta.sito) +
+            '&parole=' + encodeURIComponent(paroleScritte) +
+            (cittaScelta ? '&citta=' + encodeURIComponent(cittaScelta) : ''))
+        .then(r => r.text()).then(t => JSON.parse(t))
+        .catch(() => ({ disponibile: false, motivo: 'Controllo posizioni non riuscito.' }))
+    : Promise.resolve(null);
+
   const risultati = [];
   let fatte = 0;
   const coda = pagine.slice();
@@ -389,16 +403,16 @@ modulo.addEventListener('submit', async e => {
 
   avanza(pagine.length, pagine.length + 1,
     'Pagine lette. Aspetto la misura di velocità da Google (venti-quaranta secondi)…');
-  const lighthouse = await misura;
+  const [lighthouse, posizioni] = await Promise.all([misura, classifica]);
 
   avanzamento.classList.remove('attivo');
   bottone.disabled = false;
-  disegna(scoperta, risultati, lighthouse);
+  disegna(scoperta, risultati, lighthouse, posizioni);
   esito.classList.add('attivo');
   esito.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-function disegna(scoperta, risultati, lighthouse) {
+function disegna(scoperta, risultati, lighthouse, posizioni) {
   const buone = risultati.filter(r => !r.errore);
   const rotte = risultati.filter(r => r.errore);
   if (!buone.length) {
@@ -580,6 +594,8 @@ function disegna(scoperta, risultati, lighthouse) {
   p.push('<div class="testata-esito">' +
     '<b>Rapporto <i>Sottosopra</i></b>' +
     '<span>' + T(scoperta.sito) + '</span></div>');
+
+  if (posizioni) p.push(bloccoPosizioni(posizioni));
 
   p.push('<h2>Risultato</h2><div class="punteggio"><div class="quadrante">' +
     '<svg width="112" height="112" viewBox="0 0 112 112">' +
@@ -960,4 +976,69 @@ function disegna(scoperta, risultati, lighthouse) {
     window.print();
     document.querySelectorAll('.controllo[data-chiuso]').forEach(d => { d.open = false; delete d.dataset.chiuso; });
   });
+}
+
+
+// --- Posizioni su Google -----------------------------------------------
+// Due colonne quando l'utente ha scelto una città: Italia e locale affiancate.
+// Il confronto e' il punto: sedicesimo in Italia e terzo a Ferrara non e' una
+// brutta notizia, e' un'indicazione su dove giocarsela.
+function bloccoPosizioni(dati) {
+  if (!dati.disponibile)
+    return '<h2>Posizioni su Google</h2><p class="posizioni-nota">' +
+           T(dati.motivo || 'Controllo non eseguito.') + '</p>';
+
+  const conCitta = !!dati.citta;
+  const nomeCitta = conCitta ? dati.citta.split(',')[0] : '';
+
+  const cella = (dove, esito) => {
+    if (!esito) return '';
+    if (esito.errore)
+      return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
+             '<span class="numero fuori">non riuscita</span></span>';
+    if (esito.oltre)
+      return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
+             '<span class="numero fuori">oltre i ' + dati.profondita + '</span></span>';
+    return '<span class="cella"><span class="dove">' + T(dove) + '</span>' +
+           '<span class="numero' + (esito.posizione <= 3 ? ' top' : '') + '">' +
+           esito.posizione + '</span></span>';
+  };
+
+  const righe = dati.esiti.map(e => {
+    const naz = e.nazionale, loc = e.locale;
+    let riga = '<div class="riga"><span class="parola">' + T(e.parola) + '</span>' +
+               cella('Italia', naz) + (conCitta ? cella(nomeCitta, loc) : '');
+
+    // Chi sta davanti si prende dalla ricerca nazionale, che c'e' sempre.
+    if (naz && naz.primi && naz.primi.length && (!naz.posizione || naz.posizione > 3))
+      riga += '<p class="davanti">In cima in Italia: ' +
+              naz.primi.map(v => T(v.dominio)).join(' · ') + '</p>';
+
+    // La riga che spiega il confronto, quando c'e' qualcosa da spiegare.
+    if (conCitta && naz && loc && !naz.errore && !loc.errore) {
+      const n = naz.oltre ? null : naz.posizione;
+      const l = loc.oltre ? null : loc.posizione;
+      if (n && l && l < n - 2)
+        riga += '<p class="scarto">Sul territorio vai molto meglio che sulla ricerca ' +
+                'nazionale: qui il posizionamento locale e\u2019 la tua forza, e va difeso.</p>';
+      else if (!n && l)
+        riga += '<p class="scarto">In Italia non compari, a ' + T(nomeCitta) +
+                ' s\u00ec: la partita nazionale su questa ricerca non e\u2019 la tua.</p>';
+      else if (n && !l)
+        riga += '<p class="scarto">Compari in Italia ma non a ' + T(nomeCitta) +
+                ': su questa ricerca il locale te lo stanno portando via.</p>';
+    }
+    return riga + '</div>';
+  }).join('');
+
+  let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
+             ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
+             'Le posizioni cambiano di giorno in giorno e da persona a persona: ' +
+             'vale l\u2019ordine di grandezza, non il numero esatto.';
+  if (dati.cittaFallita)
+    nota += ' La ricerca locale non e\u2019 andata a buon fine: il fornitore non ha ' +
+            'riconosciuto la citt\u00e0, resta valida solo quella nazionale.';
+
+  return '<h2>Posizioni su Google</h2><div class="posizioni">' + righe + '</div>' +
+         '<p class="posizioni-nota">' + nota + '</p>';
 }
