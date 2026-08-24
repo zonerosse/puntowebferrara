@@ -1,22 +1,22 @@
 ---
 title: "Privacy dell'estensione"
-titleSeo: "Informativa privacy dell'estensione Verifica sito | Punto Web"
-description: "Quali dati tratta l'estensione Verifica sito per Chrome: nessuna raccolta, nessun account, analisi eseguita nel browser. Informativa completa."
+titleSeo: "Informativa privacy dell'estensione Sottosopra | Punto Web"
+description: "Quali dati tratta l'estensione Sottosopra per Chrome: nessuna raccolta, nessun account, analisi eseguita nel browser. Informativa completa."
 tipoPagina: "WebPage"
 sitemap:
   priority: 0.3
   changefreq: yearly
 ---
 
-## Informativa privacy dell'estensione "Verifica sito"
+## Informativa privacy dell'estensione "Sottosopra"
 
-Ultimo aggiornamento: agosto 2026
+Ultimo aggiornamento: 24 agosto 2026
 
-Questa informativa riguarda l'estensione per browser **Verifica sito**, pubblicata da Paolo Boldrini — Punto Web Ferrara, Ostellato (FE), Italia. Contatto: [info@puntowebferrara.com](mailto:info@puntowebferrara.com).
+Questa informativa riguarda l'estensione per browser **Sottosopra**, pubblicata da Paolo Boldrini — Punto Web Ferrara, Ostellato (FE), Italia. Contatto: [info@puntowebferrara.com](mailto:info@puntowebferrara.com).
 
 ### In sintesi
 
-L'estensione non raccoglie dati personali, non richiede registrazione, non usa cookie, non profila e non vende nulla a nessuno. L'analisi viene eseguita interamente dentro il tuo browser e il risultato resta lì: chiudendo la scheda sparisce.
+L'estensione non raccoglie dati personali, non richiede registrazione, non usa cookie, non profila e non vende nulla a nessuno. Il contenuto delle pagine viene esaminato dentro il tuo browser e il risultato resta lì: chiudendo la scheda sparisce. L'unica cosa che esce, e solo durante l'analisi completa, è l'indirizzo del sito che hai chiesto di analizzare: sotto è spiegato verso chi e perché.
 
 ### Quali dati tratta e perché
 
@@ -24,13 +24,17 @@ Quando clicchi l'icona, l'estensione legge il contenuto HTML della pagina che ha
 
 Quando lanci l'analisi completa di un sito, l'estensione scarica le pagine elencate nella sitemap di quel sito, fino a un massimo di duecento, e le esamina con lo stesso procedimento. Anche in questo caso l'elaborazione è locale.
 
-### L'unico dato che esce dal browser
+### Cosa esce dal browser, e verso chi
 
-Per misurare la velocità, l'estensione invia **l'indirizzo del sito che stai analizzando** a un componente ospitato su `puntowebferrara.com`, che a sua volta lo passa all'API PageSpeed Insights di Google. Questo passaggio serve unicamente a tenere la chiave di accesso all'API su un server anziché dentro l'estensione, dove sarebbe leggibile da chiunque.
+Durante l'**analisi completa di un sito** l'indirizzo del sito analizzato viene trasmesso a due servizi esterni. Il contenuto delle pagine non esce mai dal browser, in nessun caso.
 
-Viene trasmesso solo l'indirizzo, mai il contenuto delle pagine. L'indirizzo non viene registrato né conservato dal componente. Il trattamento successivo da parte di Google è regolato dalle [norme sulla privacy di Google](https://policies.google.com/privacy).
+**puntowebferrara.com** — per la misura di velocità. L'indirizzo viene passato a un componente su questo dominio, che a sua volta lo inoltra all'API PageSpeed Insights di Google. Il passaggio serve unicamente a tenere la chiave di accesso all'API su un server anziché dentro l'estensione, dove sarebbe leggibile da chiunque. L'indirizzo non viene registrato né conservato. Il trattamento successivo da parte di Google è regolato dalle [norme sulla privacy di Google](https://policies.google.com/privacy).
 
-Se non vuoi che questo accada, non usare la funzione di analisi completa: il pannello su singola pagina non contatta alcun server esterno.
+**cloudflare-dns.com** — per riconoscere chi ospita il sito. Il nome del dominio analizzato viene inviato al servizio DNS pubblico di Cloudflare, che risponde con i record tecnici del dominio. È la stessa interrogazione che il browser compie ogni volta che apri un sito qualsiasi.
+
+In entrambi i casi viaggia solo l'indirizzo del sito che hai chiesto di analizzare: non la tua navigazione, non le pagine che visiti, non il contenuto di alcuna pagina.
+
+Il **pannello su singola pagina** non contatta alcun server esterno: l'analisi avviene interamente nel browser. Se non vuoi che nulla esca, usa solo il pannello e non avviare l'analisi completa.
 
 ### Cosa non fa
 
@@ -40,7 +44,7 @@ Non registra la cronologia di navigazione. Non traccia le pagine che visiti. Non
 
 L'estensione dichiara tre permessi, e ciascuno serve a una funzione precisa.
 
-**activeTab e scripting** servono a leggere il contenuto della pagina che hai aperto nel momento in cui clicchi l'icona. Senza di essi l'estensione non potrebbe analizzare nulla.
+**activeTab e scripting** servono a leggere il contenuto della pagina che hai aperto nel momento in cui clicchi l'icona. Senza di essi l'estensione non potrebbe analizzare nulla. Durante l'analisi completa, `scripting` serve anche a scaricare le altre pagine passando dalla scheda che hai aperto: è ciò che permette di leggere le pagine visibili solo dopo l'accesso, usando la tua sessione. Anche in quel caso il contenuto resta nel browser.
 
 **tabs** serve ad aprire la scheda con il rapporto completo quando premi il pulsante.
 
