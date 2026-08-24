@@ -50,9 +50,26 @@ export async function onRequest(context) {
   }
 }
 
+// Le credenziali si possono dare in due modi. Il secondo esiste perché il
+// pannello del fornitore non sempre mostra un campo "API login" separato, e
+// tirare a indovinare quale sia il login produce un 401 che sembra un problema
+// di codice: DFS_BASIC è la stringa Base64 già pronta che il pannello offre
+// sotto "Base64 Format", cioè login:password impacchettati. Se c'è quella,
+// vince lei e non c'è più niente da interpretare.
+// Il .trim() non è pignoleria: copiando dal pannello si porta dietro uno spazio
+// o un a capo che il server rifiuta senza dire perché.
+function credenziali(env) {
+  const pronta = (env && env.DFS_BASIC || '').trim();
+  if (pronta) return pronta;
+
+  const login = (env && env.DFS_LOGIN || '').trim();
+  const password = (env && env.DFS_PASSWORD || '').trim();
+  if (!login || !password) return null;
+  return btoa(login + ':' + password);
+}
+
 async function posizioni(context) {
-  const login = context.env && context.env.DFS_LOGIN;
-  const password = context.env && context.env.DFS_PASSWORD;
+  const basic = credenziali(context.env);
 
   const parametri = new URL(context.request.url).searchParams;
   const sito = (parametri.get('sito') || '').trim();
@@ -73,7 +90,7 @@ async function posizioni(context) {
   const dominio = estraiDominio(sito);
   if (!dominio) return risposta({ disponibile: false, motivo: 'Dominio non valido.' }, 400);
 
-  if (!login || !password)
+  if (!basic)
     return risposta({
       disponibile: false,
       motivo: 'Controllo posizioni non configurato: mancano le credenziali del fornitore di dati SERP.',
@@ -98,18 +115,21 @@ async function posizioni(context) {
   const r = await fetch('https://api.dataforseo.com/v3/serp/google/organic/live/advanced', {
     method: 'POST',
     headers: {
-      'Authorization': 'Basic ' + btoa(login + ':' + password),
+      'Authorization': 'Basic ' + basic,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(compiti),
     signal: AbortSignal.timeout(40000),
   });
 
-  if (!r.ok)
-    return risposta({
-      disponibile: false,
-      motivo: 'Il fornitore di dati ha risposto ' + r.status + '.',
-    });
+  if (!r.ok) {
+    const dettaglio = r.status === 401
+      ? 'Il fornitore ha rifiutato le credenziali (401). Controlla che DFS_BASIC contenga la ' +
+        'stringa "Base64 Format" copiata dal pannello, oppure che DFS_LOGIN sia l\'API login ' +
+        'esatto e non un indirizzo email diverso. Verifica anche che l\'account sia attivato.'
+      : 'Il fornitore di dati ha risposto ' + r.status + '.';
+    return risposta({ disponibile: false, motivo: dettaglio });
+  }
 
   const dati = await r.json();
 
