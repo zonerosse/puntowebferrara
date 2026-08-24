@@ -1037,14 +1037,20 @@ function bloccoPosizioni(dati) {
     const lati = conCitta ? [['Italia', naz], [nomeCitta, loc]] : [['Italia', naz]];
     const conMappe = lati.filter(x => x[1] && x[1].mappe && x[1].mappe.presente);
     if (conMappe.length) {
-      h += '<p class="davanti"><b>Riquadro mappe:</b></p><ul class="mappe">';
+      h += '<p class="davanti"><b>Riquadro mappe di Google</b></p>' +
+           '<p class="chiosa">Il blocco con la cartina e le schede delle attivit\u00e0, ' +
+           'sopra i risultati normali. Per chi cerca qualcosa vicino a s\u00e9 \u00e8 la prima ' +
+           'cosa che vede, e spesso l\u2019unica su cui clicca.</p><ul class="mappe">';
       for (const [dove, lato] of conMappe) {
         const m = lato.mappe;
+        const quanti = m.totale || m.posizione;
+        const attivita = quanti === 1 ? 'attivit\u00e0 mostrata' : 'attivit\u00e0 mostrate';
         h += m.dentro
-          ? '<li class="dentro">' + T(dove) + ': ci sei, ' + m.posizione + '\u00b0 su ' +
-            (m.totale || m.posizione) + '</li>'
-          : '<li class="fuori">' + T(dove) + ': compare, ma tu non ci sei' +
-            (m.chi.length ? ' \u2014 ' + T(m.chi.join(', ')) : '') + '</li>';
+          ? '<li class="dentro"><b>' + T(dove) + ':</b> ci sei \u2014 sei il ' + m.posizione +
+            '\u00b0 delle ' + quanti + ' ' + attivita + ' nel riquadro</li>'
+          : '<li class="fuori"><b>' + T(dove) + ':</b> il riquadro compare con ' + quanti + ' ' +
+            attivita + ', ma tu non ci sei' +
+            (m.chi.length ? '. Al posto tuo: ' + T(m.chi.join(', ')) : '') + '</li>';
       }
       h += '</ul>';
     }
