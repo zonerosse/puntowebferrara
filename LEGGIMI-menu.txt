@@ -1,0 +1,42 @@
+puntowebferrara-menu-tendina.zip
+================================
+
+DUE FILE. Sostituisce quello che ti avevo mandato prima: e' aggiornato,
+perche' ora nella tendina c'e' anche la voce del posizionamento.
+
+  hugo.toml                     la voce "Sottosopra" diventa "Strumenti"
+                                con tre sottovoci
+  layouts/_default/baseof.html  la tendina: markup, CSS e comportamento
+
+Nessuno dei due file e' stato toccato dalle modifiche di stasera, quindi
+non sovrascrive niente di quello che hai gia' pubblicato.
+
+DOPO AVER SCOMPATTATO, VERIFICA CHE SIA ENTRATO DAVVERO
+-------------------------------------------------------
+Le due volte precedenti questi file non sono arrivati a destinazione.
+Controlla PRIMA di pubblicare:
+
+  Select-String -Path .\hugo.toml -Pattern "Strumenti"
+  Select-String -Path .\layouts\_default\baseof.html -Pattern "ha-tendina"
+
+Devono stampare delle righe TUTTE E DUE. Se una delle due non stampa
+niente, il file non e' arrivato: fermati e dimmelo.
+
+Poi git status deve elencare DUE file modificati.
+
+COSA VEDRAI
+-----------
+Prima:  ... Portfolio | Sottosopra | Blog ...
+Dopo:   ... Portfolio | Strumenti v | Blog ...
+
+Aprendo "Strumenti":
+  Verifica SEO e GEO         -> /sottosopra/
+  Posizionamento su Google   -> /sottosopra/posizionamento/
+  Estensione per Chrome      -> /estensione/
+
+Nessun indirizzo cambia. La tendina si apre con il clic, si chiude con Esc
+o cliccando fuori, e su telefono diventa una fisarmonica.
+
+COLLAUDATO
+----------
+Sito ricompilato con Hugo: il menu esce corretto, con tutte e tre le voci.

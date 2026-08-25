@@ -32,9 +32,33 @@ enableRobotsTXT = false
     url = '/portfolio/'
     weight = 5
   [[menus.main]]
-    name = 'Sottosopra'
+    name = 'Strumenti'
+    identifier = 'strumenti'
     url = '/sottosopra/'
     weight = 6
+  # Sottovoci della tendina. Se ne aggiunge una SOLO quando la pagina esiste
+  # davvero: un menu che promette pagine inesistenti e' un 404 con l'invito.
+  [[menus.main]]
+    name = 'Verifica SEO e GEO'
+    parent = 'strumenti'
+    url = '/sottosopra/'
+    weight = 1
+    [menus.main.params]
+      riga = '48 controlli e la tua posizione reale su Google, in Italia e nella tua città.'
+  [[menus.main]]
+    name = 'Posizionamento su Google'
+    parent = 'strumenti'
+    url = '/sottosopra/posizionamento/'
+    weight = 2
+    [menus.main.params]
+      riga = 'A che numero sei fra i risultati. Veloce, senza scansione.'
+  [[menus.main]]
+    name = 'Estensione per Chrome'
+    parent = 'strumenti'
+    url = '/estensione/'
+    weight = 3
+    [menus.main.params]
+      riga = 'Analizza la pagina aperta, anche dietro login.'
   [[menus.main]]
     name = 'Blog'
     url = '/blog/'
