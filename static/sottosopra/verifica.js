@@ -250,6 +250,17 @@ const GRAVITA = [
 const $ = id => document.getElementById(id);
 const modulo = $('modulo'), campo = $('indirizzo'), bottone = $('avvia');
 const campoParole = $('parole'), campoLuogo = $('luogo');
+
+// I campi delle parole chiave compaiono solo scegliendo la modalita' 2.
+const modo1 = $('modo1'), modo2 = $('modo2');
+function aggiornaModo() {
+  if (!modo2) return;
+  modulo.classList.toggle('con-parole', modo2.checked);
+  if (modo2.checked && campoParole) campoParole.focus();
+}
+if (modo1) modo1.addEventListener('change', aggiornaModo);
+if (modo2) modo2.addEventListener('change', aggiornaModo);
+aggiornaModo();
 const avanzamento = $('avanzamento'), riempimento = $('riempimento'), passo = $('passo');
 const esito = $('esito'), zonaErrore = $('zonaErrore');
 
