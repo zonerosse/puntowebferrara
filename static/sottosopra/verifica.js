@@ -996,7 +996,8 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
   c.push('<p>Sono Paolo Boldrini, lavoro da Ferrara. Rispondo io, entro 24 ore, e il preventivo è dettagliato ' +
     'prima di cominciare: il prezzo concordato è quello finale.</p>');
   c.push('<div class="azioni"><a href="/contatti/">Chiedimi un preventivo</a>' +
-    '<a class="vuoto" href="#" id="stampa">Salva questo report in PDF</a></div>');
+    '<a class="vuoto" href="#" id="salva">Salva il rapporto (file HTML)</a>' +
+    '<a class="vuoto" href="#" id="stampa">Stampa o salva in PDF</a></div>');
   c.push('<p class="listino">Sito vetrina da 500 € · Landing page da 400 € · ' +
     'Migrazione da WordPress a sito statico da 500 €, senza più manutenzione né aggiornamenti.</p></div>');
 
@@ -1004,10 +1005,75 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
   const bottoneStampa = document.getElementById('stampa');
   if (bottoneStampa) bottoneStampa.addEventListener('click', ev => {
     ev.preventDefault();
-    document.querySelectorAll('.controllo').forEach(d => { if (!d.open) d.dataset.chiuso = '1'; d.open = true; });
     window.print();
-    document.querySelectorAll('.controllo[data-chiuso]').forEach(d => { d.open = false; delete d.dataset.chiuso; });
   });
+
+  const bottoneSalva = document.getElementById('salva');
+  if (bottoneSalva) bottoneSalva.addEventListener('click', ev => {
+    ev.preventDefault();
+    salvaRapporto();
+  });
+}
+
+// --- Salvataggio del rapporto in un file HTML unico ------------------------
+// Un PDF generato in JavaScript sarebbe una pila di immagini: pesante, non
+// cercabile, non copiabile. Un file HTML con il foglio di stile dentro pesa
+// qualche decina di kilobyte, si apre col doppio clic anche senza rete, e chi
+// vuole il PDF lo ottiene stampandolo. Niente librerie, niente server.
+function salvaRapporto() {
+  const esito = document.getElementById('esito');
+  if (!esito) return;
+
+  // Il foglio di stile della pagina, preso dal tag <style> che sta nel layout.
+  let stile = '';
+  document.querySelectorAll('style').forEach(t => { stile += t.textContent; });
+
+  // Copia del rapporto con ogni tendina aperta: e' un documento, non
+  // un'interfaccia, e chi lo riceve non deve cliccare per vedere il contenuto.
+  const copia = esito.cloneNode(true);
+  copia.querySelectorAll('details').forEach(d => { d.setAttribute('open', ''); });
+
+  const marchio = document.querySelector('.marchio-sottosopra');
+  const testata = marchio ? marchio.outerHTML : '';
+
+  const sito = (document.querySelector('.testata-esito span') || {}).textContent || 'rapporto';
+  const oggi = new Date();
+  const data = oggi.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  const perIlNome = oggi.toISOString().slice(0, 10);
+  const dominio = sito.replace(/^https?:\/\//, '').replace(/[^a-z0-9.-]/gi, '') || 'sito';
+
+  const documento =
+    '<!DOCTYPE html>\n<html lang="it"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>Rapporto Sottosopra \u2014 ' + dominio + '</title><style>' +
+    'body{margin:0;background:#f4f6f5;font-family:system-ui,-apple-system,"Segoe UI",Roboto,' +
+    'sans-serif;-webkit-font-smoothing:antialiased}' + stile +
+    // ritocchi validi solo nel file salvato
+    '.strumento .foglio{padding-top:2rem}.strumento .esito{display:block}' +
+    '.strumento .salvato{font-family:var(--mono);font-size:.72rem;color:var(--grafite);' +
+    'margin:0 0 1.6rem;padding-bottom:.8rem;border-bottom:1px solid var(--linea)}' +
+    '.strumento summary{list-style:none;cursor:default}' +
+    '.strumento summary::-webkit-details-marker{display:none}' +
+    '.strumento .scheda-parola summary::before,.strumento .posizioni + details > summary::before' +
+    '{content:"" !important;margin:0 !important}' +
+    '.strumento .scheda-parola summary,.strumento .posizioni + details > summary' +
+    '{color:var(--inchiostro) !important;font-weight:700}' +
+    '.strumento .scheda-parola summary.avviso{color:#b3730a !important}' +
+    '</style></head><body><div class="strumento"><div class="foglio">' + testata +
+    '<p class="salvato">Rapporto salvato il ' + data + ' \u00b7 le posizioni e la velocit\u00e0 ' +
+    'sono quelle del momento dell\u2019analisi</p>' +
+    copia.outerHTML + '</div></div></body></html>';
+
+  const blob = new Blob([documento], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'sottosopra-' + dominio + '-' + perIlNome + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // Senza questo, il file resta in memoria finche' non si chiude la scheda.
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 
@@ -1022,6 +1088,21 @@ function fasciaPosizione(p) {
   if (p <= 10) return 'medio';
   return 'basso';
 }
+
+// Una tendina chiusa, su carta, stampa un titolo e basta: il contenuto non
+// c'e'. Prima l'apertura la faceva il pulsante e riguardava i soli controlli,
+// quindi con Ctrl+P non scattava e le tendine delle posizioni restavano vuote.
+// Questi due eventi coprono ogni modo di stampare, e rimettono tutto com'era
+// dopo.
+let tendineAperte = [];
+window.addEventListener('beforeprint', () => {
+  tendineAperte = Array.from(document.querySelectorAll('.strumento details:not([open])'));
+  tendineAperte.forEach(d => { d.open = true; });
+});
+window.addEventListener('afterprint', () => {
+  tendineAperte.forEach(d => { d.open = false; });
+  tendineAperte = [];
+});
 
 function bloccoPosizioni(dati) {
   if (!dati.disponibile)

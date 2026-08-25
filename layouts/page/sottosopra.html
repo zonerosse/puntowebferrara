@@ -503,12 +503,59 @@
 .strumento .altre-pagine>summary:hover, .strumento .altre-schede>summary:hover{border-color:var(--verde)}
 .strumento .altre-pagine[open]>summary::after, .strumento .altre-schede[open]>summary::after{content:" — chiudi";
     color:var(--grafite)}
-@media print{.strumento{background:#fff}
-.strumento .modulo, .strumento .avanzamento, .strumento .azioni, .strumento button, .strumento .briciole{display:none !important}
-.strumento .foglio{max-width:none;padding:0}
-.strumento .controllo[open] .spiega{display:block}
-.strumento .chiusura{background:#fff;color:#000;border:1px solid #000}
-.strumento .chiusura h2, .strumento .chiusura p, .strumento .chiusura li{color:#000}}
+/* --- STAMPA -----------------------------------------------------------------
+   Il "salva in PDF" del browser passa di qui. L'obiettivo e' un documento da
+   mostrare a un cliente: niente interfaccia, niente riquadri spezzati fra due
+   pagine, marchio in testa e indirizzo analizzato in ogni foglio. Il testo
+   resta testo, quindi il file pesa poche centinaia di kilobyte e si puo'
+   cercare dentro. */
+@page{margin:16mm 14mm 18mm}
+
+@media print{
+  .strumento{background:#fff}
+  .strumento .foglio{max-width:none;padding:0}
+
+  /* via tutto cio' che e' interfaccia e non serve su carta */
+  .strumento .modulo, .strumento .avanzamento, .strumento .azioni,
+  .strumento button, .strumento .briciole, .strumento .occhiello,
+  .strumento h1, .strumento #leggibile, .strumento .blocco-estensione,
+  .strumento #perche, .strumento .faq, .strumento .azione-pdf,
+  .strumento .esito > section:last-of-type{display:none !important}
+
+  /* i colori di sfondo vanno stampati: senza, i riquadri spariscono */
+  .strumento *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* intestazione del documento: il marchio piccolo, in linea */
+  .strumento .marchio-sottosopra{margin:0 0 .6rem;gap:.7rem;
+    border-bottom:1px solid #dbe2df;padding-bottom:.6rem}
+  .strumento .marchio-sottosopra img{width:34px}
+  .strumento .marchio-sottosopra b{font-size:1.3rem}
+  .strumento .marchio-sottosopra span{font-size:.6rem;margin-top:.15rem}
+
+  /* niente si spezza a meta' fra due pagine */
+  .strumento .punteggio, .strumento .scheda-parola, .strumento .gruppo,
+  .strumento .controllo, .strumento .voce, .strumento .gruppi div,
+  .strumento .testata-esito, .strumento .luogo,
+  .strumento table, .strumento tr{break-inside:avoid; page-break-inside:avoid}
+  .strumento h2, .strumento h3{break-after:avoid; page-break-after:avoid}
+  .strumento h2{margin-top:1.2rem}
+
+  /* le tendine dei controlli aperte, altrimenti si stampa un elenco muto */
+  .strumento .controllo[open] .spiega{display:block}
+  .strumento details{break-inside:avoid}
+  .strumento details > summary{list-style:none}
+
+  /* i collegamenti: su carta l'indirizzo va scritto, non nascosto */
+  .strumento .concorrenti li a::after{content:" (" attr(href) ")";font-size:.72em;
+    color:#5b6b66;opacity:1}
+
+  /* corpo del testo un filo piu' piccolo: meno fogli, stessa leggibilita' */
+  .strumento{font-size:10.5pt;line-height:1.45}
+  .strumento .dominio{font-size:9pt}
+
+  .strumento .chiusura{background:#fff;color:#000;border:1px solid #000}
+  .strumento .chiusura h2, .strumento .chiusura p, .strumento .chiusura li{color:#000}
+}
 @media (prefers-reduced-motion:reduce){.strumento *{transition:none !important}}
 </style>
 
