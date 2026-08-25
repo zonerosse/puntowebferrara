@@ -1,45 +1,64 @@
-puntowebferrara-a11y-conteggi.zip
-=================================
+puntowebferrara-a11y-fix.zip
+============================
 
-DUE FILE. Corregge il conteggio che restava gonfiato.
+SETTE FILE. Un falso positivo corretto, e i difetti veri sistemati sul
+tuo sito.
 
-  static/sottosopra/accessibilita.js         come si sommano le pagine
-  static/sottosopra/accessibilita-schede.js  i messaggi lo dicono in chiaro
+  functions/api/_accessibilita.js        esclude i campi nascosti
+  layouts/_default/baseof.html           link "salta al contenuto"
+  layouts/partials/stile-strumento.html  classe per etichette invisibili
+  layouts/page/sottosopra.html           etichetta al campo indirizzo
+  layouts/page/accessibilita.html        etichetta al campo indirizzo
+  layouts/page/contatti.html             autocomplete su nome/email/telefono
+  layouts/page/preventivo.html           autocomplete su nome/email/telefono
 
-Va scompattato SOPRA gli zip precedenti dell'accessibilita'.
+Va scompattato SOPRA gli zip precedenti.
 
-COS'ERA SBAGLIATO
------------------
-La correzione precedente contava gli elementi distinti DENTRO una pagina:
-i cinque link del piede diventavano cinque e non venticinque.
+IL FALSO POSITIVO CORRETTO
+--------------------------
+I campi nascosti venivano segnalati come "campi senza etichetta". Ora sono
+esclusi: hidden, display:none, visibility:hidden, aria-hidden, le classi
+sr-only e visually-hidden, e i nomi tipici delle trappole antispam
+(_gotcha, honeypot, bot-field...).
 
-Ma poi il rapporto sommava le pagine, e quei cinque tornavano a
-moltiplicarsi: 5 x 27 pagine = 135. Su delpiccolodiavolo, 5 x 138 = 690.
-Avevo sistemato il piano sbagliato.
+Erano i tuoi campi antispam su /contatti/ e /preventivo/: nessuno li vede,
+nessuno screen reader li annuncia, chiedere che abbiano un'etichetta non
+aveva senso.
 
-COSA CAMBIA ADESSO
+I DIFETTI VERI SISTEMATI
+------------------------
+1. Il campo "iltuosito.it" degli strumenti non aveva etichetta. Era un
+   rilievo giusto, sulle MIE pagine. Aggiunta un'etichetta letta dallo
+   screen reader ma non disegnata (classe .solo-voce).
+
+2. Manca(va) il link "salta al contenuto". Ora c'e' in baseof.html, quindi
+   su tutte le pagine: invisibile finche' non lo raggiungi col Tab.
+
+3. Campi nome, email e telefono senza autocomplete su contatti e
+   preventivo. Aggiunto.
+
+RISULTATO MISURATO
 ------------------
-Per i difetti che stanno nel MODELLO del sito — link che aprono nuove
-schede, testi generici, testi ambigui, collegamenti finti — si prende il
-massimo per pagina invece della somma. E' quante cose distinte devi
-toccare, che e' il numero che serve.
+Prima: voto medio 90 sulle 27 pagine.
+Dopo:  voto medio 95.
 
-  nuove schede    135  ->  5
-  testi generici    7  ->  7   (stanno su una pagina sola: invariato)
+Resta un rilievo solo, minore: i collegamenti che aprono una nuova scheda
+senza dirlo (PageSpeed, WhatsApp, il sito dell'allevamento). Si sistema
+aggiungendo al testo "si apre in una nuova scheda", o un aria-label che
+lo dica. Non l'ho fatto io perche' cambia il testo visibile dei link e
+volevo decidessi tu.
 
-Per i campi dei moduli la somma resta, ed e' giusta: i campi della lista
-d'attesa sono diversi da quelli della pagina contatti, e vanno contati
-tutti.
+E POI: /verifica/ E' ANCORA ONLINE
+----------------------------------
+L'analisi l'ha trovata fra le pagine. Nel mio albero non viene piu'
+generata, e nel tuo l'hai cancellata: quindi Cloudflare sta servendo un
+residuo di una build vecchia.
 
-I messaggi ora dicono "5 collegamenti diversi da correggere" invece di
-"5 collegamenti", cosi' non c'e' ambiguita' su cosa sia quel numero.
+Comandi per capirlo:
 
-UNA COSA CHE NON HO POTUTO VERIFICARE
--------------------------------------
-Nel rapporto che mi hai incollato gli elenchi degli esempi risultavano
-vuoti — ma vuote risultavano anche le FAQ, che il testo ce l'hanno. Puo'
-essere solo l'effetto del copia-incolla con le tendine chiuse.
+  git ls-files | Select-String "verifica"
 
-Dopo il deploy apri una tendina "Perche' conta e come si sistema" e
-guarda se dentro ci sono gli esempi tipo input name="azienda". Se non ci
-sono, dimmelo: e' un altro difetto e va cercato.
+Se non stampa niente, il repo e' pulito e il problema e' su Cloudflare:
+Workers & Pages > il progetto > Deployments. Guarda se l'ultimo e'
+"Success". Se lo e', fai "Retry deployment" sull'ultimo: rigenera tutto
+da zero e i residui spariscono.

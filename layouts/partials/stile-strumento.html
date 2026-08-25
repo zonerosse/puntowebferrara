@@ -717,4 +717,12 @@
   .strumento .a11y-barra{height:18px}
 }
 
+
+/* Etichetta letta dallo screen reader ma non disegnata: serve dove il campo
+   e' gia' chiaro a chi vede (un solo campo, con il pulsante accanto) ma non
+   a chi ascolta, che sentirebbe solo "casella di testo". Non si usa
+   display:none, che la toglierebbe anche allo screen reader. */
+.strumento .solo-voce{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
 </style>

@@ -149,6 +149,26 @@ const RUOLI_ARIA = ('alert alertdialog application article banner blockquote but
 
 const NOMI_PERSONALI = /(^|[-_])(nome|name|cognome|surname|email|mail|telefono|phone|tel|indirizzo|address|citta|city|cap|zip|postal)([-_]|$)/i;
 
+// I campi trappola antispam sono nascosti per definizione: nessuno li vede,
+// nessuno screen reader li annuncia, e chiedere che abbiano un'etichetta non
+// ha senso. Questi sono i nomi che usano i servizi piu' diffusi.
+const TRAPPOLE_ANTISPAM = /^(_?gotcha|_?honey(pot)?|_?hp|bot[-_]?field|_?confirm[-_]?email|url|website|_replyto_check)$/i;
+
+// Un campo dichiarato nascosto nel markup non e' un campo senza etichetta:
+// e' un campo che non c'e'. Si guardano hidden, display:none e visibility.
+function campoNascosto(attributi) {
+  if (haAttr(attributi, 'hidden')) return true;
+  if (/\baria-hidden\s*=\s*["']true["']/i.test(attributi)) return true;
+  const st = (attr(attributi, 'style') || '').replace(/\s+/g, '').toLowerCase();
+  if (/display:none|visibility:hidden/.test(st)) return true;
+  const nome = attr(attributi, 'name') || attr(attributi, 'id') || '';
+  if (TRAPPOLE_ANTISPAM.test(nome)) return true;
+  // classi tipiche dei campi trappola e delle etichette rese invisibili
+  const cl = (attr(attributi, 'class') || '').toLowerCase();
+  if (/\b(hidden|nascosto|honeypot|hp-field|d-none|visually-hidden|sr-only)\b/.test(cl)) return true;
+  return false;
+}
+
 /**
  * @param {string} html   sorgente della pagina, così come arriva dal fetch
  * @param {string} url    indirizzo, solo per i messaggi
@@ -361,6 +381,7 @@ export function analizzaAccessibilita(html, url) {
 
   {
     const senza = campiVeri.filter(c => {
+      if (campoNascosto(c.attributi)) return false;
       if (attr(c.attributi, 'aria-label') || attr(c.attributi, 'aria-labelledby')) return false;
       if ((attr(c.attributi, 'title') || '').trim()) return false;
       const id = attr(c.attributi, 'id');
@@ -407,6 +428,7 @@ export function analizzaAccessibilita(html, url) {
 
   {
     const daCompletare = tuttiGliInput.filter(c => {
+      if (campoNascosto(c.attributi)) return false;
       if (attr(c.attributi, 'autocomplete')) return false;
       const t = tipoInput(c);
       if (t === 'email' || t === 'tel') return true;

@@ -49,6 +49,13 @@
     .nav-cta{background:var(--primary)!important;color:var(--white)!important}
     .menu-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--primary);padding:8px;width:44px;height:44px}
 
+    /* SALTA AL CONTENUTO — invisibile finche' non riceve il focus da tastiera.
+       Senza, chi naviga col Tab riattraversa tutto il menu su ogni pagina. */
+    .salta-contenuto{position:absolute;left:-9999px;top:0;z-index:1100;
+        background:var(--primary);color:#fff;padding:12px 20px;border-radius:0 0 6px 0;
+        font-weight:600;text-decoration:none}
+    .salta-contenuto:focus{left:0}
+
     /* TENDINA STRUMENTI — il grilletto e' un button, non un link: apre un
        menu, non naviga. Si apre al clic e non al passaggio del mouse, cosi'
        funziona anche da tastiera e su telefono. Il pannello e' assoluto e
@@ -169,6 +176,7 @@
     {{ partial "schema.html" . }}
 </head>
 <body>
+    <a class="salta-contenuto" href="#main-content">Salta al contenuto</a>
     <header class="site-header">
         <div class="header-inner">
             <a href="/" class="logo" aria-label="Punto Web Ferrara - Home">
