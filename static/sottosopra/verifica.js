@@ -292,6 +292,10 @@ modulo.addEventListener('submit', async e => {
   esito.innerHTML = '';
   avanzamento.classList.add('attivo');
   avanza(0, 1, 'Cerco robots.txt e sitemap…');
+  // La barra compare sotto il modulo, che con marchio, pilastri e campi delle
+  // parole chiave sta ormai molto in basso: senza questo, chi preme Verifica
+  // resta a guardare una pagina ferma senza sapere che sta succedendo.
+  avanzamento.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   let scoperta;
   try {
@@ -376,7 +380,11 @@ modulo.addEventListener('submit', async e => {
   // Le posizioni su Google: solo se l'utente ha scritto delle parole chiave.
   // Parte anche questa in parallelo — costa soldi veri, quindi niente chiamata
   // quando il campo è vuoto.
-  const paroleScritte = (campoParole && campoParole.value || '').trim();
+  // Modalita' 2 non scelta: nessuna chiamata, nemmeno se nel campo e' rimasto
+  // del testo da un tentativo precedente. Quella chiamata costa soldi veri.
+  const modo2 = document.getElementById('modo2');
+  const vuoleposizioni = !modo2 || modo2.checked;
+  const paroleScritte = vuoleposizioni ? (campoParole && campoParole.value || '').trim() : '';
   const cittaScelta = (campoLuogo && campoLuogo.value || '').trim();
   const classifica = paroleScritte
     ? fetch('/api/posizioni?sito=' + encodeURIComponent(scoperta.sito) +
@@ -1012,33 +1020,57 @@ function bloccoPosizioni(dati) {
   const conCitta = !!dati.citta;
   const nomeCitta = conCitta ? dati.citta.split(',')[0] : '';
 
-  const casella = (dove, esito) => {
-    if (!esito)
-      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="fuori">non richiesta</span></div>';
-    if (esito.errore)
-      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="fuori" title="' + T(esito.errore) + '">non riuscita</span></div>';
-    if (esito.oltre)
-      return '<div class="casella"><span class="dove">' + T(dove) + '</span>' +
-             '<span class="fuori">oltre i primi ' + dati.profondita + '</span></div>';
+  // I numeri stanno in chiaro, le spiegazioni dentro le tendine. E' lo stesso
+  // elemento usato per i quaranta controlli, quindi non si introduce niente di
+  // nuovo: chi vuole solo il numero lo legge, chi vuole capire apre.
+  const riga = (nome, sigla, valore) =>
+    '<div class="misura"><span class="tipo">' + nome +
+    '<span class="sigla">' + sigla + '</span></span>' +
+    '<span class="valore">' + valore + '</span></div>';
 
-    const liv = fasciaPosizione(esito.posizione);
-    // Google mostra dieci risultati organici per pagina: la 33 sta in quarta,
-    // non in "seconda". Prima la riga diceva seconda per qualsiasi numero
-    // sopra il dieci, che è falso da 21 in su.
+  const misuraSerp = (esito) => {
+    const nome = 'Risultati normali', sigla = 'SERP';
+    if (!esito) return riga(nome, sigla, '<span class="fuori">non richiesta</span>');
+    if (esito.errore)
+      return riga(nome, sigla,
+        '<span class="fuori" title="' + T(esito.errore) + '">non riuscita</span>');
+    if (esito.oltre)
+      return riga(nome, sigla,
+        '<span class="fuori">oltre i primi ' + dati.profondita + '</span>');
+
     const numeroPagina = Math.ceil(esito.posizione / 10);
     const pagina = numeroPagina === 1 ? 'prima pagina' : 'pagina ' + numeroPagina;
-    return '<div class="casella ' + liv + '"><span class="dove">' + T(dove) + '</span>' +
-           '<span class="numero">' + esito.posizione + '</span>' +
-           '<span class="pagina">' + pagina + '</span></div>';
+    return riga(nome, sigla,
+      '<span class="numero ' + fasciaPosizione(esito.posizione) + '">' + esito.posizione +
+      '</span><span class="sotto">' + pagina + '</span>');
   };
+
+  const misuraMappe = (esito) => {
+    const nome = 'Riquadro mappe', sigla = 'Google Business Profile';
+    if (!esito || esito.errore || !esito.mappe)
+      return riga(nome, sigla, '<span class="fuori">non rilevato</span>');
+    const m = esito.mappe;
+    if (!m.presente) return riga(nome, sigla, '<span class="fuori">non compare</span>');
+
+    const quanti = m.totale || m.posizione;
+    if (!m.dentro)
+      return riga(nome, sigla,
+        '<span class="fuori attenzione">' + quanti + ' attivit\u00e0, tu no</span>');
+    return riga(nome, sigla,
+      '<span class="numero ' + fasciaPosizione(m.posizione) + '">' + m.posizione +
+      '</span><span class="sotto">su ' + quanti + '</span>');
+  };
+
+  const luogo = (classe, nome, esito) =>
+    '<div class="luogo ' + classe + '"><span class="dove">' + T(nome) + '</span>' +
+    misuraSerp(esito) + misuraMappe(esito) + '</div>';
+
+  const tendina = (titolo, dentro, avviso) =>
+    '<details><summary' + (avviso ? ' class="avviso"' : '') + '>' + titolo + '</summary>' +
+    '<div class="dentro">' + dentro + '</div></details>';
 
   const schede = dati.esiti.map(e => {
     const naz = e.nazionale, loc = e.locale;
-
-    // Il bordo della scheda segue il risultato migliore fra i due: e' quello
-    // che descrive davvero come sta messo il sito su quella ricerca.
     const punti = [naz, loc]
       .filter(x => x && !x.errore && !x.oltre && x.posizione)
       .map(x => x.posizione);
@@ -1046,73 +1078,85 @@ function bloccoPosizioni(dati) {
 
     let h = '<div class="scheda-parola ' + fasciaPosizione(migliore) + '">' +
             '<span class="parola">' + T(e.parola) + '</span>' +
-            '<p class="capoblocco">Fra i risultati normali</p>' +
-            '<p class="chiosa">I collegamenti blu, quelli che dipendono dal tuo sito. ' +
-            'Dieci per pagina.</p>' +
-            '<div class="caselle">' + casella('Italia', naz) +
-            (conCitta ? casella(nomeCitta, loc) : '') + '</div>';
+            '<div class="luoghi">' + luogo('italia', 'Italia', naz) +
+            (conCitta ? luogo('citta', nomeCitta, loc) : '') + '</div>';
 
-    // Il riquadro mappe: si mostra solo se in almeno una delle due ricerche
-    // compare davvero. Dove non c'e', non c'e' niente da dire.
-    const lati = conCitta ? [['Italia', naz], [nomeCitta, loc]] : [['Italia', naz]];
-    const conMappe = lati.filter(x => x[1] && x[1].mappe && x[1].mappe.presente);
-    if (conMappe.length) {
-      h += '<p class="capoblocco">Riquadro mappe \u2014 <i>un\u2019altra classifica</i></p>' +
-           '<p class="chiosa">Il blocco con la cartina, sopra i risultati normali. ' +
-           '<b>Non dipende dal sito</b>: lo decide la tua scheda Google dell\u2019attivit\u00e0 ' +
-           '\u2014 categoria, indirizzo, orari, recensioni, distanza da chi cerca. ' +
-           'Sono due gare separate, e si pu\u00f2 benissimo essere primi qui e ' +
-           'in fondo fra i risultati normali, o il contrario.</p><ul class="mappe">';
-      for (const [dove, lato] of conMappe) {
-        const m = lato.mappe;
-        const quanti = m.totale || m.posizione;
-        const attivita = quanti === 1 ? 'attivit\u00e0 mostrata' : 'attivit\u00e0 mostrate';
-        h += m.dentro
-          ? '<li class="dentro"><b>' + T(dove) + ':</b> ci sei \u2014 sei il ' + m.posizione +
-            '\u00b0 delle ' + quanti + ' ' + attivita + ' nel riquadro</li>'
-          : '<li class="fuori"><b>' + T(dove) + ':</b> il riquadro compare con ' + quanti + ' ' +
-            attivita + ', ma tu non ci sei' +
-            (m.chi.length ? '. Al posto tuo: ' + T(m.chi.join(', ')) : '') + '</li>';
-      }
-      h += '</ul>';
-    }
+    // Il caso piu' utile per un'attivita' locale: il riquadro c'e' e non ti
+    // contiene. Il titolo della tendina e' gia' l'informazione, si legge
+    // senza aprire.
+    if (conCitta && loc && loc.mappe && loc.mappe.presente && !loc.mappe.dentro)
+      h += tendina('Il riquadro mappe a ' + T(nomeCitta) + ' c\u2019\u00e8 e tu non ci sei',
+        '<p>Quel traffico sta andando alle attivit\u00e0 che compaiono nella cartina, sopra i ' +
+        'risultati normali. Su una ricerca locale \u00e8 spesso la fetta pi\u00f9 grossa.</p>' +
+        '<p>Si lavora sul <b>Google Business Profile</b>, non sul sito: categoria giusta, ' +
+        'indirizzo e orari completi, foto, recensioni.</p>', true);
 
-    if (naz && naz.primi && naz.primi.length && (!naz.posizione || naz.posizione > 3))
-      h += '<p class="davanti"><b>In cima in Italia:</b></p><ul class="concorrenti">' +
-           naz.primi.map(v => '<li>' + T(v.dominio) + '</li>').join('') + '</ul>';
-
+    // La lettura del confronto fra nazionale e locale, chiusa.
+    let lettura = '';
     if (conCitta && naz && loc && !naz.errore && !loc.errore) {
       const n = naz.oltre ? null : naz.posizione;
       const l = loc.oltre ? null : loc.posizione;
       if (n && l && l < n - 2)
-        h += '<p class="scarto">Sul territorio vai molto meglio che sulla ricerca nazionale: ' +
-             'su questa parola la tua forza e\u2019 il locale, e va difesa.</p>';
+        lettura = '<p>Sul territorio vai molto meglio che sulla ricerca nazionale: la tua forza ' +
+                  'su questa parola \u00e8 il locale, e va difesa.</p>';
       else if (!n && l)
-        h += '<p class="scarto">In Italia non compari, a ' + T(nomeCitta) + ' s\u00ec. ' +
-             'La partita nazionale su questa ricerca non e\u2019 la tua: punta sul territorio.</p>';
+        lettura = '<p>In Italia non compari, a ' + T(nomeCitta) + ' s\u00ec. La partita ' +
+                  'nazionale su questa ricerca non \u00e8 la tua: punta sul territorio.</p>';
       else if (n && !l)
-        h += '<p class="scarto attenzione">Compari in Italia ma non a ' + T(nomeCitta) + '. ' +
-             'Su questa ricerca il locale te lo stanno portando via.</p>';
+        lettura = '<p>Compari in Italia ma non a ' + T(nomeCitta) + ': su questa ricerca il ' +
+                  'locale te lo stanno portando via.</p>';
       else if (n && l && n < l - 2)
-        h += '<p class="scarto attenzione">Vai meglio a livello nazionale che a ' + T(nomeCitta) +
-             ': strano per un\u2019attivit\u00e0 locale, e vale la pena capire perche\u0301.</p>';
+        lettura = '<p>Vai meglio a livello nazionale che a ' + T(nomeCitta) + ': strano per ' +
+                  'un\u2019attivit\u00e0 locale, e vale la pena capire perch\u00e9.</p>';
     }
+    if (lettura) h += tendina('Cosa dicono questi numeri', lettura);
+
+    // Chi c'e' in cima, distinto per gara: i domini vengono dai risultati
+    // organici, i nomi dal riquadro mappe. Sono due liste diverse e finora
+    // erano presentate come una sola, senza dire da dove venissero.
+    const liste = [];
+    const elenco = (capo, voci, classe) =>
+      '<p class="capolista">' + capo + '</p><ul class="concorrenti' + classe + '">' +
+      voci.map(v => '<li>' + T(v) + '</li>').join('') + '</ul>';
+
+    if (naz && naz.primi && naz.primi.length)
+      liste.push(elenco('<b>Risultati normali (SERP)</b> \u2014 Italia',
+        naz.primi.map(v => v.dominio), ''));
+
+    for (const [dove, lato] of (conCitta ? [['Italia', naz], [nomeCitta, loc]]
+                                         : [['Italia', naz]])) {
+      if (lato && lato.mappe && lato.mappe.presente && lato.mappe.chi && lato.mappe.chi.length)
+        liste.push(elenco('<b>Riquadro mappe (Google Business Profile)</b> \u2014 ' + T(dove),
+          lato.mappe.chi, ' nomi'));
+    }
+
+    if (liste.length) h += tendina('Chi c\u2019\u00e8 in cima', liste.join(''));
+
     return h + '</div>';
   }).join('');
 
-  // I messaggi del fornitore, quando qualcosa fallisce, valgono piu\u2019 di
-  // mille supposizioni: si mostrano in chiaro. Uno per tipo, non uno per riga.
   const guasti = [];
   for (const e of dati.esiti)
     for (const lato of [e.nazionale, e.locale])
       if (lato && lato.errore && guasti.indexOf(lato.errore) === -1) guasti.push(lato.errore);
 
-  let nota = 'Le posizioni qui sopra sono quelle dei risultati organici. Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
+  const spiegone = tendina('Perch\u00e9 due numeri per ogni luogo',
+    '<p><b>Risultati normali (SERP)</b> \u2014 i collegamenti blu, dieci per pagina. ' +
+    'Dipendono dal <b>sito</b>: contenuti, struttura, velocit\u00e0, collegamenti che riceve. ' +
+    '\u00c8 quello che misura il resto di questo rapporto.</p>' +
+    '<p><b>Riquadro mappe (Google Business Profile)</b> \u2014 il blocco con la cartina sopra i ' +
+    'risultati. Non dipende dal sito: lo decide la scheda dell\u2019attivit\u00e0 su Google Maps, ' +
+    'cio\u00e8 categoria, indirizzo, orari, recensioni e distanza da chi sta cercando.</p>' +
+    '<p>Sono due gare separate, con regole diverse: si pu\u00f2 essere primi nelle mappe e in ' +
+    'quarta pagina fra i risultati normali. Se manchi nelle mappe si lavora sul Business ' +
+    'Profile; se sei in fondo fra i risultati normali si lavora sul sito.</p>');
+
+  let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
              ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
              'Le posizioni cambiano di giorno in giorno e da persona a persona: ' +
              'vale l\u2019ordine di grandezza, non il numero esatto.';
   if (dati.cittaFallita)
-    nota += ' La ricerca locale non e\u2019 andata a buon fine: il fornitore non ha ' +
+    nota += ' La ricerca locale non \u00e8 andata a buon fine: il fornitore non ha ' +
             'riconosciuto la citt\u00e0, resta valida solo quella nazionale.';
 
   const spiegazione = guasti.length
@@ -1121,5 +1165,5 @@ function bloccoPosizioni(dati) {
     : '';
 
   return '<h2>Posizioni su Google</h2><div class="posizioni">' + schede + '</div>' +
-         spiegazione + '<p class="posizioni-nota">' + nota + '</p>';
+         spiegone + spiegazione + '<p class="posizioni-nota">' + nota + '</p>';
 }

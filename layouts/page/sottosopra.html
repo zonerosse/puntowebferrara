@@ -65,14 +65,46 @@
 .strumento .nota{font-size:.82rem;color:var(--grafite);margin-top:.75rem}
 
 /* --- campi per le parole chiave --- */
-.strumento .parole-chiave{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--linea)}
-.strumento .parole-chiave .apertura-facoltativa{display:flex;align-items:baseline;flex-wrap:wrap;
-    gap:.5rem;font-size:.9rem;line-height:1.55;color:var(--inchiostro);
-    background:var(--carta);border:1px solid var(--linea);border-left:3px solid var(--verde);
-    border-radius:3px;padding:.7rem .85rem;margin:0 0 1.1rem}
-.strumento .parole-chiave .bollino{flex:0 0 auto;font-family:var(--mono);font-size:.62rem;
-    letter-spacing:.11em;text-transform:uppercase;color:#fff;background:var(--verde);
-    border-radius:3px;padding:.22rem .5rem}
+/* --- la scelta fra le due modalita' ---------------------------------------
+   E' la prima decisione della pagina e finora era una riga grigia: riquadri
+   grandi, colorati, e i campi delle parole chiave che compaiono solo con la
+   seconda. Il bordo arancione prosegue nei campi per legarli alla scelta. */
+.strumento .scelta{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:.9rem;margin:1.3rem 0 0}
+.strumento .modulo input[type=radio]{position:absolute;opacity:0;pointer-events:none}
+.strumento .opzione{display:block;background:var(--foglio);border:2px solid var(--linea);
+    border-radius:6px;padding:1.15rem 1.2rem 1.2rem;cursor:pointer;position:relative;
+    transition:border-color .12s, background .12s, transform .08s}
+.strumento .opzione:hover{transform:translateY(-1px)}
+.strumento .opzione .capo{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;
+    font-weight:800;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:.45rem;line-height:1.15}
+.strumento .opzione .numero{flex:0 0 auto;display:inline-flex;align-items:center;
+    justify-content:center;width:38px;height:38px;border-radius:50%;font-family:var(--mono);
+    font-size:1.15rem;font-weight:700;color:#fff;background:var(--grafite);
+    transition:background .12s}
+.strumento .opzione p{font-size:.86rem;color:var(--grafite);line-height:1.5;margin:0;
+    padding-left:48px}
+.strumento .opzione .sottocapo{font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;
+    color:var(--inchiostro);margin:0 0 .4rem;line-height:1.4}
+.strumento .opzione .sottocapo b{font-weight:700}
+.strumento .opzione .spunta{position:absolute;top:.9rem;right:1rem;font-size:1.1rem;
+    color:transparent}
+.strumento .opzione .nuovo{display:inline-block;font-family:var(--mono);font-size:.58rem;
+    letter-spacing:.11em;text-transform:uppercase;color:#11201d;background:#f59e0b;
+    border-radius:3px;padding:.18rem .42rem}
+
+.strumento #modo1:checked + .opzione{border-color:var(--verde);background:#eef6f3}
+.strumento #modo1:checked + .opzione .numero{background:var(--verde)}
+.strumento #modo1:checked + .opzione .capo{color:var(--verde)}
+.strumento #modo1:checked + .opzione .spunta{color:var(--verde)}
+.strumento #modo2:checked + .opzione{border-color:#f59e0b;background:#fffaf0}
+.strumento #modo2:checked + .opzione .numero{background:#0d4275}
+.strumento #modo2:checked + .opzione .capo{color:#0d4275}
+.strumento #modo2:checked + .opzione .spunta{color:#b3730a}
+
+.strumento .parole-chiave{display:none;margin-top:1.2rem;padding-top:1.1rem;
+    border-top:2px solid #f59e0b}
+.strumento #modo2:checked ~ .parole-chiave{display:block}
 .strumento .parole-chiave label{display:block;font-family:var(--mono);font-size:.68rem;
     letter-spacing:.09em;text-transform:uppercase;color:var(--grafite);margin:0 0 .35rem}
 .strumento .parole-chiave label em{font-style:normal;text-transform:none;letter-spacing:0}
@@ -81,90 +113,115 @@
     margin-bottom:.9rem}
 .strumento .parole-chiave select{width:100%;font-size:.92rem;padding:.7rem .8rem;
     border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
-    margin-bottom:.9rem;color:var(--inchiostro)}
-.strumento .parole-chiave .aiuto{font-size:.79rem;color:var(--grafite);margin:-.55rem 0 .95rem;
-    line-height:1.5}
-.strumento .parole-chiave .minuta{font-size:.78rem;color:var(--grafite);margin:0}
+    color:var(--inchiostro)}
+@media (max-width:420px){
+  .strumento .opzione .capo{font-size:1.02rem}
+  .strumento .opzione p{padding-left:0;margin-top:.2rem}
+}
 
 /* --- blocco delle posizioni nel rapporto ---------------------------------
    Il colore qui non è decorazione: dice a che altezza sei. Verde primi tre,
    blu prima pagina, arancione seconda pagina, grigio fuori. Chi guarda capisce
    la situazione prima di leggere i numeri. */
-.strumento .posizioni{margin:1.5rem 0;display:grid;gap:.9rem}
+/* --- Posizioni su Google -------------------------------------------------
+   In chiaro solo i numeri; le spiegazioni stanno nelle tendine, lo stesso
+   elemento dei quaranta controlli. Rosa l'Italia, verde la citta'. */
+.strumento .posizioni{margin:1.3rem 0 1rem;display:grid;gap:1rem}
 
 .strumento .scheda-parola{background:var(--foglio);border:1px solid var(--linea);
-    border-left:4px solid var(--linea);border-radius:4px;padding:1rem 1.1rem 1.05rem}
+    border-left:4px solid var(--linea);border-radius:4px;padding:1rem 1.1rem}
 .strumento .scheda-parola.alto{border-left-color:#0d6b58}
 .strumento .scheda-parola.medio{border-left-color:#0d4275}
 .strumento .scheda-parola.basso{border-left-color:#f59e0b}
-
 .strumento .scheda-parola .parola{display:block;font-weight:700;font-size:1.02rem;
     letter-spacing:-.01em;margin:0 0 .8rem;word-break:break-word}
 
-.strumento .caselle{display:flex;gap:.7rem;flex-wrap:wrap}
-.strumento .casella{flex:1 1 140px;min-width:0;border:1px solid var(--linea);border-radius:4px;
-    background:var(--carta);padding:.75rem .6rem;text-align:center}
-.strumento .casella .dove{display:block;font-family:var(--mono);font-size:.62rem;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);margin-bottom:.35rem}
-.strumento .casella .numero{display:block;font-family:var(--mono);font-weight:700;
-    font-size:2.1rem;line-height:1;color:var(--grafite)}
-.strumento .casella .fuori{display:block;font-size:.82rem;font-weight:600;line-height:1.35;
-    color:var(--grafite);padding:.35rem 0}
-.strumento .casella .pagina{display:block;font-size:.68rem;color:var(--grafite);margin-top:.3rem}
+.strumento .luoghi{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.7rem}
+.strumento .luogo{border-radius:4px;padding:.7rem .8rem}
+.strumento .luogo.italia{background:#fdf2f5;border:1px solid #e7c3ce;border-left:3px solid #b3124f}
+.strumento .luogo.citta{background:#eef6f3;border:1px solid #bcd9d0;border-left:3px solid #0d6b58}
+.strumento .luogo .dove{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:700;margin:0 0 .5rem}
+.strumento .luogo.italia .dove{color:#b3124f}
+.strumento .luogo.citta .dove{color:#0d6b58}
 
-.strumento .casella.alto{background:rgba(13,107,88,.07);border-color:rgba(13,107,88,.35)}
-.strumento .casella.alto .numero{color:#0d6b58}
-.strumento .casella.medio{background:rgba(13,66,117,.06);border-color:rgba(13,66,117,.3)}
-.strumento .casella.medio .numero{color:#0d4275}
-.strumento .casella.basso{background:rgba(245,158,11,.09);border-color:rgba(245,158,11,.45)}
-.strumento .casella.basso .numero{color:#b3730a}
-
-.strumento .scheda-parola .davanti{font-size:.8rem;color:var(--grafite);margin:.85rem 0 0}
-.strumento .scheda-parola .davanti b{color:var(--inchiostro);font-weight:600}
-.strumento .scheda-parola .concorrenti{display:flex;flex-wrap:wrap;gap:.35rem;margin:.4rem 0 0;
-    padding:0;list-style:none}
-.strumento .scheda-parola .concorrenti li{font-family:var(--mono);font-size:.72rem;
-    background:var(--carta);border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;
+.strumento .misura{display:flex;align-items:center;justify-content:space-between;gap:.7rem;
+    padding:.4rem 0}
+.strumento .misura + .misura{border-top:1px solid rgba(0,0,0,.06)}
+.strumento .misura .tipo{font-size:.82rem;color:var(--inchiostro);line-height:1.25}
+.strumento .misura .sigla{display:block;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.06em;color:var(--grafite);margin-top:.1rem}
+.strumento .misura .valore{flex:0 0 auto;text-align:right;white-space:nowrap}
+.strumento .misura .numero{font-family:var(--mono);font-weight:700;font-size:1.2rem;
     color:var(--grafite)}
+.strumento .misura .numero.alto{color:#0d6b58}
+.strumento .misura .numero.medio{color:#0d4275}
+.strumento .misura .numero.basso{color:#b3730a}
+.strumento .misura .sotto{font-size:.7rem;color:var(--grafite);margin-left:.35rem}
+.strumento .misura .fuori{font-size:.76rem;color:var(--grafite)}
+.strumento .misura .fuori.attenzione{color:#b3730a;font-weight:600}
 
-.strumento .scheda-parola .capoblocco{font-family:var(--mono);font-size:.66rem;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--inchiostro);font-weight:700;
-    margin:1rem 0 .1rem}
-.strumento .scheda-parola .capoblocco:first-of-type{margin-top:.2rem}
-.strumento .scheda-parola .capoblocco i{font-style:normal;color:var(--grafite);font-weight:400;
-    text-transform:none;letter-spacing:0}
-.strumento .scheda-parola .chiosa{font-size:.76rem;color:var(--grafite);line-height:1.5;
-    margin:.15rem 0 .55rem;max-width:70ch}
-.strumento .scheda-parola .chiosa b{color:var(--inchiostro);font-weight:600}
-.strumento .scheda-parola .mappe{list-style:none;margin:.4rem 0 0;padding:0;display:grid;
-    gap:.3rem}
-.strumento .scheda-parola .mappe li{font-size:.82rem;padding:.4rem .6rem;border-radius:3px;
-    border-left:3px solid var(--linea);background:var(--carta)}
-.strumento .scheda-parola .mappe li.dentro{border-left-color:#0d6b58;
-    background:rgba(13,107,88,.07)}
-.strumento .scheda-parola .mappe li.fuori{border-left-color:#f59e0b;
-    background:rgba(245,158,11,.09)}
+.strumento .scheda-parola details,
+.strumento .posizioni + details{margin:.7rem 0 0;border-top:1px solid var(--linea);
+    padding-top:.55rem}
+.strumento .scheda-parola details + details{margin-top:.35rem}
+.strumento .scheda-parola summary,
+.strumento .posizioni + details > summary{cursor:pointer;font-size:.79rem;color:var(--verde);
+    font-weight:600;list-style:none;display:flex;align-items:center;gap:.4rem}
+.strumento .scheda-parola summary::-webkit-details-marker,
+.strumento .posizioni + details > summary::-webkit-details-marker{display:none}
+.strumento .scheda-parola summary::before,
+.strumento .posizioni + details > summary::before{content:"\25B8";font-size:.7rem;
+    transition:transform .12s}
+.strumento .scheda-parola details[open] summary::before,
+.strumento .posizioni + details[open] > summary::before{transform:rotate(90deg)}
+.strumento .scheda-parola summary.avviso{color:#b3730a}
+.strumento .dentro{font-size:.83rem;line-height:1.6;color:var(--grafite);padding:.55rem 0 .2rem;
+    max-width:88ch}
+.strumento .dentro p{margin:0 0 .5rem}
+.strumento .dentro p:last-child{margin:0}
+.strumento .dentro b{color:var(--inchiostro);font-weight:600}
 
-.strumento .scheda-parola .scarto{font-size:.85rem;line-height:1.5;margin:.85rem 0 0;
-    padding:.6rem .75rem;border-radius:3px;background:rgba(13,66,117,.05);
-    border-left:3px solid #0d4275;color:var(--inchiostro)}
-.strumento .scheda-parola .scarto.attenzione{background:rgba(245,158,11,.09);
-    border-left-color:#f59e0b}
+.strumento .dentro .capolista{font-size:.76rem;color:var(--grafite);margin:.75rem 0 .3rem;
+    line-height:1.4}
+.strumento .dentro .capolista:first-child{margin-top:0}
+.strumento .dentro .capolista b{color:var(--inchiostro);font-weight:700}
+.strumento .concorrenti{display:flex;flex-wrap:wrap;gap:.35rem;margin:0;padding:0;list-style:none}
+/* i nomi delle attivita' non sono indirizzi: carattere normale, non macchina */
+.strumento .concorrenti.nomi li{font-family:inherit;font-size:.78rem}
+.strumento .concorrenti li{font-family:var(--mono);font-size:.72rem;background:var(--carta);
+    border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;color:var(--grafite)}
 
-.strumento .posizioni-nota{font-size:.8rem;color:var(--grafite);margin:.9rem 0 0;line-height:1.55}
+.strumento .posizioni-nota{font-size:.78rem;color:var(--grafite);margin:1rem 0 0;line-height:1.5}
 .strumento .posizioni-nota.guasto{color:#b3730a}
 
-@media (max-width:480px){
-  .strumento .casella{flex:1 1 100%}
-  .strumento .casella .numero{font-size:1.8rem}
+@media (max-width:520px){
+  .strumento .misura{flex-direction:column;align-items:flex-start;gap:.15rem}
+  .strumento .misura .valore{text-align:left}
 }
 .strumento code{font-family:var(--mono);font-size:.92em;background:var(--carta);padding:.1rem .3rem;border-radius:3px}
-.strumento .avanzamento{margin-top:1.25rem;display:none}
+/* --- attesa ---------------------------------------------------------------
+   Era un filo da 3 pixel con una riga grigia: durante un minuto di attesa non
+   dava alcun segno di vita. Ora e' un riquadro con la barra spessa, il testo
+   in nero e una striscia che scorre per dire che qualcosa si sta muovendo
+   anche mentre la percentuale sta ferma. */
+.strumento .avanzamento{display:none;margin-top:1.25rem;background:var(--foglio);
+    border:1px solid var(--linea);border-left:4px solid var(--verde);border-radius:4px;
+    padding:1.1rem 1.2rem;scroll-margin-top:calc(64px + 1.5rem)}
 .strumento .avanzamento.attivo{display:block}
-.strumento .barra{height:3px;background:var(--linea);border-radius:2px;overflow:hidden}
-.strumento .barra i{display:block;height:100%;width:0;background:var(--verde);transition:width .25s}
-.strumento .passo{font-family:var(--mono);font-size:.78rem;color:var(--grafite);margin-top:.5rem;
-         white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strumento .barra{position:relative;height:14px;background:var(--carta);border-radius:7px;
+    overflow:hidden;border:1px solid var(--linea)}
+.strumento .barra i{display:block;height:100%;width:0;border-radius:7px;background:var(--verde);
+    transition:width .3s ease}
+/* la striscia obliqua che scorre: dice "sto lavorando" anche a barra ferma */
+.strumento .barra i::after{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(115deg,rgba(255,255,255,.35) 25%,transparent 25%,
+    transparent 50%,rgba(255,255,255,.35) 50%,rgba(255,255,255,.35) 75%,transparent 75%);
+    background-size:22px 22px;animation:scorre 1s linear infinite}
+@keyframes scorre{from{background-position:0 0}to{background-position:22px 0}}
+@media (prefers-reduced-motion:reduce){.strumento .barra i::after{animation:none}}
+.strumento .passo{font-size:.95rem;font-weight:600;color:var(--inchiostro);margin-top:.75rem;
+    line-height:1.45}
 .strumento .errore{background:#fdf1f3;border:1px solid #edccd3;border-left:3px solid var(--rosso);
           padding:1rem 1.15rem;margin-top:1.25rem;font-size:.94rem;border-radius:3px}
 .strumento .esito{margin-top:2.5rem;display:none;scroll-margin-top:calc(64px + 1rem)}
@@ -471,19 +528,30 @@
                inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
         <button type="submit" id="avvia">Verifica il sito</button>
       </div>
+      <div class="scelta">
+        <input type="radio" name="modo" id="modo1" checked>
+        <label class="opzione" for="modo1">
+          <span class="spunta">&#10003;</span>
+          <span class="capo"><span class="numero">1</span> Solo analisi del sito</span>
+          <p>40 controlli tecnici, velocità misurata, quali AI possono leggerti.</p>
+        </label>
+
+        <input type="radio" name="modo" id="modo2">
+        <label class="opzione" for="modo2">
+          <span class="spunta">&#10003;</span>
+          <span class="capo"><span class="numero">2</span> Analisi + posizionamento
+            <span class="nuovo">nuovo</span></span>
+          <p class="sottocapo">Risultati di Google (SERP) <b>e</b> Google Business Profile</p>
+          <p>Per le tue parole chiave, in Italia e nella tua città: a che posizione sei fra i
+          risultati normali, e se compari nel riquadro delle mappe.</p>
+        </label>
+      </div>
+
       <div class="parole-chiave">
-        <p class="apertura-facoltativa">
-          <span class="bollino">Facoltativo</span>
-          Vuoi solo l'analisi del sito? <b>Lascia i campi qui sotto vuoti e premi Verifica.</b>
-          Compilali solo se vuoi sapere anche a che posizione sei su Google.
-        </p>
-        <label for="parole">Parole chiave <em>(massimo due)</em></label>
+        <label for="parole">Parole chiave <em>(massimo due, separate da virgola)</em></label>
         <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
                autocomplete="off" spellcheck="false">
-        <p class="aiuto">Due ricerche al massimo, <b>separate da una virgola</b>. Scrivile come le
-        scriverebbe un cliente su Google, non come le chiami tu: <code>idraulico ferrara</code>,
-        non <code>servizi idraulici professionali</code>.</p>
-        <label for="luogo">Confronta anche con una città <em>(la ricerca su tutta Italia si fa sempre)</em></label>
+        <label for="luogo">Confronta con una città <em>(l'Italia si fa sempre)</em></label>
         <select id="luogo">
           <option value="">Solo Italia</option>
           <option value="Ancona,Marche,Italy">Ancona</option>
@@ -520,15 +588,10 @@
           <option value="Verona,Veneto,Italy">Verona</option>
           <option value="Vicenza,Veneto,Italy">Vicenza</option>
         </select>
-        <p class="minuta">Se le compili, il rapporto dirà a che posizione sei su Google per quelle
-        ricerche, chi ti sta davanti e se compari nel riquadro delle mappe. Con una città scelta
-        vedi le due posizioni affiancate: la differenza fra nazionale e locale è spesso la cosa più
-        utile di tutta l'analisi.</p>
       </div>
 
-      <p class="nota">Basta il dominio: <code>iltuosito.it</code>. L'analisi legge tutte le pagine della sitemap, fino a 200,
-      e misura la velocità della home. Dura da venti secondi a un minuto. Non salvo nulla: quando
-      chiudi la pagina, il risultato sparisce.</p>
+      <p class="nota">Basta il dominio. Legge fino a 200 pagine dalla sitemap, dura meno di un
+      minuto, non salva nulla.</p>
     </form>
 
   <div class="avanzamento" id="avanzamento">
