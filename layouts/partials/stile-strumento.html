@@ -586,4 +586,63 @@
   .strumento .chiusura h2, .strumento .chiusura p, .strumento .chiusura li{color:#000}
 }
 @media (prefers-reduced-motion:reduce){.strumento *{transition:none !important}}
+
+/* --- Cosa controlla / dove puoi finire ------------------------------------
+   Due blocchi con lo stesso impianto, uno per pagina: barra spessa a
+   segmenti, legenda sotto. Sulla pagina dell'analisi i segmenti sono i nove
+   gruppi di controlli, larghi quanto pesano; su quella del posizionamento
+   sono le fasce di posizione, e li' il colore ha il significato che ha gia'
+   nel rapporto: verde primi tre, blu prima pagina, arancione seconda,
+   grigio oltre. */
+.strumento .blocco-scala{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--linea)}
+.strumento .blocco-scala .capo{display:flex;align-items:baseline;justify-content:space-between;
+    gap:1rem;margin-bottom:.6rem;flex-wrap:wrap}
+.strumento .blocco-scala .capo .titolo{font-family:var(--mono);font-size:.68rem;
+    letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--grafite)}
+.strumento .blocco-scala .capo .totale{font-family:var(--mono);font-size:.68rem;color:var(--grafite)}
+.strumento .blocco-scala .capo .totale b{color:var(--inchiostro)}
+
+.strumento .barra-scala{display:flex;height:26px;border-radius:3px;overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.strumento .barra-scala span{display:flex;align-items:center;justify-content:center;height:100%;
+    font-family:var(--mono);font-size:.7rem;font-weight:700;color:#fff;white-space:nowrap;
+    border-right:1px solid rgba(255,255,255,.7)}
+.strumento .barra-scala span:last-child{border-right:0}
+/* Sotto il 9% il numero non ci sta: si nasconde invece di traboccare. */
+.strumento .barra-scala span.stretto{font-size:0}
+
+.strumento .voci-scala{list-style:none;margin:.85rem 0 0;padding:0;display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:0 1.6rem}
+.strumento .voci-scala li{display:flex;align-items:flex-start;gap:.6rem;padding:.4rem 0;
+    border-bottom:1px solid var(--linea);font-size:.87rem}
+.strumento .voci-scala .tacca{width:14px;height:14px;flex:0 0 auto;border-radius:2px;
+    margin-top:.2rem;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.strumento .voci-scala .testo{flex:1 1 auto;line-height:1.35}
+.strumento .voci-scala .nome{flex:1 1 auto}
+.strumento .voci-scala .peso{font-family:var(--mono);font-size:.78rem;font-weight:700;
+    color:var(--grafite)}
+.strumento .voci-scala .dove{display:block;font-family:var(--mono);font-size:.72rem;
+    font-weight:700;letter-spacing:.04em;color:var(--inchiostro)}
+.strumento .voci-scala .che{display:block;font-size:.82rem;color:var(--grafite);margin-top:.05rem}
+
+.strumento .coda-scala{font-size:.83rem;color:var(--grafite);margin-top:.9rem;max-width:74ch}
+.strumento .coda-scala b{color:var(--inchiostro)}
+
+@media (max-width:520px){
+  .strumento .barra-scala{height:22px}
+  .strumento .barra-scala span{font-size:0}
+}
+
+/* Nove tinte distinte per i gruppi di controllo. Servono a essere
+   distinguibili dentro 26 pixel: tre verdi vicini non lo erano. */
+.strumento .g1{background:#0d4275} .strumento .g2{background:#0d6b58}
+.strumento .g3{background:#6b3fa0} .strumento .g4{background:#2b86c5}
+.strumento .g5{background:#0f9b8e} .strumento .g6{background:#a32338}
+.strumento .g7{background:#b5570d} .strumento .g8{background:#d99100}
+.strumento .g9{background:#5b6b66}
+
+/* Fasce di posizione: gli stessi colori del rapporto. */
+.strumento .f-podio{background:#0d6b58} .strumento .f-prima{background:#0d4275}
+.strumento .f-seconda{background:#f59e0b} .strumento .f-oltre{background:#8d9a95}
+
 </style>

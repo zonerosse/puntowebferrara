@@ -1,28 +1,35 @@
-puntowebferrara-solo-analisi.zip
-================================
+puntowebferrara-blocchi-grafici.zip
+===================================
 
-QUATTRO FILE. Toglie il posizionamento dalla pagina dell'analisi.
+TRE FILE. Aggiunge il blocco grafico sotto il modulo, su tutte e due le
+pagine degli strumenti.
 
-  hugo.toml                      descrizione della prima voce del menu:
-                                 non promette piu' le posizioni
-  layouts/page/sottosopra.html   via la scelta fra le due modalita', i campi
-                                 parole chiave e Turnstile
-  static/sottosopra/verifica.js  via la chiamata a /api/posizioni
-  content/sottosopra/_index.md   description aggiornata
+  layouts/partials/stile-strumento.html  gli stili dei due blocchi
+  layouts/page/sottosopra.html           barra dei nove gruppi di controlli
+  layouts/page/posizionamento.html       scala delle posizioni
 
-NON contiene la pagina del posizionamento ne' il menu a tendina: quelli
-sono gia' online, li ho visti funzionare.
+COSA CAMBIA
+-----------
+/sottosopra/                 sotto il modulo: barra spessa a nove segmenti,
+                             uno per gruppo di controlli, largo quanto pesa.
+                             Sotto, la legenda con nome e punti.
 
-VERIFICA CHE SIA ENTRATO
-------------------------
-Dopo aver scompattato:
+/sottosopra/posizionamento/  sotto il modulo: la scala delle posizioni.
+                             1-3 podio (verde), 4-10 prima pagina (blu),
+                             11-20 seconda (arancione), 21-50 oltre (grigio).
+                             Sono gli stessi colori che il rapporto usa gia'.
 
-  Select-String -Path .\layouts\page\sottosopra.html -Pattern "modo2"
+COSA NON CAMBIA
+---------------
+Il rapporto delle posizioni. Italia rosa, citta' verde, SERP e Google
+Business Profile su righe separate per ogni parola chiave: tutto identico.
+Quel codice e' stato spostato in posizioni-blocco.js senza toccarne una riga.
 
-NON deve stampare niente. Se stampa, il file non e' arrivato.
-
-DOPO IL DEPLOY, SVUOTA LA CACHE
--------------------------------
-Cloudflare tiene le pagine in cache. Se dopo il push vedi ancora la vecchia
-versione, non e' detto che sia un errore: apri la pagina con CTRL+F5, o in
-finestra anonima.
+DA GUARDARE DOPO IL DEPLOY
+--------------------------
+1. Le due pagine, sotto il modulo: la barra deve essere spessa e i colori
+   distinguibili.
+2. Restringi la finestra sotto i 520px: la barra si assottiglia e i numeri
+   dentro i segmenti spariscono. E' voluto, non ci starebbero.
+3. Fai un'analisi vera con le parole chiave sulla pagina posizionamento:
+   il rapporto deve uscire come sempre.
