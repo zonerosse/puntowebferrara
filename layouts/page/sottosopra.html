@@ -366,10 +366,24 @@
 .strumento #leggibile h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
 .strumento #leggibile p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
 .strumento #leggibile strong{color:var(--inchiostro)}
-.strumento #leggibile ul.bot{display:flex;flex-wrap:wrap;gap:.35rem;list-style:none;padding:0;
-    margin:.6rem 0 1rem}
-.strumento #leggibile ul.bot li{font-family:var(--mono);font-size:.72rem;background:var(--carta);
-    border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;color:var(--grafite)}
+/* I due gruppi di crawler, ognuno col suo colore: arancione chi ti fa sparire
+   dalle risposte se lo blocchi, blu chi raccoglie e basta. Il colore dice
+   quale blocco e' pericoloso, non decora. */
+.strumento .gruppo-bot{border-radius:4px;padding:1rem 1.15rem;margin:.8rem 0 1.4rem;max-width:88ch}
+.strumento .gruppo-bot.risposte{background:#fffaf0;border:1px solid #f2ddb4;
+    border-left:4px solid #f59e0b}
+.strumento .gruppo-bot.raccolta{background:#f2f6fa;border:1px solid #c9d8e6;
+    border-left:4px solid #0d4275}
+.strumento .gruppo-bot .capo{font-size:.94rem;font-weight:700;margin:0 0 .55rem;line-height:1.3}
+.strumento .gruppo-bot.risposte .capo{color:#8a5808}
+.strumento .gruppo-bot.raccolta .capo{color:#0d4275}
+.strumento .gruppo-bot p{font-size:.86rem;line-height:1.65;color:#3d4b47;margin:0;max-width:none}
+.strumento .gruppo-bot p + p{margin-top:.6rem}
+.strumento .gruppo-bot code{font-family:var(--mono);font-size:.8em;border-radius:3px;
+    padding:.1em .35em;white-space:nowrap}
+.strumento .gruppo-bot.risposte code{background:#fdf0d8;border:1px solid #f0d3a0;color:#7a4d06}
+.strumento .gruppo-bot.raccolta code{background:#e6eef6;border:1px solid #c2d5e6;color:#0d4275}
+.strumento .gruppo-bot .morale{font-weight:600;color:var(--inchiostro)}
 .strumento #perche h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
 .strumento #perche h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
 .strumento #perche p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
@@ -605,18 +619,26 @@
 
     <h3>Quali crawler delle AI vengono controllati</h3>
     <p>Quattordici, letti nel robots.txt del tuo sito. Non sono stime: o la direttiva c'è o non c'è,
-    e puoi verificarlo aprendo il file con i tuoi occhi.</p>
-    <ul class="bot">
-      <li>GPTBot</li><li>OAI-SearchBot</li><li>ChatGPT-User</li><li>ClaudeBot</li>
-      <li>Claude-User</li><li>PerplexityBot</li><li>Google-Extended</li><li>GoogleOther</li>
-      <li>Applebot-Extended</li><li>Amazonbot</li><li>Bingbot</li><li>CCBot</li>
-      <li>Bytespider</li><li>cohere-ai</li>
-    </ul>
-    <p>Hanno mestieri diversi, e questo cambia cosa perdi bloccandoli. <strong>GPTBot</strong>
-    raccoglie pagine per l'addestramento; <strong>OAI-SearchBot</strong> e
-    <strong>ChatGPT-User</strong> leggono il tuo sito mentre qualcuno sta facendo una domanda.
-    Bloccare il primo è una scelta legittima sui propri contenuti; bloccare gli altri due significa
-    sparire dalle risposte, ed è quasi sempre involontario.</p>
+    e puoi verificarlo aprendo il file con i tuoi occhi. Hanno mestieri diversi, e la differenza
+    cambia cosa perdi bloccandoli.</p>
+
+    <div class="gruppo-bot risposte">
+      <p class="capo">Sei leggono le pagine mentre qualcuno sta facendo una domanda</p>
+      <p><code>OAI-SearchBot</code> e <code>ChatGPT-User</code> per ChatGPT, <code>Claude-User</code>
+      per Claude, <code>PerplexityBot</code>, <code>Bingbot</code> per Bing e Copilot,
+      <code>GoogleOther</code>.</p>
+      <p class="morale">Bloccare questi significa sparire dalle risposte: nel momento in cui serve,
+      il modello non riesce ad aprire le tue pagine. È quasi sempre involontario.</p>
+    </div>
+
+    <div class="gruppo-bot raccolta">
+      <p class="capo">Gli altri otto raccolgono pagine, anche per l'addestramento</p>
+      <p><code>GPTBot</code>, <code>ClaudeBot</code>, <code>Google-Extended</code> per Gemini e gli
+      AI Overviews, <code>Applebot-Extended</code> per Apple Intelligence, <code>Amazonbot</code>,
+      <code>CCBot</code>, <code>Bytespider</code>, <code>cohere-ai</code>.</p>
+      <p class="morale">Qui la scelta è legittima: c'è chi non vuole i propri contenuti dentro un
+      modello. Sappi solo che stai decidendo, non subendo.</p>
+    </div>
 
     <h3>Cosa succede se il robots.txt li blocca</h3>
     <p>Niente di visibile: il sito funziona, Google continua a indicizzarlo, le visite non calano da
