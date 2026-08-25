@@ -102,6 +102,12 @@
 .strumento .parole-chiave select{width:100%;font-size:.92rem;padding:.7rem .8rem;
     border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
     color:var(--inchiostro)}
+/* --- verifica anti-abuso: compare solo con la modalita' 2, perche' e'
+   l'unica che interroga un servizio a pagamento ------------------------- */
+.strumento .blocco-turnstile{margin-top:1.2rem;padding-top:1rem;
+    border-top:1px dashed var(--linea)}
+.strumento .riga-spiega{font-size:.82rem;color:var(--grafite);
+    margin-top:.55rem;max-width:52ch}
 @media (max-width:420px){
   .strumento .opzione .capo{font-size:1.02rem}
   .strumento .opzione p{padding-left:0;margin-top:.2rem}
@@ -661,6 +667,18 @@
           <option value="Verona,Veneto,Italy">Verona</option>
           <option value="Vicenza,Veneto,Italy">Vicenza</option>
         </select>
+
+        <div class="blocco-turnstile">
+          <div class="cf-turnstile"
+               data-sitekey="INCOLLA-QUI-LA-SITEKEY"
+               data-language="it"
+               data-appearance="always"
+               data-refresh-expired="auto"></div>
+          <p class="riga-spiega">
+            Serve solo per il controllo delle posizioni: interroga un servizio a pagamento
+            e senza questa verifica chiunque potrebbe consumarlo con uno script.
+          </p>
+        </div>
       </div>
 
       <p class="nota">Basta il dominio. Legge fino a 200 pagine dalla sitemap, dura meno di un
@@ -940,5 +958,6 @@
 }
 </script>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script type="module" src="/sottosopra/verifica.js"></script>
 {{ end }}

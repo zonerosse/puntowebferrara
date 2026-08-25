@@ -36,12 +36,65 @@
 // di rate limiting di Cloudflare sul percorso /api/posizioni. Senza quella
 // regola, chiunque con un ciclo può prosciugare il credito in una notte.
 
+// --- verifica anti-abuso -------------------------------------------------
+// Questo endpoint spende soldi veri a ogni chiamata. Turnstile e' l'unica cosa
+// fra il credito DataForSEO e chiunque abbia un ciclo for.
+//
+// I token durano 300 secondi e valgono una volta sola: un token riusato torna
+// con l'errore timeout-or-duplicate, ed e' giusto cosi'.
+//
+// SI CHIUDE, NON SI APRE. Se manca TURNSTILE_SECRET l'endpoint rifiuta invece
+// di lasciar passare. E' l'opposto della regola usata per DFS_LOGIN: la',
+// senza chiavi, non si spende niente; qui, senza chiavi, si spende tutto.
+const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+async function personaVera(context) {
+  const segreto = context.env.TURNSTILE_SECRET;
+  if (!segreto) return { ok: false, motivo: 'Verifica anti-abuso non configurata.' };
+
+  const token = context.request.headers.get('X-Turnstile-Token');
+  if (!token) return { ok: false, motivo: 'Verifica anti-abuso mancante.' };
+
+  const corpo = new FormData();
+  corpo.append('secret', segreto);
+  corpo.append('response', token);
+  corpo.append('remoteip', context.request.headers.get('CF-Connecting-IP') || '');
+  corpo.append('idempotency_key', crypto.randomUUID());
+
+  try {
+    const r = await fetch(SITEVERIFY, { method: 'POST', body: corpo });
+    const esito = await r.json();
+    if (esito.success) return { ok: true };
+    const codici = esito['error-codes'] || [];
+    return {
+      ok: false,
+      motivo: codici.includes('timeout-or-duplicate')
+        ? 'Verifica scaduta: ricarica la pagina e riprova.'
+        : 'Verifica anti-abuso non superata.'
+    };
+  } catch {
+    // Se Cloudflare non risponde si rifiuta lo stesso: meglio un'analisi
+    // mancata che il credito prosciugato.
+    return { ok: false, motivo: 'Verifica anti-abuso non raggiungibile.' };
+  }
+}
+
 const MAX_PAROLE = 2;
 const PROFONDITA = 50;        // quanti risultati guardare: si fattura ogni 10, quindi 50 = cinque unità
 const NAZIONE = 'Italy';
 const LINGUA = 'it';
 
 export async function onRequest(context) {
+  // Primissima cosa, prima di leggere i parametri e prima di qualunque
+  // chiamata a DataForSEO: se non e' una persona, non si spende.
+  const varco = await personaVera(context);
+  if (!varco.ok) {
+    return new Response(
+      JSON.stringify({ disponibile: false, motivo: varco.motivo }),
+      { status: 403, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
   try {
     return await posizioni(context);
   } catch (err) {

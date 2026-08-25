@@ -1,0 +1,37 @@
+puntowebferrara-turnstile.zip
+=============================
+
+CONTIENE SOLO TRE FILE MODIFICATI. Niente altro.
+Si scompatta sulla radice del repo, sovrascrivendo:
+
+  layouts/page/sottosopra.html      widget + CSS + script Turnstile
+  static/sottosopra/verifica.js     invia il token in intestazione
+  functions/api/posizioni.js        rifiuta chi non ha superato la verifica
+
+PRIMA DI SCOMPATTARE
+--------------------
+Fai un commit di quello che hai adesso, cosi' un "git diff" ti mostra
+esattamente cosa e' cambiato e niente puo' rientrare di nascosto.
+
+DUE COSE DA FARE A MANO, SENZA LE QUALI NON FUNZIONA
+----------------------------------------------------
+1. In layouts/page/sottosopra.html sostituisci INCOLLA-QUI-LA-SITEKEY
+   con la sitekey del widget (pannello Cloudflare > Turnstile > Managed,
+   dominio puntowebferrara.com).
+
+2. In Pages > il progetto > Settings > Environment variables aggiungi:
+      TURNSTILE_SECRET = <la secret key dello stesso widget>
+   La secret non va MAI nell'HTML.
+
+Senza la variabile l'endpoint rifiuta tutti: e' voluto. Meglio le posizioni
+che non partono che il credito prosciugato.
+
+IL COLLAUDO CHE CONTA
+---------------------
+  curl -i "https://puntowebferrara.com/api/posizioni?sito=esempio.it&parole=test"
+
+Deve rispondere 403. Se risponde 200 con dei dati, la verifica non sta
+girando e stai ancora pagando per chiunque.
+
+Poi un'analisi vera dalla pagina, con la modalita' 2 e due parole chiave:
+deve funzionare come prima.

@@ -397,10 +397,17 @@ modulo.addEventListener('submit', async e => {
   const vuoleposizioni = !modo2 || modo2.checked;
   const paroleScritte = vuoleposizioni ? (campoParole && campoParole.value || '').trim() : '';
   const cittaScelta = (campoLuogo && campoLuogo.value || '').trim();
+  // Il token della verifica anti-abuso. Lo crea da solo il widget di Turnstile
+  // dentro il modulo, in un input nascosto. Viaggia in un'intestazione e non
+  // nell'indirizzo: i token nelle query string finiscono nei log e nei referrer.
+  const campoToken = document.querySelector('input[name="cf-turnstile-response"]');
+  const token = campoToken ? campoToken.value : '';
+
   const classifica = paroleScritte
     ? fetch('/api/posizioni?sito=' + encodeURIComponent(scoperta.sito) +
             '&parole=' + encodeURIComponent(paroleScritte) +
-            (cittaScelta ? '&citta=' + encodeURIComponent(cittaScelta) : ''))
+            (cittaScelta ? '&citta=' + encodeURIComponent(cittaScelta) : ''),
+            { headers: { 'X-Turnstile-Token': token } })
         .then(r => r.text()).then(t => JSON.parse(t))
         .catch(() => ({ disponibile: false, motivo: 'Controllo posizioni non riuscito.' }))
     : Promise.resolve(null);
