@@ -1,4 +1,4 @@
-// accessibilita-schede.js — cosa dire all'utente per ogni controllo.
+// accessibilita-schede.js — cosa dire all'utente per ognuno dei 35 controlli.
 //
 // Il motore (_accessibilita.js, lato server) misura e basta: sa contare le
 // immagini senza alt, non sa spiegare perché contano. Le spiegazioni stanno
@@ -129,15 +129,6 @@ export const SCHEDE = {
     perche: 'Ogni area cliccabile è un collegamento, e va nominata come tale.',
     comeSi: 'Aggiungi alt a ogni <area>.',
     messaggio: (n, t, r, l) => frase(n, 'area senza alt', 'aree senza alt') + suPagine(r, l),
-  },
-  a11ySvg: {
-    gravita: 'basso', wcag: '1.1.1 A',
-    titolo: 'Icone SVG né nominate né marcate come decorative',
-    perche: 'Un SVG senza nome e senza aria-hidden lascia lo screen reader in dubbio: a ' +
-      'volte lo annuncia come "immagine" e basta, interrompendo la lettura.',
-    comeSi: 'Se è informativo, aggiungi <title> dentro l\'SVG o aria-label. Se è decorativo, ' +
-      'aria-hidden="true". La scelta va fatta, non lasciata aperta.',
-    messaggio: (n, t, r, l) => frase(n, 'SVG', 'SVG') + ' su ' + t + suPagine(r, l),
   },
   a11ySottotitoli: {
     gravita: 'alto', wcag: '1.2.2 A',

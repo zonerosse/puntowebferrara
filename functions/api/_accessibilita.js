@@ -1,9 +1,17 @@
-// _accessibilita.js — 36 controlli WCAG 2.1 AA su una singola pagina.
+// _accessibilita.js — 35 controlli WCAG 2.1 AA su una singola pagina.
 //
 // Stessa forma di _analisi.js: nessuna dipendenza, espressioni regolari
 // volutamente semplici, perché il piano gratuito di Cloudflare concede 10
 // millisecondi di CPU per invocazione. Niente ricorsione, niente quantificatori
 // annidati, tetti espliciti su ogni ciclo.
+//
+// UN CONTROLLO TOLTO. C'era una voce sugli SVG senza nome accessibile: e'
+// stata rimossa perche' diceva la stessa cosa di "collegamento senza testo" e
+// "pulsante senza testo accessibile". Un'icona senza nome e' un problema solo
+// quando e' l'unico contenuto di un elemento cliccabile — caso che quei due
+// controlli coprono gia'. Segnalarlo tre volte gonfiava il conteggio senza
+// aggiungere niente, e su un sito con le icone nel menu e nel piede voleva
+// dire bocciare il 98% degli SVG della pagina.
 //
 // QUELLO CHE QUI NON SI PUÒ FARE. Tre controlli WCAG richiedono i colori
 // calcolati dal browser — contrasto del testo, indicatore di focus, testo su
@@ -95,6 +103,20 @@ function vuoti(html, nome, tetto) {
 // Il cliente legge questi messaggi: valgono la riga in piu'.
 function frase(n, singolare, plurale) {
   return n + ' ' + (n === 1 ? singolare : plurale);
+}
+
+// Due indirizzi che portano allo stesso posto ma scritti diversamente — uno
+// con i + e uno con i %20, uno con la barra finale e uno senza — non sono due
+// destinazioni. Senza questa normalizzazione un link WhatsApp ripetuto nel
+// piede veniva contato come "stesso testo, due destinazioni".
+function normalizzaHref(h) {
+  let v = String(h || '').trim();
+  if (!v) return '';
+  v = v.split('#')[0];
+  try { v = decodeURIComponent(v.replace(/\+/g, ' ')); } catch { /* resta com'e' */ }
+  v = v.replace(/\s+/g, ' ').trim();
+  if (v.length > 1) v = v.replace(/\/$/, '');
+  return v.toLowerCase();
 }
 
 function frammento(s, max) {
@@ -283,31 +305,6 @@ export function analizzaAccessibilita(html, url) {
     if (senza.length) segnala('medio', frase(senza.length, 'area della mappa immagine senza alternativa', 'aree della mappa immagine senza alternativa'));
   }
 
-  {
-    // Un'icona dentro un collegamento o un bottone che ha gia' il suo testo non
-    // va nominata: il nome ce l'ha il contenitore, e ripeterlo farebbe
-    // annunciare la voce due volte. Si raccolgono quelle icone e si escludono.
-    const dentroTesto = Object.create(null);
-    for (const nome of ['a', 'button']) {
-      for (const c of elementi(corpo, nome, 400)) {
-        if (!testoPulito(c.dentro)) continue;
-        for (const t of (c.dentro.match(/<svg\b[^>]*>/gi) || [])) {
-          dentroTesto[t.replace(/\s+/g, ' ')] = true;
-        }
-      }
-    }
-
-    const svg = elementi(corpo, 'svg', 300);
-    const muti = svg.filter(s => {
-      if (/\baria-hidden\s*=\s*["']true["']/i.test(s.attributi)) return false;
-      if (attr(s.attributi, 'aria-label') || attr(s.attributi, 'aria-labelledby')) return false;
-      if (/<title[^>]*>\s*\S/i.test(s.dentro)) return false;
-      if (dentroTesto[('<svg' + s.attributi + '>').replace(/\s+/g, ' ')]) return false;
-      return true;
-    });
-    quotaSu('a11ySvg', muti.length, svg.length, muti.map(() => 'svg senza title né aria-label'));
-    if (muti.length) segnala('basso', frase(muti.length, 'elemento SVG senza nome accessibile', 'elementi SVG senza nome accessibile') + ' né marcatura decorativa');
-  }
 
   {
     // I video muti restano fuori: i sottotitoli servono a rendere accessibile
@@ -471,7 +468,7 @@ export function analizzaAccessibilita(html, url) {
     for (const a of link) {
       const n = nomeLink(a).toLowerCase();
       if (!n || n.length < 3) continue;
-      (mappa[n] = mappa[n] || []).push(attr(a.attributi, 'href'));
+      (mappa[n] = mappa[n] || []).push(normalizzaHref(attr(a.attributi, 'href')));
     }
     const ambigui = Object.keys(mappa).filter(n => {
       const d = mappa[n];
@@ -483,12 +480,26 @@ export function analizzaAccessibilita(html, url) {
   }
 
   {
+    // Si contano i TESTI distinti, non le occorrenze. Cinque link nel piede di
+    // pagina su un sito di 138 pagine fanno 690 occorrenze e cinque cose da
+    // sistemare: il numero grande non aggiunge niente e schiaccia i rilievi
+    // che contano davvero.
     const nuoveSchede = link.filter(a => /\btarget\s*=\s*["']_blank["']/i.test(a.attributi));
-    const senzaAvviso = nuoveSchede.filter(a =>
-      !/nuova (scheda|finestra)|new (tab|window)|si apre in/i.test(nomeLink(a) + ' ' + (attr(a.attributi, 'title') || '')));
-    quotaSu('a11yNuovaScheda', senzaAvviso.length, nuoveSchede.length,
-      senzaAvviso.map(a => '"' + frammento(nomeLink(a), 40) + '"'));
-    if (senzaAvviso.length) segnala('basso', frase(senzaAvviso.length, 'collegamento apre', 'collegamenti aprono') + ' una nuova scheda senza avvisare');
+    const distintiTot = Object.create(null), distintiRotti = Object.create(null);
+    for (const a of nuoveSchede) {
+      const n = nomeLink(a).toLowerCase() || normalizzaHref(attr(a.attributi, 'href'));
+      distintiTot[n] = true;
+      if (!/nuova (scheda|finestra)|new (tab|window)|si apre in/i.test(
+            nomeLink(a) + ' ' + (attr(a.attributi, 'title') || ''))) {
+        distintiRotti[n] = frammento(nomeLink(a), 40);
+      }
+    }
+    const nomiRotti = Object.keys(distintiRotti);
+    quotaSu('a11yNuovaScheda', nomiRotti.length, Object.keys(distintiTot).length,
+      nomiRotti.map(n => '"' + distintiRotti[n] + '"'));
+    if (nomiRotti.length) segnala('basso',
+      frase(nomiRotti.length, 'collegamento diverso apre', 'collegamenti diversi aprono') +
+      ' una nuova scheda senza avvisare');
   }
 
   {

@@ -1,6 +1,6 @@
 ---
 title: "Accessibilità"
-titleSeo: "Verifica accessibilità sito web | Gratis, 36 controlli"
+titleSeo: "Verifica accessibilità sito web | Gratis, 35 controlli"
 description: "Controlla gratis se il tuo sito rispetta le WCAG 2.1 AA: testi alternativi, moduli, struttura, navigazione da tastiera. Ogni problema con il suo rimedio."
 type: "page"
 layout: "accessibilita"

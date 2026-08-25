@@ -58,7 +58,7 @@ enableRobotsTXT = false
     url = '/sottosopra/accessibilita/'
     weight = 3
     [menus.main.params]
-      riga = '36 controlli WCAG 2.1 AA, ognuno con il suo rimedio.'
+      riga = '35 controlli WCAG 2.1 AA, ognuno con il suo rimedio.'
   [[menus.main]]
     name = 'Estensione per Chrome'
     parent = 'strumenti'

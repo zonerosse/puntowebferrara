@@ -60,7 +60,7 @@ export function bloccoAccessibilita(dati) {
         vociLegenda(conta) +
       '</ul>' +
       '<p class="a11y-quante">' + quantePagine(dati) + ' · ' +
-        (dati.controlliMisurati || 0) + ' controlli applicabili su 36</p>' +
+        (dati.controlliMisurati || 0) + ' controlli applicabili su 35</p>' +
     '</div>' +
   '</div>';
 
@@ -75,7 +75,7 @@ export function bloccoAccessibilita(dati) {
   /* --- i problemi, dal piu' grave -------------------------------------- */
 
   if (!totali) {
-    h += '<p class="a11y-pulito">Nessuno dei 36 controlli ha trovato difetti sulle pagine ' +
+    h += '<p class="a11y-pulito">Nessuno dei 35 controlli ha trovato difetti sulle pagine ' +
          'lette. Restano da verificare a mano le cose che un programma non vede: vedi in fondo.</p>';
   } else {
     const ordinati = dati.problemi.slice().sort((a, b) =>

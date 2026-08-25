@@ -1,38 +1,44 @@
-puntowebferrara-a11y-correzioni.zip
-===================================
+puntowebferrara-a11y-rumore.zip
+===============================
 
-CINQUE FILE. Sostituiscono quelli dello zip precedente.
-Va messo SOPRA puntowebferrara-accessibilita.zip, non al posto suo:
-gli altri quattro file di quello zip restano validi.
+SEI FILE. Correggono il rumore trovato sull'analisi di delpiccolodiavolo.it.
 
-  functions/api/_accessibilita.js            corretti TRE falsi positivi
-  static/sottosopra/accessibilita.js         tetto 100 -> 200, conteggio pagine
-  static/sottosopra/accessibilita-blocco.js  scrive "lette N su M"
-  layouts/page/accessibilita.html            testo aggiornato
-  content/sottosopra/accessibilita.md        FAQ aggiornata
+  functions/api/_accessibilita.js            tre correzioni al motore
+  static/sottosopra/accessibilita-schede.js  tolta la scheda del controllo
+                                             rimosso
+  static/sottosopra/accessibilita-blocco.js  conteggio 36 -> 35
+  layouts/page/accessibilita.html            barra dei gruppi ricalcolata
+  content/sottosopra/accessibilita.md        title aggiornato
+  hugo.toml                                  voce di menu aggiornata
 
-I TRE FALSI POSITIVI CORRETTI
------------------------------
-1. <label>Nome <input name="n"></label>
-   Un campo avvolto dentro la sua etichetta ma senza attributo id veniva
-   segnalato come "campo senza etichetta". E' HTML perfettamente corretto.
+Va scompattato SOPRA gli zip precedenti dell'accessibilita'.
 
-2. <a href="/x"><svg></svg> Torna alla home</a>
-   Un'icona dentro un collegamento che ha gia' il suo testo veniva segnalata
-   come "SVG senza nome accessibile". Il nome ce l'ha il contenitore, e
-   ripeterlo farebbe annunciare la voce due volte.
+COSA CAMBIA NEI RILIEVI
+-----------------------
+1. INDIRIZZI NORMALIZZATI
+   Due link con lo stesso testo e lo stesso indirizzo scritto in modi
+   diversi (+ contro %20, con o senza barra finale) non sono piu' contati
+   come "due destinazioni". Erano i tuoi link WhatsApp nel piede.
 
-3. <video autoplay muted>
-   Un video muto veniva segnalato come "senza sottotitoli". I sottotitoli
-   servono a rendere accessibile l'audio: un video di sfondo senza audio
-   non ha niente da sottotitolare.
+2. IL CONTROLLO SUGLI SVG E' STATO TOLTO
+   Segnalava 639 icone su 653 — il 98%. Un controllo che boccia quasi tutto
+   quello che guarda non aiuta a distinguere niente. E il caso che contava
+   davvero — un elemento cliccabile fatto di sola icona — era gia' coperto
+   da "collegamento senza testo" e "pulsante senza testo accessibile".
+   I controlli passano da 36 a 35.
 
-Tutti e tre erano difetti miei, non dei siti analizzati.
+3. NUOVE SCHEDE CONTATE PER TESTO DISTINTO
+   Cinque link nel piede di pagina su 138 pagine facevano 803 segnalazioni.
+   Ora sono 5: cinque cose da sistemare, non ottocento.
 
-DOPO IL DEPLOY, RIFAI L'ANALISI DI delpiccolodiavolo.it
--------------------------------------------------------
-Il punteggio salira', e il rapporto dira' "lette 138 pagine, tutte quelle
-trovate" invece di fermarsi a 100 senza dirlo.
+I RILIEVI VERI RESTANO TUTTI
+----------------------------
+Provato su una pagina costruita con i difetti veri: campi senza etichetta,
+link fatti di sola icona, video con audio, testi di link ambigui. Li trova
+ancora tutti. Le correzioni non hanno spento niente.
 
-Poi mandami i primi cinque rilievi che restano: quelli li guardiamo uno
-per uno per capire se sono veri.
+DOPO IL DEPLOY
+--------------
+Ctrl+F5, poi rifai l'analisi di delpiccolodiavolo.it. Il punteggio salira'
+e in cima resteranno le cose che contano davvero: i 18 campi senza etichetta
+sulle pagine della lista d'attesa.
