@@ -3,19 +3,8 @@
 {{ partial "stile-strumento.html" . }}
 
 <style>
-  /* Le poche regole che esistono solo qui: il modulo snello di questa pagina,
-     senza la scelta fra le due modalita' e senza i riquadri dell'analisi. */
-  .strumento .modulo-veloce .campo{margin-bottom:1rem}
-  .strumento .modulo-veloce label{display:block;font-family:var(--mono);font-size:.68rem;
-    text-transform:uppercase;letter-spacing:.1em;color:var(--grafite);font-weight:700;
-    margin-bottom:.35rem}
-  .strumento .modulo-veloce label em{font-style:normal;text-transform:none;letter-spacing:0;
-    font-weight:400}
-  .strumento .modulo-veloce input[type=text]{width:100%;flex:none}
-  .strumento .modulo-veloce select{width:100%;font-size:.92rem;padding:.7rem .8rem;
-    border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
-    color:var(--inchiostro)}
-  .strumento .modulo-veloce .avvia{width:100%;margin-top:.4rem}
+  /* Le poche regole che esistono solo qui. Gli stili dei passi numerati
+     stanno nella partial condivisa: li usano tutti e tre gli strumenti. */
   .strumento .blocco-turnstile{margin-top:1.2rem;padding-top:1rem;
     border-top:1px dashed var(--linea)}
   .strumento .riga-spiega{font-size:.82rem;color:var(--grafite);margin-top:.55rem;max-width:52ch}
@@ -45,22 +34,31 @@
     interroga soltanto Google.</p>
 
     <form class="modulo modulo-veloce" id="modulo">
-      <div class="campo">
-        <label for="indirizzo">Il tuo sito</label>
-        <input type="text" id="indirizzo" placeholder="iltuosito.it" required
-               inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+      <div class="passo-campo">
+        <span class="passo-num" aria-hidden="true">1</span>
+        <div>
+          <label for="indirizzo">Il tuo sito</label>
+          <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+                 inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+        </div>
       </div>
 
-      <div class="campo">
-        <label for="parole">Parole chiave <em>(massimo due, separate da virgola)</em></label>
-        <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
-               autocomplete="off" spellcheck="false" required>
+      <div class="passo-campo">
+        <span class="passo-num" aria-hidden="true">2</span>
+        <div>
+          <label for="parole">Parole chiave <em>Massimo due, separate da virgola</em></label>
+          <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
+                 autocomplete="off" spellcheck="false" required>
+        </div>
       </div>
 
-      <div class="campo">
-        <label for="luogo">Confronta con una città <em>(l'Italia si fa sempre)</em></label>
-        <select id="luogo">
-          <option value="">Solo Italia</option>
+      <div class="passo-campo">
+        <span class="passo-num" aria-hidden="true">3</span>
+        <div>
+          <label for="luogo">Da quale città vuoi simulare la ricerca locale
+            <em>Facoltativo — la ricerca nazionale si fa comunque</em></label>
+          <select id="luogo">
+          <option value="">Nessuna — solo ricerca nazionale</option>
           <option value="Ancona,Marche,Italy">Ancona</option>
           <option value="Bari,Apulia,Italy">Bari</option>
           <option value="Bergamo,Lombardy,Italy">Bergamo</option>
@@ -90,9 +88,11 @@
           <option value="Verona,Veneto,Italy">Verona</option>
           <option value="Vicenza,Veneto,Italy">Vicenza</option>
         </select>
+        </div>
+      </div>
       </div>
 
-      <div class="blocco-turnstile">
+      <div class="blocco-turnstile passo-fine">
         <div class="cf-turnstile"
              data-sitekey="0x4AAAAAAEb9CtiPvt0ETHIP"
              data-language="it"
@@ -102,8 +102,8 @@
         senza il controllo chiunque potrebbe consumarlo con uno script.</p>
       </div>
 
-      <button type="submit" id="avvia" class="avvia">Vedi le posizioni</button>
-      <p class="nota">Basta il dominio. Di solito risponde in meno di dieci secondi.</p>
+      <div class="passo-fine"><button type="submit" id="avvia" class="avvia">Vedi le posizioni</button>
+      <p class="nota">Basta il dominio. Di solito risponde in meno di dieci secondi.</p></div>
 
       <div class="blocco-scala">
         <div class="capo">

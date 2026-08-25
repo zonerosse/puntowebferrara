@@ -725,4 +725,41 @@
 .strumento .solo-voce{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
+
+/* --- i passi del modulo -------------------------------------------------
+   Il modulo e' una sequenza: senza dominio non c'e' parola chiave, senza
+   parola chiave non c'e' ricerca. I numeri lo rendono visibile invece di
+   lasciarlo intuire, e l'ambra e' quella del marchio.
+
+   Le etichette erano a .68rem in maiuscoletto grigio: dimensione e
+   trattamento da didascalia, applicati a una cosa che va letta per capire
+   cosa scrivere. Ora sono a .98rem, tonde e a colore pieno. */
+.strumento .passo-campo{display:grid;grid-template-columns:30px 1fr;gap:.7rem;
+    align-items:start;margin-bottom:1rem}
+.strumento .passo-num{width:30px;height:30px;border-radius:50%;background:#f59e0b;
+    color:#3a2600;font-family:var(--mono);font-weight:700;font-size:.9rem;
+    display:flex;align-items:center;justify-content:center;margin-top:.1rem;flex:0 0 auto}
+.strumento .passo-campo > div{min-width:0}
+.strumento .passo-campo label{display:block;font-size:.98rem;font-weight:700;
+    color:var(--inchiostro);margin-bottom:.35rem;line-height:1.3;
+    font-family:inherit;text-transform:none;letter-spacing:0}
+.strumento .passo-campo label em{display:block;font-style:normal;font-weight:400;
+    font-size:.82rem;color:var(--grafite);margin-top:.05rem;text-transform:none;
+    letter-spacing:0}
+.strumento .passo-campo input[type=text],
+.strumento .passo-campo select{width:100%;flex:none;margin-bottom:0}
+.strumento .passo-fine{margin-left:calc(30px + .7rem)}
+@media (max-width:420px){
+  .strumento .passo-campo{grid-template-columns:26px 1fr;gap:.55rem}
+  .strumento .passo-num{width:26px;height:26px;font-size:.82rem}
+  .strumento .passo-fine{margin-left:calc(26px + .55rem)}
+}
+
+
+/* Etichetta visibile per i moduli a un campo solo: numerarli come una
+   sequenza sarebbe assurdo, ma l'etichetta va vista lo stesso. Prima era
+   nascosta agli occhi e letta solo dallo screen reader. */
+.strumento .etichetta-campo{display:block;font-size:.98rem;font-weight:700;
+    color:var(--inchiostro);margin-bottom:.45rem;line-height:1.3}
+
 </style>

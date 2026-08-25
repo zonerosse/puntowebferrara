@@ -1,61 +1,44 @@
-puntowebferrara-COMPLETO.zip
-============================
+puntowebferrara-moduli.zip
+==========================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-26 file. Contiene TUTTO il lavoro di stanotte per questo sito, in una
-volta sola: se hai gia' messo qualche zip precedente, questo lo
-sovrascrive con la versione definitiva. Se te ne sei perso qualcuno,
-questo lo recupera.
+QUATTRO FILE. Solo l'aspetto dei moduli dei tre strumenti.
+Va scompattato SOPRA puntowebferrara-COMPLETO.zip.
 
-PRIMA DI SCOMPATTARE
---------------------
-Se non l'hai gia' fatto, la vecchia pagina verifica va tolta dal repo:
+  layouts/partials/stile-strumento.html   gli stili, condivisi
+  layouts/page/posizionamento.html        modulo a tre passi numerati
+  layouts/page/sottosopra.html            etichetta visibile
+  layouts/page/accessibilita.html         etichetta visibile
 
-  git rm content/verifica.md layouts/page/verifica.html
-  git rm -r static/verifica/
+COSA CAMBIA
+-----------
+LE ETICHETTE SI LEGGONO.
+Erano a .68rem (circa 11 pixel) in maiuscoletto spaziato grigio: un
+trattamento da didascalia applicato a una cosa che devi leggere per
+capire cosa scrivere. Ora sono a .98rem, tonde, a colore pieno.
+Il contrasto passa da 5,6:1 a 16,8:1.
 
-Se rispondono "did not match any files", vuol dire che l'hai gia' fatto.
+IL POSIZIONAMENTO HA TRE PASSI NUMERATI.
+Il modulo e' una sequenza — senza dominio non c'e' parola chiave, senza
+parola chiave non c'e' ricerca — e i numeri in ambra la rendono visibile.
+L'ambra e' quella del marchio. Turnstile e pulsante rientrano sotto la
+colonna dei numeri, cosi' la sequenza non si spezza.
 
-DOPO AVER SCOMPATTATO, CONTROLLA CHE SIA ENTRATO TUTTO
--------------------------------------------------------
-  Select-String -Path .\hugo.toml -Pattern "Strumenti"
-  Select-String -Path .\layouts\_default\baseof.html -Pattern "ha-tendina"
-  Select-String -Path .\layouts\page\sottosopra.html -Pattern "modo2"
+IL TERZO CAMPO ORA SI CAPISCE.
+Prima:  "Confronta con una città (l'Italia si fa sempre)"
+Dopo:   "Da quale città vuoi simulare la ricerca locale"
+        "Facoltativo — la ricerca nazionale si fa comunque"
+E la prima voce del menu non e' piu' "Solo Italia" ma
+"Nessuna — solo ricerca nazionale".
 
-Le prime due DEVONO stampare righe. La terza NON deve stampare niente.
-Poi git status deve elencare 26 file (piu' le cancellazioni).
+GLI ALTRI DUE STRUMENTI hanno un campo solo: numerarlo sarebbe assurdo.
+Prendono pero' la stessa etichetta leggibile — e li' ho corretto un
+difetto vero: l'etichetta c'era ma era NASCOSTA agli occhi, letta solo
+dallo screen reader. Ora si vede.
 
-COSA C'E' DENTRO
-----------------
-MENU
-  hugo.toml, baseof.html
-  La voce "Sottosopra" diventa "Strumenti" con quattro sottovoci.
-  Aggiunto anche il link "salta al contenuto" su tutte le pagine.
-
-I TRE STRUMENTI, UNO PER COMPITO
-  /sottosopra/                 solo analisi tecnica. Niente parole chiave,
-                               niente Turnstile, nessun costo.
-  /sottosopra/posizionamento/  solo posizioni su Google. Turnstile qui.
-  /sottosopra/accessibilita/   35 controlli WCAG 2.1 AA. NUOVA.
-
-  Il codice del rapporto posizioni sta in un file solo
-  (posizioni-blocco.js) usato da chi serve: nessuna copia doppia.
-
-ACCESSIBILITA' DEL TUO SITO
-  Etichette ai campi degli strumenti, autocomplete su contatti e
-  preventivo, avviso "si apre in una nuova scheda" su tutti i link
-  esterni, link di salto al contenuto.
-
-  Misurato ricompilando: da 90 a 100 di media su 27 pagine.
-
-DA PROVARE DOPO IL DEPLOY
--------------------------
-1. Menu "Strumenti": quattro voci, e provalo anche col solo Tab.
-2. /sottosopra/ analisi completa: il rapporto NON deve piu' contenere
-   il blocco delle posizioni.
-3. /sottosopra/posizionamento/: due analisi di fila devono funzionare
-   entrambe (il token Turnstile si rigenera dopo ogni uso).
-4. /sottosopra/accessibilita/ su un sito qualsiasi.
-5. Premere un pulsante senza fare la verifica Turnstile: deve avvisare,
-   non fallire.
+VERIFICATO
+----------
+Build Hugo, sintassi di tutti i file JS, gli id cercati dagli script
+esistono nelle pagine, accessibilita' del sito ancora 100/100 su 27
+pagine, e le prove del motore tutte come attese.
