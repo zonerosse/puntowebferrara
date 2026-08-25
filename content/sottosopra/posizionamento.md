@@ -1,6 +1,6 @@
 ---
 title: "Posizionamento"
-titleSeo: "A che posizione sei su Google | Verifica gratis"
+titleSeo: "In che posizione sei su Google | Verifica gratis"
 description: "Scopri a che numero compare il tuo sito su Google per le tue parole chiave, in Italia e nella tua città. Gratis, senza registrazione, in pochi secondi."
 type: "page"
 layout: "posizionamento"
