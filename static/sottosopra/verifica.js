@@ -1,10 +1,9 @@
 // verifica.js — orchestrazione dell'analisi e resa del report.
 import { CONTROLLI } from './controlli.js';
-// Il disegno del rapporto sulle posizioni sta in un file suo: lo usa anche
-// la pagina /sottosopra/posizionamento/, che mostra lo stesso blocco senza
-// fare l'analisi del sito.
-import { bloccoPosizioni, T, fasciaPosizione, normalizza, abilitaStampaTendine }
-  from './posizioni-blocco.js';
+// Le funzioni comuni alle pagine degli strumenti stanno in un file a parte:
+// il disegno del rapporto sulle posizioni serve solo a
+// /sottosopra/posizionamento/, ma T() e normalizza() servono a tutte e due.
+import { T, normalizza, abilitaStampaTendine } from './posizioni-blocco.js';
 
 // --- semaforo -------------------------------------------------------------
 // Quattro livelli invece di due: un controllo superato sul 70% delle pagine
@@ -254,18 +253,8 @@ const GRAVITA = [
 
 const $ = id => document.getElementById(id);
 const modulo = $('modulo'), campo = $('indirizzo'), bottone = $('avvia');
-const campoParole = $('parole'), campoLuogo = $('luogo');
-
-// I campi delle parole chiave compaiono solo scegliendo la modalita' 2.
-const modo1 = $('modo1'), modo2 = $('modo2');
-function aggiornaModo() {
-  if (!modo2) return;
-  modulo.classList.toggle('con-parole', modo2.checked);
-  if (modo2.checked && campoParole) campoParole.focus();
-}
-if (modo1) modo1.addEventListener('change', aggiornaModo);
-if (modo2) modo2.addEventListener('change', aggiornaModo);
-aggiornaModo();
+// Le posizioni su Google non stanno piu' qui: hanno una pagina loro,
+// /sottosopra/posizionamento/. Questa fa una cosa sola, l'analisi del sito.
 const avanzamento = $('avanzamento'), riempimento = $('riempimento'), passo = $('passo');
 const esito = $('esito'), zonaErrore = $('zonaErrore');
 
@@ -381,30 +370,6 @@ modulo.addEventListener('submit', async e => {
     .then(r => r.text()).then(t => JSON.parse(t))
     .catch(() => ({ disponibile: false, motivo: 'Misura delle prestazioni non riuscita.' }));
 
-  // Le posizioni su Google: solo se l'utente ha scritto delle parole chiave.
-  // Parte anche questa in parallelo — costa soldi veri, quindi niente chiamata
-  // quando il campo è vuoto.
-  // Modalita' 2 non scelta: nessuna chiamata, nemmeno se nel campo e' rimasto
-  // del testo da un tentativo precedente. Quella chiamata costa soldi veri.
-  const modo2 = document.getElementById('modo2');
-  const vuoleposizioni = !modo2 || modo2.checked;
-  const paroleScritte = vuoleposizioni ? (campoParole && campoParole.value || '').trim() : '';
-  const cittaScelta = (campoLuogo && campoLuogo.value || '').trim();
-  // Il token della verifica anti-abuso. Lo crea da solo il widget di Turnstile
-  // dentro il modulo, in un input nascosto. Viaggia in un'intestazione e non
-  // nell'indirizzo: i token nelle query string finiscono nei log e nei referrer.
-  const campoToken = document.querySelector('input[name="cf-turnstile-response"]');
-  const token = campoToken ? campoToken.value : '';
-
-  const classifica = paroleScritte
-    ? fetch('/api/posizioni?sito=' + encodeURIComponent(scoperta.sito) +
-            '&parole=' + encodeURIComponent(paroleScritte) +
-            (cittaScelta ? '&citta=' + encodeURIComponent(cittaScelta) : ''),
-            { headers: { 'X-Turnstile-Token': token } })
-        .then(r => r.text()).then(t => JSON.parse(t))
-        .catch(() => ({ disponibile: false, motivo: 'Controllo posizioni non riuscito.' }))
-    : Promise.resolve(null);
-
   const risultati = [];
   let fatte = 0;
   const coda = pagine.slice();
@@ -422,16 +387,16 @@ modulo.addEventListener('submit', async e => {
 
   avanza(pagine.length, pagine.length + 1,
     'Pagine lette. Aspetto la misura di velocità da Google (venti-quaranta secondi)…');
-  const [lighthouse, posizioni] = await Promise.all([misura, classifica]);
+  const lighthouse = await misura;
 
   avanzamento.classList.remove('attivo');
   bottone.disabled = false;
-  disegna(scoperta, risultati, lighthouse, posizioni);
+  disegna(scoperta, risultati, lighthouse);
   esito.classList.add('attivo');
   esito.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
-function disegna(scoperta, risultati, lighthouse, posizioni) {
+function disegna(scoperta, risultati, lighthouse) {
   const buone = risultati.filter(r => !r.errore);
   const rotte = risultati.filter(r => r.errore);
   if (!buone.length) {
@@ -613,8 +578,6 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
   p.push('<div class="testata-esito">' +
     '<b>Rapporto <i>Sottosopra</i></b>' +
     '<span>' + T(scoperta.sito) + '</span></div>');
-
-  if (posizioni) p.push(bloccoPosizioni(posizioni));
 
   // Un voto complessivo calcolato su una o due pagine non vale niente: e' lo
   // stesso difetto che questo strumento rimprovera agli altri. Quando il

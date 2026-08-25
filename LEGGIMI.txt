@@ -1,0 +1,28 @@
+puntowebferrara-solo-analisi.zip
+================================
+
+QUATTRO FILE. Toglie il posizionamento dalla pagina dell'analisi.
+
+  hugo.toml                      descrizione della prima voce del menu:
+                                 non promette piu' le posizioni
+  layouts/page/sottosopra.html   via la scelta fra le due modalita', i campi
+                                 parole chiave e Turnstile
+  static/sottosopra/verifica.js  via la chiamata a /api/posizioni
+  content/sottosopra/_index.md   description aggiornata
+
+NON contiene la pagina del posizionamento ne' il menu a tendina: quelli
+sono gia' online, li ho visti funzionare.
+
+VERIFICA CHE SIA ENTRATO
+------------------------
+Dopo aver scompattato:
+
+  Select-String -Path .\layouts\page\sottosopra.html -Pattern "modo2"
+
+NON deve stampare niente. Se stampa, il file non e' arrivato.
+
+DOPO IL DEPLOY, SVUOTA LA CACHE
+-------------------------------
+Cloudflare tiene le pagine in cache. Se dopo il push vedi ancora la vecchia
+versione, non e' detto che sia un errore: apri la pagina con CTRL+F5, o in
+finestra anonima.

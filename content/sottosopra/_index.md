@@ -1,7 +1,7 @@
 ---
 title: "Sottosopra"
 titleSeo: "Il tuo sito è leggibile dalle AI? Verifica gratis"
-description: "Quali motori IA possono leggere il tuo sito e a che posizione sei su Google. 48 controlli spiegati uno per uno, gratis e senza registrazione."
+description: "Quali motori IA possono davvero leggere il tuo sito e cosa glielo impedisce. 48 controlli spiegati uno per uno, con il rimedio. Gratis, senza registrazione."
 type: "page"
 layout: "sottosopra"
 sitemap:

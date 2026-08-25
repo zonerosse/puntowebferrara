@@ -44,7 +44,7 @@ enableRobotsTXT = false
     url = '/sottosopra/'
     weight = 1
     [menus.main.params]
-      riga = '48 controlli e la tua posizione reale su Google, in Italia e nella tua città.'
+      riga = '48 controlli tecnici sul sito: dati strutturati, velocità, crawler IA.'
   [[menus.main]]
     name = 'Posizionamento su Google'
     parent = 'strumenti'
