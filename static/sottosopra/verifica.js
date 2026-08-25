@@ -637,7 +637,13 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
     '<div class="dominio">' + T(scoperta.sito) + ' · ' + buone.length + ' pagine lette' +
     (lh ? ' · velocità misurata su ' + T(lh.dispositivo) : '') + '</div>' +
     (conCosa ? '<p class="conCosa">Il sito è stato creato con <b>' + T(conCosa) + '</b></p>' : '') +
-    '<p>' + T(giudizio) + '</p></div></div>');
+    '<p>' + T(giudizio) + '</p></div>' +
+    // Portarsi via il rapporto deve essere possibile subito, non solo dopo
+    // aver scorso tutto fino in fondo.
+    '<div class="azione-salva">' +
+    '<a class="btn-salva js-salva" href="#">Salva il rapporto</a>' +
+    '<a class="minuta-salva js-stampa" href="#">oppure stampa in PDF</a>' +
+    '</div></div>');
 
   // Grafico e riquadri affiancati: la forma d'insieme a sinistra, i numeri a destra.
   const perGrafico = CONTROLLI.filter(g => g._max)
@@ -996,23 +1002,23 @@ function disegna(scoperta, risultati, lighthouse, posizioni) {
   c.push('<p>Sono Paolo Boldrini, lavoro da Ferrara. Rispondo io, entro 24 ore, e il preventivo è dettagliato ' +
     'prima di cominciare: il prezzo concordato è quello finale.</p>');
   c.push('<div class="azioni"><a href="/contatti/">Chiedimi un preventivo</a>' +
-    '<a class="vuoto" href="#" id="salva">Salva il rapporto (file HTML)</a>' +
-    '<a class="vuoto" href="#" id="stampa">Stampa o salva in PDF</a></div>');
+    '<a class="vuoto js-salva" href="#">Salva il rapporto (file HTML)</a>' +
+    '<a class="vuoto js-stampa" href="#">Stampa o salva in PDF</a></div>');
   c.push('<p class="listino">Sito vetrina da 500 € · Landing page da 400 € · ' +
     'Migrazione da WordPress a sito statico da 500 €, senza più manutenzione né aggiornamenti.</p></div>');
 
   esito.innerHTML = p.join('') + c.join('');
-  const bottoneStampa = document.getElementById('stampa');
-  if (bottoneStampa) bottoneStampa.addEventListener('click', ev => {
+  // I pulsanti compaiono in due punti — accanto al punteggio e in fondo —
+  // quindi si agganciano per classe: con gli id il secondo sarebbe rimasto
+  // muto, perche' un id deve essere unico nella pagina.
+  document.querySelectorAll('.js-stampa').forEach(b => b.addEventListener('click', ev => {
     ev.preventDefault();
     window.print();
-  });
-
-  const bottoneSalva = document.getElementById('salva');
-  if (bottoneSalva) bottoneSalva.addEventListener('click', ev => {
+  }));
+  document.querySelectorAll('.js-salva').forEach(b => b.addEventListener('click', ev => {
     ev.preventDefault();
     salvaRapporto();
-  });
+  }));
 }
 
 // --- Salvataggio del rapporto in un file HTML unico ------------------------
