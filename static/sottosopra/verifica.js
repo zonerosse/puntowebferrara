@@ -1024,7 +1024,11 @@ function bloccoPosizioni(dati) {
              '<span class="fuori">oltre i primi ' + dati.profondita + '</span></div>';
 
     const liv = fasciaPosizione(esito.posizione);
-    const pagina = esito.posizione <= 10 ? 'prima pagina' : 'seconda pagina';
+    // Google mostra dieci risultati organici per pagina: la 33 sta in quarta,
+    // non in "seconda". Prima la riga diceva seconda per qualsiasi numero
+    // sopra il dieci, che è falso da 21 in su.
+    const numeroPagina = Math.ceil(esito.posizione / 10);
+    const pagina = numeroPagina === 1 ? 'prima pagina' : 'pagina ' + numeroPagina;
     return '<div class="casella ' + liv + '"><span class="dove">' + T(dove) + '</span>' +
            '<span class="numero">' + esito.posizione + '</span>' +
            '<span class="pagina">' + pagina + '</span></div>';
@@ -1042,6 +1046,9 @@ function bloccoPosizioni(dati) {
 
     let h = '<div class="scheda-parola ' + fasciaPosizione(migliore) + '">' +
             '<span class="parola">' + T(e.parola) + '</span>' +
+            '<p class="capoblocco">Fra i risultati normali</p>' +
+            '<p class="chiosa">I collegamenti blu, quelli che dipendono dal tuo sito. ' +
+            'Dieci per pagina.</p>' +
             '<div class="caselle">' + casella('Italia', naz) +
             (conCitta ? casella(nomeCitta, loc) : '') + '</div>';
 
@@ -1050,10 +1057,12 @@ function bloccoPosizioni(dati) {
     const lati = conCitta ? [['Italia', naz], [nomeCitta, loc]] : [['Italia', naz]];
     const conMappe = lati.filter(x => x[1] && x[1].mappe && x[1].mappe.presente);
     if (conMappe.length) {
-      h += '<p class="davanti"><b>Riquadro mappe di Google</b></p>' +
-           '<p class="chiosa">Il blocco con la cartina e le schede delle attivit\u00e0, ' +
-           'sopra i risultati normali. Per chi cerca qualcosa vicino a s\u00e9 \u00e8 la prima ' +
-           'cosa che vede, e spesso l\u2019unica su cui clicca.</p><ul class="mappe">';
+      h += '<p class="capoblocco">Riquadro mappe \u2014 <i>un\u2019altra classifica</i></p>' +
+           '<p class="chiosa">Il blocco con la cartina, sopra i risultati normali. ' +
+           '<b>Non dipende dal sito</b>: lo decide la tua scheda Google dell\u2019attivit\u00e0 ' +
+           '\u2014 categoria, indirizzo, orari, recensioni, distanza da chi cerca. ' +
+           'Sono due gare separate, e si pu\u00f2 benissimo essere primi qui e ' +
+           'in fondo fra i risultati normali, o il contrario.</p><ul class="mappe">';
       for (const [dove, lato] of conMappe) {
         const m = lato.mappe;
         const quanti = m.totale || m.posizione;
@@ -1098,7 +1107,7 @@ function bloccoPosizioni(dati) {
     for (const lato of [e.nazionale, e.locale])
       if (lato && lato.errore && guasti.indexOf(lato.errore) === -1) guasti.push(lato.errore);
 
-  let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
+  let nota = 'Le posizioni qui sopra sono quelle dei risultati organici. Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
              ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
              'Le posizioni cambiano di giorno in giorno e da persona a persona: ' +
              'vale l\u2019ordine di grandezza, non il numero esatto.';
