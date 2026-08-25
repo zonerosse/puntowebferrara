@@ -645,4 +645,76 @@
 .strumento .f-podio{background:#0d6b58} .strumento .f-prima{background:#0d4275}
 .strumento .f-seconda{background:#f59e0b} .strumento .f-oltre{background:#8d9a95}
 
+
+/* --- rapporto accessibilita' ---------------------------------------------
+   Stesso vocabolario del rapporto sulle posizioni: numeri in chiaro,
+   spiegazioni dentro le tendine, tre gravita' e non quattro. */
+.strumento .a11y-testata{display:flex;gap:1.6rem;flex-wrap:wrap;align-items:flex-start;
+    margin:1.2rem 0 1rem}
+.strumento .a11y-voto{line-height:1;flex:0 0 auto}
+.strumento .a11y-voto .numero{font-family:var(--mono);font-size:3rem;font-weight:700;
+    letter-spacing:-.03em;color:var(--grafite)}
+.strumento .a11y-voto.alto .numero{color:#0d6b58}
+.strumento .a11y-voto.medio .numero{color:#0d4275}
+.strumento .a11y-voto.basso .numero{color:#a32338}
+.strumento .a11y-voto .su{font-family:var(--mono);font-size:1rem;color:var(--grafite)}
+.strumento .a11y-voto .etichetta{display:block;margin-top:.45rem;font-family:var(--mono);
+    font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--grafite);
+    font-weight:700}
+.strumento .a11y-riepilogo{flex:1 1 300px;min-width:260px}
+
+.strumento .a11y-barra{display:flex;height:22px;border-radius:3px;overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.strumento .a11y-barra span{display:block;height:100%;
+    border-right:1px solid rgba(255,255,255,.7)}
+.strumento .a11y-barra span:last-child{border-right:0}
+.strumento .p-alto{background:#a32338} .strumento .p-medio{background:#b5570d}
+.strumento .p-basso{background:#9a7209} .strumento .p-ok{background:#e7f2ee}
+
+.strumento .a11y-legenda{list-style:none;margin:.7rem 0 0;padding:0;display:flex;
+    gap:1.2rem;flex-wrap:wrap;font-size:.84rem}
+.strumento .a11y-legenda li{display:flex;align-items:center;gap:.45rem}
+.strumento .a11y-legenda .tacca{width:13px;height:13px;border-radius:2px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.strumento .a11y-legenda .q{color:var(--grafite)}
+.strumento .a11y-quante{font-size:.8rem;color:var(--grafite);margin-top:.55rem;
+    font-family:var(--mono)}
+
+.strumento .a11y-avvertenza{font-size:.86rem;color:var(--grafite);background:var(--foglio);
+    border:1px solid var(--linea);border-left:3px solid var(--inchiostro);border-radius:4px;
+    padding:.8rem .95rem;margin-bottom:1.1rem;max-width:78ch}
+.strumento .a11y-avvertenza b{color:var(--inchiostro)}
+.strumento .a11y-pulito{font-size:.9rem;background:#e7f2ee;border:1px solid #bcd9d0;
+    border-left:3px solid #0d6b58;border-radius:4px;padding:.8rem .95rem;margin-bottom:1rem}
+
+.strumento .a11y-elenco{display:grid;gap:.7rem;margin-bottom:1rem}
+.strumento .a11y-voce{background:var(--foglio);border:1px solid var(--linea);
+    border-left:4px solid var(--linea);border-radius:4px;padding:.85rem 1rem}
+.strumento .a11y-voce.alto{border-left-color:#a32338}
+.strumento .a11y-voce.medio{border-left-color:#b5570d}
+.strumento .a11y-voce.basso{border-left-color:#9a7209}
+.strumento .a11y-capo{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+    margin-bottom:.25rem}
+.strumento .a11y-capo .marca{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;
+    text-transform:uppercase;font-weight:700;color:#fff;padding:.16rem .45rem;border-radius:2px}
+.strumento .a11y-voce.alto .marca{background:#a32338}
+.strumento .a11y-voce.medio .marca{background:#b5570d}
+.strumento .a11y-voce.basso .marca{background:#9a7209}
+.strumento .a11y-capo .nome{font-weight:700;font-size:.97rem;flex:1 1 auto}
+.strumento .a11y-capo .rif{font-family:var(--mono);font-size:.66rem;color:var(--grafite);
+    white-space:nowrap}
+.strumento .a11y-quanti{font-size:.85rem;color:var(--grafite)}
+.strumento .a11y-esempi{list-style:none;margin:.5rem 0 0;padding:0}
+.strumento .a11y-esempi li{padding:.16rem 0;font-size:.82rem}
+.strumento .a11y-esempi code{font-family:var(--mono);font-size:.76rem;background:var(--carta);
+    padding:.1rem .3rem;border-radius:2px;word-break:break-all}
+.strumento .a11y-dove{font-size:.78rem;color:var(--grafite);margin-top:.5rem}
+.strumento .a11y-dove code{font-family:var(--mono);font-size:.74rem;background:var(--carta);
+    padding:.08rem .28rem;border-radius:2px}
+
+@media (max-width:520px){
+  .strumento .a11y-voto .numero{font-size:2.4rem}
+  .strumento .a11y-barra{height:18px}
+}
+
 </style>

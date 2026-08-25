@@ -1,0 +1,142 @@
+{{ define "main" }}
+{{ partial "stile-strumento.html" . }}
+
+<div class="strumento">
+  <div class="foglio">
+
+    <div class="marchio-sottosopra">
+      <img src="/img/marchio/simbolo.svg" width="108" height="108" alt="" loading="eager">
+      <div>
+        <b>Sotto<i>sopra</i></b>
+        <span>Prima sotto. <em>Poi sopra nelle SERP.</em></span>
+      </div>
+    </div>
+
+    <p class="briciole">
+      <a href="/">Home</a> · <a href="/sottosopra/">Strumenti</a> · Accessibilità
+    </p>
+
+    <p class="occhiello">Strumento gratuito · <b>36 controlli WCAG 2.1 AA</b> · nessuna registrazione</p>
+    <h1>Il tuo sito è accessibile? Verificalo in un minuto</h1>
+
+    <p class="tesi">Trentasei controlli sulle linee guida <b>WCAG 2.1 livello AA</b>, quelle
+    richiamate dalle normative europee e italiane. Ogni problema trovato viene detto con il suo
+    rimedio, non con una sigla. Gratis, senza registrazione, senza salvare niente.</p>
+
+    <form class="modulo" id="modulo">
+      <div class="campo">
+        <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+               inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+        <button type="submit" id="avvia">Verifica l'accessibilità</button>
+      </div>
+      <p class="nota">Basta il dominio. Legge fino a 100 pagine, dura pochi
+      secondi su un sito normale, non salva nulla.</p>
+
+      <div class="blocco-scala">
+        <div class="capo">
+          <span class="titolo">Cosa controlla, e quanto pesa</span>
+          <span class="totale">36 controlli · 7 gruppi · <b>WCAG 2.1 AA</b></span>
+        </div>
+
+        <div class="barra-scala" role="img" aria-label="Ripartizione dei 36 controlli: moduli ed etichette 6, testi alternativi 7, collegamenti 5, struttura e intestazioni 9, tastiera e zoom 3, tabelle e ARIA 5, contenuti in movimento 2">
+          <span class="g1" style="width:25%">9</span>
+          <span class="g2" style="width:19.4%">7</span>
+          <span class="g3" style="width:16.7%">6</span>
+          <span class="g4" style="width:13.9%">5</span>
+          <span class="g5" style="width:13.9%">5</span>
+          <span class="g6 stretto" style="width:8.3%">3</span>
+          <span class="g8 stretto" style="width:2.8%">2</span>
+        </div>
+
+        <ul class="voci-scala">
+          <li><span class="tacca g1"></span><span class="nome">Struttura e intestazioni</span><span class="peso">9</span></li>
+          <li><span class="tacca g2"></span><span class="nome">Testi alternativi</span><span class="peso">7</span></li>
+          <li><span class="tacca g3"></span><span class="nome">Moduli ed etichette</span><span class="peso">6</span></li>
+          <li><span class="tacca g4"></span><span class="nome">Collegamenti</span><span class="peso">5</span></li>
+          <li><span class="tacca g5"></span><span class="nome">Tabelle e attributi ARIA</span><span class="peso">5</span></li>
+          <li><span class="tacca g6"></span><span class="nome">Tastiera e zoom</span><span class="peso">3</span></li>
+          <li><span class="tacca g8"></span><span class="nome">Contenuti in movimento</span><span class="peso">2</span></li>
+        </ul>
+
+        <p class="coda-scala">Ogni controllo trovato in difetto dice <b>quante pagine riguarda,
+        perché conta e come si sistema</b> — non una sigla da cercare altrove.</p>
+      </div>
+    </form>
+
+    <div class="avanzamento" id="avanzamento">
+      <div class="barra"><i id="riempimento"></i></div>
+      <div class="passo" id="passo">In attesa…</div>
+    </div>
+    <div id="zonaErrore"></div>
+    <section class="esito" id="esito"></section>
+
+    <section>
+      <h2>Cosa controlla, in parole normali</h2>
+
+      <h3>Se chi non vede può capire le immagini</h3>
+      <p>Ogni immagine dovrebbe avere una descrizione testuale, e ogni immagine puramente
+      decorativa dovrebbe essere marcata come tale. Senza, lo screen reader legge il nome del
+      file: chi ascolta sente una sigla e non sa cosa sta guardando. Vale anche per le icone,
+      i pulsanti fatti di sole immagini e i video senza sottotitoli.</p>
+
+      <h3>Se i moduli si possono compilare</h3>
+      <p>È il punto dove si perdono più persone. Un campo senza etichetta collegata viene
+      annunciato come "casella di testo" e basta: non si sa cosa scriverci. Il testo grigio
+      dentro il campo non conta, perché sparisce appena si inizia a digitare e molti lettori
+      di schermo non lo leggono affatto.</p>
+
+      <h3>Se la pagina ha una struttura</h3>
+      <p>Chi usa lo screen reader non legge dall'inizio alla fine: salta di titolo in titolo,
+      come tu scorri con gli occhi. Se i titoli mancano, saltano un livello o sono vuoti, quel
+      modo di navigare smette di funzionare. Stessa cosa per la lingua dichiarata: senza, il
+      testo italiano viene letto con la pronuncia inglese.</p>
+
+      <h3>Se si può usare senza mouse</h3>
+      <p>Non riguarda solo chi ha disabilità motorie: riguarda chiunque abbia un mouse rotto,
+      un trackpad scomodo o le mani occupate. Un elemento cliccabile che risponde solo al mouse,
+      per chi naviga da tastiera, semplicemente non esiste. E lo zoom bloccato sul telefono
+      taglia fuori chiunque abbia una vista imperfetta.</p>
+
+      <h2>Le tre cose che questa pagina non può controllare</h2>
+      <p>Il <strong>contrasto del testo</strong>, l'<strong>indicatore di focus</strong> e il
+      <strong>testo sovrapposto alle immagini di sfondo</strong> dipendono dai colori calcolati
+      dal browser. Nell'HTML che il server consegna quei valori non esistono: si ottengono solo
+      applicando tutto il foglio di stile, con l'ereditarietà e la cascata.</p>
+      <p>Non è un limite di questo strumento, è una impossibilità del terreno — e vale per
+      qualunque controllo fatto dal lato server, compresi quelli che non te lo dicono. Per quei
+      tre requisiti serve l'<a href="/estensione/">estensione per il browser</a>, dove la pagina
+      è già disegnata e i colori si possono leggere davvero.</p>
+
+      <h2>Chi è tenuto a essere accessibile</h2>
+      <p>In Italia la legge Stanca riguarda da tempo la pubblica amministrazione e i soggetti
+      che erogano servizi pubblici. L'<strong>European Accessibility Act</strong>, recepito
+      nell'ordinamento italiano, ha esteso obblighi analoghi a diverse categorie di operatori
+      privati — fra cui commercio elettronico, servizi bancari, trasporti e comunicazioni
+      elettroniche — con soglie dimensionali che escludono le microimprese da alcuni adempimenti.</p>
+      <p><strong>Se rientri fra i soggetti obbligati non te lo può dire uno strumento, e nemmeno
+      io: chiedilo a un legale.</strong> Quello che questa pagina può fare è dirti a che punto
+      sei tecnicamente, obbligato o no. Un sito accessibile è comunque un sito che funziona per
+      più persone, ed è la ragione migliore per farlo.</p>
+
+      <h2>Domande frequenti</h2>
+      {{ range .Params.faq }}
+      <details class="faq">
+        <summary>{{ .q }}</summary>
+        <p>{{ .a }}</p>
+      </details>
+      {{ end }}
+
+      <h2>Gli altri strumenti</h2>
+      <p>L'<a href="/sottosopra/">analisi completa</a> guarda il lato tecnico e di
+      posizionamento: dati strutturati, indicizzazione, velocità misurata, e quali motori IA
+      riescono a leggere il sito. La <a href="/sottosopra/posizionamento/">verifica delle
+      posizioni</a> dice a che numero compari su Google per le tue parole chiave.</p>
+      <p>Se i problemi trovati qui li deve sistemare qualcuno, <a href="/servizi/">è il lavoro
+      che faccio</a>: <a href="/contatti/">scrivimi</a> e ne parliamo.</p>
+    </section>
+
+  </div>
+</div>
+
+<script type="module" src="/sottosopra/accessibilita.js"></script>
+{{ end }}
