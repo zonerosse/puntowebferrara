@@ -59,8 +59,7 @@ export function bloccoAccessibilita(dati) {
       '<ul class="a11y-legenda">' +
         vociLegenda(conta) +
       '</ul>' +
-      '<p class="a11y-quante">Lette ' + dati.pagine.length +
-        (dati.pagine.length === 1 ? ' pagina' : ' pagine') + ' · ' +
+      '<p class="a11y-quante">' + quantePagine(dati) + ' · ' +
         (dati.controlliMisurati || 0) + ' controlli applicabili su 36</p>' +
     '</div>' +
   '</div>';
@@ -130,6 +129,19 @@ export function bloccoAccessibilita(dati) {
 }
 
 /* --- pezzi di disegno ---------------------------------------------------- */
+
+// Se il sito ha piu' pagine di quante ne sono state lette, va scritto. Un
+// conteggio presentato come completo quando non lo e' fa prendere decisioni
+// sbagliate: e' l'errore che rimproveriamo agli altri strumenti.
+function quantePagine(dati) {
+  const lette = dati.pagine.length;
+  const trovate = dati.trovate || lette;
+  if (trovate > lette) {
+    return 'Lette ' + lette + ' pagine su ' + trovate +
+           ' — i conteggi qui sotto riguardano solo quelle lette';
+  }
+  return 'Lette ' + lette + (lette === 1 ? ' pagina' : ' pagine') + ', tutte quelle trovate';
+}
 
 function barraGravita(conta, superati) {
   const peso = { alto: 10, medio: 4, basso: 1 };

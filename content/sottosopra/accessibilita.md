@@ -15,7 +15,7 @@ faq:
   - q: "Ho un punteggio alto ma ricevo lamentele: com'è possibile?"
     a: "Perché il punteggio misura il codice, non l'esperienza. Un sito può avere tutti gli attributi al posto giusto e restare faticoso da usare: testi scritti male, percorsi contorti, moduli che chiedono cose inutili. Al contrario, un sito con qualche difetto tecnico ma scritto in modo chiaro può funzionare benissimo. I due piani vanno guardati insieme."
   - q: "Quante pagine legge?"
-    a: "Fino a cento, che nella pratica vuol dire tutte: la stragrande maggioranza dei siti ne ha molte meno. Se un sito supera le cento, le pagine vengono prese a distanza costante lungo l'elenco e non le prime cento in fila, perché le prime di un sito si somigliano quasi sempre fra loro."
+    a: "Fino a duecento, lo stesso tetto dell'analisi tecnica: nella pratica vuol dire tutte, perché quasi nessun sito ne ha di più. Se un sito le supera, le pagine vengono prese a distanza costante lungo l'elenco e non le prime duecento in fila, e il rapporto scrive quante ne ha lette su quante."
   - q: "Perché contrasto e focus non vengono controllati?"
     a: "Perché dipendono dai colori calcolati dal browser, che nell'HTML scaricato dal server non esistono: si ottengono solo applicando tutto il CSS, con l'ereditarietà e la cascata. Non è un limite di questo strumento, è una impossibilità di leggere il codice dal server. Per quei tre requisiti serve l'estensione per il browser, dove la pagina è già disegnata."
   - q: "Quanto costa sistemare i problemi trovati?"

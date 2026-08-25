@@ -3,11 +3,10 @@
 // Stessa sequenza dell'analisi completa: prima /api/scopri, che rispetta il
 // robots.txt e restituisce l'elenco delle pagine, poi una chiamata per pagina.
 //
-// QUANTE PAGINE. Cento. Praticamente tutti i siti reali ne hanno meno, quindi
-// nella stragrande maggioranza dei casi vengono lette tutte e il tetto non
-// entra nemmeno in funzione. Serve solo a non partire in quarta su un sito
-// enorme: cento pagine sono 101 invocazioni, e il piano gratuito ne concede
-// centomila al giorno.
+// QUANTE PAGINE. Duecento, lo stesso tetto dell'analisi tecnica: cosi' i due
+// strumenti si comportano allo stesso modo e non serve ricordarsi che uno
+// campiona e l'altro no. Duecento pagine sono 201 invocazioni, e il piano
+// gratuito ne concede centomila al giorno.
 //
 // Quando il tetto scatta, le pagine si prendono a distanza costante lungo
 // l'elenco e non le prime cento in fila: le prime di un sito si somigliano
@@ -17,7 +16,7 @@ import { bloccoAccessibilita } from './accessibilita-blocco.js';
 import { normalizza, abilitaStampaTendine } from './posizioni-blocco.js';
 import { SCHEDE } from './accessibilita-schede.js';
 
-const MAX_PAGINE = 100;
+const MAX_PAGINE = 200;
 const OPERAI = 4;
 
 const $ = id => document.getElementById(id);
@@ -122,7 +121,7 @@ modulo.addEventListener('submit', async e => {
     return;
   }
 
-  esito.innerHTML = bloccoAccessibilita(aggrega(buone, scoperta));
+  esito.innerHTML = bloccoAccessibilita(aggrega(buone, scoperta, tutte.length));
   esito.classList.add('attivo');
   esito.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
@@ -132,7 +131,7 @@ modulo.addEventListener('submit', async e => {
    difetto del modello, e va detto una volta sola con scritto su quante
    pagine ricorre — non una volta per pagina.
    ------------------------------------------------------------------------ */
-function aggrega(pagine, scoperta) {
+function aggrega(pagine, scoperta, totaleTrovate) {
   const per = {};   // id -> { n, tot, pagineRotte:[], esempi:[] }
 
   for (const p of pagine) {
@@ -184,6 +183,10 @@ function aggrega(pagine, scoperta) {
     disponibile: true,
     sito: scoperta.sito,
     pagine: pagine.map(p => p.url),
+    // Quante ne ha trovate in tutto: se sono piu' di quelle lette, il rapporto
+    // deve dirlo. Scrivere "lette 200 pagine" su un sito che ne ha 340 e' il
+    // difetto che rimproveriamo agli altri strumenti.
+    trovate: totaleTrovate,
     voto: misurati ? Math.round(somma / misurati * 100) : null,
     controlliMisurati: misurati,
     controlliSuperati: superati,

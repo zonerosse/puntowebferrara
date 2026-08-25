@@ -284,11 +284,25 @@ export function analizzaAccessibilita(html, url) {
   }
 
   {
+    // Un'icona dentro un collegamento o un bottone che ha gia' il suo testo non
+    // va nominata: il nome ce l'ha il contenitore, e ripeterlo farebbe
+    // annunciare la voce due volte. Si raccolgono quelle icone e si escludono.
+    const dentroTesto = Object.create(null);
+    for (const nome of ['a', 'button']) {
+      for (const c of elementi(corpo, nome, 400)) {
+        if (!testoPulito(c.dentro)) continue;
+        for (const t of (c.dentro.match(/<svg\b[^>]*>/gi) || [])) {
+          dentroTesto[t.replace(/\s+/g, ' ')] = true;
+        }
+      }
+    }
+
     const svg = elementi(corpo, 'svg', 300);
     const muti = svg.filter(s => {
       if (/\baria-hidden\s*=\s*["']true["']/i.test(s.attributi)) return false;
       if (attr(s.attributi, 'aria-label') || attr(s.attributi, 'aria-labelledby')) return false;
       if (/<title[^>]*>\s*\S/i.test(s.dentro)) return false;
+      if (dentroTesto[('<svg' + s.attributi + '>').replace(/\s+/g, ' ')]) return false;
       return true;
     });
     quotaSu('a11ySvg', muti.length, svg.length, muti.map(() => 'svg senza title né aria-label'));
@@ -296,7 +310,9 @@ export function analizzaAccessibilita(html, url) {
   }
 
   {
-    const video = elementi(corpo, 'video', 60);
+    // I video muti restano fuori: i sottotitoli servono a rendere accessibile
+    // l'audio, e un video di sfondo senza audio non ha niente da sottotitolare.
+    const video = elementi(corpo, 'video', 60).filter(v => !haAttr(v.attributi, 'muted'));
     const senza = video.filter(v => !/<track\b[^>]*kind\s*=\s*["'](captions|subtitles)["']/i.test(v.dentro));
     quotaSu('a11ySottotitoli', senza.length, video.length, senza.map(() => 'video senza traccia di sottotitoli'));
     if (senza.length) segnala('alto', frase(senza.length, 'video senza sottotitoli', 'video senza sottotitoli'));
@@ -321,12 +337,21 @@ export function analizzaAccessibilita(html, url) {
     const f = attr(l.attributi, 'for');
     if (f && testoPulito(l.dentro)) idEtichettati[f] = true;
   }
-  // campi avvolti dentro una label: <label>Nome <input></label>
+  // Campi avvolti dentro una label: <label>Nome <input></label>.
+  // Due modi, perche' un input avvolto NON e' obbligato ad avere un id: si
+  // raccolgono sia gli id trovati dentro le label, sia i tag interi. Senza il
+  // secondo modo, <label>Nome <input name="n"></label> — che e' HTML corretto —
+  // veniva segnalato come campo senza etichetta.
   const idAvvolti = Object.create(null);
+  const tagAvvolti = Object.create(null);
   for (const l of etichette) {
+    if (!testoPulito(l.dentro)) continue;   // label vuota: non etichetta niente
     const re = /\bid\s*=\s*["']([^"']+)["']/gi;
     let m;
     while ((m = re.exec(l.dentro))) idAvvolti[m[1]] = true;
+    for (const t of (l.dentro.match(/<(?:input|select|textarea)\b[^>]*>/gi) || [])) {
+      tagAvvolti[t.replace(/\s+/g, ' ')] = true;
+    }
   }
 
   const campi = []
@@ -343,6 +368,9 @@ export function analizzaAccessibilita(html, url) {
       if ((attr(c.attributi, 'title') || '').trim()) return false;
       const id = attr(c.attributi, 'id');
       if (id && (idEtichettati[id] || idAvvolti[id])) return false;
+      // input avvolto in una label ma senza id
+      const suo = (c.intero || ('<' + c.tag + c.attributi + '>')).replace(/\s+/g, ' ');
+      if (tagAvvolti[suo]) return false;
       return true;
     });
     quotaSu('a11yCampiEtichettati', senza.length, campiVeri.length, senza.map(c => {
