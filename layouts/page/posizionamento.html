@@ -1,0 +1,213 @@
+{{ define "main" }}
+{{/* Stili condivisi con /sottosopra/: stessa partial, nessuna copia. */}}
+{{ partial "stile-strumento.html" . }}
+
+<style>
+  /* Le poche regole che esistono solo qui: il modulo snello di questa pagina,
+     senza la scelta fra le due modalita' e senza i riquadri dell'analisi. */
+  .strumento .modulo-veloce .campo{margin-bottom:1rem}
+  .strumento .modulo-veloce label{display:block;font-family:var(--mono);font-size:.68rem;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--grafite);font-weight:700;
+    margin-bottom:.35rem}
+  .strumento .modulo-veloce label em{font-style:normal;text-transform:none;letter-spacing:0;
+    font-weight:400}
+  .strumento .modulo-veloce input[type=text]{width:100%;flex:none}
+  .strumento .modulo-veloce select{width:100%;font-size:.92rem;padding:.7rem .8rem;
+    border:1px solid var(--linea);border-radius:3px;background:var(--foglio);
+    color:var(--inchiostro)}
+  .strumento .modulo-veloce .avvia{width:100%;margin-top:.4rem}
+  .strumento .blocco-turnstile{margin-top:1.2rem;padding-top:1rem;
+    border-top:1px dashed var(--linea)}
+  .strumento .riga-spiega{font-size:.82rem;color:var(--grafite);margin-top:.55rem;max-width:52ch}
+</style>
+
+<div class="strumento">
+  <div class="foglio">
+
+    <div class="marchio-sottosopra">
+      <img src="/img/marchio/simbolo.svg" width="108" height="108" alt="" loading="eager">
+      <div>
+        <b>Sotto<i>sopra</i></b>
+        <span>Prima sotto. <em>Poi sopra nelle SERP.</em></span>
+      </div>
+    </div>
+
+    <p class="briciole">
+      <a href="/">Home</a> · <a href="/sottosopra/">Strumenti</a> · Posizionamento
+    </p>
+
+    <p class="occhiello">Verifica veloce · <b>posizioni su Google</b> · nessuna scansione</p>
+    <h1>A che posizione sei su Google, davvero</h1>
+
+    <p class="tesi">Scrivi il tuo sito e una parola chiave: ti dico <b>a che numero compari</b> fra
+    i risultati di Google in Italia e nella tua città, e se esci nel riquadro delle mappe. Nessuna
+    registrazione, nessuna email. Risponde in pochi secondi, perché non legge le tue pagine:
+    interroga soltanto Google.</p>
+
+    <form class="modulo modulo-veloce" id="modulo">
+      <div class="campo">
+        <label for="indirizzo">Il tuo sito</label>
+        <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+               inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+      </div>
+
+      <div class="campo">
+        <label for="parole">Parole chiave <em>(massimo due, separate da virgola)</em></label>
+        <input type="text" id="parole" placeholder="es. idraulico ferrara, riparazione caldaie"
+               autocomplete="off" spellcheck="false" required>
+      </div>
+
+      <div class="campo">
+        <label for="luogo">Confronta con una città <em>(l'Italia si fa sempre)</em></label>
+        <select id="luogo">
+          <option value="">Solo Italia</option>
+          <option value="Ancona,Marche,Italy">Ancona</option>
+          <option value="Bari,Apulia,Italy">Bari</option>
+          <option value="Bergamo,Lombardy,Italy">Bergamo</option>
+          <option value="Bologna,Emilia-Romagna,Italy">Bologna</option>
+          <option value="Bolzano,Trentino-South Tyrol,Italy">Bolzano</option>
+          <option value="Brescia,Lombardy,Italy">Brescia</option>
+          <option value="Cagliari,Sardinia,Italy">Cagliari</option>
+          <option value="Catania,Sicily,Italy">Catania</option>
+          <option value="Ferrara,Emilia-Romagna,Italy">Ferrara</option>
+          <option value="Florence,Tuscany,Italy">Firenze</option>
+          <option value="Genoa,Liguria,Italy">Genova</option>
+          <option value="Livorno,Tuscany,Italy">Livorno</option>
+          <option value="Milan,Lombardy,Italy">Milano</option>
+          <option value="Modena,Emilia-Romagna,Italy">Modena</option>
+          <option value="Naples,Campania,Italy">Napoli</option>
+          <option value="Padua,Veneto,Italy">Padova</option>
+          <option value="Palermo,Sicily,Italy">Palermo</option>
+          <option value="Parma,Emilia-Romagna,Italy">Parma</option>
+          <option value="Perugia,Umbria,Italy">Perugia</option>
+          <option value="Pescara,Abruzzo,Italy">Pescara</option>
+          <option value="Ravenna,Emilia-Romagna,Italy">Ravenna</option>
+          <option value="Rome,Lazio,Italy">Roma</option>
+          <option value="Turin,Piedmont,Italy">Torino</option>
+          <option value="Trieste,Friuli-Venezia Giulia,Italy">Trieste</option>
+          <option value="Udine,Friuli-Venezia Giulia,Italy">Udine</option>
+          <option value="Venice,Veneto,Italy">Venezia</option>
+          <option value="Verona,Veneto,Italy">Verona</option>
+          <option value="Vicenza,Veneto,Italy">Vicenza</option>
+        </select>
+      </div>
+
+      <div class="blocco-turnstile">
+        <div class="cf-turnstile"
+             data-sitekey="0x4AAAAAAEb9CtiPvt0ETHIP"
+             data-language="it"
+             data-appearance="always"
+             data-refresh-expired="auto"></div>
+        <p class="riga-spiega">Questa verifica interroga Google tramite un servizio a pagamento:
+        senza il controllo chiunque potrebbe consumarlo con uno script.</p>
+      </div>
+
+      <button type="submit" id="avvia" class="avvia">Vedi le posizioni</button>
+      <p class="nota">Basta il dominio. Di solito risponde in meno di dieci secondi.</p>
+    </form>
+
+    <div class="avanzamento" id="avanzamento">
+      <div class="barra"><i id="riempimento"></i></div>
+      <div class="passo" id="passo">In attesa…</div>
+    </div>
+    <div id="zonaErrore"></div>
+    <div id="esito"></div>
+
+    {{/* ====================================================================
+         Il testo che segue arriva dalla sezione "In che posizione sei su
+         Google" di /sottosopra/. Non e' stato duplicato: li' e' stato
+         ridotto a un paragrafo con il collegamento a questa pagina, perche'
+         due pagine che spiegano la stessa cosa si fanno concorrenza fra loro.
+         ==================================================================== */}}
+
+    <section>
+      <h2>Due gare diverse, che quasi nessuno distingue</h2>
+      <p>Su una ricerca locale Google mostra due cose in una schermata sola, e vengono da due
+      classifiche separate.</p>
+      <p>I <strong>risultati normali</strong> — i collegamenti blu, dieci per pagina — dipendono dal
+      <strong>sito</strong>: contenuti, struttura, velocità, collegamenti che riceve. È quello che
+      misurano i <a href="/sottosopra/">48 controlli dell'analisi completa</a>.</p>
+      <p>Il <strong>riquadro delle mappe</strong>, il blocco con la cartina che sta sopra i
+      risultati, non dipende dal sito: lo decide la scheda <strong>Google Business Profile</strong>,
+      cioè categoria, indirizzo, orari, foto, recensioni e distanza da chi sta cercando in quel
+      momento.</p>
+      <p>Si può essere primi nelle mappe e in quarta pagina fra i risultati normali, o il contrario.
+      Confonderle significa lavorare per mesi sul fronte sbagliato: <strong>se manchi nelle mappe si
+      interviene sul Business Profile, se sei in fondo fra i risultati normali si interviene sul
+      sito.</strong> Il rapporto tiene le due misure separate, per ogni parola chiave.</p>
+
+      <h3>Italia e la tua città, affiancate</h3>
+      <p>La ricerca nazionale si fa sempre; se scegli una città ne parte una seconda, geolocalizzata
+      lì. È il confronto a dire qualcosa: essere trentatreesimi in Italia e terzi in città non è una
+      brutta notizia, è l'indicazione che la tua partita si gioca sul territorio e che quel vantaggio
+      va difeso.</p>
+      <p>Per un'attività locale — un artigiano, uno studio, un allevamento — la posizione nazionale su
+      una ricerca generica conta poco: davanti ci sono i grandi portali, e restarci è normale. Quella
+      locale conta tutto.</p>
+
+      <h3>Cosa vedi accanto al numero</h3>
+      <p>Chi occupa le prime posizioni, per ognuna delle due classifiche e per ognuna delle due
+      località: i domini per i risultati normali, i nomi delle attività per il riquadro delle mappe.
+      Sapere <em>chi</em> ti sta davanti spiega il numero meglio del numero stesso: se in cima ci sono
+      tre portali di annunci nazionali, quella parola chiave è persa e conviene sceglierne un'altra;
+      se ci sono concorrenti veri come te, la partita è aperta.</p>
+
+      <h3>Quanto sono affidabili questi numeri</h3>
+      <p><strong>La SERP non esiste al singolare.</strong> Google personalizza per posizione
+      geografica precisa, cronologia, dispositivo e momento della giornata: due persone nella stessa
+      città, nella stessa ora, vedono pagine leggermente diverse. Quello che misuri è una pagina dei
+      risultati plausibile — da computer fisso, senza cronologia, geolocalizzata sulla città scelta —
+      non quella del tuo cliente.</p>
+      <p>Vale l'ordine di grandezza, non il numero esatto. Fra la terza e la quinta posizione la
+      differenza è rumore; fra la terza e la trentesima no. E un rapporto senza data non significa
+      niente: la posizione di oggi non è quella di fra un mese, ed è il motivo per cui il file che
+      puoi salvare porta scritta la data dell'analisi.</p>
+    </section>
+
+    <section>
+      <h2>Se sei in fondo, il problema non è sempre lo stesso</h2>
+      <p>Un numero alto non dice da solo dove intervenire. Le cause ricorrenti sono tre, e si
+      distinguono guardando cosa succede negli altri due riquadri del rapporto.</p>
+      <p><strong>Sei in fondo ovunque, anche in città.</strong> Allora è il sito: contenuti scarsi,
+      struttura confusa, pagine lente, o un problema tecnico che impedisce a Google di leggerlo
+      bene. È esattamente quello che l'<a href="/sottosopra/">analisi completa</a> mette in fila,
+      con il peso di ogni difetto e il rimedio.</p>
+      <p><strong>Vai bene in città e male in Italia.</strong> Non è un problema: è la normalità per
+      chi lavora su un territorio. Difendi la posizione locale e smetti di guardare quella
+      nazionale.</p>
+      <p><strong>Vai bene fra i risultati normali ma manchi nelle mappe.</strong> Il sito non
+      c'entra. Si lavora sulla scheda Google Business Profile: categoria giusta, indirizzo
+      verificato, orari aggiornati, foto, recensioni.</p>
+    </section>
+
+    <section>
+      <h2>Domande frequenti</h2>
+      {{/* Una fonte sola: le domande stanno nel front matter e da li' vanno sia
+           a video sia nello schema FAQPage. Su /sottosopra/ sono scritte due
+           volte, a mano nell'HTML e nel front matter, e infatti hanno gia'
+           divergito. */}}
+      {{ range .Params.faq }}
+      <details class="faq">
+        <summary>{{ .q }}</summary>
+        <p>{{ .a }}</p>
+      </details>
+      {{ end }}
+    </section>
+
+    <section>
+      <h2>Quando serve invece l'analisi completa</h2>
+      <p>Questa pagina risponde a una domanda sola: a che numero sei. Non guarda com'è fatto il
+      sito, e non può dirti perché sei a quel numero.</p>
+      <p>L'<a href="/sottosopra/">analisi completa</a> legge fino a 200 pagine e controlla 48
+      aspetti tecnici: dati strutturati, struttura dei contenuti, indicizzazione, sicurezza,
+      velocità misurata, e quali motori IA riescono davvero a leggerti. Ci mette qualche minuto
+      invece di qualche secondo, e comprende anche il controllo delle posizioni che trovi qui.</p>
+      <p>Se hai bisogno che i problemi trovati li sistemi qualcuno, <a href="/servizi/">è il lavoro
+      che faccio</a>: <a href="/contatti/">scrivimi</a> e ne parliamo.</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{{ end }}

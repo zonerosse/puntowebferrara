@@ -1,0 +1,46 @@
+puntowebferrara-posizionamento.zip
+==================================
+
+CONTIENE SETTE FILE. Niente altro.
+
+  content/sottosopra/_index.md          era content/sottosopra.md — SPOSTATO
+  content/sottosopra/posizionamento.md  NUOVO
+  layouts/page/posizionamento.html      NUOVO
+  layouts/page/sottosopra.html          sezione posizioni ridotta, 40 -> 48
+  layouts/partials/stile-strumento.html NUOVO — stili estratti, condivisi
+  layouts/404.html                      "Quaranta" -> "Quarantotto"
+  static/llms.txt                       40 -> 48 controlli
+
+UN PASSAGGIO DA FARE A MANO, PRIMA DI SCOMPATTARE
+-------------------------------------------------
+content/sottosopra.md diventa content/sottosopra/_index.md. Lo zip crea il
+file nuovo ma NON cancella il vecchio: se resta, Hugo trova due pagine per
+lo stesso indirizzo. In PowerShell, dentro C:\Hugo\puntowebferrara-hugo :
+
+  git rm content/sottosopra.md
+
+Poi scompatta lo zip e controlla con git status.
+
+L'indirizzo /sottosopra/ NON cambia: verificato ricompilando il sito.
+
+COSA CAMBIA
+-----------
+1. Nasce /sottosopra/posizionamento/ con il testo sulle posizioni che prima
+   stava dentro /sottosopra/. Non e' duplicato: e' stato spostato, e nella
+   pagina madre resta un paragrafo con il collegamento.
+2. Gli stili di Sottosopra sono in una partial condivisa. Il CSS prodotto e'
+   identico al carattere, verificato confrontando le build prima e dopo.
+3. "40 controlli" corretto in 48 in cinque punti.
+
+COSA MANCA ANCORA
+-----------------
+Il pulsante "Vedi le posizioni" NON funziona ancora: manca il codice che
+chiama /api/posizioni e disegna il risultato. La pagina si vede, i testi si
+leggono, ma il modulo e' fermo.
+
+E' voluto: quel codice esiste gia' dentro verifica.js e va estratto invece
+che riscritto, altrimenti fra sei mesi ci sono due copie che divergono.
+E' il passo successivo.
+
+Quindi: guarda la pagina in locale con "hugo server", ma NON pubblicarla
+finche' il modulo non funziona.

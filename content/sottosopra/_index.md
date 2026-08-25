@@ -1,7 +1,7 @@
 ---
 title: "Sottosopra"
-titleSeo: "Il tuo sito è leggibile dalle AI? Verifica gratis, 40 controlli"
-description: "Quali AI possono leggere il tuo sito e a che posizione sei su Google. 40 controlli spiegati uno per uno, gratis e senza registrazione."
+titleSeo: "Il tuo sito è leggibile dalle AI? Verifica gratis"
+description: "Quali motori IA possono leggere il tuo sito e a che posizione sei su Google. 48 controlli spiegati uno per uno, gratis e senza registrazione."
 type: "page"
 layout: "sottosopra"
 sitemap:
@@ -13,7 +13,7 @@ faq:
   - q: "La verifica è davvero gratuita?"
     a: "Sì. Nessuna registrazione, nessuna email, nessun limite di prova. Se poi vuoi che sistemi io i problemi trovati, quello è un lavoro a pagamento — la verifica resta gratis."
   - q: "Che cosa controlla esattamente?"
-    a: "Quaranta controlli in otto gruppi: accesso dei crawler IA, dati strutturati, struttura dei contenuti, indicizzazione, metadati e condivisione, sicurezza e configurazione, peso del codice, e prestazioni reali misurate con Lighthouse."
+    a: "Quarantotto controlli in nove gruppi: accesso dei crawler IA, dati strutturati, struttura dei contenuti, indicizzazione, metadati e condivisione, sicurezza e configurazione, peso del codice, e prestazioni reali misurate con Lighthouse."
   - q: "Da dove vengono i dati sulle prestazioni?"
     a: "Dall'API PageSpeed Insights di Google, che è Lighthouse eseguito sui server di Google. Sono le stesse misure che vedresti aprendo Lighthouse nel browser, ma su un dispositivo di riferimento uguale per tutti, così i confronti hanno senso."
   - q: "Perché il punteggio è scomposto?"
