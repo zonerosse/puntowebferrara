@@ -207,7 +207,7 @@ export const SCHEDE = {
     perche: 'Chi naviga elencando i collegamenti si ritrova venti voci "leggi di più" ' +
       'identiche, senza nessuna indicazione di dove portino. Vale anche per Google.',
     comeSi: 'Scrivi dove porta: "Leggi la scheda della cucciolata" invece di "Leggi di più".',
-    messaggio: (n, t, r, l) => frase(n, 'collegamento generico', 'collegamenti generici') + suPagine(r, l),
+    messaggio: (n, t, r, l) => frase(n, 'collegamento generico', 'collegamenti generici') + ' da correggere' + suPagine(r, l),
   },
   a11yLinkDistinti: {
     gravita: 'medio', wcag: '2.4.4 A',
@@ -215,15 +215,18 @@ export const SCHEDE = {
     perche: 'Due collegamenti con lo stesso nome e destinazioni diverse sono indistinguibili ' +
       'per chi non vede il contesto attorno.',
     comeSi: 'Differenzia i testi, o aggiungi aria-label più specifici.',
-    messaggio: (n, t, r, l) => frase(n, 'testo ripetuto', 'testi ripetuti') + suPagine(r, l),
+    messaggio: (n, t, r, l) => frase(n, 'testo ripetuto', 'testi ripetuti') + ' da differenziare' + suPagine(r, l),
   },
   a11yNuovaScheda: {
     gravita: 'basso', wcag: '3.2.2 A',
     titolo: 'Nuove schede aperte senza avvisare',
+    // Conteggio per elementi distinti: sono quasi sempre i link del piede di
+    // pagina, gli stessi su tutto il sito. Sommarli darebbe un numero enorme
+    // e cinque cose da sistemare.
     perche: 'Il cambio di contesto non annunciato disorienta, e il tasto indietro smette di ' +
       'funzionare come ci si aspetta.',
     comeSi: 'Aggiungi al testo o all\'aria-label "si apre in una nuova scheda".',
-    messaggio: (n, t, r, l) => frase(n, 'collegamento', 'collegamenti') + suPagine(r, l),
+    messaggio: (n, t, r, l) => frase(n, 'collegamento diverso', 'collegamenti diversi') + ' da correggere' + suPagine(r, l),
   },
   a11yLinkVeri: {
     gravita: 'medio', wcag: '4.1.2 A',
@@ -231,7 +234,7 @@ export const SCHEDE = {
     perche: 'Un <a href="#"> viene annunciato come collegamento ma non porta da nessuna ' +
       'parte. Se è un\'azione, va dichiarata come tale.',
     comeSi: 'Usa <button> per le azioni e <a> solo per la navigazione.',
-    messaggio: (n, t, r, l) => frase(n, 'collegamento finto', 'collegamenti finti') + suPagine(r, l),
+    messaggio: (n, t, r, l) => frase(n, 'collegamento finto', 'collegamenti finti') + ' da correggere' + suPagine(r, l),
   },
 
   /* ===== TABELLE ====================================================== */

@@ -1,44 +1,45 @@
-puntowebferrara-a11y-rumore.zip
-===============================
+puntowebferrara-a11y-conteggi.zip
+=================================
 
-SEI FILE. Correggono il rumore trovato sull'analisi di delpiccolodiavolo.it.
+DUE FILE. Corregge il conteggio che restava gonfiato.
 
-  functions/api/_accessibilita.js            tre correzioni al motore
-  static/sottosopra/accessibilita-schede.js  tolta la scheda del controllo
-                                             rimosso
-  static/sottosopra/accessibilita-blocco.js  conteggio 36 -> 35
-  layouts/page/accessibilita.html            barra dei gruppi ricalcolata
-  content/sottosopra/accessibilita.md        title aggiornato
-  hugo.toml                                  voce di menu aggiornata
+  static/sottosopra/accessibilita.js         come si sommano le pagine
+  static/sottosopra/accessibilita-schede.js  i messaggi lo dicono in chiaro
 
 Va scompattato SOPRA gli zip precedenti dell'accessibilita'.
 
-COSA CAMBIA NEI RILIEVI
------------------------
-1. INDIRIZZI NORMALIZZATI
-   Due link con lo stesso testo e lo stesso indirizzo scritto in modi
-   diversi (+ contro %20, con o senza barra finale) non sono piu' contati
-   come "due destinazioni". Erano i tuoi link WhatsApp nel piede.
+COS'ERA SBAGLIATO
+-----------------
+La correzione precedente contava gli elementi distinti DENTRO una pagina:
+i cinque link del piede diventavano cinque e non venticinque.
 
-2. IL CONTROLLO SUGLI SVG E' STATO TOLTO
-   Segnalava 639 icone su 653 — il 98%. Un controllo che boccia quasi tutto
-   quello che guarda non aiuta a distinguere niente. E il caso che contava
-   davvero — un elemento cliccabile fatto di sola icona — era gia' coperto
-   da "collegamento senza testo" e "pulsante senza testo accessibile".
-   I controlli passano da 36 a 35.
+Ma poi il rapporto sommava le pagine, e quei cinque tornavano a
+moltiplicarsi: 5 x 27 pagine = 135. Su delpiccolodiavolo, 5 x 138 = 690.
+Avevo sistemato il piano sbagliato.
 
-3. NUOVE SCHEDE CONTATE PER TESTO DISTINTO
-   Cinque link nel piede di pagina su 138 pagine facevano 803 segnalazioni.
-   Ora sono 5: cinque cose da sistemare, non ottocento.
+COSA CAMBIA ADESSO
+------------------
+Per i difetti che stanno nel MODELLO del sito — link che aprono nuove
+schede, testi generici, testi ambigui, collegamenti finti — si prende il
+massimo per pagina invece della somma. E' quante cose distinte devi
+toccare, che e' il numero che serve.
 
-I RILIEVI VERI RESTANO TUTTI
-----------------------------
-Provato su una pagina costruita con i difetti veri: campi senza etichetta,
-link fatti di sola icona, video con audio, testi di link ambigui. Li trova
-ancora tutti. Le correzioni non hanno spento niente.
+  nuove schede    135  ->  5
+  testi generici    7  ->  7   (stanno su una pagina sola: invariato)
 
-DOPO IL DEPLOY
---------------
-Ctrl+F5, poi rifai l'analisi di delpiccolodiavolo.it. Il punteggio salira'
-e in cima resteranno le cose che contano davvero: i 18 campi senza etichetta
-sulle pagine della lista d'attesa.
+Per i campi dei moduli la somma resta, ed e' giusta: i campi della lista
+d'attesa sono diversi da quelli della pagina contatti, e vanno contati
+tutti.
+
+I messaggi ora dicono "5 collegamenti diversi da correggere" invece di
+"5 collegamenti", cosi' non c'e' ambiguita' su cosa sia quel numero.
+
+UNA COSA CHE NON HO POTUTO VERIFICARE
+-------------------------------------
+Nel rapporto che mi hai incollato gli elenchi degli esempi risultavano
+vuoti — ma vuote risultavano anche le FAQ, che il testo ce l'hanno. Puo'
+essere solo l'effetto del copia-incolla con le tendine chiuse.
+
+Dopo il deploy apri una tendina "Perche' conta e come si sistema" e
+guarda se dentro ci sono gli esempi tipo input name="azienda". Se non ci
+sono, dimmelo: e' un altro difetto e va cercato.

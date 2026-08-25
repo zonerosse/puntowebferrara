@@ -130,7 +130,24 @@ modulo.addEventListener('submit', async e => {
    Aggregazione. Un controllo che fallisce sulla meta' delle pagine e' un
    difetto del modello, e va detto una volta sola con scritto su quante
    pagine ricorre — non una volta per pagina.
+
+   SOMMARE O NO. Per certi controlli sommare le pagine e' giusto: i campi
+   senza etichetta di un modulo sono campi diversi da quelli di un altro
+   modulo, e vanno contati tutti. Per altri no: i cinque collegamenti del
+   piede di pagina sono gli stessi cinque su tutte le pagine del sito, e
+   sommarli vuol dire scrivere 803 dove le cose da sistemare sono cinque.
+
+   Per quelli sotto si prende il MASSIMO per pagina invece della somma: e'
+   quanti elementi distinti ci sono nel modello, che e' il numero di cose
+   che devi davvero toccare.
    ------------------------------------------------------------------------ */
+
+const NEL_MODELLO = [
+  'a11yNuovaScheda',       // i link del piede, identici ovunque
+  'a11yLinkDescrittivi',   // "Leggi →" ripetuto negli elenchi
+  'a11yLinkDistinti',      // testi ambigui del menu e del piede
+  'a11yLinkVeri',          // collegamenti finti della navigazione
+];
 function aggrega(pagine, scoperta, totaleTrovate) {
   const per = {};   // id -> { n, tot, pagineRotte:[], esempi:[] }
 
@@ -142,8 +159,15 @@ function aggrega(pagine, scoperta, totaleTrovate) {
                                           dove: [], esempi: [] });
       acc.quota += e.quota;
       acc.misurate++;
-      acc.n += e.n || 0;
-      acc.tot += e.tot || 0;
+      if (NEL_MODELLO.indexOf(id) === -1) {
+        acc.n += e.n || 0;
+        acc.tot += e.tot || 0;
+      } else {
+        // difetto del modello: quante cose distinte da sistemare, non quante
+        // volte si ripetono lungo il sito
+        acc.n = Math.max(acc.n, e.n || 0);
+        acc.tot = Math.max(acc.tot, e.tot || 0);
+      }
       if (e.quota < 0.999) {
         acc.dove.push(p.url);
         for (const x of (e.esempi || [])) {
