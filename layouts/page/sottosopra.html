@@ -361,6 +361,15 @@
 .strumento .legenda span{display:inline-flex;align-items:center;gap:.35rem}
 .strumento /* --- testo editoriale in fondo --- */
   #perche{margin-top:3rem}
+/* la sezione sui crawler AI veste come #perche: e' prosa, non interfaccia */
+.strumento #leggibile h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
+.strumento #leggibile h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
+.strumento #leggibile p{max-width:66ch;margin-bottom:.9rem;color:#3d4b47}
+.strumento #leggibile strong{color:var(--inchiostro)}
+.strumento #leggibile ul.bot{display:flex;flex-wrap:wrap;gap:.35rem;list-style:none;padding:0;
+    margin:.6rem 0 1rem}
+.strumento #leggibile ul.bot li{font-family:var(--mono);font-size:.72rem;background:var(--carta);
+    border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;color:var(--grafite)}
 .strumento #perche h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
 .strumento #perche h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
 .strumento #perche p{max-width:66ch;margin-bottom:.9rem;color:#3d4b47}
@@ -584,8 +593,56 @@
   <div id="zonaErrore"></div>
   <section class="esito" id="esito"></section>
 
+  <section id="leggibile">
+    <h2>Il tuo sito è leggibile dalle AI?</h2>
+    <p>Quando ChatGPT, Gemini o Perplexity rispondono a una domanda, spesso vanno a leggere le
+    pagine web nel momento stesso in cui serve. Se il tuo sito dice loro di non entrare, non ti
+    citeranno mai — e non c'è nessun avviso che te lo segnali.</p>
+    <p>Il blocco si trova in un file di testo alla radice del sito, il <strong>robots.txt</strong>.
+    Molti siti lo hanno ereditato da un tema, da un plugin o da un consulente che nel 2023 ha scelto
+    di sbarrare la porta alle AI, e da allora nessuno l'ha più guardato. La verifica qui sopra legge
+    quel file e ti dice, uno per uno, chi può entrare e chi no.</p>
+
+    <h3>Quali crawler delle AI vengono controllati</h3>
+    <p>Quattordici, letti nel robots.txt del tuo sito. Non sono stime: o la direttiva c'è o non c'è,
+    e puoi verificarlo aprendo il file con i tuoi occhi.</p>
+    <ul class="bot">
+      <li>GPTBot</li><li>OAI-SearchBot</li><li>ChatGPT-User</li><li>ClaudeBot</li>
+      <li>Claude-User</li><li>PerplexityBot</li><li>Google-Extended</li><li>GoogleOther</li>
+      <li>Applebot-Extended</li><li>Amazonbot</li><li>Bingbot</li><li>CCBot</li>
+      <li>Bytespider</li><li>cohere-ai</li>
+    </ul>
+    <p>Hanno mestieri diversi, e questo cambia cosa perdi bloccandoli. <strong>GPTBot</strong>
+    raccoglie pagine per l'addestramento; <strong>OAI-SearchBot</strong> e
+    <strong>ChatGPT-User</strong> leggono il tuo sito mentre qualcuno sta facendo una domanda.
+    Bloccare il primo è una scelta legittima sui propri contenuti; bloccare gli altri due significa
+    sparire dalle risposte, ed è quasi sempre involontario.</p>
+
+    <h3>Cosa succede se il robots.txt li blocca</h3>
+    <p>Niente di visibile: il sito funziona, Google continua a indicizzarlo, le visite non calano da
+    un giorno all'altro. Semplicemente, quando qualcuno chiede a un'AI un consiglio nel tuo settore,
+    tu non sei fra le fonti. È un'assenza silenziosa, e per questo dura anni.</p>
+    <p>Sbloccarli è una riga di testo. La parte difficile è accorgersene.</p>
+
+    <h3>llms.txt: cos'è e serve davvero</h3>
+    <p>È un file, sempre alla radice del sito, che descrive in forma breve di cosa ti occupi e quali
+    pagine contano. L'idea è dare ai modelli una mappa scritta apposta per loro, invece di lasciarli
+    dedurre tutto dal codice.</p>
+    <p><strong>Onestamente: oggi non è uno standard riconosciuto</strong> e nessuno dei grandi motori
+    ha dichiarato di usarlo. La verifica lo controlla perché costa nulla averlo e potrebbe contare
+    domani, non perché la sua assenza sia un problema adesso. Se qualcuno te lo vende come
+    indispensabile, ti sta vendendo qualcosa.</p>
+  </section>
+
   <section>
     <h2>Domande frequenti</h2>
+    <details class="faq"><summary>Il mio sito non compare nelle risposte delle AI: dipende da questo?</summary>
+      <p>Può dipendere, ed è la prima cosa da escludere. Se il robots.txt blocca i crawler dei
+      modelli, il sito per loro non esiste e nessun contenuto potrà cambiarlo. La verifica te lo dice
+      in un minuto, uno per uno. Se invece i crawler entrano, il problema è altrove: contenuti,
+      autorevolezza, o semplicemente il fatto che nessuno ha ancora fatto quella domanda a un
+      modello.</p>
+    </details>
     <details class="faq"><summary>La verifica è davvero gratuita?</summary>
       <p>Sì. Nessuna registrazione, nessuna email, nessun limite di prova. Se poi vuoi che sistemi io i
       problemi trovati, quello è un lavoro a pagamento — la verifica resta gratis.</p></details>

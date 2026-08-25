@@ -1,13 +1,15 @@
 ---
 title: "Sottosopra"
-titleSeo: "Sottosopra — verifica gratuita del sito | Punto Web"
-description: "Analisi gratuita del tuo sito: 40 controlli su dati strutturati, crawler IA, struttura e velocità. Ogni punto spiegato, con il rimedio."
+titleSeo: "Il tuo sito è leggibile dalle AI? Verificalo gratis in un minuto"
+description: "Scopri se ChatGPT, Gemini e Perplexity possono leggere il tuo sito, e a che posizione sei su Google. 40 controlli gratis, ognuno spiegato. Senza registrazione."
 type: "page"
 layout: "sottosopra"
 sitemap:
   priority: 0.9
   changefreq: monthly
 faq:
+  - q: "Il mio sito non compare nelle risposte delle AI: dipende da questo?"
+    a: "Può dipendere, ed è la prima cosa da escludere. Se il robots.txt blocca i crawler dei modelli, il sito per loro non esiste e nessun contenuto potrà cambiarlo. La verifica te lo dice in un minuto, uno per uno. Se invece i crawler entrano, il problema è altrove: contenuti, autorevolezza, o semplicemente il fatto che nessuno ha ancora fatto quella domanda a un modello."
   - q: "La verifica è davvero gratuita?"
     a: "Sì. Nessuna registrazione, nessuna email, nessun limite di prova. Se poi vuoi che sistemi io i problemi trovati, quello è un lavoro a pagamento — la verifica resta gratis."
   - q: "Che cosa controlla esattamente?"
