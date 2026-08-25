@@ -170,7 +170,16 @@
 .strumento .dentro p:last-child{margin:0}
 .strumento .dentro b{color:var(--inchiostro);font-weight:600}
 
-.strumento .dentro .capolista{font-size:.76rem;color:var(--grafite);margin:.75rem 0 .3rem;
+/* le liste raggruppate per localita', con lo stesso colore delle caselle */
+.strumento .dentro .gruppo{margin:0 0 .9rem;padding-left:.7rem;border-left:3px solid var(--linea)}
+.strumento .dentro .gruppo:last-child{margin-bottom:0}
+.strumento .dentro .gruppo.italia{border-left-color:#b3124f}
+.strumento .dentro .gruppo.citta{border-left-color:#0d6b58}
+.strumento .dentro .luogo-capo{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:700;margin:0 0 .45rem}
+.strumento .dentro .gruppo.italia .luogo-capo{color:#b3124f}
+.strumento .dentro .gruppo.citta .luogo-capo{color:#0d6b58}
+.strumento .dentro .capolista{font-size:.76rem;color:var(--grafite);margin:.6rem 0 .3rem;
     line-height:1.4}
 .strumento .dentro .capolista:first-child{margin-top:0}
 .strumento .dentro .capolista b{color:var(--inchiostro);font-weight:700}
@@ -179,6 +188,10 @@
 .strumento .concorrenti.nomi li{font-family:inherit;font-size:.78rem}
 .strumento .concorrenti li{font-family:var(--mono);font-size:.72rem;background:var(--carta);
     border:1px solid var(--linea);border-radius:3px;padding:.2rem .45rem;color:var(--grafite)}
+.strumento .concorrenti li a{color:#0d4275;text-decoration:none;display:block}
+.strumento .concorrenti li a:hover{text-decoration:underline}
+.strumento .concorrenti li a::after{content:"\2197";font-size:.72em;margin-left:.3em;opacity:.6}
+.strumento .concorrenti li.senza-link{color:var(--grafite)}
 
 .strumento .posizioni-nota{font-size:.78rem;color:var(--grafite);margin:1rem 0 0;line-height:1.5}
 .strumento .posizioni-nota.guasto{color:#b3730a}

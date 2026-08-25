@@ -1122,26 +1122,46 @@ function bloccoPosizioni(dati) {
     }
     if (lettura) h += tendina('Cosa dicono questi numeri', lettura);
 
-    // Chi c'e' in cima, distinto per gara: i domini vengono dai risultati
-    // organici, i nomi dal riquadro mappe. Sono due liste diverse e finora
-    // erano presentate come una sola, senza dire da dove venissero.
-    const liste = [];
+    // Chi c'e' in cima, per ogni localita' e per ognuna delle due gare: i
+    // domini vengono dai risultati organici, i nomi dal riquadro mappe. Il
+    // dato locale arrivava gia' dall'endpoint e veniva buttato via.
+    // Una voce diventa un collegamento solo se l'indirizzo c'e' davvero. Le
+    // schede del riquadro mappe spesso non dichiarano un sito: in quel caso
+    // resta testo, invece di inventare un indirizzo plausibile.
+    // rel="nofollow": senza, ogni rapporto regalerebbe un segnale di fiducia
+    // ai concorrenti del sito analizzato.
+    const voce = (testo, indirizzo) => {
+      if (!indirizzo || !/^https?:\/\//i.test(indirizzo))
+        return '<li class="senza-link">' + T(testo) + '</li>';
+      return '<li><a href="' + T(indirizzo) + '" target="_blank" rel="nofollow noopener">' +
+             T(testo) + '</a></li>';
+    };
+
     const elenco = (capo, voci, classe) =>
-      '<p class="capolista">' + capo + '</p><ul class="concorrenti' + classe + '">' +
-      voci.map(v => '<li>' + T(v) + '</li>').join('') + '</ul>';
+      '<p class="capolista"><b>' + capo + '</b></p><ul class="concorrenti' + classe + '">' +
+      voci.map(v => voce(v.testo, v.indirizzo)).join('') + '</ul>';
 
-    if (naz && naz.primi && naz.primi.length)
-      liste.push(elenco('<b>Risultati normali (SERP)</b> \u2014 Italia',
-        naz.primi.map(v => v.dominio), ''));
-
-    for (const [dove, lato] of (conCitta ? [['Italia', naz], [nomeCitta, loc]]
-                                         : [['Italia', naz]])) {
-      if (lato && lato.mappe && lato.mappe.presente && lato.mappe.chi && lato.mappe.chi.length)
-        liste.push(elenco('<b>Riquadro mappe (Google Business Profile)</b> \u2014 ' + T(dove),
-          lato.mappe.chi, ' nomi'));
+    const gruppi = [];
+    for (const [classe, dove, lato] of (conCitta ? [['italia', 'Italia', naz],
+                                                    ['citta', nomeCitta, loc]]
+                                                 : [['italia', 'Italia', naz]])) {
+      if (!lato || lato.errore) continue;
+      let dentro = '';
+      if (lato.primi && lato.primi.length)
+        dentro += elenco('Risultati normali (SERP)',
+          lato.primi.map(v => ({ testo: v.dominio, indirizzo: v.indirizzo })), '');
+      if (lato.mappe && lato.mappe.presente && lato.mappe.chi && lato.mappe.chi.length)
+        dentro += elenco('Riquadro mappe (Google Business Profile)',
+          // le versioni precedenti mandavano solo il nome, come stringa
+          lato.mappe.chi.map(v => (typeof v === 'string'
+            ? { testo: v, indirizzo: null }
+            : { testo: v.nome, indirizzo: v.indirizzo })), ' nomi');
+      if (dentro)
+        gruppi.push('<div class="gruppo ' + classe + '"><p class="luogo-capo">' + T(dove) +
+                    '</p>' + dentro + '</div>');
     }
 
-    if (liste.length) h += tendina('Chi c\u2019\u00e8 in cima', liste.join(''));
+    if (gruppi.length) h += tendina('Chi c\u2019\u00e8 in cima', gruppi.join(''));
 
     return h + '</div>';
   }).join('');

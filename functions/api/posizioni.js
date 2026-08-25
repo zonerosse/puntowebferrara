@@ -195,10 +195,12 @@ async function posizioni(context) {
       oltre: !mio,
       indirizzo: mio ? mio.url : null,
       // Chi sta davanti serve più del numero: se in cima ci sono tre portali
-      // nazionali, la parola chiave è persa, e va detto.
+      // nazionali, la parola chiave è persa, e va detto. L'indirizzo serve a
+      // rendere le voci cliccabili nel rapporto.
       primi: organici.slice(0, 3).map(v => ({
         dominio: v.domain,
         titolo: (v.title || '').slice(0, 90),
+        indirizzo: v.url || null,
       })),
       mappe: {
         presente: mappe.length > 0,
@@ -207,7 +209,12 @@ async function posizioni(context) {
         // Il totale va contato su TUTTE le schede, non sulle tre che mi porto
         // dietro per mostrarle: altrimenti chi è quarto risulta "4° su 3".
         totale: mappe.length,
-        chi: mappe.slice(0, 3).map(v => (v.title || '').slice(0, 60)),
+        // Nome e sito dichiarato nella scheda. Il sito spesso manca: in quel
+        // caso la voce resta non cliccabile, senza inventarle un indirizzo.
+        chi: mappe.slice(0, 3).map(v => ({
+          nome: (v.title || '').slice(0, 60),
+          indirizzo: v.url || (v.domain ? 'https://' + v.domain : null),
+        })),
       },
     };
   }
