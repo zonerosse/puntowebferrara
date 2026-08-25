@@ -383,14 +383,26 @@
 .strumento /* --- testo editoriale in fondo --- */
   #perche{margin-top:3rem}
 /* la sezione sui crawler AI veste come #perche: e' prosa, non interfaccia */
-.strumento #posizioni-sez h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
-.strumento #posizioni-sez h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
-.strumento #posizioni-sez p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
-.strumento #posizioni-sez strong{color:var(--inchiostro)}
-.strumento #leggibile h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
-.strumento #leggibile h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
-.strumento #leggibile p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
-.strumento #leggibile strong{color:var(--inchiostro)}
+/* IMPAGINAZIONE DEL TESTO. Queste regole erano legate agli id delle due
+   sezioni della pagina di analisi — #posizioni-sez e #leggibile — e quindi
+   valevano solo li'. Le pagine nuove del posizionamento e dell'accessibilita'
+   restavano senza: il testo correva per tutti i 1180 pixel del foglio, cioe'
+   ben oltre le 88 battute oltre le quali l'occhio perde la riga.
+
+   Ora la regola e' sulle sezioni: vale ovunque, comprese le pagine che
+   verranno. Gli id restano per le regole che davvero sono solo loro. */
+.strumento .foglio > section h2,
+.strumento #posizioni-sez h2, .strumento #leggibile h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
+.strumento .foglio > section h3,
+.strumento #posizioni-sez h3, .strumento #leggibile h3{font-size:1rem;margin:1.6rem 0 .5rem;
+    color:var(--verde)}
+.strumento .foglio > section p,
+.strumento #posizioni-sez p, .strumento #leggibile p{max-width:88ch;margin-bottom:.9rem;
+    color:#3d4b47}
+.strumento .foglio > section strong,
+.strumento #posizioni-sez strong, .strumento #leggibile strong{color:var(--inchiostro)}
+/* le tendine delle FAQ hanno gia' il loro trattamento: non le tocchiamo */
+.strumento .foglio > section details.faq p{max-width:88ch}
 /* I due gruppi di crawler, ognuno col suo colore: arancione chi ti fa sparire
    dalle risposte se lo blocchi, blu chi raccoglie e basta. Il colore dice
    quale blocco e' pericoloso, non decora. */

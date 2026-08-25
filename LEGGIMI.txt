@@ -1,62 +1,61 @@
-puntowebferrara-moduli.zip  (versione 3)
-========================================
+puntowebferrara-moduli.zip  (versione 4 — definitiva)
+=====================================================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-CINQUE FILE. Sostituisce le versioni precedenti di questo stesso zip.
+CINQUE FILE. Sostituisce tutte le versioni precedenti di questo zip.
 Va scompattato SOPRA puntowebferrara-COMPLETO.zip.
 
-  layouts/partials/stile-strumento.html   stili di moduli e tendina
-  layouts/page/posizionamento.html        tre passi + la tendina nuova
+  layouts/partials/stile-strumento.html   stili di moduli, tendina, testo
+  layouts/page/posizionamento.html        tre passi, tendina, impaginazione
   layouts/page/sottosopra.html            etichetta visibile
   layouts/page/accessibilita.html         etichetta visibile
   content/sottosopra/posizionamento.md    title
 
+I DUE DIFETTI DI IMPAGINAZIONE, CORRETTI
+----------------------------------------
+1. UN </div> DI TROPPO nella pagina del posizionamento, rimasto quando ho
+   sostituito la tendina. Chiudeva il contenitore .foglio in anticipo e da
+   li' in giu' la pagina usciva dai margini: ecco perche' non c'erano
+   bordi laterali.
+
+2. IL LIMITE DI 88 BATTUTE non arrivava alle pagine nuove. Era scritto
+   legato agli id #posizioni-sez e #leggibile, due sezioni della sola
+   pagina di analisi. Ora la regola e' sulle sezioni: vale su tutte e tre
+   le pagine e varra' anche su quelle che verranno.
+
+3. IL CONTENITORE DEL RAPPORTO sulla pagina posizionamento era un <div>
+   senza classe, mentre sulle altre due e' <section class="esito">. Non
+   prendeva ne' gli stili del rapporto ne' le 88 battute. Ora sono uguali
+   tutte e tre.
+
 LA TENDINA DELLE LOCALITA'
 --------------------------
-Da 28 voci a 127:
-  1   "Nessuna — solo ricerca nazionale"
-  20  regioni intere  ("Tutta la Lombardia", "Tutte le Marche"...)
-  106 capoluoghi di provincia
+127 voci: nessuna localita', 20 regioni intere, 106 capoluoghi.
+Raggruppate per regione, intestazioni su fondo verde chiaro (si vede su
+Firefox; su Chrome e Safari restano i trattini nel testo, che si vedono
+ovunque). Freccia disegnata nel tuo verde.
 
-LA RICERCA PER REGIONE E' NUOVA. Serve a chi lavora su un territorio
-ampio invece che su una citta' sola.
-
-Le voci sono raggruppate per regione, con l'intestazione su fondo verde
-chiaro. ATTENZIONE: il colore si vede su Firefox, non su Chrome e Safari
-— la tendina di un select la disegna il sistema operativo, non il CSS.
-Per questo le intestazioni portano anche dei trattini nel testo, che si
-vedono ovunque: dove il colore arriva e' un di piu', dove non arriva le
-regioni restano comunque distinguibili.
-
-La freccia e' disegnata nel tuo verde invece di quella grigia del sistema.
-
-UN LIMITE DI CUI DEVI SAPERE
-----------------------------
-I nomi delle localita' devono coincidere con quelli del fornitore dei
-dati. Alcune usano l'esonimo inglese: Milano e' "Milan", Mantova
-"Mantua", Siracusa "Syracuse", Firenze "Florence". Le ho scritte cosi',
-ma su qualcuna posso aver sbagliato e non ho modo di verificarle una per
-una da qui.
-
-Quando una localita' non viene riconosciuta, la ricerca locale non parte,
-il rapporto lo scrive, e il resto dell'analisi continua. Nessun danno,
-ma un'analisi sprecata.
-
-Se vuoi la certezza, DataForSEO ha un endpoint che elenca le localita'
-valide: si interroga una volta, si confronta con questa lista e si
-correggono le poche che non tornano. Costa pochi centesimi e la lista
-resta buona per anni.
-
-IL RESTO
+I MODULI
 --------
-Etichette dei moduli da 11 a 15 pixel, tonde invece che maiuscolette.
+Etichette da 11 a 15 pixel, tonde invece che maiuscolette, colore pieno.
 Il posizionamento ha tre passi numerati in ambra, tutti e tre pieni.
-"In che posizione sei" al posto di "A che posizione sei", in tre punti.
+Il terzo campo dice cosa fa: "Da quale citta' vuoi simulare la ricerca
+locale". "In che posizione sei" al posto di "A che posizione sei".
 Sugli altri due strumenti l'etichetta del campo era nascosta agli occhi:
 ora si vede.
 
 VERIFICATO
 ----------
-Build Hugo, 127 voci tutte ben formate, nessun valore malformato,
+Build Hugo, sintassi di tutti i file JS, gli id cercati dagli script,
+div bilanciati in tutte e tre le pagine, 127 voci ben formate,
 accessibilita' del sito 100/100 su 27 pagine.
+
+UNA COSA DA PROVARE TU DOPO IL DEPLOY
+-------------------------------------
+Il rapporto dell'ANALISI COMPLETA — cerchi, ragnatela, tabella dei 48
+controlli — ha i suoi stili scritti da te e non l'ho toccato, ma non ho
+modo di simularlo qui senza un'analisi vera.
+
+Fai un'analisi completa su /sottosopra/ e guarda che l'impaginazione sia
+quella di sempre. Se lo e', siamo a posto ovunque.
