@@ -147,6 +147,18 @@ const RUOLI_ARIA = ('alert alertdialog application article banner blockquote but
   'spinbutton status strong subscript superscript switch tab table tablist tabpanel term ' +
   'textbox time timer toolbar tooltip tree treegrid treeitem').split(' ');
 
+// L'avviso di apertura in nuova scheda, nelle lingue che un sito italiano
+// puo' ragionevolmente servire. La prima versione conosceva solo italiano e
+// inglese, e bocciava le pagine tedesche di un sito che l'avviso ce l'aveva:
+// "wird in einem neuen Tab geoeffnet" e' un avviso perfettamente valido.
+const RE_AVVISO_NUOVA_SCHEDA = new RegExp(
+  'nuova (scheda|finestra)|si apre in|' +          // italiano
+  'new (tab|window)|opens in' +                    // inglese
+  '|neuen (tab|fenster)|neuem (tab|fenster)|wird in einem|geöffnet|geoffnet' +  // tedesco
+  '|nouvel onglet|nouvelle fenêtre|s\'ouvre dans' +   // francese
+  '|nueva (pestaña|ventana)|se abre en',              // spagnolo
+  'i');
+
 const NOMI_PERSONALI = /(^|[-_])(nome|name|cognome|surname|email|mail|telefono|phone|tel|indirizzo|address|citta|city|cap|zip|postal)([-_]|$)/i;
 
 // I campi trappola antispam sono nascosti per definizione: nessuno li vede,
@@ -174,6 +186,20 @@ function campoNascosto(attributi) {
  * @param {string} url    indirizzo, solo per i messaggi
  */
 export function analizzaAccessibilita(html, url) {
+  // Le pagine di reindirizzamento non sono pagine: un meta refresh a zero
+  // secondi porta altrove prima che chiunque legga qualcosa. Hugo ne genera
+  // una per ogni alias e per le radici di lingua. Analizzarle vuol dire
+  // segnalare che manca l'H1 su un file di dieci righe che nessuno vede.
+  const rinvio = html.match(/<meta[^>]+http-equiv\s*=\s*["']refresh["'][^>]*>/i);
+  if (rinvio && /content\s*=\s*["']\s*[0-2]\s*;/i.test(rinvio[0])) {
+    return {
+      url, esiti: {}, problemi: [], voto: null,
+      controlliMisurati: 0, controlliNonApplicabili: 0,
+      reindirizzamento: true,
+      fuoriPortata: [],
+    };
+  }
+
   const problemi = [];
   const segnala = (gravita, messaggio) =>
     problemi.push({ categoria: 'Accessibilità', gravita, messaggio });
@@ -274,11 +300,21 @@ export function analizzaAccessibilita(html, url) {
     const haNav = /<nav\b/i.test(corpo) || /\brole\s*=\s*["']navigation["']/i.test(corpo);
     if (!haNav) esiti['a11ySalta'] = { quota: null, n: 0, tot: 0, esempi: [] };
     else {
+      // NON si riconosce dal testo. La prima versione cercava parole come
+      // "salta" o "skip", e su un sito multilingua bocciava le pagine tedesche
+      // — "Zum Inhalt springen" e' un link di salto perfettamente valido.
+      // Il criterio giusto e' strutturale: fra i primi collegamenti ce n'e'
+      // uno che punta a un'ancora esistente nella pagina stessa. Funziona in
+      // qualunque lingua, comprese quelle a cui non abbiamo pensato.
       const primi = elementi(corpo, 'a', 6).slice(0, 5);
       const trovato = primi.some(a => {
         const h = attr(a.attributi, 'href') || '';
-        return h.charAt(0) === '#' &&
-          /salta|skip|vai al contenuto|contenuto principale|main content/i.test(testoPulito(a.dentro) + ' ' + (attr(a.attributi, 'aria-label') || ''));
+        if (h.charAt(0) !== '#' || h.length < 2) return false;
+        const bersaglio = h.slice(1);
+        // l'ancora deve esistere: un link a #contenuto che non porta da
+        // nessuna parte non aiuta nessuno
+        return !!tuttiGliId[bersaglio] ||
+          new RegExp('\\bname\\s*=\\s*["\']' + bersaglio.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '["\']').test(corpo);
       });
       siNo('a11ySalta', trovato);
       if (!trovato) segnala('basso', 'Manca il collegamento per saltare al contenuto: da tastiera si riattraversa il menu a ogni pagina');
@@ -386,8 +422,13 @@ export function analizzaAccessibilita(html, url) {
       if ((attr(c.attributi, 'title') || '').trim()) return false;
       const id = attr(c.attributi, 'id');
       if (id && (idEtichettati[id] || idAvvolti[id])) return false;
-      // input avvolto in una label ma senza id
-      const suo = (c.intero || ('<' + c.tag + c.attributi + '>')).replace(/\s+/g, ' ');
+      // Campo avvolto in una label ma senza id. Il confronto si fa sul solo
+      // tag di apertura ricostruito: per <select> e <textarea> la funzione
+      // elementi() restituisce l'elemento INTERO, contenuto e chiusura
+      // compresi, e confrontare quello con i tag raccolti dentro le label non
+      // trovava mai niente. Risultato: i menu a tendina di un modulo scritto
+      // correttamente venivano segnalati come campi senza etichetta.
+      const suo = ('<' + c.tag + c.attributi + '>').replace(/\s+/g, ' ');
       if (tagAvvolti[suo]) return false;
       return true;
     });
@@ -511,7 +552,7 @@ export function analizzaAccessibilita(html, url) {
     for (const a of nuoveSchede) {
       const n = nomeLink(a).toLowerCase() || normalizzaHref(attr(a.attributi, 'href'));
       distintiTot[n] = true;
-      if (!/nuova (scheda|finestra)|new (tab|window)|si apre in/i.test(
+      if (!RE_AVVISO_NUOVA_SCHEDA.test(
             nomeLink(a) + ' ' + (attr(a.attributi, 'title') || ''))) {
         distintiRotti[n] = frammento(nomeLink(a), 40);
       }

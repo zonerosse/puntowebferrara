@@ -1,64 +1,61 @@
-puntowebferrara-a11y-fix.zip
+puntowebferrara-COMPLETO.zip
 ============================
 
-SETTE FILE. Un falso positivo corretto, e i difetti veri sistemati sul
-tuo sito.
+VA IN:  C:\Hugo\puntowebferrara-hugo
 
-  functions/api/_accessibilita.js        esclude i campi nascosti
-  layouts/_default/baseof.html           link "salta al contenuto"
-  layouts/partials/stile-strumento.html  classe per etichette invisibili
-  layouts/page/sottosopra.html           etichetta al campo indirizzo
-  layouts/page/accessibilita.html        etichetta al campo indirizzo
-  layouts/page/contatti.html             autocomplete su nome/email/telefono
-  layouts/page/preventivo.html           autocomplete su nome/email/telefono
+26 file. Contiene TUTTO il lavoro di stanotte per questo sito, in una
+volta sola: se hai gia' messo qualche zip precedente, questo lo
+sovrascrive con la versione definitiva. Se te ne sei perso qualcuno,
+questo lo recupera.
 
-Va scompattato SOPRA gli zip precedenti.
+PRIMA DI SCOMPATTARE
+--------------------
+Se non l'hai gia' fatto, la vecchia pagina verifica va tolta dal repo:
 
-IL FALSO POSITIVO CORRETTO
---------------------------
-I campi nascosti venivano segnalati come "campi senza etichetta". Ora sono
-esclusi: hidden, display:none, visibility:hidden, aria-hidden, le classi
-sr-only e visually-hidden, e i nomi tipici delle trappole antispam
-(_gotcha, honeypot, bot-field...).
+  git rm content/verifica.md layouts/page/verifica.html
+  git rm -r static/verifica/
 
-Erano i tuoi campi antispam su /contatti/ e /preventivo/: nessuno li vede,
-nessuno screen reader li annuncia, chiedere che abbiano un'etichetta non
-aveva senso.
+Se rispondono "did not match any files", vuol dire che l'hai gia' fatto.
 
-I DIFETTI VERI SISTEMATI
-------------------------
-1. Il campo "iltuosito.it" degli strumenti non aveva etichetta. Era un
-   rilievo giusto, sulle MIE pagine. Aggiunta un'etichetta letta dallo
-   screen reader ma non disegnata (classe .solo-voce).
+DOPO AVER SCOMPATTATO, CONTROLLA CHE SIA ENTRATO TUTTO
+-------------------------------------------------------
+  Select-String -Path .\hugo.toml -Pattern "Strumenti"
+  Select-String -Path .\layouts\_default\baseof.html -Pattern "ha-tendina"
+  Select-String -Path .\layouts\page\sottosopra.html -Pattern "modo2"
 
-2. Manca(va) il link "salta al contenuto". Ora c'e' in baseof.html, quindi
-   su tutte le pagine: invisibile finche' non lo raggiungi col Tab.
+Le prime due DEVONO stampare righe. La terza NON deve stampare niente.
+Poi git status deve elencare 26 file (piu' le cancellazioni).
 
-3. Campi nome, email e telefono senza autocomplete su contatti e
-   preventivo. Aggiunto.
+COSA C'E' DENTRO
+----------------
+MENU
+  hugo.toml, baseof.html
+  La voce "Sottosopra" diventa "Strumenti" con quattro sottovoci.
+  Aggiunto anche il link "salta al contenuto" su tutte le pagine.
 
-RISULTATO MISURATO
-------------------
-Prima: voto medio 90 sulle 27 pagine.
-Dopo:  voto medio 95.
+I TRE STRUMENTI, UNO PER COMPITO
+  /sottosopra/                 solo analisi tecnica. Niente parole chiave,
+                               niente Turnstile, nessun costo.
+  /sottosopra/posizionamento/  solo posizioni su Google. Turnstile qui.
+  /sottosopra/accessibilita/   35 controlli WCAG 2.1 AA. NUOVA.
 
-Resta un rilievo solo, minore: i collegamenti che aprono una nuova scheda
-senza dirlo (PageSpeed, WhatsApp, il sito dell'allevamento). Si sistema
-aggiungendo al testo "si apre in una nuova scheda", o un aria-label che
-lo dica. Non l'ho fatto io perche' cambia il testo visibile dei link e
-volevo decidessi tu.
+  Il codice del rapporto posizioni sta in un file solo
+  (posizioni-blocco.js) usato da chi serve: nessuna copia doppia.
 
-E POI: /verifica/ E' ANCORA ONLINE
-----------------------------------
-L'analisi l'ha trovata fra le pagine. Nel mio albero non viene piu'
-generata, e nel tuo l'hai cancellata: quindi Cloudflare sta servendo un
-residuo di una build vecchia.
+ACCESSIBILITA' DEL TUO SITO
+  Etichette ai campi degli strumenti, autocomplete su contatti e
+  preventivo, avviso "si apre in una nuova scheda" su tutti i link
+  esterni, link di salto al contenuto.
 
-Comandi per capirlo:
+  Misurato ricompilando: da 90 a 100 di media su 27 pagine.
 
-  git ls-files | Select-String "verifica"
-
-Se non stampa niente, il repo e' pulito e il problema e' su Cloudflare:
-Workers & Pages > il progetto > Deployments. Guarda se l'ultimo e'
-"Success". Se lo e', fai "Retry deployment" sull'ultimo: rigenera tutto
-da zero e i residui spariscono.
+DA PROVARE DOPO IL DEPLOY
+-------------------------
+1. Menu "Strumenti": quattro voci, e provalo anche col solo Tab.
+2. /sottosopra/ analisi completa: il rapporto NON deve piu' contenere
+   il blocco delle posizioni.
+3. /sottosopra/posizionamento/: due analisi di fila devono funzionare
+   entrambe (il token Turnstile si rigenera dopo ogni uso).
+4. /sottosopra/accessibilita/ su un sito qualsiasi.
+5. Premere un pulsante senza fare la verifica Turnstile: deve avvisare,
+   non fallire.

@@ -109,7 +109,10 @@ modulo.addEventListener('submit', async e => {
   await Promise.all(Array.from({ length: OPERAI }, operaio));
 
   // --- 3. aggregazione ----------------------------------------------------
-  const buone = risultati.filter(r => !r.errore && r.esiti);
+  // Le pagine di reindirizzamento tornano senza esiti: non sono pagine da
+  // valutare e non devono nemmeno finire nel conteggio di quelle lette.
+  const buone = risultati.filter(r => !r.errore && r.esiti && !r.reindirizzamento
+                                      && Object.keys(r.esiti).length);
   avanzamento.classList.remove('attivo');
   bottone.disabled = false;
 
