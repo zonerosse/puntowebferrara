@@ -1,0 +1,39 @@
+puntowebferrara-modulo-posizioni.zip
+====================================
+
+QUATTRO FILE. Accende il pulsante della pagina /sottosopra/posizionamento/.
+
+  static/sottosopra/posizioni-blocco.js  NUOVO — il disegno del rapporto,
+                                         estratto da verifica.js
+  static/sottosopra/posizionamento.js    NUOVO — la logica della pagina veloce
+  static/sottosopra/verifica.js          MODIFICATO — non contiene piu' quel
+                                         codice, lo importa
+  layouts/page/posizionamento.html       MODIFICATO — collega lo script
+
+COSA E' STATO FATTO
+-------------------
+Il codice che disegna il rapporto sulle posizioni stava dentro verifica.js.
+Adesso sta in posizioni-blocco.js e lo importano tutte e due le pagine.
+NON e' stato copiato: e' stato spostato. Una versione sola.
+
+Insieme sono uscite da verifica.js anche T(), fasciaPosizione(), normalizza()
+e la gestione della stampa delle tendine: servivano a entrambe.
+
+DA PROVARE DOPO IL DEPLOY — TUTTE E DUE LE PAGINE
+-------------------------------------------------
+Il file verifica.js e' stato modificato, quindi va ricontrollata anche la
+pagina che gia' funzionava.
+
+1. /sottosopra/  -> analisi completa, modalita' 2, due parole chiave.
+   Il blocco "Posizioni su Google" deve uscire ESATTAMENTE come prima.
+
+2. /sottosopra/posizionamento/ -> dominio, parole chiave, citta'.
+   Deve uscire lo stesso identico blocco.
+
+3. Sulla pagina veloce, fai DUE analisi di fila.
+   La seconda deve funzionare: il token Turnstile vale una volta sola e lo
+   script rigenera il widget dopo ogni uso. Se la seconda fallisce con
+   "verifica scaduta", quel pezzo non sta funzionando.
+
+4. Prova a premere il pulsante SENZA aver completato la verifica.
+   Deve dirtelo con un messaggio, non partire e fallire.
