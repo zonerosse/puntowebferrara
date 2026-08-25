@@ -374,6 +374,10 @@
 .strumento /* --- testo editoriale in fondo --- */
   #perche{margin-top:3rem}
 /* la sezione sui crawler AI veste come #perche: e' prosa, non interfaccia */
+.strumento #posizioni-sez h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
+.strumento #posizioni-sez h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
+.strumento #posizioni-sez p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
+.strumento #posizioni-sez strong{color:var(--inchiostro)}
 .strumento #leggibile h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
 .strumento #leggibile h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
 .strumento #leggibile p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
@@ -398,6 +402,10 @@
 .strumento .gruppo-bot .morale{font-weight:600;color:var(--inchiostro)}
 .strumento #perche h2{font-size:1.22rem;margin:2.4rem 0 .8rem}
 .strumento #perche h3{font-size:1rem;margin:1.6rem 0 .5rem;color:var(--verde)}
+/* Era un H2, ma introduceva tre difetti che ora sono H3: come intestazione
+   avrebbe creato un quarto livello. Resta come riga in evidenza. */
+.strumento #perche .capitoletto{font-size:1.02rem;font-weight:700;color:var(--inchiostro);
+    margin:2rem 0 .2rem;max-width:88ch}
 .strumento #perche p{max-width:88ch;margin-bottom:.9rem;color:#3d4b47}
 .strumento #perche em{font-style:italic}
 .strumento #perche strong{color:var(--inchiostro)}
@@ -715,6 +723,57 @@
     indispensabile, ti sta vendendo qualcosa.</p>
   </section>
 
+  <section id="posizioni-sez">
+    <h2>In che posizione sei su Google</h2>
+    <p>Un sito tecnicamente perfetto che nessuno trova è un sito che non lavora. Per questo, se
+    scegli la seconda modalità, la verifica aggiunge una cosa che gli altri strumenti gratuiti non
+    fanno: va a guardare davvero i risultati di Google per le parole chiave che scrivi tu, e ti dice
+    in che posizione compari.</p>
+    <p>Non sono stime ricavate da un modello. È la pagina dei risultati, letta nel momento in cui
+    premi il pulsante.</p>
+
+    <h3>Due gare diverse, che quasi nessuno distingue</h3>
+    <p>Su una ricerca locale Google mostra due cose in una schermata sola, e vengono da due
+    classifiche separate.</p>
+    <p>I <strong>risultati normali</strong> — i collegamenti blu, dieci per pagina — dipendono dal
+    <strong>sito</strong>: contenuti, struttura, velocità, collegamenti che riceve. È quello che
+    misurano gli altri quaranta controlli di questa pagina.</p>
+    <p>Il <strong>riquadro delle mappe</strong>, il blocco con la cartina che sta sopra i risultati,
+    non dipende dal sito: lo decide la scheda <strong>Google Business Profile</strong>, cioè
+    categoria, indirizzo, orari, foto, recensioni e distanza da chi sta cercando in quel momento.</p>
+    <p>Si può essere primi nelle mappe e in quarta pagina fra i risultati normali, o il contrario.
+    Confonderle significa lavorare per mesi sul fronte sbagliato: <strong>se manchi nelle mappe si
+    interviene sul Business Profile, se sei in fondo fra i risultati normali si interviene sul
+    sito.</strong> Il rapporto tiene le due misure separate, per ogni parola chiave.</p>
+
+    <h3>Italia e la tua città, affiancate</h3>
+    <p>La ricerca nazionale si fa sempre; se scegli una città ne parte una seconda, geolocalizzata
+    lì. È il confronto a dire qualcosa: essere trentatreesimi in Italia e terzi in città non è una
+    brutta notizia, è l'indicazione che la tua partita si gioca sul territorio e che quel vantaggio
+    va difeso.</p>
+    <p>Per un'attività locale — un artigiano, uno studio, un allevamento — la posizione nazionale su
+    una ricerca generica conta poco: davanti ci sono i grandi portali, e restarci è normale. Quella
+    locale conta tutto.</p>
+
+    <h3>Cosa vedi accanto al numero</h3>
+    <p>Chi occupa le prime posizioni, per ognuna delle due classifiche e per ognuna delle due
+    località: i domini per i risultati normali, i nomi delle attività per il riquadro delle mappe.
+    Sapere <em>chi</em> ti sta davanti spiega il numero meglio del numero stesso: se in cima ci sono
+    tre portali di annunci nazionali, quella parola chiave è persa e conviene sceglierne un'altra;
+    se ci sono concorrenti veri come te, la partita è aperta.</p>
+
+    <h3>Quanto sono affidabili questi numeri</h3>
+    <p><strong>La SERP non esiste al singolare.</strong> Google personalizza per posizione
+    geografica precisa, cronologia, dispositivo e momento della giornata: due persone nella stessa
+    città, nella stessa ora, vedono pagine leggermente diverse. Quello che misuri è una pagina dei
+    risultati plausibile — da computer fisso, senza cronologia, geolocalizzata sulla città scelta —
+    non quella del tuo cliente.</p>
+    <p>Vale l'ordine di grandezza, non il numero esatto. Fra la terza e la quinta posizione la
+    differenza è rumore; fra la terza e la trentesima no. E un rapporto senza data non significa
+    niente: la posizione di oggi non è quella di fra un mese, ed è il motivo per cui il file che
+    puoi salvare porta scritta la data dell'analisi.</p>
+  </section>
+
   <section>
     <h2>Domande frequenti</h2>
     <details class="faq"><summary>Il mio sito non compare nelle risposte delle AI: dipende da questo?</summary>
@@ -788,7 +847,7 @@
     <em>5 su 30</em> alla voce dati strutturati, mentre nel codice c'erano cinquecentocinquantotto blocchi
     <a href="https://schema.org/" target="_blank" rel="noopener nofollow">JSON-LD</a> tutti validi.</p>
 
-    <h2>Quello che non mi torna negli strumenti in circolazione</h2>
+    <p class="capitoletto">Quello che non mi torna negli strumenti in circolazione</p>
 
     <h3>Il punteggio non si può verificare</h3>
     <p>Ti danno 72 su 100 e non c'è modo di sapere da dove viene quel 72. Quali controlli lo compongono,
@@ -812,7 +871,7 @@
     per uno, con scritto se il tuo robots.txt li lascia entrare — che è una cosa verificabile, e che
     sorprendentemente parecchi siti hanno bloccata senza saperlo.</p>
 
-    <h2>Come vorrei che fosse fatto uno strumento del genere</h2>
+    <h3>Come vorrei che fosse fatto uno strumento del genere</h3>
     <p>Faccio siti da anni e passo più tempo a smontare diagnosi sbagliate che a sistemare problemi veri.
     Un buon strumento, per come la vedo, dovrebbe rispettare tre cose.</p>
 
@@ -830,7 +889,7 @@
     su duecento, non è un allarme: è un suggerimento, e resta verde. Quando tutto è colorato di giallo il
     giallo non significa più niente, e si smette di guardare anche dove c'è un guasto vero.</p>
 
-    <h2>Cosa questo strumento non fa, detto prima</h2>
+    <h3>Cosa questo strumento non fa, detto prima</h3>
     <p>Legge il codice HTML che il server consegna. I siti che costruiscono i contenuti con JavaScript dopo
     il caricamento li vede in parte, perché quello che appare dopo non c'è nel codice servito — vale per
     molti siti fatti con framework moderni, non per WordPress né per i siti statici.</p>
@@ -842,7 +901,7 @@
     eseguito sui server di Google su un dispositivo di riferimento uguale per tutti. Sono gli stessi numeri
     che vedresti aprendo Lighthouse nel tuo browser, ma confrontabili fra siti diversi.</p>
 
-    <h2>E se il punteggio esce basso</h2>
+    <h3>E se il punteggio esce basso</h3>
     <p>Buona parte di quello che il report segnala puoi sistemarla da solo, seguendo le
     istruzioni di ogni voce.
     Le intestazioni di sicurezza sono quattro righe di configurazione, i livelli dei titoli si correggono

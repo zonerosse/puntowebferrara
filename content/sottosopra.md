@@ -1,7 +1,7 @@
 ---
 title: "Sottosopra"
-titleSeo: "Il tuo sito è leggibile dalle AI? Verificalo gratis in un minuto"
-description: "Scopri se ChatGPT, Gemini e Perplexity possono leggere il tuo sito, e a che posizione sei su Google. 40 controlli gratis, ognuno spiegato. Senza registrazione."
+titleSeo: "Il tuo sito è leggibile dalle AI? Verifica gratis, 40 controlli"
+description: "Quali AI possono leggere il tuo sito e a che posizione sei su Google. 40 controlli spiegati uno per uno, gratis e senza registrazione."
 type: "page"
 layout: "sottosopra"
 sitemap:
