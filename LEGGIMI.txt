@@ -3,113 +3,120 @@ puntowebferrara-cookie.zip
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-NOVE FILE. Il quarto strumento, piu' la correzione del menu.
-
-  functions/api/_cookie.js           il motore
-  functions/api/cookie.js            l'endpoint
-  static/sottosopra/cookie.js        la logica di pagina
-  static/sottosopra/cookie-blocco.js il rapporto
-  layouts/page/cookie.html           la pagina
-  layouts/_default/baseof.html       LA TENDINA DEL MENU, corretta
-  layouts/partials/stile-strumento.html  gli stili nuovi
-  content/sottosopra/cookie.md       titolo, descrizione, 6 FAQ
-  hugo.toml                          la voce nel menu
+DIECI FILE. Il quarto strumento, piu' due correzioni al menu.
 
 Niente da configurare: nessun Turnstile, nessuna variabile.
 
 =====================================================================
-LA TENDINA DEL MENU — il difetto che avevi visto tu
-=====================================================================
-Avevi ragione: la voce restava nascosta sulla destra.
-
-Il pannello era ancorato a sinistra (left:0), ma "Strumenti" sta nella
-meta' destra della barra: con 330px di larghezza minima usciva dal bordo
-della finestra, e l'ultima voce finiva fuori schermo.
-
-Ora e' ancorato a destra e cresce verso l'interno, dove lo spazio c'e'
-sempre. Aggiunto anche un limite di larghezza legato alla finestra, cosi'
-non puo' uscire neanche su schermi piccoli. La regola per telefono e'
-stata allineata, altrimenti si portava dietro i valori nuovi.
-
-=====================================================================
-IL RAPPORTO
+AVEVI RAGIONE SUL MOTORE. QUATTRO DIFETTI, CORRETTI.
 =====================================================================
 
-LA TABELLA DEL CONFRONTO e' il cuore. Una riga per servizio:
+1. DICEVA "PULITO" QUANDO NON AVEVA POTUTO GUARDARE
 
-  Servizio           Serve consenso   Aspetta il consenso   Nell'informativa
-  Google Analytics   Si               no, parte subito      nominato
-  Hotjar             Si               no, parte subito      assente
-  Meta Pixel         Si               si . marketing        nominato
+   E' il difetto piu' grave che uno strumento del genere possa avere:
+   rassicurare chi ha un problema.
 
-"Aspetta il consenso" vuol dire: una piattaforma configurata bene non
-carica gli script, li tiene fermi e li fa partire solo dopo il si'.
-Avevo scritto "sospeso dal banner", che era gergo mio e non si capiva.
-Corretto anche nei testi della pagina, che dicevano la stessa cosa nello
-stesso modo sbagliato.
+   Sui siti moderni la pagina consegnata dal server e' un guscio vuoto:
+   contenuto e tracciatori li mette JavaScript dopo. Il motore non
+   trovava niente e scriveva "niente da chiedere". Falso.
 
-Le tre colonne restano SEPARATE di proposito: un servizio puo' essere
-dichiarato nell'informativa e non bloccato dal banner, o il contrario.
-Fonderle in un giudizio unico nasconderebbe il caso interessante.
+   Ora riconosce il guscio (React, Next, Nuxt, poco testo e molti
+   script) e dichiara un esito nuovo: NON SI VEDE.
 
-Quando il banner e' configurato bene, la colonna centrale non dice "si"
-ma la CATEGORIA vera — statistics, marketing. E' quello che si legge dal
-codice: quali servizi il sito dichiara di sottoporre al permesso.
+     "Questa pagina viene costruita nel browser. Non trovare
+      tracciatori qui NON vuol dire che non ce ne siano: vuol dire
+      che da questa parte non si vedono."
 
-LA RUOTA DEL PUNTEGGIO, come negli altri strumenti. Ma sotto c'e'
-scritto "igiene del sito", NON "conformita'": su un tema sanzionabile un
-numero che sembra un voto di legalita' e' una promessa che non puoi
-mantenere.
+   E prende 35 su 100, non 100: non aver potuto guardare non e' un
+   merito.
 
-Il conto e' esplicito nel codice, cosi' chiunque puo' rifarlo:
-  70  la situazione di partenza (i cinque esiti)
-  20  i servizi dichiarati nell'informativa
-  10  l'informativa esiste e si raggiunge
+   L'avviso sta IN CIMA al rapporto, non in fondo.
 
-  niente da chiedere    70      banner inutile      48
-  probabilmente a posto 62      nessun consenso     18
-                                banner decorativo   12
+2. IGNORAVA TUTTO QUELLO CHE NON RICONOSCEVA
 
-Il decorativo vale meno del "nessun consenso" di proposito: e' peggio
-avere un problema che sembra risolto.
+   Se un servizio non era nel mio elenco di 45, faceva finta che non
+   esistesse. Cosi' un sito che contatta trenta domini di terze parti
+   risultava pulito.
 
-IL RICHIAMO ALL'ESTENSIONE non e' piu' una tendina nascosta ma un
-riquadro col bordo verde, dentro il rapporto, dove ha un motivo: e' la
-risposta alla domanda che il rapporto ha appena lasciato aperta.
+   Ora i domini si elencano TUTTI. Quelli riconosciuti nella tabella,
+   gli altri in un elenco a parte:
 
-Il testo del banner e' nominato esplicitamente fra le cinque cose che
-servono il browser.
+     "Oltre a quelli riconosciuti, la pagina contatta altri 5 domini.
+      Non so cosa siano, ma il tuo browser li contatta, e ognuno
+      riceve almeno il tuo indirizzo IP."
 
-Etichetta "In arrivo" accanto al titolo, e una riga sola: le fara'
-l'estensione, che oggi esegue i 48 controlli tecnici. NON scrivo che li
-fa gia', perche' non e' vero e chi la installasse non troverebbe la
-funzione.
+   E' il cambiamento che da solo rende il rapporto sostanzioso su
+   qualunque sito.
 
-Il bottone e' un CONTORNO, non un pieno: il pulsante pieno della pagina
-e' uno solo, quello che avvia la verifica, e due pieni si contendono
-l'attenzione.
+3. CERCAVA MALE LA PRIVACY
+
+   Pretendeva l'host identico: scartava privacy.esempio.it, che e'
+   dove molti siti grandi la tengono. Ora accetta i sottodomini.
+
+   E se il pie' di pagina lo scrive JavaScript, il collegamento da qui
+   non si vede: allora prova otto indirizzi consueti (/privacy/,
+   /privacy-policy/, /cookie-policy/...) e verifica che la pagina
+   trovata somigli davvero a un'informativa, non sia un 404 travestito.
+
+   Il rapporto dice come l'ha trovata.
+
+4. LEGGEVA UNA PAGINA SOLA
+
+   Il modulo di contatto carica reCAPTCHA, l'articolo carica il video,
+   la home nessuno dei due.
+
+   Ora legge la pagina indicata piu' altre due, scelte fra contatti,
+   prodotti, blog, carrello — quelle che caricano cose diverse. I
+   risultati si uniscono senza duplicare, e la testata dice quante
+   pagine ha letto.
+
+=====================================================================
+QUELLO CHE RESTA, E CHE NON PUO' SPARIRE
+=====================================================================
+Quello che JavaScript inietta mentre la pagina gira, dal server non si
+vede mai. Con queste correzioni lo strumento e' onesto e utile sui siti
+normali — artigiani, professionisti, allevamenti. Sui grandi portali
+continuera' a dire "non si vede abbastanza".
+
+E DEVE dirlo, invece di fingere.
+
+=====================================================================
+IL MENU: DUE DIFETTI
+=====================================================================
+
+1. LE VOCI IN COLONNE AFFIANCATE — la causa vera
+
+   Il sito carica /css/style.css DOPO gli stili dentro baseof.html. A
+   parita' di specificita' vince chi arriva dopo.
+
+   In baseof.html c'era .tendina ul{display:block}, giusta. Ma in
+   style.css c'e' .main-nav ul{display:flex}, che la sovrascriveva.
+
+   La regola ora sta in style.css, dove puo' vincere.
+
+   PER IL FUTURO: ci sono altri 43 selettori definiti in tutti e due i
+   posti. Il foglio esterno vince sempre. Se un domani una modifica
+   agli stili in linea "non fa niente", il motivo e' quasi sempre
+   questo.
+
+2. IL PANNELLO USCIVA DAL BORDO DESTRO
+   Era ancorato a sinistra; ora a destra, con un limite di larghezza.
 
 =====================================================================
 VERIFICATO
 =====================================================================
-Build Hugo pulita. 9 file JS validi. I cinque scenari riconosciuti tutti
-e cinque su pagine di prova costruite apposta.
+Build pulita, sintassi valida, 38 classi tutte gia' definite nella
+partial. Motore: mediana 5,4 ms (tetto 10). Accessibilita' 100/100 su
+28 pagine.
 
-Le 35 classi prodotte dal rapporto sono TUTTE gia' definite nella partial
-condivisa: stessa grafica delle altre pagine per costruzione.
-
-Motore: mediana 4,5 ms su una pagina da 96 KB (tetto 10 ms).
-
-Pagina cookie 100/100 di accessibilita', sito 100/100 su 28 pagine.
-
-Anche il rapporto di un sito PULITO ha 297 parole, ruota e richiamo: non
-resta piu' vuoto come nella versione che avevi provato.
+Sei scenari collaudati, compreso il guscio vuoto che ora NON viene
+dichiarato pulito.
 
 =====================================================================
-UNA COSA CHE MI SERVE DA TE
+DA PROVARE
 =====================================================================
-Nel rapporto che mi hai incollato comparivano insieme "1 piattaforma di
-consenso trovata" e "informativa non trovata". Sui miei tre siti non
-succede: nessun falso positivo, e la privacy viene trovata sempre.
+Rilancialo su repubblica.it: prima diceva "pulito", ora deve dire che
+da li' non si vede abbastanza ed elencare i domini contattati.
 
-Dimmi su quale indirizzo l'avevi lanciato e lo inseguo.
+Poi su un sito di un artigiano qualsiasi: li' il rapporto deve essere
+pieno.

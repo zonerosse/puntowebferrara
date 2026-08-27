@@ -244,6 +244,7 @@ function statoDelTag(corpo, impronta) {
    ========================================================================= */
 
 const PUNTI_STATO = {
+  'non-si-vede': 35,            // non e' un merito: non si e' potuto guardare
   'niente-da-chiedere': 70,     // niente da chiedere, niente da sbagliare
   'probabilmente-a-posto': 62,  // fatto bene, ma il blocco va provato davvero
   'banner-inutile': 48,         // niente di grave: un fastidio inutile
@@ -269,6 +270,111 @@ function calcolaPunteggio(stato, trovati, policy, policyLetta) {
   if (policyLetta) p += 10;
 
   return Math.max(0, Math.min(100, p));
+}
+
+
+/* =========================================================================
+   TUTTI I DOMINI ESTERNI
+   Il difetto peggiore della prima versione: se non riconoscevo un servizio,
+   facevo finta che non esistesse. Cosi' un sito che contatta trenta domini
+   di terze parti risultava "pulito" perche' nessuno era nel mio elenco.
+
+   Adesso i domini si elencano TUTTI. Quelli riconosciuti hanno un nome,
+   gli altri restano un indirizzo — ed e' comunque un dato: chi legge vede
+   quante terze parti tocca la sua pagina.
+   ========================================================================= */
+
+// Da dove si carica davvero qualcosa: script, fogli di stile, riquadri,
+// immagini, precaricamenti. Un collegamento <a> NO: portare a un sito non
+// vuol dire caricarne il codice.
+const RE_RISORSE = /<(script|link|iframe|img|source|embed|object|video|audio)\b([^>]*)>/gi;
+const RE_URL_IN_TAG = /\b(?:src|href|data-src|data-href)\s*=\s*["']([^"']+)["']/i;
+
+function dominiEsterni(corpo, base) {
+  let mio = null;
+  try { mio = new URL(base).hostname.replace(/^www\./, ''); } catch { /* pazienza */ }
+
+  const conta = {};
+  let m, letti = 0;
+  while ((m = RE_RISORSE.exec(corpo)) && letti < 1200) {
+    letti++;
+    const attributi = m[2] || '';
+    // i fogli di stile contano solo se sono davvero fogli di stile
+    if (m[1].toLowerCase() === 'link' &&
+        !/rel\s*=\s*["'](?:stylesheet|preload|preconnect|dns-prefetch)/i.test(attributi)) continue;
+
+    const u = (attributi.match(RE_URL_IN_TAG) || [, ''])[1];
+    if (!u || u.startsWith('data:') || u.startsWith('#')) continue;
+
+    let host;
+    try { host = new URL(u, base).hostname.replace(/^www\./, ''); } catch { continue; }
+    if (!host || host === mio) continue;
+    // i sottodomini del sito stesso non sono terze parti
+    if (mio && host.endsWith('.' + mio)) continue;
+
+    conta[host] = (conta[host] || 0) + 1;
+  }
+  return conta;
+}
+
+/* =========================================================================
+   QUANTO SI PUO' VEDERE DA QUI
+   Su molti siti moderni la pagina consegnata dal server e' un guscio vuoto:
+   il contenuto e i tracciatori li mette JavaScript dopo. In quel caso
+   trovare "niente" NON vuol dire che non ci sia niente, e dirlo sarebbe
+   peggio che tacere — sarebbe rassicurare a torto.
+   ========================================================================= */
+
+function quantoSiVede(html, corpo, domini) {
+  // il testo visibile, tolti script e stili
+  const testo = corpo
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const quantiScript = (corpo.match(/<script\b/gi) || []).length;
+  const pesoScript = (corpo.match(/<script[\s\S]*?<\/script>/gi) || [])
+    .join('').length;
+
+  // i segni di un'applicazione che si disegna da sola nel browser
+  const impalcatura =
+    /<div[^>]+id\s*=\s*["'](root|app|__next|__nuxt|gatsby)["']/i.test(corpo) ||
+    /window\.__(NUXT|NEXT|INITIAL_STATE)__/i.test(corpo) ||
+    /<script[^>]+src=[^>]*\/(_next|_nuxt|static\/js\/main)\//i.test(corpo);
+
+  const testoScarso = testo.length < 900;
+
+  if (impalcatura && testoScarso) {
+    return {
+      livello: 'poco',
+      perche: 'Questa pagina viene costruita nel browser: il server consegna ' +
+        'un guscio quasi vuoto e il contenuto — tracciatori compresi — lo ' +
+        'aggiunge JavaScript dopo. Quello che si legge da qui è una parte ' +
+        'piccola di quello che il visitatore riceve davvero.',
+    };
+  }
+  if (testoScarso && quantiScript > 6) {
+    return {
+      livello: 'parziale',
+      perche: 'La pagina consegnata dal server contiene poco testo e molti ' +
+        'script. È probabile che una parte di quello che carica venga decisa ' +
+        'nel browser, e da qui non si veda.',
+    };
+  }
+  if (Object.keys(domini).length > 12) {
+    return {
+      livello: 'parziale',
+      perche: 'La pagina contatta molti domini di terze parti. Alcuni ne ' +
+        'caricano altri a loro volta, e quella seconda ondata da qui non si vede.',
+    };
+  }
+  return {
+    livello: 'buono',
+    perche: 'La pagina consegnata dal server contiene il suo contenuto: ' +
+      'quello che si legge da qui è una fotografia attendibile di cosa carica.',
+  };
 }
 
 /* =========================================================================
@@ -308,6 +414,20 @@ export function analizzaCookie(html, url, policy) {
     CHIEDONO_CONSENSO.includes(t.genere) &&
     !(t.id === 'youtube' && soloNoCookie));
 
+  /* --- 1bis. tutti i domini esterni, riconosciuti o no ------------------ */
+  const domini = dominiEsterni(corpo, url);
+  const noti = new Set();
+  for (const t of trovati) {
+    for (const d of Object.keys(domini)) {
+      if (t.impronta.includes(d) || d.includes(t.impronta.split('/')[0])) noti.add(d);
+    }
+  }
+  const sconosciuti = Object.keys(domini)
+    .filter(d => !noti.has(d))
+    .sort((a, b) => domini[b] - domini[a]);
+
+  const visibilita = quantoSiVede(html, corpo, domini);
+
   /* --- 2. chi chiede il permesso --------------------------------------- */
   const piattaforme = [];
   for (const p of PIATTAFORME) {
@@ -326,7 +446,14 @@ export function analizzaCookie(html, url, policy) {
   const bloccati = attesi.some(m => minuscolo.includes(m.toLowerCase()));
 
   let stato, spiegazione;
-  if (!daConsenso.length && !piattaforme.length) {
+  if (visibilita.livello === 'poco' && !daConsenso.length) {
+    // NON si dice "pulito" quando semplicemente non si e' visto abbastanza.
+    // E' il difetto piu' grave che uno strumento del genere possa avere:
+    // rassicurare chi ha un problema.
+    stato = 'non-si-vede';
+    spiegazione = visibilita.perche + ' Non trovare tracciatori qui NON vuol ' +
+      'dire che non ce ne siano: vuol dire che da questa parte non si vedono.';
+  } else if (!daConsenso.length && !piattaforme.length) {
     stato = 'niente-da-chiedere';
     spiegazione = 'Nessun servizio che richieda consenso, e nessuna piattaforma ' +
       'di consenso. È la situazione più semplice: non serve nessun banner, ' +
@@ -390,6 +517,10 @@ export function analizzaCookie(html, url, policy) {
   return {
     url,
     punteggio,
+    domini,
+    sconosciuti,
+    quantiDomini: Object.keys(domini).length,
+    visibilita,
     trovati,
     daConsenso: daConsenso.map(t => t.nome),
     piattaforme: piattaforme.map(p => p.nome),

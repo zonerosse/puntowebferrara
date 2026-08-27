@@ -77,8 +77,21 @@ export function bloccoCookie(dati) {
     'l\'informativa. Se questo comporti un obbligo, e quale, lo dice un ' +
     'legale — non uno strumento automatico.</p>';
 
+  /* --- se non si e' visto abbastanza, si dice PRIMA di tutto ------------ */
+  // Un rapporto che dice "pulito" quando semplicemente non ha potuto
+  // guardare e' peggio di nessun rapporto: rassicura chi ha un problema.
+  if (dati.visibilita && dati.visibilita.livello !== 'buono') {
+    h += '<div class="ck-visibilita ' + dati.visibilita.livello + '">' +
+      '<b>' + (dati.visibilita.livello === 'poco'
+        ? 'Di questo sito si vede poco da qui'
+        : 'Di questo sito si vede solo una parte') + '</b>' +
+      '<p>' + T(dati.visibilita.perche) + '</p>' +
+    '</div>';
+  }
+
   /* --- il confronto, prima di tutto: e' quello che si vuole vedere ------ */
   h += tabellaConfronto(dati);
+  h += elencoDomini(dati);
 
   /* --- lo stato, sempre, anche quando e' buono -------------------------- */
   h += '<div class="a11y-elenco">';
@@ -200,6 +213,32 @@ function segno(tipo, testo) {
   return '<span class="ck-segno ' + tipo + '">' + T(testo) + '</span>';
 }
 
+
+/* --- tutti i domini esterni ----------------------------------------------
+   Il dato che rendeva scarno il rapporto quando mancava: se una pagina
+   contatta ventisette domini di terze parti, quello E' il rapporto, anche
+   senza sapere cosa sia ognuno.
+
+   I riconosciuti stanno gia' nella tabella sopra. Qui ci sono gli altri:
+   non so cosa siano, e lo dico — ma dico che ci sono. */
+function elencoDomini(dati) {
+  if (!dati.sconosciuti || !dati.sconosciuti.length) return '';
+  const n = dati.sconosciuti.length;
+  const dentro = '<p>Oltre a quelli riconosciuti qui sopra, la pagina contatta ' +
+    'altri ' + n + ' domini di terze parti. Non so cosa siano — non sono ' +
+    'nell\'elenco dei 45 che riconosco — ma il tuo browser li contatta, e ' +
+    'ognuno riceve almeno il tuo indirizzo IP.</p>' +
+    '<ul class="a11y-esempi">' +
+    dati.sconosciuti.slice(0, 25).map(d =>
+      '<li><span class="a11y-dove">' + T(d) + '</span>' +
+      (dati.domini[d] > 1 ? ' <b>×' + dati.domini[d] + '</b>' : '') + '</li>').join('') +
+    (n > 25 ? '<li>…e altri ' + (n - 25) + '</li>' : '') +
+    '</ul>' +
+    '<p>Cercali per nome: quasi sempre bastano trenta secondi per capire ' +
+    'cosa fanno. Se raccolgono dati, vanno nell\'informativa come gli altri.</p>';
+  return tendina(n + ' altri domini contattati, che non ho riconosciuto', dentro);
+}
+
 /* --- i rilievi oltre allo stato ------------------------------------------ */
 
 function costruisciRilievi(dati) {
@@ -290,6 +329,7 @@ function titoloStato(stato) {
     'banner-decorativo': 'Il banner c\'è, ma i tracciatori partono lo stesso',
     'probabilmente-a-posto': 'Il consenso sembra configurato correttamente',
     'banner-inutile': 'C\'è un banner, ma non c\'è niente da chiedere',
+    'non-si-vede': 'Da qui non si vede abbastanza per dire com\'è messo',
   }[stato] || 'Situazione non riconosciuta';
 }
 
@@ -297,6 +337,7 @@ function gravitaStato(stato) {
   return {
     'niente-da-chiedere': 'basso',
     'probabilmente-a-posto': 'basso',
+    'non-si-vede': 'medio',
     'banner-inutile': 'medio',
     'nessun-consenso': 'alto',
     'banner-decorativo': 'alto',
@@ -305,7 +346,7 @@ function gravitaStato(stato) {
 
 function fascia(stato) {
   return (stato === 'niente-da-chiedere' || stato === 'probabilmente-a-posto')
-    ? 'alto' : (stato === 'banner-inutile' ? 'medio' : 'basso');
+    ? 'alto' : (stato === 'banner-inutile' || stato === 'non-si-vede' ? 'medio' : 'basso');
 }
 
 function comeSiSistema(stato) {
@@ -333,10 +374,15 @@ function comeSiSistema(stato) {
 }
 
 function riga(dati) {
-  const parti = ['Letta la pagina indicata'];
-  if (dati.policyLetta) parti.push('e l\'informativa privacy');
-  else parti.push('· informativa non trovata');
-  parti.push('· 45 servizi cercati, 17 piattaforme di consenso');
+  const n = dati.paginelette || 1;
+  const parti = [n === 1 ? 'Letta 1 pagina' : 'Lette ' + n + ' pagine'];
+  if (dati.quantiDomini) parti.push('· ' + dati.quantiDomini + ' domini esterni contattati');
+  if (dati.policyLetta) {
+    parti.push('· informativa letta' +
+      (dati.comeTrovata === 'indirizzo consueto' ? ' (trovata per tentativi)' : ''));
+  } else {
+    parti.push('· informativa non trovata');
+  }
   return parti.join(' ');
 }
 
