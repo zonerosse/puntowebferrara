@@ -179,7 +179,22 @@
     </style>
     
     <!-- CSS completo -->
-    <link rel="stylesheet" href="/css/style.css">
+    {{- /* IL NOME DEL FOGLIO DI STILE CAMBIA QUANDO CAMBIA IL CONTENUTO.
+         Prima si chiamava sempre /css/style.css e Cloudflare lo teneva in
+         cache per un anno: ogni modifica al CSS restava invisibile finche'
+         non si purgava a mano quell'indirizzo. Una trappola che scattava
+         a ogni ritocco.
+         Ora Hugo calcola un'impronta del contenuto e la mette nel nome:
+         /css/style.a3f9c2....css. Se il CSS cambia, cambia l'indirizzo, e
+         il browser scarica il nuovo perche' e' un file che non ha mai
+         visto. La cache lunga diventa un vantaggio invece che un ostacolo.
+         L'integrity fa verificare al browser che il file non sia stato
+         alterato per strada. */ -}}
+    {{ with resources.Get "css/style.css" }}
+      {{ $foglio := . | minify | fingerprint "sha384" }}
+      <link rel="stylesheet" href="{{ $foglio.RelPermalink }}"
+            integrity="{{ $foglio.Data.Integrity }}" crossorigin="anonymous">
+    {{ end }}
     
     {{ partial "schema.html" . }}
 </head>

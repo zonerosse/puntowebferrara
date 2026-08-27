@@ -8,10 +8,18 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
-# Asset con nome fisso: cache breve lato browser, Cloudflare li serve
-# comunque dalla CDN. Passa a 1 anno solo con filename versionati.
+# Il foglio di stile ha il nome con l'impronta del contenuto
+# (style.min.<hash>.css): se cambia il CSS, cambia l'indirizzo, e il
+# browser scarica il file nuovo perche' non l'ha mai visto.
+#
+# Per questo un anno di cache qui e' sicuro, ed e' anzi quello che si
+# vuole: il file vecchio nessuno lo chiedera' piu'. Prima il nome era
+# fisso e ogni modifica al CSS richiedeva un purge a mano su Cloudflare.
+#
+# immutable dice al browser di non ricontrollare nemmeno: quel contenuto,
+# a quell'indirizzo, non puo' cambiare per definizione.
 /css/*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=31536000, immutable
 
 /img/*
   Cache-Control: public, max-age=604800

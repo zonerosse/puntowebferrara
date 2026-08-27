@@ -1,122 +1,82 @@
-puntowebferrara-cookie.zip
-==========================
+puntowebferrara-cache-css.zip
+=============================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-DIECI FILE. Il quarto strumento, piu' due correzioni al menu.
+TRE FILE, piu' UNA CANCELLAZIONE DA FARE A MANO.
 
-Niente da configurare: nessun Turnstile, nessuna variabile.
-
-=====================================================================
-AVEVI RAGIONE SUL MOTORE. QUATTRO DIFETTI, CORRETTI.
-=====================================================================
-
-1. DICEVA "PULITO" QUANDO NON AVEVA POTUTO GUARDARE
-
-   E' il difetto piu' grave che uno strumento del genere possa avere:
-   rassicurare chi ha un problema.
-
-   Sui siti moderni la pagina consegnata dal server e' un guscio vuoto:
-   contenuto e tracciatori li mette JavaScript dopo. Il motore non
-   trovava niente e scriveva "niente da chiedere". Falso.
-
-   Ora riconosce il guscio (React, Next, Nuxt, poco testo e molti
-   script) e dichiara un esito nuovo: NON SI VEDE.
-
-     "Questa pagina viene costruita nel browser. Non trovare
-      tracciatori qui NON vuol dire che non ce ne siano: vuol dire
-      che da questa parte non si vedono."
-
-   E prende 35 su 100, non 100: non aver potuto guardare non e' un
-   merito.
-
-   L'avviso sta IN CIMA al rapporto, non in fondo.
-
-2. IGNORAVA TUTTO QUELLO CHE NON RICONOSCEVA
-
-   Se un servizio non era nel mio elenco di 45, faceva finta che non
-   esistesse. Cosi' un sito che contatta trenta domini di terze parti
-   risultava pulito.
-
-   Ora i domini si elencano TUTTI. Quelli riconosciuti nella tabella,
-   gli altri in un elenco a parte:
-
-     "Oltre a quelli riconosciuti, la pagina contatta altri 5 domini.
-      Non so cosa siano, ma il tuo browser li contatta, e ognuno
-      riceve almeno il tuo indirizzo IP."
-
-   E' il cambiamento che da solo rende il rapporto sostanzioso su
-   qualunque sito.
-
-3. CERCAVA MALE LA PRIVACY
-
-   Pretendeva l'host identico: scartava privacy.esempio.it, che e'
-   dove molti siti grandi la tengono. Ora accetta i sottodomini.
-
-   E se il pie' di pagina lo scrive JavaScript, il collegamento da qui
-   non si vede: allora prova otto indirizzi consueti (/privacy/,
-   /privacy-policy/, /cookie-policy/...) e verifica che la pagina
-   trovata somigli davvero a un'informativa, non sia un 404 travestito.
-
-   Il rapporto dice come l'ha trovata.
-
-4. LEGGEVA UNA PAGINA SOLA
-
-   Il modulo di contatto carica reCAPTCHA, l'articolo carica il video,
-   la home nessuno dei due.
-
-   Ora legge la pagina indicata piu' altre due, scelte fra contatti,
-   prodotti, blog, carrello — quelle che caricano cose diverse. I
-   risultati si uniscono senza duplicare, e la testata dice quante
-   pagine ha letto.
+  assets/css/style.css           il foglio di stile, SPOSTATO qui
+  layouts/_default/baseof.html   il tag <link> con l'impronta
+  static/_headers                cache di un anno, ora sicura
 
 =====================================================================
-QUELLO CHE RESTA, E CHE NON PUO' SPARIRE
+PRIMA DI TUTTO: CANCELLA IL VECCHIO
 =====================================================================
-Quello che JavaScript inietta mentre la pagina gira, dal server non si
-vede mai. Con queste correzioni lo strumento e' onesto e utile sui siti
-normali — artigiani, professionisti, allevamenti. Sui grandi portali
-continuera' a dire "non si vede abbastanza".
+Il foglio di stile si sposta da static/ ad assets/. Se resta anche il
+vecchio, Hugo pubblica DUE file e il browser potrebbe prendere quello
+sbagliato.
 
-E DEVE dirlo, invece di fingere.
+  cd C:\Hugo\puntowebferrara-hugo
+  git rm static\css\style.css
+
+Poi scompatta lo zip.
+
+Controlla che sia andata:
+
+  Get-ChildItem .\static\css -ErrorAction SilentlyContinue
+  Get-ChildItem .\assets\css
+
+La prima non deve trovare niente, la seconda deve elencare style.css.
 
 =====================================================================
-IL MENU: DUE DIFETTI
+IL PROBLEMA CHE RISOLVE
 =====================================================================
+Il foglio si chiamava sempre /css/style.css, e Cloudflare lo teneva in
+cache per un anno. Ogni modifica al CSS restava invisibile finche' non
+purgavi a mano quell'indirizzo esatto.
 
-1. LE VOCI IN COLONNE AFFIANCATE — la causa vera
+Era la trappola di stamattina: la regola del menu era nel file, il file
+era sul server, ma i visitatori ricevevano la versione vecchia.
 
-   Il sito carica /css/style.css DOPO gli stili dentro baseof.html. A
-   parita' di specificita' vince chi arriva dopo.
+E sarebbe scattata di nuovo a ogni ritocco.
 
-   In baseof.html c'era .tendina ul{display:block}, giusta. Ma in
-   style.css c'e' .main-nav ul{display:flex}, che la sovrascriveva.
+=====================================================================
+COME FUNZIONA ADESSO
+=====================================================================
+Hugo calcola un'impronta del contenuto e la mette nel nome:
 
-   La regola ora sta in style.css, dove puo' vincere.
+  /css/style.min.3c2f19af81dc1851....css
 
-   PER IL FUTURO: ci sono altri 43 selettori definiti in tutti e due i
-   posti. Il foglio esterno vince sempre. Se un domani una modifica
-   agli stili in linea "non fa niente", il motivo e' quasi sempre
-   questo.
+Se cambi una riga di CSS, l'impronta cambia, quindi cambia l'indirizzo,
+quindi il browser scarica il file nuovo — perche' e' un file che non ha
+mai visto. Niente da purgare, mai piu'.
 
-2. IL PANNELLO USCIVA DAL BORDO DESTRO
-   Era ancorato a sinistra; ora a destra, con un limite di larghezza.
+E la cache lunga da ostacolo diventa un vantaggio: il file vecchio
+nessuno lo chiedera' piu'. Per questo _headers passa da un'ora a un
+anno, con "immutable": quel contenuto a quell'indirizzo non puo'
+cambiare per definizione.
+
+In piu' il file viene minificato (pesa meno) e porta un'integrity, con
+cui il browser verifica che non sia stato alterato per strada.
 
 =====================================================================
 VERIFICATO
 =====================================================================
-Build pulita, sintassi valida, 38 classi tutte gia' definite nella
-partial. Motore: mediana 5,4 ms (tetto 10). Accessibilita' 100/100 su
-28 pagine.
+Build pulita. Tutte le 28 pagine puntano allo stesso indirizzo, il file
+esiste dove il tag lo cerca, nessun riferimento al vecchio nome rimasto.
 
-Sei scenari collaudati, compreso il guscio vuoto che ora NON viene
-dichiarato pulito.
+Provata la cosa che conta: aggiunta una riga al CSS -> impronta
+581dcc320afb32de...; tolta la riga -> torna 3c2f19af81dc1851...
+L'indirizzo segue il contenuto, come deve.
+
+Accessibilita' 100/100 su 28 pagine.
 
 =====================================================================
-DA PROVARE
+DOPO IL DEPLOY
 =====================================================================
-Rilancialo su repubblica.it: prima diceva "pulito", ora deve dire che
-da li' non si vede abbastanza ed elencare i domini contattati.
+Questa volta un ULTIMO purge serve: la home vecchia in cache punta
+ancora al vecchio /css/style.css.
 
-Poi su un sito di un artigiano qualsiasi: li' il rapporto deve essere
-pieno.
+  Caching > Configuration > Purge Everything
+
+E' l'ultima volta che ti serve per il CSS.
