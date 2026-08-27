@@ -13,7 +13,7 @@ faq:
   - q: "Perché non mi dice quali cookie vengono scritti?"
     a: "Perché dal server non si vedono. I cookie nascono quando gli script girano nel browser: nel codice che il server consegna non esistono ancora. Uno strumento che dal lato server ti elenca i cookie del tuo sito o li indovina, o li ha presi da un elenco preconfezionato. Per contarli davvero serve l'estensione per il browser."
   - q: "Ho il banner di un servizio famoso: basta?"
-    a: "Dipende da come è configurato. Un banner installato e mai configurato mostra l'avviso ma non blocca niente, e in quel caso non sta facendo il suo lavoro. È esattamente la situazione che questa verifica prova a riconoscere: quando la piattaforma di consenso c'è ma gli script non risultano sospesi in attesa del permesso."
+    a: "Dipende da come è configurato. Un banner installato e mai configurato mostra l'avviso ma non blocca niente, e in quel caso non sta facendo il suo lavoro. È esattamente la situazione che questa verifica prova a riconoscere: quando la piattaforma di consenso c'è ma i tracciatori partono lo stesso, senza aspettare il permesso."
   - q: "Quanti servizi riconosce?"
     a: "Quarantacinque, dai più diffusi ai più di nicchia, e diciassette piattaforme di consenso. Se il tuo sito ne carica uno che non conosco non comparirà: il rapporto dice sempre quanti ne ha cercati, così sai qual è il confine di quello che hai letto."
   - q: "Legge anche la mia privacy policy?"

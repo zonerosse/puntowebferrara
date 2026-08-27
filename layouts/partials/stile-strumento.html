@@ -799,4 +799,79 @@
     font-size:.95rem;padding-left:1rem}
 .strumento .modulo select option[value=""]{font-weight:700}
 
+
+/* --- la ruota del punteggio cookie --------------------------------------
+   Stessi tre livelli di colore degli altri strumenti. Il numero sta dentro
+   la ruota, l'etichetta sotto: "igiene del sito", mai "conformita'". */
+.strumento .ck-punteggio{display:flex;flex-direction:column;align-items:center;
+    gap:.35rem;flex:0 0 auto}
+.strumento .ck-punteggio .etichetta{font-family:var(--mono);font-size:.68rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);
+    text-align:center}
+.strumento .ck-ruota{display:block}
+.strumento .ck-ruota.alto{color:var(--verde)}
+.strumento .ck-ruota.medio{color:#b5570d}
+.strumento .ck-ruota.basso{color:#a32338}
+
+
+/* --- la tabella del confronto cookie -------------------------------------
+   Tre colonne che rispondono a tre domande diverse. Su telefono la tabella
+   scorre in orizzontale invece di comprimersi: quattro colonne strette
+   diventano illeggibili, una tabella che scorre resta una tabella. */
+.strumento .ck-tabella{margin:1.2rem 0 1.4rem;overflow-x:auto;
+    -webkit-overflow-scrolling:touch}
+.strumento .ck-tabella table{width:100%;border-collapse:collapse;
+    font-size:.92rem;min-width:540px}
+.strumento .ck-tabella caption{text-align:left;font-family:var(--mono);
+    font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grafite);padding-bottom:.6rem}
+.strumento .ck-tabella th{text-align:left;font-size:.74rem;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--grafite);font-weight:700;
+    padding:.5rem .7rem;border-bottom:2px solid var(--linea);white-space:nowrap}
+.strumento .ck-tabella td{padding:.7rem;border-bottom:1px solid var(--linea);
+    vertical-align:top}
+.strumento .ck-tabella tbody tr:last-child td{border-bottom:none}
+.strumento .ck-impronta{display:block;font-family:var(--mono);font-size:.72rem;
+    color:var(--grafite);margin-top:.15rem;word-break:break-all}
+.strumento .ck-segno{display:inline-block;font-size:.8rem;font-weight:600;
+    padding:.15rem .5rem;border-radius:3px;white-space:nowrap}
+.strumento .ck-segno.si{background:#e7f2ee;color:#0a5344}
+.strumento .ck-segno.no{background:#fbe9ec;color:#8d1c2e}
+.strumento .ck-segno.vuoto{background:#f0f2f1;color:var(--grafite);font-weight:400}
+.strumento .ck-sotto{font-size:.85rem;color:var(--grafite);margin:.7rem 0 0;
+    max-width:78ch}
+
+
+/* --- il richiamo all'estensione ------------------------------------------
+   Sta dentro il rapporto perche' li' ha un motivo: e' la risposta alla
+   domanda che il rapporto ha appena lasciato aperta.
+
+   Il bottone e' un contorno, non un pieno colorato: il pulsante pieno di
+   questa pagina e' uno solo, quello che avvia la verifica, e due pulsanti
+   pieni si contendono l'attenzione. Questo invita, non insiste. */
+.strumento .ck-browser{background:#f7f9f8;border:1px solid var(--linea);
+    border-left:3px solid var(--verde);border-radius:4px;
+    padding:1.15rem 1.25rem;margin:1.6rem 0}
+.strumento .ck-browser h3{font-size:1rem;margin:0 0 .5rem;color:var(--verde)}
+.strumento .ck-browser p{max-width:78ch;margin:0 0 .7rem}
+.strumento .ck-quando{font-size:.88rem;color:var(--grafite)}
+.strumento .ck-quando b{color:var(--inchiostro)}
+.strumento .ck-bottone{margin:.9rem 0 0}
+.strumento .ck-bottone a{display:inline-block;font-size:.88rem;font-weight:600;
+    color:var(--verde);text-decoration:none;padding:.55rem 1.1rem;
+    border:1.5px solid var(--verde);border-radius:3px;transition:background .15s}
+.strumento .ck-bottone a::after{content:" \2192";font-weight:400}
+.strumento .ck-bottone a:hover{background:var(--verde);color:#fff}
+.strumento .ck-bottone a:focus-visible{outline:2px solid var(--verde);
+    outline-offset:2px}
+
+
+/* L'etichetta accanto al titolo: dice che la cosa esiste e non e' ancora
+   pronta, in due parole invece di tre righe di scuse. Ambra del marchio. */
+.strumento .ck-arrivo{display:inline-block;margin-left:.6rem;
+    font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:#7a4a06;background:#fdeee0;
+    border:1px solid #f2ddb4;border-radius:3px;padding:.15rem .45rem;
+    vertical-align:middle;white-space:nowrap}
+
 </style>

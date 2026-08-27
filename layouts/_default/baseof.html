@@ -66,7 +66,15 @@
     .grilletto .freccia{width:9px;height:9px;flex:0 0 auto;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .15s ease}
     .grilletto[aria-expanded="true"]{background:var(--light);color:var(--primary)}
     .grilletto[aria-expanded="true"] .freccia{transform:rotate(-135deg) translate(-3px,-3px)}
-    .tendina{position:absolute;top:calc(100% + 6px);left:0;min-width:330px;background:var(--white);border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 28px rgba(9,45,79,.14);padding:6px;display:none}
+    /* Il pannello si ancora a DESTRA, non a sinistra. "Strumenti" sta nella
+       metà destra della barra: con left:0 un pannello da 330px usciva dal bordo
+       della finestra e le voci restavano tagliate fuori. Ancorandolo a destra
+       cresce verso l'interno, dove lo spazio c'è sempre.
+       Il max-width lo tiene dentro lo schermo anche su finestre strette. */
+    .tendina{position:absolute;top:calc(100% + 6px);right:0;left:auto;
+      min-width:330px;max-width:min(360px,calc(100vw - 32px));
+      background:var(--white);border:1px solid var(--border);border-radius:10px;
+      box-shadow:0 12px 28px rgba(9,45,79,.14);padding:6px;display:none}
     .ha-tendina.aperta .tendina{display:block}
     .tendina ul{display:block;list-style:none;gap:0}
     .tendina a{display:block;padding:11px 14px;border-radius:7px;color:var(--text);font-weight:500;line-height:1.35}
@@ -153,7 +161,7 @@
         /* Su telefono la tendina diventa una fisarmonica dentro il pannello,
            non un riquadro che galleggia sopra il resto. */
         .grilletto{width:100%;justify-content:space-between;padding:10px 18px}
-        .tendina{position:static;min-width:0;border:none;border-left:2px solid var(--border);border-radius:0;box-shadow:none;padding:2px 0 6px;margin:2px 0 6px 18px}
+        .tendina{position:static;min-width:0;max-width:none;right:auto;border:none;border-left:2px solid var(--border);border-radius:0;box-shadow:none;padding:2px 0 6px;margin:2px 0 6px 18px}
         .tendina a{padding:9px 14px}
         .hero{min-height:auto;padding:100px 0 60px}
         .hero-grid{grid-template-columns:1fr;gap:40px}

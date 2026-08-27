@@ -195,6 +195,82 @@ const MARCATORI_GENERICI = [
   'data-consent', 'data-categories', 'data-cmp',
 ];
 
+
+
+// Il tag che carica un servizio e' sospeso in attesa del consenso?
+// Si guarda il tag intorno all'impronta: se porta un marcatore, il sito
+// dichiara di bloccarlo, e spesso dice anche in quale categoria.
+//
+// Questo e' il dato piu' utile che si ricava dal server sul banner: non il
+// testo che l'utente legge — quello lo scrive JavaScript e da qui non si
+// vede — ma QUALI SERVIZI IL SITO DICHIARA DI SOTTOPORRE AL PERMESSO.
+function statoDelTag(corpo, impronta) {
+  const i = corpo.toLowerCase().indexOf(impronta.toLowerCase());
+  if (i === -1) return { marcato: false, categoria: null };
+
+  // il tag di apertura che contiene l'impronta
+  const da = corpo.lastIndexOf('<', i);
+  const a = corpo.indexOf('>', i);
+  if (da === -1 || a === -1) return { marcato: false, categoria: null };
+  const tag = corpo.slice(da, a + 1);
+
+  const marcato = /type\s*=\s*["']text\/plain["']/i.test(tag) ||
+    /data-(cookieconsent|cookiecategory|cookie-consent|consent|categories|cmp|cookieyes|usercentrics|borlabs-cookie|cookiescript|cookiefirst|didomi|osano)\b/i.test(tag) ||
+    /class\s*=\s*["'][^"']*(_iub_cs_activate|optanon-category|cmplz-)/i.test(tag);
+
+  // la categoria dichiarata, quando c'e'
+  let categoria = null;
+  const m = tag.match(/data-(?:cookieconsent|cookiecategory|cookie-consent|categories|category)\s*=\s*["']([^"']+)["']/i);
+  if (m) categoria = m[1].trim();
+
+  return { marcato, categoria };
+}
+
+/* =========================================================================
+   IL PUNTEGGIO
+   Cento punti che misurano UNA COSA SOLA: quanto e' pulito il sito dal
+   punto di vista di chi lo visita. Non e' un voto di conformita' — quella
+   dipende da cento cose che uno strumento non vede — ed e' per questo che
+   nel rapporto si chiama "igiene del sito" e non "conformita'".
+
+   La regola e' esplicita apposta: chi legge deve poter rifare il conto.
+
+     70  la situazione di partenza (i cinque esiti)
+     20  i servizi dichiarati nell'informativa
+     10  l'informativa esiste e si raggiunge
+
+   Un sito senza tracciatori e con l'informativa a posto fa 100. Non perche'
+   sia "a norma": perche' non c'e' niente da sistemare in quello che si vede.
+   ========================================================================= */
+
+const PUNTI_STATO = {
+  'niente-da-chiedere': 70,     // niente da chiedere, niente da sbagliare
+  'probabilmente-a-posto': 62,  // fatto bene, ma il blocco va provato davvero
+  'banner-inutile': 48,         // niente di grave: un fastidio inutile
+  'nessun-consenso': 18,        // i tracciatori partono e nessuno chiede
+  'banner-decorativo': 12,      // peggio: sembra risolto e non lo e'
+};
+
+function calcolaPunteggio(stato, trovati, policy, policyLetta) {
+  let p = PUNTI_STATO[stato] != null ? PUNTI_STATO[stato] : 30;
+
+  // --- i servizi dichiarati (20) ---
+  if (!policyLetta) {
+    p += 0;                     // senza informativa non si puo' verificare
+  } else if (!trovati.length) {
+    p += 20;                    // niente da dichiarare: pieno
+  } else {
+    const quanti = policy.nonDichiarati.length;
+    const quota = 1 - (quanti / trovati.length);
+    p += Math.round(20 * Math.max(0, quota));
+  }
+
+  // --- l'informativa c'e' e si raggiunge (10) ---
+  if (policyLetta) p += 10;
+
+  return Math.max(0, Math.min(100, p));
+}
+
 /* =========================================================================
    ANALISI
    ========================================================================= */
@@ -213,8 +289,12 @@ export function analizzaCookie(html, url, policy) {
   for (const s of SERVIZI) {
     for (const impronta of s.impronte) {
       if (minuscolo.includes(impronta.toLowerCase())) {
+        const tag = statoDelTag(corpo, impronta);
         trovati.push({ id: s.id, nome: s.nome, genere: s.genere, ue: s.ue,
-                       impronta });
+                       impronta,
+                       sospeso: tag.marcato,
+                       categoria: tag.categoria,
+                       chiedeConsenso: CHIEDONO_CONSENSO.includes(s.genere) });
         break;
       }
     }
@@ -264,13 +344,13 @@ export function analizzaCookie(html, url, policy) {
   } else if (bloccati) {
     stato = 'probabilmente-a-posto';
     spiegazione = 'C\'è una piattaforma di consenso e gli script dei servizi ' +
-      'risultano marcati come sospesi in attesa del permesso. È il ' +
+      'risultano configurati per aspettare il permesso prima di partire. È il ' +
       'comportamento corretto. Se il blocco funzioni davvero, però, si vede ' +
       'solo caricando la pagina in un browser.';
   } else {
     stato = 'banner-decorativo';
     spiegazione = 'C\'è una piattaforma di consenso, ma gli script dei servizi ' +
-      'NON risultano marcati come sospesi: sembrano caricarsi normalmente. ' +
+      'NON aspettano il permesso: sembrano partire al primo caricamento. ' +
       'Un banner che non blocca niente non serve a niente — e chi ha il sito ' +
       'di solito crede che il problema sia risolto proprio perché il banner c\'è.';
   }
@@ -285,29 +365,38 @@ export function analizzaCookie(html, url, policy) {
       // si cerca il nome del servizio e la sua parola più caratteristica
       const chiavi = [t.nome.toLowerCase()]
         .concat(t.nome.toLowerCase().split(/[\s(),/]+/).filter(x => x.length > 4));
-      (chiavi.some(k => p.includes(k)) ? dichiarati : nonDichiarati).push(t.nome);
+      t.dichiarato = chiavi.some(k => p.includes(k));
+      (t.dichiarato ? dichiarati : nonDichiarati).push(t.nome);
     }
+  } else {
+    for (const t of trovati) t.dichiarato = null;
   }
+
+  const esitoPolicy = policy ? {
+    dichiarati,
+    nonDichiarati,
+    citaTrasferimento: null,   // riempito sotto
+  } : null;
 
   /* --- 5. fuori dall'unione europea ------------------------------------ */
   const extraUE = trovati.filter(t => !t.ue).map(t => t.nome);
-  const policyCitaTrasferimento = policy
-    ? /extra[- ]?ue|fuori dall|paesi terzi|stati uniti|united states|clausole contrattuali|standard contractual/i.test(policy)
-    : null;
+  if (esitoPolicy) {
+    esitoPolicy.citaTrasferimento =
+      /extra[- ]?ue|fuori dall|paesi terzi|stati uniti|united states|clausole contrattuali|standard contractual/i.test(policy);
+  }
+
+  const punteggio = calcolaPunteggio(stato, trovati, esitoPolicy, policy != null);
 
   return {
     url,
+    punteggio,
     trovati,
     daConsenso: daConsenso.map(t => t.nome),
     piattaforme: piattaforme.map(p => p.nome),
     stato,
     spiegazione,
     scriptSospesi: bloccati,
-    policy: policy ? {
-      dichiarati,
-      nonDichiarati,
-      citaTrasferimento: policyCitaTrasferimento,
-    } : null,
+    policy: esitoPolicy,
     extraUE,
 
     // Quello che qui non si puo' misurare, e perche'. Si accende con

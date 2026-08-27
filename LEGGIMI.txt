@@ -3,103 +3,113 @@ puntowebferrara-cookie.zip
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-SETTE FILE. Il quarto strumento: Sottosopra Cookie.
+NOVE FILE. Il quarto strumento, piu' la correzione del menu.
 
-  functions/api/_cookie.js          il motore: 45 servizi, 17 piattaforme
-  functions/api/cookie.js           l'endpoint: scarica pagina e informativa
-  static/sottosopra/cookie.js       la logica di pagina
+  functions/api/_cookie.js           il motore
+  functions/api/cookie.js            l'endpoint
+  static/sottosopra/cookie.js        la logica di pagina
   static/sottosopra/cookie-blocco.js il rapporto
-  layouts/page/cookie.html          la pagina
-  content/sottosopra/cookie.md      titolo, descrizione e 6 FAQ
-  hugo.toml                         la voce nel menu
+  layouts/page/cookie.html           la pagina
+  layouts/_default/baseof.html       LA TENDINA DEL MENU, corretta
+  layouts/partials/stile-strumento.html  gli stili nuovi
+  content/sottosopra/cookie.md       titolo, descrizione, 6 FAQ
+  hugo.toml                          la voce nel menu
 
-NIENTE DA CONFIGURARE. Non chiama servizi a pagamento, quindi non ha
-Turnstile e non ha variabili d'ambiente. Si pubblica e funziona.
-
-=====================================================================
-COSA FA
-=====================================================================
-Riconosce 45 servizi (misura, pubblicita', contenuti incorporati, chat,
-CRM) e 17 piattaforme di consenso. Ma la parte che vale e' il RAPPORTO
-FRA I DUE, e distingue cinque situazioni:
-
-  niente-da-chiedere     nessun tracciatore, nessun banner
-  nessun-consenso        tracciatori e nessuno che chieda il permesso
-  banner-decorativo      c'e' il banner, ma gli script non sono sospesi
-  probabilmente-a-posto  banner e script marcati correttamente
-  banner-inutile         banner senza niente da chiedere
-
-Il terzo e' quello che vende: e' frequentissimo, e chi ha il sito crede
-che il problema sia risolto proprio perche' il banner c'e'.
-
-E LEGGE LA TUA INFORMATIVA. Cerca la privacy policy fra i collegamenti
-della pagina, la scarica, e dice quali servizi trovati NON sono
-nominati. E' il controllo che nessuno strumento gratuito fa, ed e' la
-contestazione piu' facile da muovere.
+Niente da configurare: nessun Turnstile, nessuna variabile.
 
 =====================================================================
-IL TONO, E PERCHE'
+LA TENDINA DEL MENU — il difetto che avevi visto tu
 =====================================================================
-Questa e' la pagina che ti espone di piu', perche' il tema e'
-sanzionabile. La regola che governa tutti i testi:
+Avevi ragione: la voce restava nascosta sulla destra.
 
-  DIRE COSA SI TROVA, MAI COSA COMPORTA.
+Il pannello era ancorato a sinistra (left:0), ma "Strumenti" sta nella
+meta' destra della barra: con 330px di larghezza minima usciva dal bordo
+della finestra, e l'ultima voce finiva fuori schermo.
 
-"Il sito carica Meta Pixel e l'informativa non lo nomina" e' un fatto
-verificabile da chiunque. "Il tuo sito non e' a norma" e' una
-consulenza legale, e dipende da cento cose che uno strumento non vede.
-
-Ogni rilievo dice anche il LIMITE del controllo: dove finisce quello
-che si vede e comincia quello che va verificato altrimenti.
-
-=====================================================================
-COSA NON PUO' VEDERE, E LO DICE
-=====================================================================
-Cinque verifiche restano vuote e dichiarano il perche':
-  - i cookie effettivamente scritti
-  - se partono prima del consenso   <- la domanda che conta di piu'
-  - quali richieste di rete partono davvero
-  - l'archiviazione locale del browser
-  - se il banner funziona davvero
-
-Sono gia' predisposte per l'estensione: stessi id, stessa struttura,
-campo "esito" che si riempie. Quando l'estensione sara' approvata, si
-attacca senza riscrivere niente.
+Ora e' ancorato a destra e cresce verso l'interno, dove lo spazio c'e'
+sempre. Aggiunto anche un limite di larghezza legato alla finestra, cosi'
+non puo' uscire neanche su schermi piccoli. La regola per telefono e'
+stata allineata, altrimenti si portava dietro i valori nuovi.
 
 =====================================================================
-HO CORRETTO ANCHE LA RIGA DEL MENU
+IL RAPPORTO
 =====================================================================
-  prima:  "A che numero sei fra i risultati. Veloce, senza scansione."
-  dopo:   "Vedi se compari nella prima pagina, e a che posizione."
 
-Avevi ragione: la prima non diceva niente a chi non sapeva gia' cosa
-fa lo strumento.
+LA TABELLA DEL CONFRONTO e' il cuore. Una riga per servizio:
+
+  Servizio           Serve consenso   Aspetta il consenso   Nell'informativa
+  Google Analytics   Si               no, parte subito      nominato
+  Hotjar             Si               no, parte subito      assente
+  Meta Pixel         Si               si . marketing        nominato
+
+"Aspetta il consenso" vuol dire: una piattaforma configurata bene non
+carica gli script, li tiene fermi e li fa partire solo dopo il si'.
+Avevo scritto "sospeso dal banner", che era gergo mio e non si capiva.
+Corretto anche nei testi della pagina, che dicevano la stessa cosa nello
+stesso modo sbagliato.
+
+Le tre colonne restano SEPARATE di proposito: un servizio puo' essere
+dichiarato nell'informativa e non bloccato dal banner, o il contrario.
+Fonderle in un giudizio unico nasconderebbe il caso interessante.
+
+Quando il banner e' configurato bene, la colonna centrale non dice "si"
+ma la CATEGORIA vera — statistics, marketing. E' quello che si legge dal
+codice: quali servizi il sito dichiara di sottoporre al permesso.
+
+LA RUOTA DEL PUNTEGGIO, come negli altri strumenti. Ma sotto c'e'
+scritto "igiene del sito", NON "conformita'": su un tema sanzionabile un
+numero che sembra un voto di legalita' e' una promessa che non puoi
+mantenere.
+
+Il conto e' esplicito nel codice, cosi' chiunque puo' rifarlo:
+  70  la situazione di partenza (i cinque esiti)
+  20  i servizi dichiarati nell'informativa
+  10  l'informativa esiste e si raggiunge
+
+  niente da chiedere    70      banner inutile      48
+  probabilmente a posto 62      nessun consenso     18
+                                banner decorativo   12
+
+Il decorativo vale meno del "nessun consenso" di proposito: e' peggio
+avere un problema che sembra risolto.
+
+IL RICHIAMO ALL'ESTENSIONE non e' piu' una tendina nascosta ma un
+riquadro col bordo verde, dentro il rapporto, dove ha un motivo: e' la
+risposta alla domanda che il rapporto ha appena lasciato aperta.
+
+Il testo del banner e' nominato esplicitamente fra le cinque cose che
+servono il browser.
+
+Etichetta "In arrivo" accanto al titolo, e una riga sola: le fara'
+l'estensione, che oggi esegue i 48 controlli tecnici. NON scrivo che li
+fa gia', perche' non e' vero e chi la installasse non troverebbe la
+funzione.
+
+Il bottone e' un CONTORNO, non un pieno: il pulsante pieno della pagina
+e' uno solo, quello che avvia la verifica, e due pieni si contendono
+l'attenzione.
 
 =====================================================================
 VERIFICATO
 =====================================================================
-Build Hugo senza errori. 11 file JS con sintassi valida, tutti gli
-import risolvono, gli id cercati dallo script esistono nella pagina.
+Build Hugo pulita. 9 file JS validi. I cinque scenari riconosciuti tutti
+e cinque su pagine di prova costruite apposta.
 
-Le 25 classi prodotte dal rapporto sono TUTTE gia' definite nella
-partial condivisa: nessuna riga di CSS nuova, stessa grafica delle
-altre pagine per costruzione e non per somiglianza.
+Le 35 classi prodotte dal rapporto sono TUTTE gia' definite nella partial
+condivisa: stessa grafica delle altre pagine per costruzione.
 
-Motore: mediana 3,4 ms su una pagina da 83 KB (il tetto e' 10 ms).
+Motore: mediana 4,5 ms su una pagina da 96 KB (tetto 10 ms).
 
-La pagina nuova passa il tuo stesso controllo di accessibilita' a
-100/100, e il sito resta a 100/100 su 28 pagine.
+Pagina cookie 100/100 di accessibilita', sito 100/100 su 28 pagine.
 
-I cinque scenari sono stati collaudati su pagine di prova costruite
-apposta, e riconosciuti tutti e cinque.
+Anche il rapporto di un sito PULITO ha 297 parole, ruota e richiamo: non
+resta piu' vuoto come nella versione che avevi provato.
 
 =====================================================================
-DA PROVARE DOPO IL DEPLOY
+UNA COSA CHE MI SERVE DA TE
 =====================================================================
-1. Il menu Strumenti ha cinque voci.
-2. /sottosopra/cookie/ su puntowebferrara.com stesso: deve dire
-   "niente da chiedere" — ma attenzione, online trovera' anche
-   Cloudflare Web Analytics, che Cloudflare inietta al volo e che nel
-   repo non c'e'. E' corretto: lo strumento legge il sito vero.
-3. Su un sito WordPress qualsiasi di un tuo concorrente: li' vedrai
-   il rapporto interessante.
+Nel rapporto che mi hai incollato comparivano insieme "1 piattaforma di
+consenso trovata" e "informativa non trovata". Sui miei tre siti non
+succede: nessun falso positivo, e la privacy viene trovata sempre.
+
+Dimmi su quale indirizzo l'avevi lanciato e lo inseguo.

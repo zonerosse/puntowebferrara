@@ -9,6 +9,30 @@
 
 const ETICHETTA = { alto: 'Da vedere', medio: 'Da sapere', basso: 'Da rifinire' };
 
+// La ruota del punteggio. Stessa costruzione di quella dell'analisi
+// completa: un cerchio di sfondo e un arco proporzionale.
+//
+// NON si chiama "conformità". Misura quanto è pulito il sito in quello
+// che si vede dal codice — che è una cosa diversa dall'essere a norma, e
+// la pagina lo ripete in tre punti. Un numero che sembra un voto di
+// legalità, su un tema sanzionabile, è una promessa che non possiamo fare.
+function ruota(punti) {
+  const R = 46, C = 2 * Math.PI * R;
+  const q = Math.max(0, Math.min(100, punti)) / 100;
+  const liv = punti >= 85 ? 'alto' : punti >= 55 ? 'medio' : 'basso';
+  return '<svg class="ck-ruota ' + liv + '" width="128" height="128" viewBox="0 0 128 128" ' +
+    'role="img" aria-label="Punteggio: ' + punti + ' su 100">' +
+    '<circle cx="64" cy="64" r="' + R + '" fill="none" stroke="var(--linea)" stroke-width="9"/>' +
+    (q > 0 ? '<circle cx="64" cy="64" r="' + R + '" fill="none" stroke="currentColor" ' +
+      'stroke-width="9" stroke-linecap="round" stroke-dasharray="' +
+      (C * q).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 64 64)"/>' : '') +
+    '<text x="64" y="70" text-anchor="middle" fill="currentColor" ' +
+    'style="font-size:34px;font-weight:700">' + punti + '</text>' +
+    '<text x="64" y="88" text-anchor="middle" fill="var(--grafite)" ' +
+    'style="font-size:11px;letter-spacing:.08em">SU 100</text></svg>';
+}
+
+
 export function bloccoCookie(dati) {
   if (!dati || dati.disponibile === false) {
     return '<div class="a11y-testata"><p class="a11y-quante">' +
@@ -24,13 +48,16 @@ export function bloccoCookie(dati) {
   /* --- testata ---------------------------------------------------------- */
   const quanti = dati.daConsenso.length;
   h += '<div class="a11y-testata">' +
-    '<div class="a11y-voto ' + fascia(dati.stato) + '">' +
-      '<span class="numero">' + quanti + '</span>' +
-      '<span class="su">' + (quanti === 1 ? 'servizio' : 'servizi') + '</span>' +
-      '<span class="etichetta">richiedono il consenso</span>' +
+    '<div class="ck-punteggio">' +
+      ruota(dati.punteggio) +
+      '<span class="etichetta">igiene del sito</span>' +
     '</div>' +
     '<div class="a11y-riepilogo">' +
       '<ul class="a11y-legenda">' +
+        (quanti
+          ? voce('g2', quanti, 'servizio richiede il consenso',
+                 'servizi richiedono il consenso')
+          : '<li><span class="tacca g1"></span>nessun servizio richiede il consenso</li>') +
         voce('g6', dati.piattaforme.length,
              'piattaforma di consenso trovata', 'piattaforme di consenso trovate') +
         (dati.policy
@@ -50,6 +77,9 @@ export function bloccoCookie(dati) {
     'l\'informativa. Se questo comporti un obbligo, e quale, lo dice un ' +
     'legale — non uno strumento automatico.</p>';
 
+  /* --- il confronto, prima di tutto: e' quello che si vuole vedere ------ */
+  h += tabellaConfronto(dati);
+
   /* --- lo stato, sempre, anche quando e' buono -------------------------- */
   h += '<div class="a11y-elenco">';
   h += '<div class="a11y-voce ' + gravitaStato(dati.stato) + '">' +
@@ -58,12 +88,8 @@ export function bloccoCookie(dati) {
       '<span class="nome">' + T(titoloStato(dati.stato)) + '</span>' +
     '</div>' +
     '<p class="a11y-quanti">' + T(dati.spiegazione) + '</p>' +
-    (dati.daConsenso.length
-      ? tendina('Quali servizi, e cosa se ne fa',
-          '<ul class="a11y-esempi">' +
-          dati.trovati.map(t => '<li><b>' + T(t.nome) + '</b> — ' +
-            '<span class="a11y-dove">' + T(t.impronta) + '</span></li>').join('') +
-          '</ul>' + comeSiSistema(dati.stato))
+    (comeSiSistema(dati.stato)
+      ? tendina('Come si sistema', comeSiSistema(dati.stato))
       : '')
   + '</div>';
 
@@ -81,18 +107,97 @@ export function bloccoCookie(dati) {
   h += '</div>';
 
   /* --- quello che qui non si puo' vedere -------------------------------- */
+  // Non e' una tendina da nascondere: e' meta' del quadro, e chi legge deve
+  // sapere che esiste un pezzo mancante e chi lo colmera'. Il richiamo
+  // all'estensione sta qui e non altrove, perche' qui ha un motivo.
   if (dati.fuoriPortata && dati.fuoriPortata.length) {
-    const dentro = '<p>Cinque verifiche dipendono da cosa succede mentre la ' +
-      'pagina gira nel browser. Nel codice consegnato dal server non esistono ' +
-      'ancora.</p><ul class="a11y-esempi">' +
-      dati.fuoriPortata.map(f =>
-        '<li><b>' + T(f.nome) + '</b> — ' + T(f.perche) + '</li>').join('') +
-      '</ul><p>Per queste serve l\'<a href="/estensione/">estensione per il ' +
-      'browser</a>, dove la pagina è viva e i cookie si possono contare.</p>';
-    h += tendina('Le cinque cose che questa pagina non può controllare', dentro, true);
+    h += '<div class="ck-browser">' +
+      '<h3>Cinque cose che si vedono solo nel browser' +
+        '<span class="ck-arrivo">In arrivo</span></h3>' +
+      '<p>Il rapporto qui sopra legge il codice che il server consegna. Ma i ' +
+      'cookie non stanno nel codice: nascono quando gli script girano. ' +
+      'Queste cinque verifiche, compreso <b>il testo che il banner mostra ' +
+      'davvero</b>, si possono fare solo a pagina viva.</p>' +
+      '<ul class="a11y-esempi">' +
+        dati.fuoriPortata.map(f =>
+          '<li><b>' + T(f.nome) + '</b> — ' + T(f.perche) + '</li>').join('') +
+      '</ul>' +
+      '<p class="ck-quando">Le farà l\'estensione. Oggi esegue i 48 controlli ' +
+      'tecnici e di posizionamento; la parte sui cookie sta arrivando.</p>' +
+      '<p class="ck-bottone"><a href="/estensione/">Guarda l\'estensione</a></p>' +
+    '</div>';
   }
 
   return h;
+}
+
+
+/* --- la tabella del confronto --------------------------------------------
+   E' il cuore del rapporto: una riga per servizio, e per ognuna cosa dice
+   il codice, cosa dice il banner, cosa dice l'informativa.
+
+   Le tre colonne rispondono a tre domande diverse, e vanno tenute separate
+   perche' un servizio puo' essere dichiarato nell'informativa e non
+   bloccato dal banner, o viceversa. Metterle insieme in un giudizio unico
+   nasconderebbe proprio il caso interessante.
+
+   IL TESTO DEL BANNER NON SI LEGGE DA QUI: lo scrive JavaScript quando la
+   pagina gira. Quello che si legge e' la CATEGORIA con cui il sito marca
+   ogni script, che dice quali servizi dichiara di sottoporre al permesso. */
+function tabellaConfronto(dati) {
+  if (!dati.trovati.length) return '';
+
+  const conPolicy = dati.policyLetta;
+  let h = '<div class="ck-tabella"><table>' +
+    '<caption>Cosa carica il sito, e cosa ne dicono banner e informativa</caption>' +
+    '<thead><tr>' +
+      '<th scope="col">Servizio</th>' +
+      '<th scope="col">Serve il consenso</th>' +
+      '<th scope="col">Aspetta il consenso</th>' +
+      '<th scope="col">Nell\'informativa</th>' +
+    '</tr></thead><tbody>';
+
+  for (const t of dati.trovati) {
+    h += '<tr>' +
+      '<td><b>' + T(t.nome) + '</b><span class="ck-impronta">' + T(t.impronta) + '</span></td>' +
+      '<td>' + (t.chiedeConsenso ? segno('si', 'Sì') : segno('no', 'No')) + '</td>' +
+      // "sospeso" era gergo mio: nessuno direbbe cosi'. Qui la colonna dice
+      // cosa fa il servizio, e il valore e' una frase che si legge da sola
+      // senza tornare all'intestazione.
+      '<td>' + (!t.chiedeConsenso
+          ? segno('vuoto', 'non serve')
+          : t.sospeso
+            ? segno('si', t.categoria ? 'sì · ' + T(t.categoria) : 'sì, aspetta')
+            : segno('no', 'no, parte subito')) + '</td>' +
+      '<td>' + (!conPolicy
+          ? segno('vuoto', 'non letta')
+          : t.dichiarato ? segno('si', 'nominato') : segno('no', 'assente')) + '</td>' +
+    '</tr>';
+  }
+
+  h += '</tbody></table>';
+
+  if (dati.piattaforme.length) {
+    h += '<p class="ck-sotto"><b>Piattaforma di consenso:</b> ' +
+      elenco(dati.piattaforme) + '.</p>';
+  } else {
+    h += '<p class="ck-sotto">Nessuna piattaforma di consenso trovata nel codice.</p>';
+  }
+
+  h += '<p class="ck-sotto"><b>Cosa vuol dire «aspetta il consenso».</b> Una ' +
+    'piattaforma configurata bene non carica gli script: li tiene fermi e li ' +
+    'fa partire solo dopo che il visitatore ha accettato. Quando succede, il ' +
+    'codice lo dichiara, e spesso dice anche in quale categoria.</p>' +
+    '<p class="ck-sotto"><b>Il limite.</b> Da qui si legge cosa il sito ' +
+    '<i>dichiara</i>, non il testo che il visitatore vede nel banner né se il ' +
+    'blocco funzioni davvero. Quello lo scrive JavaScript quando la pagina ' +
+    'gira nel browser.</p>';
+
+  return h + '</div>';
+}
+
+function segno(tipo, testo) {
+  return '<span class="ck-segno ' + tipo + '">' + T(testo) + '</span>';
 }
 
 /* --- i rilievi oltre allo stato ------------------------------------------ */
@@ -154,7 +259,7 @@ function costruisciRilievi(dati) {
         'e per chi controlla. Il posto giusto è il piè di pagina, su tutte le ' +
         'pagine del sito.</p>' +
         '<p>Senza informativa non ho potuto verificare se i servizi trovati ' +
-        'siano dichiarati: è il controllo che vale di più, e resta in sospeso.</p>',
+        'siano dichiarati: è il controllo che vale di più, e resta senza risposta.</p>',
     });
   }
 
@@ -182,7 +287,7 @@ function titoloStato(stato) {
   return {
     'niente-da-chiedere': 'Non c\'è niente per cui chiedere il consenso',
     'nessun-consenso': 'Ci sono tracciatori e nessuno chiede il permesso',
-    'banner-decorativo': 'Il banner c\'è, ma gli script non risultano sospesi',
+    'banner-decorativo': 'Il banner c\'è, ma i tracciatori partono lo stesso',
     'probabilmente-a-posto': 'Il consenso sembra configurato correttamente',
     'banner-inutile': 'C\'è un banner, ma non c\'è niente da chiedere',
   }[stato] || 'Situazione non riconosciuta';
