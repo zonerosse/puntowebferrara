@@ -86,6 +86,16 @@ export function bloccoCookie(dati) {
         ? 'Di questo sito si vede poco da qui'
         : 'Di questo sito si vede solo una parte') + '</b>' +
       '<p>' + T(dati.visibilita.perche) + '</p>' +
+      // L'avviso da solo lascia la domanda "e quindi cosa devo fare?".
+      // Non si puo' rispondere in termini legali, ma la cosa concreta da
+      // fare c'e' ed e' sempre la stessa.
+      '<p class="ck-quindi"><b>Cosa fare.</b> Guarda l\'elenco dei domini ' +
+      'qui sotto e cerca per nome quelli che non conosci: bastano trenta ' +
+      'secondi a testa. Se raccolgono dati — e per caricarsi ricevono ' +
+      'comunque l\'indirizzo IP di chi visita — vanno nominati ' +
+      'nell\'informativa. Quello che il sito carica e non è dichiarato è la ' +
+      'contestazione più facile da muovere, perché chiunque può aprire il ' +
+      'sorgente e verificarla.</p>' +
     '</div>';
   }
 

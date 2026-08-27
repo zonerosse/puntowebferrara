@@ -1,82 +1,27 @@
-puntowebferrara-cache-css.zip
-=============================
+puntowebferrara-cookie-cosafare.zip
+===================================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-TRE FILE, piu' UNA CANCELLAZIONE DA FARE A MANO.
+DUE FILE. Va messo DOPO lo zip dei cookie e quello della cache CSS.
 
-  assets/css/style.css           il foglio di stile, SPOSTATO qui
-  layouts/_default/baseof.html   il tag <link> con l'impronta
-  static/_headers                cache di un anno, ora sicura
+  static/sottosopra/cookie-blocco.js     la frase nuova
+  layouts/partials/stile-strumento.html  il suo stile
 
-=====================================================================
-PRIMA DI TUTTO: CANCELLA IL VECCHIO
-=====================================================================
-Il foglio di stile si sposta da static/ ad assets/. Se resta anche il
-vecchio, Hugo pubblica DUE file e il browser potrebbe prendere quello
-sbagliato.
+COSA CAMBIA
+-----------
+L'avviso in cima al rapporto diceva solo che di quel sito si vede poco.
+Un avviso tecnico, che lasciava la domanda vera senza risposta: e quindi
+cosa devo fare?
 
-  cd C:\Hugo\puntowebferrara-hugo
-  git rm static\css\style.css
+Ora lo dice, sotto una riga di separazione:
 
-Poi scompatta lo zip.
+  "Cosa fare. Guarda l'elenco dei domini qui sotto e cerca per nome
+   quelli che non conosci: bastano trenta secondi a testa. Se
+   raccolgono dati — e per caricarsi ricevono comunque l'indirizzo IP
+   di chi visita — vanno nominati nell'informativa. Quello che il sito
+   carica e non e' dichiarato e' la contestazione piu' facile da
+   muovere, perche' chiunque puo' aprire il sorgente e verificarla."
 
-Controlla che sia andata:
-
-  Get-ChildItem .\static\css -ErrorAction SilentlyContinue
-  Get-ChildItem .\assets\css
-
-La prima non deve trovare niente, la seconda deve elencare style.css.
-
-=====================================================================
-IL PROBLEMA CHE RISOLVE
-=====================================================================
-Il foglio si chiamava sempre /css/style.css, e Cloudflare lo teneva in
-cache per un anno. Ogni modifica al CSS restava invisibile finche' non
-purgavi a mano quell'indirizzo esatto.
-
-Era la trappola di stamattina: la regola del menu era nel file, il file
-era sul server, ma i visitatori ricevevano la versione vecchia.
-
-E sarebbe scattata di nuovo a ogni ritocco.
-
-=====================================================================
-COME FUNZIONA ADESSO
-=====================================================================
-Hugo calcola un'impronta del contenuto e la mette nel nome:
-
-  /css/style.min.3c2f19af81dc1851....css
-
-Se cambi una riga di CSS, l'impronta cambia, quindi cambia l'indirizzo,
-quindi il browser scarica il file nuovo — perche' e' un file che non ha
-mai visto. Niente da purgare, mai piu'.
-
-E la cache lunga da ostacolo diventa un vantaggio: il file vecchio
-nessuno lo chiedera' piu'. Per questo _headers passa da un'ora a un
-anno, con "immutable": quel contenuto a quell'indirizzo non puo'
-cambiare per definizione.
-
-In piu' il file viene minificato (pesa meno) e porta un'integrity, con
-cui il browser verifica che non sia stato alterato per strada.
-
-=====================================================================
-VERIFICATO
-=====================================================================
-Build pulita. Tutte le 28 pagine puntano allo stesso indirizzo, il file
-esiste dove il tag lo cerca, nessun riferimento al vecchio nome rimasto.
-
-Provata la cosa che conta: aggiunta una riga al CSS -> impronta
-581dcc320afb32de...; tolta la riga -> torna 3c2f19af81dc1851...
-L'indirizzo segue il contenuto, come deve.
-
-Accessibilita' 100/100 su 28 pagine.
-
-=====================================================================
-DOPO IL DEPLOY
-=====================================================================
-Questa volta un ULTIMO purge serve: la home vecchia in cache punta
-ancora al vecchio /css/style.css.
-
-  Caching > Configuration > Purge Everything
-
-E' l'ultima volta che ti serve per il CSS.
+Non e' una risposta legale, che non possiamo dare. E' l'unica cosa
+concreta e vera: cercali, e se raccolgono dati dichiarali.
