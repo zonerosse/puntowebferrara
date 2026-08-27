@@ -35,7 +35,8 @@
             <p>Ti ricontatto io entro 24 ore.</p>
         </div>
         <div style="max-width: 600px; margin: 0 auto;">
-            <form action="https://formspree.io/f/xwvkeobz" method="POST" class="contact-form" style="background: white; padding: 32px; border-radius: 12px;">
+            <form action="/api/contatto" method="POST" class="contact-form" style="background: white; padding: 32px; border-radius: 12px;">
+                <input type="hidden" name="_form" value="contatti">
                 <input type="hidden" name="_subject" value="Contatto - Paolo Boldrini Web">
                 <input type="hidden" name="_next" value="https://puntowebferrara.com/grazie/">
                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">

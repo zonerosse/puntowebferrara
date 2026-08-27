@@ -12,8 +12,8 @@ Ultimo aggiornamento: Agosto 2026
 
 ### Titolare del Trattamento
 
-Punto Web Ferrara  
-Ferrara (FE)  
+Punto Web Ferrara di Paolo Boldrini  
+Ostellato (FE)  
 Email: zonerosse&#64;gmail&#46;com  
 Telefono: 392 463 5584
 
@@ -24,7 +24,38 @@ Questo sito raccoglie i seguenti dati personali solo quando forniti volontariame
 - Nome e cognome
 - Indirizzo email
 - Numero di telefono (opzionale)
+- Nome dell'attività, tipo di servizio richiesto, budget indicativo e sito
+  attuale, per chi compila il modulo di preventivo
 - Messaggio e contenuto della richiesta
+
+I moduli del sito non passano da servizi esterni: la richiesta viene ricevuta
+da una funzione ospitata su Cloudflare, che compone l'email e la recapita alla
+casella del titolare. **Il contenuto dei messaggi non viene memorizzato da
+nessuna parte**: non esiste un archivio, un registro o un database delle
+richieste ricevute. Restano solo nella casella di posta, come una qualsiasi
+email.
+
+### Servizi di terze parti
+
+Per funzionare, il sito si appoggia ai seguenti fornitori.
+
+**Cloudflare** (Cloudflare Inc.) ospita il sito, ne gestisce la rete e recapita
+le email dei moduli. Tratta l'indirizzo IP del visitatore e i dati tecnici
+della connessione, per la sicurezza e il funzionamento del servizio.
+
+**Cloudflare Web Analytics** raccoglie statistiche di traffico aggregate. Non
+installa cookie, non assegna identificatori e non segue il visitatore fra siti
+diversi.
+
+**Cloudflare Turnstile** è la verifica anti-abuso presente sulla sola pagina di
+controllo del posizionamento. Serve a distinguere le persone dagli script
+automatici e può memorizzare informazioni tecniche nel browser per la durata
+della verifica. Non viene usata per profilazione.
+
+**Google PageSpeed Insights** e **DataForSEO** vengono interrogati soltanto
+quando l'utente avvia volontariamente uno degli strumenti di analisi, e
+ricevono l'indirizzo del sito da esaminare e le eventuali parole chiave
+inserite. Non ricevono dati personali dell'utente.
 
 ### Finalità del Trattamento
 
@@ -56,7 +87,12 @@ Per esercitare i propri diritti, contattare: zonerosse&#64;gmail&#46;com
 
 ### Cookie
 
-Questo sito non utilizza cookie di profilazione. Potrebbero essere utilizzati solo cookie tecnici necessari al funzionamento del sito.
+Questo sito non utilizza cookie di profilazione, né strumenti di analisi del
+traffico basati su cookie, né sistemi di tracciamento pubblicitario.
+
+Possono essere presenti cookie tecnici necessari al funzionamento del sito e
+della verifica anti-abuso. Per i cookie tecnici la normativa non richiede il
+consenso preventivo: per questo il sito non mostra alcun banner.
 
 ### Modifiche alla Privacy Policy
 
