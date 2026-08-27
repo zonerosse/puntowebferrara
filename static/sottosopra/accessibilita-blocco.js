@@ -60,7 +60,10 @@ export function bloccoAccessibilita(dati) {
         vociLegenda(conta) +
       '</ul>' +
       '<p class="a11y-quante">' + quantePagine(dati) + ' · ' +
-        (dati.controlliMisurati || 0) + ' controlli applicabili su 35</p>' +
+        // "25 applicabili su 35" fa pensare che dieci siano falliti. Non e'
+        // cosi': semplicemente non avevano materia — nessuna tabella, nessun
+        // video, nessuna mappa immagine su cui esprimersi.
+        (dati.controlliMisurati || 0) + ' controlli su 35 avevano qualcosa da esaminare</p>' +
     '</div>' +
   '</div>';
 
