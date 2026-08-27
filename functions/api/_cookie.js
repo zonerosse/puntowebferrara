@@ -273,6 +273,128 @@ function calcolaPunteggio(stato, trovati, policy, policyLetta) {
 }
 
 
+
+/* =========================================================================
+   COSA FA QUEL DOMINIO
+   I 45 servizi sopra sono riconosciuti per nome e finiscono nella tabella
+   del confronto. Ma restavano decine di domini elencati e basta, con
+   scritto "non so cosa siano": un elenco che a chi ha il sito non serve,
+   perche' non e' il suo mestiere andarseli a cercare.
+
+   Qui non serve il nome commerciale esatto: basta dire A COSA SERVE, in
+   una parola che si capisce. "Rete di distribuzione contenuti" e' gia'
+   abbastanza per sapere se preoccuparsi o no.
+
+   L'ordine conta: si prende la prima voce che corrisponde, quindi le
+   regole piu' specifiche vanno prima di quelle generiche.
+   ========================================================================= */
+
+const COSA_FA = [
+  // --- pubblicita' e aste: sono i piu' delicati ---
+  [/doubleclick|googlesyndication|googleadservices|adservice\.google/i,
+   'pubblicità di Google', 'pubblicita'],
+  [/amazon-adsystem|adsystem/i, 'pubblicità di Amazon', 'pubblicita'],
+  [/criteo|taboola|outbrain|adform|adnxs|appnexus|rubiconproject|pubmatic|openx|smartadserver|teads|sharethrough|indexww|casalemedia|33across|yieldmo|triplelift|gumgum|sovrn/i,
+   'asta pubblicitaria in tempo reale', 'pubblicita'],
+  [/adroll|perfectaudience|bing\.com\/bat|bat\.bing/i, 'pubblicità e retargeting', 'pubblicita'],
+  [/prebid|amp4ads|adsafeprotected|moatads|doubleverify/i,
+   'controllo e misura della pubblicità', 'pubblicita'],
+
+  // --- misurazione e comportamento ---
+  [/segment\.com|segment\.io/i, 'raccolta e smistamento dei dati di navigazione', 'misura'],
+  [/tiqcdn|tealium/i, 'gestore di tag: carica altri strumenti a sua volta', 'misura'],
+  [/optimizely|vwo\.com|abtasty|kameleoon|convertexperiments/i,
+   'test A/B: mostra versioni diverse della pagina', 'misura'],
+  [/mixpanel|amplitude|heap(analytics)?|kissmetrics|posthog/i,
+   'analisi del comportamento degli utenti', 'misura'],
+  [/newrelic|nr-data|sentry|bugsnag|datadoghq|rollbar|raygun/i,
+   'controllo degli errori e delle prestazioni', 'tecnico'],
+  [/hotjar|mouseflow|smartlook|fullstory|contentsquare|glassbox|inspectlet|luckyorange/i,
+   'registra la sessione: vede dove clicchi e come scorri', 'sessione'],
+  [/quantserve|quantcast|comscore|scorecardresearch|nielsen/i,
+   'misura del pubblico per il mercato pubblicitario', 'misura'],
+  [/chartbeat|parsely|parse\.ly/i, 'statistiche per editori', 'misura'],
+
+  // --- social ---
+  [/facebook\.(net|com)|fbcdn/i, 'Facebook', 'social'],
+  [/twitter|twimg|x\.com/i, 'X (Twitter)', 'social'],
+  [/linkedin|licdn/i, 'LinkedIn', 'social'],
+  [/tiktok|tiktokcdn/i, 'TikTok', 'social'],
+  [/pinterest|pinimg/i, 'Pinterest', 'social'],
+  [/instagram|cdninstagram/i, 'Instagram', 'social'],
+  [/youtube|ytimg|googlevideo/i, 'YouTube', 'video'],
+  [/vimeo|vimeocdn/i, 'Vimeo', 'video'],
+
+  // --- consenso ---
+  [/consensu\.org|cookielaw|cookiebot|iubenda|onetrust|usercentrics|didomi|privacy-center|axept|cookieyes|termly|osano|cookie-script|cookiefirst/i,
+   'gestione del consenso ai cookie', 'consenso'],
+
+  // --- chat, moduli, posta ---
+  [/intercom|tawk|crisp\.chat|zendesk|zdassets|freshchat|drift\.com|hubspot|hs-scripts|hsforms/i,
+   'chat o modulo di contatto', 'contatto'],
+  [/mailchimp|list-manage|klaviyo|sendinblue|brevo|activecampaign|mailerlite/i,
+   'newsletter e invio email', 'contatto'],
+  [/calendly|youcanbook|acuityscheduling|cal\.com/i, 'prenotazione appuntamenti', 'contatto'],
+
+  // --- pagamenti ---
+  [/stripe|paypal|braintree|checkout\.com|adyen|klarna|satispay|nexi|sumup/i,
+   'pagamenti', 'tecnico'],
+
+  // --- verifiche e sicurezza ---
+  [/recaptcha|gstatic\.com\/recaptcha|hcaptcha|challenges\.cloudflare|turnstile/i,
+   'verifica anti-robot', 'tecnico'],
+
+  // --- mappe ---
+  [/maps\.google|maps\.gstatic|mapbox|openstreetmap|here\.com|tomtom/i,
+   'mappe', 'incorporato'],
+
+  // --- font e icone ---
+  [/fonts\.(googleapis|gstatic)/i, 'font di Google', 'incorporato'],
+  [/use\.typekit|use\.fontawesome|fontawesome|fonts\.net|typography\.com/i,
+   'font e icone', 'incorporato'],
+
+  // --- recensioni, prenotazioni, marketplace ---
+  [/trustpilot|feedaty|ekomi|yotpo|judge\.me|reviews\.io/i, 'recensioni', 'incorporato'],
+  [/booking\.com|tripadvisor|thefork|expedia/i, 'prenotazioni e recensioni', 'incorporato'],
+
+  // --- reti di distribuzione: le piu' innocue, e le piu' frequenti ---
+  [/cdnjs|jsdelivr|unpkg|cdn\.jsdelivr|bootstrapcdn|ajax\.googleapis|code\.jquery|polyfill/i,
+   'libreria di codice servita da una rete di distribuzione', 'tecnico'],
+  [/cloudfront|akamai|fastly|cloudflare(insights)?|azureedge|stackpath|bunny(cdn)?|imgix|cloudinary/i,
+   'rete di distribuzione contenuti', 'tecnico'],
+  [/wp\.com|wordpress\.com|gravatar|w\.org/i, 'servizi di WordPress', 'tecnico'],
+  [/shopify|shopifycdn|myshopify/i, 'servizi di Shopify', 'tecnico'],
+  [/wix(static)?|parastorage/i, 'servizi di Wix', 'tecnico'],
+  [/squarespace|sqspcdn/i, 'servizi di Squarespace', 'tecnico'],
+
+  // --- google, quello che resta ---
+  [/google\.com|google\.it|gstatic|googleapis|googletagmanager|google-analytics/i,
+   'servizio di Google', 'misura'],
+  [/microsoft|msecnd|azure|clarity\.ms|bing/i, 'servizio Microsoft', 'misura'],
+];
+
+// I generi che meritano attenzione nell'informativa, dal piu' delicato.
+const PESO_GENERE = {
+  pubblicita: 'Serve quasi sempre il consenso, ed è il tipo di servizio su cui si concentrano i controlli.',
+  sessione: 'Registra il comportamento del visitatore: serve il consenso.',
+  misura: 'Di solito serve il consenso, salvo misurazioni anonime e senza cookie.',
+  social: 'Se è un riquadro incorporato serve il consenso; se è solo un collegamento, no.',
+  video: 'Serve il consenso, a meno che non sia la versione senza cookie.',
+  consenso: 'È il sistema che chiede il permesso: non ne ha bisogno lui stesso.',
+  contatto: 'Tratta i dati di chi ti scrive: va nominato nell\'informativa.',
+  incorporato: 'Riceve l\'indirizzo IP del visitatore: va nominato nell\'informativa.',
+  tecnico: 'Di solito è tecnico e non richiede consenso, ma riceve comunque l\'indirizzo IP.',
+};
+
+export function riconosciDominio(dominio) {
+  for (const [regola, cosa, genere] of COSA_FA) {
+    if (regola.test(dominio)) {
+      return { cosa, genere, nota: PESO_GENERE[genere] || null };
+    }
+  }
+  return null;
+}
+
 /* =========================================================================
    TUTTI I DOMINI ESTERNI
    Il difetto peggiore della prima versione: se non riconoscevo un servizio,
@@ -424,7 +546,14 @@ export function analizzaCookie(html, url, policy) {
   }
   const sconosciuti = Object.keys(domini)
     .filter(d => !noti.has(d))
-    .sort((a, b) => domini[b] - domini[a]);
+    .sort((a, b) => domini[b] - domini[a])
+    .map(d => {
+      const r = riconosciDominio(d);
+      return { dominio: d, volte: domini[d],
+               cosa: r ? r.cosa : null,
+               genere: r ? r.genere : null,
+               nota: r ? r.nota : null };
+    });
 
   const visibilita = quantoSiVede(html, corpo, domini);
 

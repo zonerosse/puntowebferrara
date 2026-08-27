@@ -89,13 +89,12 @@ export function bloccoCookie(dati) {
       // L'avviso da solo lascia la domanda "e quindi cosa devo fare?".
       // Non si puo' rispondere in termini legali, ma la cosa concreta da
       // fare c'e' ed e' sempre la stessa.
-      '<p class="ck-quindi"><b>Cosa fare.</b> Guarda l\'elenco dei domini ' +
-      'qui sotto e cerca per nome quelli che non conosci: bastano trenta ' +
-      'secondi a testa. Se raccolgono dati — e per caricarsi ricevono ' +
-      'comunque l\'indirizzo IP di chi visita — vanno nominati ' +
-      'nell\'informativa. Quello che il sito carica e non è dichiarato è la ' +
-      'contestazione più facile da muovere, perché chiunque può aprire il ' +
-      'sorgente e verificarla.</p>' +
+      '<p class="ck-quindi"><b>Cosa fare.</b> Apri l\'elenco dei domini qui ' +
+      'sotto: per la maggior parte c\'è scritto a cosa servono. Quelli di ' +
+      'pubblicità e di misura sono i primi da guardare. Se non li avevi ' +
+      'messi tu, chiedi a chi ti ha fatto il sito cosa sono e perché ci ' +
+      'sono: è una domanda legittima, e la risposta ti serve per scrivere ' +
+      'l\'informativa.</p>' +
     '</div>';
   }
 
@@ -233,20 +232,63 @@ function segno(tipo, testo) {
    non so cosa siano, e lo dico — ma dico che ci sono. */
 function elencoDomini(dati) {
   if (!dati.sconosciuti || !dati.sconosciuti.length) return '';
-  const n = dati.sconosciuti.length;
-  const dentro = '<p>Oltre a quelli riconosciuti qui sopra, la pagina contatta ' +
-    'altri ' + n + ' domini di terze parti. Non so cosa siano — non sono ' +
-    'nell\'elenco dei 45 che riconosco — ma il tuo browser li contatta, e ' +
-    'ognuno riceve almeno il tuo indirizzo IP.</p>' +
-    '<ul class="a11y-esempi">' +
-    dati.sconosciuti.slice(0, 25).map(d =>
-      '<li><span class="a11y-dove">' + T(d) + '</span>' +
-      (dati.domini[d] > 1 ? ' <b>×' + dati.domini[d] + '</b>' : '') + '</li>').join('') +
-    (n > 25 ? '<li>…e altri ' + (n - 25) + '</li>' : '') +
-    '</ul>' +
-    '<p>Cercali per nome: quasi sempre bastano trenta secondi per capire ' +
-    'cosa fanno. Se raccolgono dati, vanno nell\'informativa come gli altri.</p>';
-  return tendina(n + ' altri domini contattati, che non ho riconosciuto', dentro);
+
+  // Quelli di cui so dire a cosa servono, e i pochi che restano davvero
+  // ignoti. Prima diceva "non so cosa siano" per tutti: un elenco che a
+  // chi ha il sito non serviva, perche' cercarseli non e' il suo mestiere.
+  const spiegati = dati.sconosciuti.filter(d => d.cosa);
+  const ignoti = dati.sconosciuti.filter(d => !d.cosa);
+
+  // raggruppo per cosa fanno: e' l'ordine in cui uno se ne preoccupa
+  const ordine = ['pubblicita', 'sessione', 'misura', 'social', 'video',
+                  'contatto', 'incorporato', 'consenso', 'tecnico'];
+  const titoli = {
+    pubblicita: 'Pubblicità e profilazione',
+    sessione: 'Registrazione del comportamento',
+    misura: 'Misura del traffico',
+    social: 'Social',
+    video: 'Video',
+    contatto: 'Contatti e newsletter',
+    incorporato: 'Contenuti incorporati',
+    consenso: 'Gestione del consenso',
+    tecnico: 'Tecnici e di servizio',
+  };
+
+  const gruppi = {};
+  for (const d of spiegati) (gruppi[d.genere] = gruppi[d.genere] || []).push(d);
+
+  let dentro = '<p>Oltre a quelli riconosciuti per nome, la pagina contatta ' +
+    'altri ' + dati.sconosciuti.length + ' domini di terze parti. Per la ' +
+    'maggior parte so dirti a cosa servono.</p>';
+
+  for (const g of ordine) {
+    if (!gruppi[g]) continue;
+    dentro += '<p class="ck-gruppo-dom"><b>' + T(titoli[g]) + '</b>' +
+      (gruppi[g][0].nota ? '<span>' + T(gruppi[g][0].nota) + '</span>' : '') +
+      '</p><ul class="a11y-esempi">' +
+      gruppi[g].map(d =>
+        '<li><span class="a11y-dove">' + T(d.dominio) + '</span> — ' +
+        T(d.cosa) + (d.volte > 1 ? ' <b>×' + d.volte + '</b>' : '') + '</li>'
+      ).join('') + '</ul>';
+  }
+
+  if (ignoti.length) {
+    dentro += '<p class="ck-gruppo-dom"><b>Questi non li conosco</b>' +
+      '<span>Sono ' + ignoti.length + ': pochi, e sono quelli su cui vale la ' +
+      'pena chiedere a chi ti ha fatto il sito cosa siano e perché ci sono.' +
+      '</span></p><ul class="a11y-esempi">' +
+      ignoti.slice(0, 15).map(d =>
+        '<li><span class="a11y-dove">' + T(d.dominio) + '</span>' +
+        (d.volte > 1 ? ' <b>×' + d.volte + '</b>' : '') + '</li>').join('') +
+      (ignoti.length > 15 ? '<li>…e altri ' + (ignoti.length - 15) + '</li>' : '') +
+      '</ul>';
+  }
+
+  dentro += '<p>Tutti questi, per caricarsi, ricevono almeno l\'indirizzo IP ' +
+    'di chi visita il sito. Quelli marcati come da consenso vanno anche ' +
+    'sottoposti al permesso prima di partire.</p>';
+
+  return tendina(dati.sconosciuti.length + ' altri domini contattati, e cosa fanno', dentro);
 }
 
 /* --- i rilievi oltre allo stato ------------------------------------------ */
