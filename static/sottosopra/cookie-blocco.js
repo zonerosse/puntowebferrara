@@ -273,14 +273,19 @@ function elencoDomini(dati) {
   }
 
   if (ignoti.length) {
-    dentro += '<p class="ck-gruppo-dom"><b>Questi non li conosco</b>' +
-      '<span>Sono ' + ignoti.length + ': pochi, e sono quelli su cui vale la ' +
-      'pena chiedere a chi ti ha fatto il sito cosa siano e perché ci sono.' +
-      '</span></p><ul class="a11y-esempi">' +
-      ignoti.slice(0, 15).map(d =>
+    // Non "non li conosco", che scarica addosso a chi legge un lavoro non
+    // suo. Il consiglio deve valere anche se restano dieci: il modo di
+    // scoprirlo e' sempre lo stesso, e non e' cercarli su Google.
+    dentro += '<p class="ck-gruppo-dom"><b>Su questi non so pronunciarmi</b>' +
+      '<span>Non sono fra quelli che riconosco. Non vuol dire che siano un ' +
+      'problema: possono essere servizi tecnici del tuo stesso sito. Il modo ' +
+      'per saperlo è chiederlo a chi ti ha fatto il sito, o a chi te lo ' +
+      'gestisce — è una domanda legittima e la risposta serve per ' +
+      'l\'informativa.</span></p><ul class="a11y-esempi">' +
+      ignoti.slice(0, 30).map(d =>
         '<li><span class="a11y-dove">' + T(d.dominio) + '</span>' +
         (d.volte > 1 ? ' <b>×' + d.volte + '</b>' : '') + '</li>').join('') +
-      (ignoti.length > 15 ? '<li>…e altri ' + (ignoti.length - 15) + '</li>' : '') +
+      (ignoti.length > 30 ? '<li>…e altri ' + (ignoti.length - 30) + '</li>' : '') +
       '</ul>';
   }
 

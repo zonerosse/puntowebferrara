@@ -291,7 +291,7 @@ function calcolaPunteggio(stato, trovati, policy, policyLetta) {
 
 const COSA_FA = [
   // --- pubblicita' e aste: sono i piu' delicati ---
-  [/doubleclick|googlesyndication|googleadservices|adservice\.google/i,
+  [/doubleclick|googlesyndication|googleadservices|googletagservices|adservice\.google/i,
    'pubblicità di Google', 'pubblicita'],
   [/amazon-adsystem|adsystem/i, 'pubblicità di Amazon', 'pubblicita'],
   [/criteo|taboola|outbrain|adform|adnxs|appnexus|rubiconproject|pubmatic|openx|smartadserver|teads|sharethrough|indexww|casalemedia|33across|yieldmo|triplelift|gumgum|sovrn/i,
@@ -299,6 +299,22 @@ const COSA_FA = [
   [/adroll|perfectaudience|bing\.com\/bat|bat\.bing/i, 'pubblicità e retargeting', 'pubblicita'],
   [/prebid|amp4ads|adsafeprotected|moatads|doubleverify/i,
    'controllo e misura della pubblicità', 'pubblicita'],
+
+  // --- domini tecnici di gruppi editoriali e piattaforme italiane -------
+  // Non sono terze parti sconosciute: sono la CDN del sito stesso, con un
+  // nome diverso. Elencarli come "non li conosco" faceva sembrare pieno di
+  // misteri un sito che semplicemente serve le immagini da un altro dominio.
+  [/repstatic|gelestatic|kataweb|gedidigital|repubblica\.it|lastampa|huffingtonpost\.it/i,
+   'dominio tecnico del gruppo editoriale (immagini, script, login)', 'tecnico'],
+  [/rcsobjects|rcsmetrics|corriere|gazzetta\.it|iodonna|corriereobjects/i,
+   'dominio tecnico del gruppo editoriale', 'tecnico'],
+  [/mediaset|mediasetplay|msdn-static|videonews/i,
+   'dominio tecnico del gruppo editoriale', 'tecnico'],
+  [/staticsky|sky\.it|skytg24/i, 'dominio tecnico del gruppo editoriale', 'tecnico'],
+  [/rai\.it|raiplay|rainews/i, 'dominio tecnico del gruppo editoriale', 'tecnico'],
+  [/imrworldwide|nielsen/i, 'misura del pubblico (Nielsen)', 'misura'],
+  [/geniusmedia|4strokemedia|websystem\.it|shinystat/i,
+   'servizio pubblicitario o di statistiche', 'pubblicita'],
 
   // --- misurazione e comportamento ---
   [/segment\.com|segment\.io/i, 'raccolta e smistamento dei dati di navigazione', 'misura'],
@@ -385,6 +401,30 @@ const PESO_GENERE = {
   incorporato: 'Riceve l\'indirizzo IP del visitatore: va nominato nell\'informativa.',
   tecnico: 'Di solito è tecnico e non richiede consenso, ma riceve comunque l\'indirizzo IP.',
 };
+
+
+// Un dominio che somiglia al nome del sito e' quasi sempre il sito stesso
+// con un altro cappello: la CDN delle immagini, il sottodominio del login,
+// il dominio tecnico del gruppo. Non e' una terza parte da indagare.
+//
+// Questa e' una REGOLA, non un elenco: funziona anche sui gruppi che non
+// conosco, ed e' l'unico modo per non dover inseguire il mondo a mano.
+function pareIlSitoStesso(dominio, base) {
+  let nome;
+  try {
+    nome = new URL(base).hostname.replace(/^www\./, '').split('.')[0];
+  } catch { return false; }
+  if (!nome || nome.length < 4) return false;
+
+  const d = dominio.toLowerCase();
+  if (d.includes(nome)) return true;
+
+  // "repubblica" -> "repstatic": la radice breve compare nel dominio
+  const radice = nome.slice(0, Math.max(4, Math.ceil(nome.length / 2)));
+  if (radice.length >= 4 && d.includes(radice)) return true;
+
+  return false;
+}
 
 export function riconosciDominio(dominio) {
   for (const [regola, cosa, genere] of COSA_FA) {
@@ -549,10 +589,16 @@ export function analizzaCookie(html, url, policy) {
     .sort((a, b) => domini[b] - domini[a])
     .map(d => {
       const r = riconosciDominio(d);
-      return { dominio: d, volte: domini[d],
-               cosa: r ? r.cosa : null,
-               genere: r ? r.genere : null,
-               nota: r ? r.nota : null };
+      if (r) {
+        return { dominio: d, volte: domini[d], cosa: r.cosa,
+                 genere: r.genere, nota: r.nota };
+      }
+      if (pareIlSitoStesso(d, url)) {
+        return { dominio: d, volte: domini[d],
+                 cosa: 'dominio tecnico dello stesso sito o del suo gruppo',
+                 genere: 'tecnico', nota: PESO_GENERE.tecnico };
+      }
+      return { dominio: d, volte: domini[d], cosa: null, genere: null, nota: null };
     });
 
   const visibilita = quantoSiVede(html, corpo, domini);

@@ -1,74 +1,69 @@
-puntowebferrara-cookie-domini.zip
-=================================
+puntowebferrara-cookie-domini.zip  (versione 2)
+===============================================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-TRE FILE. Sostituisce lo zip "cosafare" di prima.
-
-  functions/api/_cookie.js               riconosce cosa fa ogni dominio
-  static/sottosopra/cookie-blocco.js     l'elenco raggruppato
-  layouts/partials/stile-strumento.html  il suo stile
+TRE FILE. Sostituisce la versione precedente di questo zip.
 
 =====================================================================
-AVEVI RAGIONE: "CERCALI PER NOME" NON E' UNA RISPOSTA
+IL CASO REPUBBLICA
 =====================================================================
-Dire a un idraulico di cercarsi ventisette domini su Google e'
-scaricargli addosso un lavoro che non e' il suo.
+Nell'elenco "non li conosco" c'erano dieci domini. Ma guarda quali:
 
-Ora glielo dice lo strumento.
+  repstatic.it, gelestatic.it, kataweb.it, gedidigital.it
 
-COME
-----
-Una seconda tabella di riconoscimento, piu' larga della prima: non i 45
-servizi per nome commerciale, ma una sessantina di REGOLE su cosa fa un
-dominio. Non serve sapere che tiqcdn e' Tealium: serve sapere che e' un
-gestore di tag che ne carica altri.
+Sono IL SITO STESSO. Sono i domini tecnici del gruppo GEDI che serve
+Repubblica: le immagini, gli script, il login. Non terze parti da
+indagare: la sua CDN con un altro nome.
 
-  cdn.segment.com        raccolta e smistamento dei dati di navigazione
-  cdn.optimizely.com     test A/B: mostra versioni diverse della pagina
-  tags.tiqcdn.com        gestore di tag: carica altri strumenti
-  c.amazon-adsystem.com  pubblicita' di Amazon
-  cdnjs.cloudflare.com   libreria di codice da una rete di distribuzione
-  d1234.cloudfront.net   rete di distribuzione contenuti
-  stats.wp.com           servizi di WordPress
-  js.stripe.com          pagamenti
+E googletagservices.com e' pubblicita' di Google — quello lo conoscevo,
+me l'ero perso per una regola scritta male.
 
-Su una prova di undici domini, dieci riconosciuti.
+=====================================================================
+DUE CORREZIONI, E LA SECONDA CONTA DI PIU'
+=====================================================================
 
-RAGGRUPPATI PER QUANTO CONTANO
--------------------------------
-Non un elenco piatto ma famiglie, nell'ordine in cui uno se ne
-preoccupa, e ognuna dice se serve il consenso:
+1. AGGIUNTE LE REGOLE MANCANTI
+   I domini tecnici dei grandi gruppi editoriali italiani (GEDI, RCS,
+   Mediaset, Sky, Rai), Nielsen, e googletagservices.
+   Sui dieci di Repubblica: dieci su dieci riconosciuti.
 
-  Pubblicita' e profilazione
-    Serve quasi sempre il consenso, ed e' il tipo di servizio su cui si
-    concentrano i controlli.
-  Registrazione del comportamento
-    Registra il comportamento del visitatore: serve il consenso.
-  Misura del traffico
-    Di solito serve il consenso, salvo misurazioni anonime senza cookie.
-  ...
-  Tecnici e di servizio
-    Di solito e' tecnico e non richiede consenso, ma riceve comunque
-    l'indirizzo IP.
+2. UNA REGOLA INVECE DI UN ELENCO — questa e' quella che conta
 
-Quelli che restano davvero ignoti finiscono in coda, e sono pochi:
-  "Sono 2: pochi, e sono quelli su cui vale la pena chiedere a chi ti ha
-   fatto il sito cosa siano e perche' ci sono."
+   Inseguire i domini uno per uno non finisce mai: domani ne trovi altri
+   dieci che non conosco.
 
-LA FRASE "COSA FARE" E' CAMBIATA
----------------------------------
-Non manda piu' a cercare su Google:
+   Ora c'e' una regola strutturale: se il nome del dominio somiglia al
+   nome del sito, e' quasi sempre il sito stesso con un altro cappello.
 
-  "Apri l'elenco dei domini qui sotto: per la maggior parte c'e' scritto
-   a cosa servono. Quelli di pubblicita' e di misura sono i primi da
-   guardare. Se non li avevi messi tu, chiedi a chi ti ha fatto il sito
-   cosa sono e perche' ci sono: e' una domanda legittima, e la risposta
-   ti serve per scrivere l'informativa."
+     esempiogiornale.it  ->  scripts.esempiogiornale-static.it
+                             riconosciuto, senza saperne niente
+
+   Funziona anche sui gruppi che non conosco, ed e' l'unico modo per non
+   dover inseguire il mondo a mano.
+
+=====================================================================
+E IL TESTO E' CAMBIATO
+=====================================================================
+Prima: "Questi non li conosco. Sono 10: pochi, e sono quelli su cui
+vale la pena chiedere..."
+
+Che era due volte sbagliato: dieci non sono pochi, e "non li conosco"
+scarica addosso a chi legge un lavoro che non e' il suo.
+
+Ora:
+
+  "Su questi non so pronunciarmi.
+   Non sono fra quelli che riconosco. Non vuol dire che siano un
+   problema: possono essere servizi tecnici del tuo stesso sito. Il modo
+   per saperlo e' chiederlo a chi ti ha fatto il sito, o a chi te lo
+   gestisce — e' una domanda legittima e la risposta serve per
+   l'informativa."
+
+Il consiglio vale che siano due o che siano trenta.
 
 =====================================================================
 VERIFICATO
 =====================================================================
-Build pulita, sintassi valida, tutte le classi gia' definite nella
-partial. Sette scenari collaudati. Motore: mediana 5,8 ms (tetto 10).
-Accessibilita' 100/100 su 28 pagine.
+Build pulita, sintassi valida, cinque scenari collaudati compreso un
+gruppo editoriale inventato apposta per provare la regola nuova.
