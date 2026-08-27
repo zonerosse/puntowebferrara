@@ -1,0 +1,148 @@
+{{ define "main" }}
+{{ partial "stile-strumento.html" . }}
+
+<div class="strumento">
+  <div class="foglio">
+
+    <div class="marchio-sottosopra">
+      <img src="/img/marchio/simbolo.svg" width="108" height="108" alt="" loading="eager">
+      <div>
+        <b>Sotto<i>sopra</i></b>
+        <span>Prima sotto. <em>Poi sopra nelle SERP.</em></span>
+      </div>
+    </div>
+
+    <p class="briciole">
+      <a href="/">Home</a> · <a href="/sottosopra/">Strumenti</a> · Cookie
+    </p>
+
+    <p class="occhiello">Strumento gratuito · <b>45 servizi riconosciuti</b> · nessuna registrazione</p>
+    <h1>Il tuo sito ha bisogno del banner cookie?</h1>
+
+    <p class="tesi">Quarantacinque servizi riconosciuti e diciassette piattaforme di
+    consenso. Ma non conta solo quali tracciatori hai: conta se partono <b>prima o dopo</b>
+    che il visitatore ha detto sì. Gratis, senza registrazione, senza salvare niente.</p>
+
+    <label for="indirizzo" class="etichetta-campo">Il tuo sito</label>
+    <form class="modulo" id="modulo">
+      <div class="campo">
+        <input type="text" id="indirizzo" placeholder="iltuosito.it" required
+               inputmode="url" autocomplete="url" spellcheck="false" autocapitalize="off">
+        <button type="submit" id="avvia">Guarda cosa carica</button>
+      </div>
+      <p class="nota">Basta il dominio. Legge la pagina e la tua informativa privacy,
+      dura pochi secondi, non salva nulla.</p>
+
+      <div class="blocco-scala">
+        <div class="capo">
+          <span class="titolo">Cosa cerca, e dove</span>
+          <span class="totale">45 servizi · 17 piattaforme · <b>5 esiti</b></span>
+        </div>
+
+        <div class="barra-scala" role="img" aria-label="Ripartizione dei servizi riconosciuti: misura del traffico 14, pubblicità e retargeting 11, contenuti incorporati 12, chat moduli e CRM 8, piattaforme di consenso 17">
+          <span class="g1" style="width:22.6%">14</span>
+          <span class="g2" style="width:17.7%">11</span>
+          <span class="g3" style="width:19.4%">12</span>
+          <span class="g4" style="width:12.9%">8</span>
+          <span class="g5" style="width:27.4%">17</span>
+        </div>
+
+        <ul class="voci-scala">
+          <li><span class="tacca g1"></span><span class="nome">Misura del traffico</span><span class="peso">14</span></li>
+          <li><span class="tacca g2"></span><span class="nome">Pubblicità e retargeting</span><span class="peso">11</span></li>
+          <li><span class="tacca g3"></span><span class="nome">Contenuti incorporati</span><span class="peso">12</span></li>
+          <li><span class="tacca g4"></span><span class="nome">Chat, moduli e CRM</span><span class="peso">8</span></li>
+          <li><span class="tacca g5"></span><span class="nome">Piattaforme di consenso</span><span class="peso">17</span></li>
+        </ul>
+      </div>
+    </form>
+
+    <p>Ogni servizio trovato viene detto con il suo nome, non con una sigla. E la
+    verifica non si ferma a elencarli: legge la tua informativa privacy e ti dice
+    quali <b>non sono dichiarati</b>.</p>
+
+    <section class="esito" id="esito"></section>
+
+    <section>
+      <h2>Le cinque risposte possibili</h2>
+
+      <p>Il numero dei tracciatori conta meno di quanto si creda. Quello che cambia
+      tutto è il <b>rapporto fra i tracciatori e il consenso</b>, e le combinazioni
+      sono cinque.</p>
+
+      <h3>Niente da chiedere</h3>
+      <p>Nessun servizio che richieda il permesso, e nessun banner. È la situazione più
+      semplice e la più rara: non serve nessun avviso, perché non c'è nulla per cui
+      chiederlo. Un sito così carica prima e non fa cliccare nessuno per niente.</p>
+
+      <h3>Nessun consenso</h3>
+      <p>Ci sono tracciatori e non c'è niente che raccolga il permesso. Partono al primo
+      caricamento, prima che il visitatore possa dire qualcosa.</p>
+
+      <h3>Il banner c'è ma non blocca</h3>
+      <p>La situazione più diffusa, e la più insidiosa: c'è la piattaforma di consenso,
+      ma gli script non risultano sospesi. Chi ha il sito di solito crede che il problema
+      sia risolto <b>proprio perché il banner c'è</b>.</p>
+
+      <h3>Probabilmente a posto</h3>
+      <p>C'è la piattaforma e gli script sono marcati come sospesi. È il comportamento
+      corretto. Se il blocco funzioni davvero si vede solo caricando la pagina in un
+      browser, e il rapporto lo dice invece di far finta di saperlo.</p>
+
+      <h3>Banner inutile</h3>
+      <p>C'è il banner e non c'è niente da chiedere. Rallenta il sito e fa cliccare la
+      gente per niente. Succede più spesso di quanto sembri, di solito perché un plugin
+      è rimasto acceso dopo che i tracciatori sono stati tolti.</p>
+    </section>
+
+    <section>
+      <h2>Cosa dice la tua informativa</h2>
+      <p>Questa è la parte che quasi nessuno controlla. Lo strumento cerca la tua privacy
+      policy fra i collegamenti della pagina, ne legge il testo, e verifica se nomina i
+      servizi che ha trovato nel codice.</p>
+      <p>Un elenco di servizi presenti ma non dichiarati è la contestazione più facile da
+      muovere: chiunque può aprire il sorgente della pagina e verificarla in un minuto.</p>
+      <p>Quello che <b>non</b> può dire è se l'informativa sia scritta bene, se le
+      finalità dichiarate siano corrette o se le basi giuridiche siano quelle giuste.
+      Quello è lavoro da legale, e uno strumento automatico non ci si avvicina.</p>
+    </section>
+
+    <section>
+      <h2>Chi deve chiedere il consenso</h2>
+      <p>In generale il consenso preventivo serve per i cookie e le tecnologie di
+      tracciamento che non sono strettamente necessari a far funzionare il sito. I cookie
+      tecnici non lo richiedono, ed è la ragione per cui alcuni siti legittimamente non
+      mostrano nessun banner.</p>
+      <p>Dove passi la linea nel tuo caso specifico non te lo può dire uno strumento, e
+      nemmeno io. Quello che questa pagina fa è dirti <b>cosa carica il tuo sito</b> e
+      <b>cosa dichiara la tua informativa</b>: due fatti verificabili, da portare a chi
+      di dovere.</p>
+    </section>
+
+    <section>
+      <h2>Domande frequenti</h2>
+      {{ range .Params.faq }}
+      <details class="faq">
+        <summary>{{ .q }}</summary>
+        <p>{{ .a }}</p>
+      </details>
+      {{ end }}
+    </section>
+
+    <section>
+      <h2>Gli altri strumenti</h2>
+      <p>L'<a href="/sottosopra/">analisi completa</a> guarda il lato tecnico e di
+      posizionamento: dati strutturati, indicizzazione, velocità misurata, e quali motori
+      IA riescono a leggere il sito. La <a href="/sottosopra/posizionamento/">verifica
+      delle posizioni</a> dice in che posizione compari su Google per le tue parole
+      chiave. La <a href="/sottosopra/accessibilita/">verifica di accessibilità</a>
+      controlla 35 criteri WCAG 2.1 AA.</p>
+      <p>Se quello che trovi qui lo deve sistemare qualcuno, <a href="/servizi/">è il
+      lavoro che faccio</a>: <a href="/contatti/">scrivimi</a> e ne parliamo.</p>
+    </section>
+
+  </div>
+</div>
+
+<script type="module" src="/sottosopra/cookie.js"></script>
+{{ end }}

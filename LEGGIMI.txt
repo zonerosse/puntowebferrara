@@ -1,29 +1,105 @@
-puntowebferrara-conteggio.zip
-=============================
+puntowebferrara-cookie.zip
+==========================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-UN FILE SOLO.
+SETTE FILE. Il quarto strumento: Sottosopra Cookie.
 
-  static/sottosopra/accessibilita-blocco.js
+  functions/api/_cookie.js          il motore: 45 servizi, 17 piattaforme
+  functions/api/cookie.js           l'endpoint: scarica pagina e informativa
+  static/sottosopra/cookie.js       la logica di pagina
+  static/sottosopra/cookie-blocco.js il rapporto
+  layouts/page/cookie.html          la pagina
+  content/sottosopra/cookie.md      titolo, descrizione e 6 FAQ
+  hugo.toml                         la voce nel menu
 
-COSA CAMBIA
------------
-Una riga del rapporto.
+NIENTE DA CONFIGURARE. Non chiama servizi a pagamento, quindi non ha
+Turnstile e non ha variabili d'ambiente. Si pubblica e funziona.
 
-  prima:  "25 controlli applicabili su 35"
-  dopo:   "25 controlli su 35 avevano qualcosa da esaminare"
+=====================================================================
+COSA FA
+=====================================================================
+Riconosce 45 servizi (misura, pubblicita', contenuti incorporati, chat,
+CRM) e 17 piattaforme di consenso. Ma la parte che vale e' il RAPPORTO
+FRA I DUE, e distingue cinque situazioni:
 
-Il numero era giusto ma si leggeva male: faceva pensare che dieci
-controlli fossero falliti. Non e' cosi' — semplicemente non avevano
-materia su cui esprimersi: nessuna tabella di dati, nessun video,
-nessuna mappa immagine su quel sito.
+  niente-da-chiedere     nessun tracciatore, nessun banner
+  nessun-consenso        tracciatori e nessuno che chieda il permesso
+  banner-decorativo      c'e' il banner, ma gli script non sono sospesi
+  probabilmente-a-posto  banner e script marcati correttamente
+  banner-inutile         banner senza niente da chiedere
 
-Un controllo senza materia non viene contato ne' a favore ne' contro,
-ed e' giusto cosi'. Ma andava detto in modo che si capisse.
+Il terzo e' quello che vende: e' frequentissimo, e chi ha il sito crede
+che il problema sia risolto proprio perche' il banner c'e'.
 
-I PUNTINI VUOTI NEL RAPPORTO
-----------------------------
-Li ho verificati: i dati arrivano completi. Le tendine chiuse perdono il
-contenuto quando copi la pagina, ed e' lo stesso effetto che si vedeva
-anche sulle FAQ. Nel browser il contenuto c'e'.
+E LEGGE LA TUA INFORMATIVA. Cerca la privacy policy fra i collegamenti
+della pagina, la scarica, e dice quali servizi trovati NON sono
+nominati. E' il controllo che nessuno strumento gratuito fa, ed e' la
+contestazione piu' facile da muovere.
+
+=====================================================================
+IL TONO, E PERCHE'
+=====================================================================
+Questa e' la pagina che ti espone di piu', perche' il tema e'
+sanzionabile. La regola che governa tutti i testi:
+
+  DIRE COSA SI TROVA, MAI COSA COMPORTA.
+
+"Il sito carica Meta Pixel e l'informativa non lo nomina" e' un fatto
+verificabile da chiunque. "Il tuo sito non e' a norma" e' una
+consulenza legale, e dipende da cento cose che uno strumento non vede.
+
+Ogni rilievo dice anche il LIMITE del controllo: dove finisce quello
+che si vede e comincia quello che va verificato altrimenti.
+
+=====================================================================
+COSA NON PUO' VEDERE, E LO DICE
+=====================================================================
+Cinque verifiche restano vuote e dichiarano il perche':
+  - i cookie effettivamente scritti
+  - se partono prima del consenso   <- la domanda che conta di piu'
+  - quali richieste di rete partono davvero
+  - l'archiviazione locale del browser
+  - se il banner funziona davvero
+
+Sono gia' predisposte per l'estensione: stessi id, stessa struttura,
+campo "esito" che si riempie. Quando l'estensione sara' approvata, si
+attacca senza riscrivere niente.
+
+=====================================================================
+HO CORRETTO ANCHE LA RIGA DEL MENU
+=====================================================================
+  prima:  "A che numero sei fra i risultati. Veloce, senza scansione."
+  dopo:   "Vedi se compari nella prima pagina, e a che posizione."
+
+Avevi ragione: la prima non diceva niente a chi non sapeva gia' cosa
+fa lo strumento.
+
+=====================================================================
+VERIFICATO
+=====================================================================
+Build Hugo senza errori. 11 file JS con sintassi valida, tutti gli
+import risolvono, gli id cercati dallo script esistono nella pagina.
+
+Le 25 classi prodotte dal rapporto sono TUTTE gia' definite nella
+partial condivisa: nessuna riga di CSS nuova, stessa grafica delle
+altre pagine per costruzione e non per somiglianza.
+
+Motore: mediana 3,4 ms su una pagina da 83 KB (il tetto e' 10 ms).
+
+La pagina nuova passa il tuo stesso controllo di accessibilita' a
+100/100, e il sito resta a 100/100 su 28 pagine.
+
+I cinque scenari sono stati collaudati su pagine di prova costruite
+apposta, e riconosciuti tutti e cinque.
+
+=====================================================================
+DA PROVARE DOPO IL DEPLOY
+=====================================================================
+1. Il menu Strumenti ha cinque voci.
+2. /sottosopra/cookie/ su puntowebferrara.com stesso: deve dire
+   "niente da chiedere" — ma attenzione, online trovera' anche
+   Cloudflare Web Analytics, che Cloudflare inietta al volo e che nel
+   repo non c'e'. E' corretto: lo strumento legge il sito vero.
+3. Su un sito WordPress qualsiasi di un tuo concorrente: li' vedrai
+   il rapporto interessante.

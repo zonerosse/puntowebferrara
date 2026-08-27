@@ -51,7 +51,7 @@ enableRobotsTXT = false
     url = '/sottosopra/posizionamento/'
     weight = 2
     [menus.main.params]
-      riga = 'A che numero sei fra i risultati. Veloce, senza scansione.'
+      riga = 'Vedi se compari nella prima pagina, e a che posizione.'
   [[menus.main]]
     name = 'Accessibilità'
     parent = 'strumenti'
@@ -60,10 +60,17 @@ enableRobotsTXT = false
     [menus.main.params]
       riga = '35 controlli WCAG 2.1 AA, ognuno con il suo rimedio.'
   [[menus.main]]
+    name = 'Cookie e consenso'
+    parent = 'strumenti'
+    url = '/sottosopra/cookie/'
+    weight = 4
+    [menus.main.params]
+      riga = 'Quali tracciatori carichi, e se ti serve il banner.'
+  [[menus.main]]
     name = 'Estensione per Chrome'
     parent = 'strumenti'
     url = '/estensione/'
-    weight = 4
+    weight = 5
     [menus.main.params]
       riga = 'Analizza la pagina aperta, anche dietro login.'
   [[menus.main]]
