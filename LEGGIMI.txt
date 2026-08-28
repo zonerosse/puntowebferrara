@@ -1,69 +1,86 @@
-puntowebferrara-cookie-domini.zip  (versione 2)
-===============================================
+puntowebferrara-mappe.zip
+=========================
 
 VA IN:  C:\Hugo\puntowebferrara-hugo
 
-TRE FILE. Sostituisce la versione precedente di questo zip.
+DUE FILE.
+
+  functions/api/posizioni.js            il riconoscimento della scheda
+  static/sottosopra/posizioni-blocco.js il rapporto lo dichiara
 
 =====================================================================
-IL CASO REPUBBLICA
+IL DIFETTO CHE HAI TROVATO
 =====================================================================
-Nell'elenco "non li conosco" c'erano dieci domini. Ma guarda quali:
+Il rapporto diceva due cose incompatibili nella stessa schermata:
 
-  repstatic.it, gelestatic.it, kataweb.it, gedidigital.it
+  Riquadro mappe: "12 attivita', tu no"
+  Chi c'e' in cima, riquadro mappe:
+     1. Allevamento Staffordshire Bull Terrier Del Piccolo Diavolo
 
-Sono IL SITO STESSO. Sono i domini tecnici del gruppo GEDI che serve
-Repubblica: le immagini, gli script, il login. Non terze parti da
-indagare: la sua CDN con un altro nome.
+Eri PRIMO e ti diceva che non c'eri.
 
-E googletagservices.com e' pubblicita' di Google — quello lo conoscevo,
-me l'ero perso per una regola scritta male.
+LA CAUSA
+--------
+Il confronto cercava la tua scheda per DOMINIO. Ma le schede del
+riquadro mappe sono attivita' di Google Business Profile, e molte NON
+dichiarano il sito: il campo resta vuoto, il confronto fallisce, e lo
+strumento conclude che non ci sei.
 
-=====================================================================
-DUE CORREZIONI, E LA SECONDA CONTA DI PIU'
-=====================================================================
+Il commento nel codice lo diceva pure — "il sito spesso manca" — ma solo
+per non rendere cliccabile la voce. Nessuno aveva collegato le due cose.
 
-1. AGGIUNTE LE REGOLE MANCANTI
-   I domini tecnici dei grandi gruppi editoriali italiani (GEDI, RCS,
-   Mediaset, Sky, Rai), Nielsen, e googletagservices.
-   Sui dieci di Repubblica: dieci su dieci riconosciuti.
+LA CORREZIONE
+-------------
+Quando la scheda dichiara un sito, quello vince: e' il confronto sicuro.
 
-2. UNA REGOLA INVECE DI UN ELENCO — questa e' quella che conta
+Quando manca, si confronta il NOME dell'attivita' con quello ricavato dal
+dominio, ripulito delle parole comuni del settore:
 
-   Inseguire i domini uno per uno non finisce mai: domani ne trovi altri
-   dieci che non conosco.
+  delpiccolodiavolo.it  ->  "piccolodiavolo"
+  "Allevamento Staffordshire Bull Terrier Del Piccolo Diavolo"
+                        ->  staffordshire, bull, terrier, piccolo, diavolo
+                        ->  "piccolo"+"diavolo" = piccolodiavolo   TROVATO
 
-   Ora c'e' una regola strutturale: se il nome del dominio somiglia al
-   nome del sito, e' quasi sempre il sito stesso con un altro cappello.
+Il nome cercato si ricompone da parole CONSECUTIVE del titolo, non
+incollando tutto: altrimenti bastava una parola in mezzo per non trovare
+piu' niente.
 
-     esempiogiornale.it  ->  scripts.esempiogiornale-static.it
-                             riconosciuto, senza saperne niente
+DUE COSE CHE HO SBAGLIATO STRADA FACENDO, E CORRETTO
+-----------------------------------------------------
+La prima versione incollava tutte le parole del titolo e cercava dentro:
+funzionava per caso su alcuni nomi e falliva sul tuo.
 
-   Funziona anche sui gruppi che non conosco, ed e' l'unico modo per non
-   dover inseguire il mondo a mano.
+La seconda toglieva "del" dal titolo ma non dal dominio, quindi cercava
+"delpiccolodiavolo" fra parole da cui il "del" era gia' sparito. Non
+avrebbero mai combaciato.
 
-=====================================================================
-E IL TESTO E' CAMBIATO
-=====================================================================
-Prima: "Questi non li conosco. Sono 10: pochi, e sono quelli su cui
-vale la pena chiedere..."
+IL RAPPORTO ORA LO DICHIARA
+---------------------------
+Se ti ha riconosciuto dal nome invece che dal sito, lo scrive:
 
-Che era due volte sbagliato: dieci non sono pochi, e "non li conosco"
-scarica addosso a chi legge un lavoro che non e' il suo.
+  3  su 9 · riconosciuto dal nome
 
-Ora:
+E se dice che non ci sei, ammette di poter sbagliare:
 
-  "Su questi non so pronunciarmi.
-   Non sono fra quelli che riconosco. Non vuol dire che siano un
-   problema: possono essere servizi tecnici del tuo stesso sito. Il modo
-   per saperlo e' chiederlo a chi ti ha fatto il sito, o a chi te lo
-   gestisce — e' una domanda legittima e la risposta serve per
-   l'informativa."
+  12 attivita', tu no
+  se hai una scheda con un altro nome, potrei non averla riconosciuta
 
-Il consiglio vale che siano due o che siano trenta.
+UN LIMITE CHE RESTA
+-------------------
+Un'attivita' che si chiama in modo molto diverso dal dominio puo' non
+essere riconosciuta. Su dodici prove ne sbaglia una: "Bar Da Mario" con
+dominio damario.it.
+
+Allargare ancora il confronto produrrebbe falsi positivi, e dire "sei nel
+riquadro" quando non ci sei e' peggio del contrario. Per questo il
+rapporto avverte invece di allargare la rete.
 
 =====================================================================
 VERIFICATO
 =====================================================================
-Build pulita, sintassi valida, cinque scenari collaudati compreso un
-gruppo editoriale inventato apposta per provare la regola nuova.
+Dodici casi di prova, presi dal TUO rapporto vero: le cinque schede del
+riquadro mappe di Ferrara e Italia, piu' i tuoi tre siti e alcuni casi
+limite. Undici su dodici corrette, e la dodicesima e' il caso limite
+dichiarato qui sopra.
+
+Build pulita, sintassi valida.

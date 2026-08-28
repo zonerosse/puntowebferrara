@@ -90,10 +90,17 @@ export function bloccoPosizioni(dati) {
     const quanti = m.totale || m.posizione;
     if (!m.dentro)
       return riga(nome, sigla,
-        '<span class="fuori attenzione">' + quanti + ' attivit\u00e0, tu no</span>');
+        '<span class="fuori attenzione">' + quanti +
+        ' attivit\u00e0, tu no</span>' +
+        '<span class="sotto">se hai una scheda con un altro nome, ' +
+        'potrei non averla riconosciuta</span>');
     return riga(nome, sigla,
       '<span class="numero ' + fasciaPosizione(m.posizione) + '">' + m.posizione +
-      '</span><span class="sotto">su ' + quanti + '</span>');
+      '</span><span class="sotto">su ' + quanti +
+      // Le schede mappe spesso non dichiarano il sito: in quel caso il
+      // riconoscimento e' per somiglianza del nome, ed e' giusto che chi
+      // legge sappia che e' un'attribuzione probabile, non certa.
+      (m.perNome ? ' · riconosciuto dal nome' : '') + '</span>');
   };
 
   const luogo = (classe, nome, esito) =>

@@ -84,6 +84,84 @@ const PROFONDITA = 50;        // quanti risultati guardare: si fattura ogni 10, 
 const NAZIONE = 'Italy';
 const LINGUA = 'it';
 
+
+// Le schede del riquadro mappe spesso NON dichiarano un sito: sono attività
+// di Google Business Profile, e il campo domain resta vuoto. Cercarsi solo
+// per dominio faceva fallire il confronto e concludere "non ci sei" mentre
+// la scheda stava prima fra tutte — con l'assurdo che il rapporto poi la
+// elencava fra quelle in cima.
+//
+// Quando il dominio manca si confronta il NOME dell'attività con quello del
+// sito, ripulito di tutto quello che non aiuta: la punteggiatura, le parole
+// comuni del settore, gli articoli. Se resta un nome proprio abbastanza
+// lungo e quello compare nella scheda, è lui.
+const PAROLE_COMUNI = /\b(allevamento|kennel|cani|cane|dog|dogs|di|del|della|dei|delle|il|lo|la|le|e|and|srl|snc|sas|spa|studio|centro|azienda|agricola)\b/gi;
+
+function nomeSignificativo(testo) {
+  return String(testo || '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .replace(PAROLE_COMUNI, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Il nome proprio ricavato dal dominio: delpiccolodiavolo.it -> "piccolodiavolo"
+//
+// Nel dominio le parole sono attaccate, quindi PAROLE_COMUNI — che cerca
+// parole intere — non le trova: "delpiccolodiavolo" restava intero mentre
+// dal titolo il "Del" veniva tolto, e i due non combaciavano mai. Qui i
+// prefissi vanno tolti per posizione, non per confine di parola.
+const PREFISSI = /^(allevamento|kennel|studio|centro|azienda|agricola|del|della|dei|delle|il|lo|la|le|di|da)+/;
+
+function nomeDalDominio(dominio) {
+  let radice = String(dominio || '')
+    .replace(/^www\./, '').split('.')[0]
+    .replace(/[^a-z0-9]/gi, '').toLowerCase();
+
+  // si tolgono i prefissi finche' ce ne sono, ma senza svuotare il nome
+  let prima;
+  do {
+    prima = radice;
+    const dopo = radice.replace(PREFISSI, '');
+    if (dopo.length >= 5) radice = dopo;
+  } while (radice !== prima);
+
+  return radice;
+}
+
+function schedaMia(voce, dominio) {
+  // se la scheda dichiara un sito, quello vince: è il confronto sicuro
+  if (voce.domain) return stessoDominio(voce.domain, dominio);
+
+  const cercato = nomeDalDominio(dominio);
+  if (cercato.length < 6) return false;   // troppo corto: rischio di falsi
+
+  // Il nome della scheda, ridotto alle sue parole significative. NON si
+  // incollano insieme: "Allevamento Staffordshire Bull Terrier Del Piccolo
+  // Diavolo" incollato diventa "staffordshirebullterrierpiccolodiavolo", e
+  // cercarci dentro "piccolodiavolo" funziona solo per caso — basta una
+  // parola in mezzo e non trova più niente.
+  //
+  // Si prova invece a ricomporre il nome cercato da parole CONSECUTIVE del
+  // titolo: "piccolo diavolo" -> "piccolodiavolo" corrisponde, "bull
+  // terrier del" no.
+  const parole = nomeSignificativo(voce.title).split(' ').filter(Boolean);
+  if (!parole.length) return false;
+
+  for (let i = 0; i < parole.length; i++) {
+    let insieme = '';
+    for (let j = i; j < parole.length && insieme.length <= cercato.length + 4; j++) {
+      insieme += parole[j];
+      if (insieme === cercato) return true;
+    }
+  }
+
+  // ultimo tentativo: il titolo intero senza spazi, per i nomi di una parola
+  const tutto = parole.join('');
+  return tutto === cercato;
+}
+
 export async function onRequest(context) {
   // Primissima cosa, prima di leggere i parametri e prima di qualunque
   // chiamata a DataForSEO: se non e' una persona, non si spende.
@@ -241,7 +319,7 @@ async function posizioni(context) {
     // dell'organico: occupa mezzo schermo e sta sopra tutti i link blu.
     // Arriva nella stessa risposta, quindi non costa una chiamata in più.
     const mappe = voci.filter(v => v.type === 'local_pack');
-    const mioNelleMappe = mappe.findIndex(v => stessoDominio(v.domain, dominio));
+    const mioNelleMappe = mappe.findIndex(v => schedaMia(v, dominio));
 
     riga[chiave] = {
       posizione: posizione,
@@ -258,6 +336,10 @@ async function posizioni(context) {
       mappe: {
         presente: mappe.length > 0,
         dentro: mioNelleMappe >= 0,
+        // Come si e' riconosciuta la scheda: per sito dichiarato (sicuro) o
+        // per somiglianza del nome (probabile). Il rapporto lo dice, cosi'
+        // chi legge sa quanto fidarsi.
+        perNome: mioNelleMappe >= 0 && !mappe[mioNelleMappe].domain,
         posizione: mioNelleMappe >= 0 ? mioNelleMappe + 1 : null,
         // Il totale va contato su TUTTE le schede, non sulle tre che mi porto
         // dietro per mostrarle: altrimenti chi è quarto risulta "4° su 3".
