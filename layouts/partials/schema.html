@@ -135,16 +135,41 @@
     {
       "@type": "BreadcrumbList",
       "@id": {{ printf "%s#breadcrumb" .Permalink }},
+      {{- /* LA BRICIOLA SEGUE LA STRUTTURA VERA DELLE PAGINE.
+           Prima erano due livelli fissi, Home e la pagina. Ma le pagine
+           degli strumenti stanno sotto /sottosopra/, e la briciola visibile
+           dice giustamente tre passaggi: Home · Strumenti · Accessibilità.
+           Le due non coincidevano, e Google chiede che coincidano.
+           Ora i livelli intermedi si ricavano dalla gerarchia: se domani
+           nasce un'altra pagina figlia, la briciola e' gia' giusta. */ -}}
+      {{- $catena := slice -}}
+      {{- $p := . -}}
+      {{- range seq 5 -}}
+        {{- with $p -}}
+          {{- if and (not .IsHome) .Parent -}}
+            {{- $catena = $catena | append .Parent -}}
+            {{- $p = .Parent -}}
+          {{- else -}}
+            {{- $p = false -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
           "item": "https://puntowebferrara.com/"
-        },
+        }{{ $n := 1 }}{{ range (sort $catena "Permalink") }}{{ if not .IsHome }}{{ $n = add $n 1 }},
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": {{ $n }},
+          "name": {{ with .Params.titoloBriciola }}{{ . }}{{ else }}{{ $.Title }}{{ end }},
+          "item": {{ .Permalink }}
+        }{{ end }}{{ end }},
+        {
+          "@type": "ListItem",
+          "position": {{ add $n 1 }},
           "name": {{ .Title }},
           "item": {{ .Permalink }}
         }

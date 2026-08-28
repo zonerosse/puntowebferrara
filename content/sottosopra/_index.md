@@ -1,5 +1,9 @@
 ---
 title: "Sottosopra"
+# Nella briciola e nel menu la pagina si chiama "Strumenti": e' piu'
+# chiaro di "Sottosopra" per chi arriva da fuori. Il titolo resta quello
+# del marchio, la briciola usa questo.
+titoloBriciola: "Strumenti"
 titleSeo: "Il tuo sito è leggibile dalle AI? Verifica gratis"
 description: "Quali motori IA possono davvero leggere il tuo sito e cosa glielo impedisce. 48 controlli spiegati uno per uno, con il rimedio. Gratis, senza registrazione."
 type: "page"
