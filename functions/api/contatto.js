@@ -26,12 +26,14 @@
 //   1. il Worker "postino" pubblicato
 //   2. un Binding di servizi su questo progetto Pages, chiamato POSTINO,
 //      che punta a quel Worker
+//   3. la variabile d'ambiente TURNSTILE_SECRET con la Secret Key
 //
 // Se manca, la funzione NON finge di aver spedito: lo dice, e invita a
 // scrivere direttamente. Un modulo che sembra funzionare e non manda
 // niente fa perdere richieste vere senza che nessuno se ne accorga.
 
 const RITORNO = 'https://puntowebferrara.com/grazie/';
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 // Solo questi campi finiscono nell'email. Un elenco chiuso invece di
 // "tutto quello che arriva": se qualcuno inietta campi extra nel modulo,
@@ -57,11 +59,44 @@ export async function onRequestPost(context) {
     return errore(400, 'Richiesta non valida.');
   }
 
-  // --- la trappola antispam -------------------------------------------
+  // --- la trappola antispam (honeypot) -----------------------------------
   // Un campo nascosto che nessuna persona compila: se e' pieno, e' un
   // programma. Si risponde come se fosse andato tutto bene, cosi' chi
   // manda spam non capisce di essere stato scartato e non riprova.
   if ((modulo.get('_gotcha') || '').trim()) return vaiA(RITORNO);
+
+  // --- verifica Turnstile ------------------------------------------------
+  const turnstileToken = modulo.get('cf-turnstile-response');
+  const turnstileSecret = context.env.TURNSTILE_SECRET;
+
+  if (turnstileSecret) {
+    // Se la secret e' configurata, verifichiamo il token
+    if (!turnstileToken) {
+      return errore(400, 'Verifica di sicurezza non completata. Ricarica la pagina e riprova.');
+    }
+
+    const ip = context.request.headers.get('CF-Connecting-IP');
+    
+    const verificaResponse = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: turnstileSecret,
+        response: turnstileToken,
+        remoteip: ip,
+      }),
+    });
+
+    const verificaResult = await verificaResponse.json();
+
+    if (!verificaResult.success) {
+      // Bot rilevato: rispondiamo come se fosse andato bene
+      // cosi' il bot non capisce di essere stato bloccato
+      return vaiA(RITORNO);
+    }
+  }
+  // Se la secret non e' configurata, si prosegue senza verifica
+  // (per retrocompatibilita' durante la transizione)
 
   // --- i campi obbligatori --------------------------------------------
   const nome = pulisci(modulo.get('name'));

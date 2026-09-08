@@ -93,6 +93,11 @@
                         </label>
                     </div>
                     
+                    <!-- Cloudflare Turnstile -->
+                    <div class="form-group">
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEb9CtiPvt0ETHIP" data-theme="light"></div>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary form-submit" style="width: 100%;">Invia Richiesta Preventivo</button>
                     
                     <p style="margin-top: 16px; font-size: 0.9rem; color: var(--text-light); text-align: center;">
@@ -155,4 +160,7 @@
         </div>
     </div>
 </section>
+
+<!-- Turnstile Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 {{ end }}
