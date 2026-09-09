@@ -638,11 +638,16 @@ function disegna(scoperta, risultati, lighthouse) {
   p.push('</div></div>');
 
   if (principali.length) {
-    p.push('<h2>Le tre cose che pesano di più</h2>');
+    // Il titolo si adatta a quante voci ci sono davvero: su un sito messo bene
+    // ne resta una, e "le tre cose" smentiva quello che c'era sotto.
+    const quante = principali.length === 1 ? 'La cosa che pesa di più'
+      : principali.length === 2 ? 'Le due cose che pesano di più'
+      : 'Le tre cose che pesano di più';
+    p.push('<h2>' + quante + '</h2>');
     for (const v of principali) {
       const liv = livello(v.quota);
       p.push('<div class="voce ' + (liv === 'rosso' ? 'alto' : liv === 'arancio' ? 'medio' : 'basso') + '">' +
-        '<span class="cat liv-' + liv + '">' + segno(liv) + '−' + v.persi + ' punti</span> ' + T(v.nome) +
+        '<span class="cat liv-' + liv + '">' + segno(liv) + '−' + v.persi + ' punt' + (v.persi === 1 ? 'o' : 'i') + '</span> ' + T(v.nome) +
         '<div class="dove" style="font-family:inherit;font-size:.87rem;color:var(--grafite)">' +
         T(v.come) + '</div></div>');
     }

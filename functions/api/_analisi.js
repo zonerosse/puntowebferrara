@@ -199,6 +199,8 @@ export function analizzaPagina(html, url, intestazioni) {
   const tipi = [];
   let blocchi = 0, invalidi = 0;
   const contatti = { via: null, cap: null, coordinate: null, telefono: null, puntoContatto: false };
+  const faqNonDomande = [], faqLunghe = [], faqSenzaRisposta = [];
+  let faqSenzaNome = 0;
   let entitaCompleta = null;
   const reLd = new RegExp(RE_LD.source, 'gi');
   while ((m = reLd.exec(html)) !== null) {
@@ -227,6 +229,23 @@ export function analizzaPagina(html, url, intestazioni) {
         contatti.puntoContatto = true;
       if (o.geo && o.geo.latitude != null) contatti.coordinate = o.geo.latitude + ',' + o.geo.longitude;
       if (o.telephone) contatti.telefono = String(o.telephone).replace(/[^\d+]/g, '');
+      // Un FAQPage valido non e' automaticamente un FAQPage sensato. Le
+      // espressioni che pescano le domande dal contenuto scivolano facilmente
+      // oltre il titolo e incollano dentro il nome della Question il paragrafo
+      // che segue: JSON ineccepibile, dichiarato a Google come domanda. Nessun
+      // validatore lo rileva, perche' name e' una stringa e la stringa c'e'.
+      if (tt.includes('FAQPage') && Array.isArray(o.mainEntity)) {
+        for (const q of o.mainEntity) {
+          if (!q || typeof q !== 'object') continue;
+          const nome = String(q.name || '').replace(/\s+/g, ' ').trim();
+          const risp = q.acceptedAnswer && typeof q.acceptedAnswer === 'object'
+            ? pulisci(String(q.acceptedAnswer.text || '')) : '';
+          if (!nome) { faqSenzaNome++; continue; }
+          if (!/[?\uff1f]$/.test(nome)) faqNonDomande.push(nome);
+          else if (nome.length > 120) faqLunghe.push(nome);
+          if (!risp) faqSenzaRisposta.push(nome);
+        }
+      }
       if (tt.some(x => ['Organization', 'LocalBusiness', 'ProfessionalService', 'Store'].includes(x))) {
         const completa = !!(o.name && (o.telephone || o.email) && o.address && o.url);
         entitaCompleta = entitaCompleta === false ? false : completa;
@@ -239,6 +258,20 @@ export function analizzaPagina(html, url, intestazioni) {
     'Nessun dato strutturato: i motori IA non hanno appigli per capire di chi \u00e8 il sito');
   if (tipi.filter(t => t === 'FAQPage').length > 1)
     segnala('Dati strutturati', 'alto', 'Due o pi\u00f9 blocchi FAQPage sulla stessa pagina: rischiano di essere ignorati entrambi');
+  // Si mostra il testo trovato, non il conteggio: e' l'unico modo perche' chi
+  // legge riconosca il proprio paragrafo finito dentro il nome di una domanda.
+  const assaggioFaq = t => '\u201c' + (t.length > 70 ? t.slice(0, 69) + '\u2026' : t) + '\u201d';
+  if (faqNonDomande.length) segnala('Dati strutturati', 'medio',
+    'Nel FAQPage ' + (faqNonDomande.length === 1 ? 'una voce non \u00e8 una domanda' : faqNonDomande.length + ' voci non sono domande')
+    + ': cercato un punto interrogativo in fondo al campo name, non trovato in ' + assaggioFaq(faqNonDomande[0]));
+  if (faqLunghe.length) segnala('Dati strutturati', 'basso',
+    'Nel FAQPage ' + faqLunghe.length + ' domand' + (faqLunghe.length === 1 ? 'a supera' : 'e superano')
+    + ' i 120 caratteri: di solito \u00e8 il segno che il titolo si \u00e8 portato dietro il testo che lo segue \u2014 ' + assaggioFaq(faqLunghe[0]));
+  if (faqSenzaRisposta.length) segnala('Dati strutturati', 'alto',
+    'Nel FAQPage ' + faqSenzaRisposta.length + ' domand' + (faqSenzaRisposta.length === 1 ? 'a \u00e8' : 'e sono')
+    + ' senza testo nella acceptedAnswer: ' + assaggioFaq(faqSenzaRisposta[0]));
+  if (faqSenzaNome) segnala('Dati strutturati', 'alto',
+    'Nel FAQPage ' + faqSenzaNome + ' voc' + (faqSenzaNome === 1 ? 'e \u00e8' : 'i sono') + ' senza campo name');
 
   // Una domanda vale come FAQ solo se sotto c'è una risposta vera. I richiami
   // pubblicitari sono scritti col punto interrogativo ma seguiti da una riga e
