@@ -437,7 +437,17 @@ function disegna(scoperta, risultati, lighthouse) {
   const hoPagina = (...parole) => parole.some(x => indirizzi.includes(x));
   const privacy = hoPagina('privacy', 'informativa', 'datenschutz');
   const legale = hoPagina('note-legali', 'legal', 'impressum', 'termini', 'condizioni', 'cookie');
-  const contatti = hoPagina('contatt', 'contact', 'kontakt', 'preventivo');
+  // La pagina dei contatti non si riconosce dall'indirizzo: su un sito
+  // posizionato può chiamarsi in qualunque modo — allevamento-...-emilia-romagna
+  // è una pagina contatti a tutti gli effetti. Vale anche il ContactPoint dei
+  // dati strutturati, o una pagina che pubblica insieme telefono e indirizzo.
+  const contattiDaSchema = buone.some(p =>
+    (p.contatti && p.contatti.puntoContatto) ||
+    (p.tipiSchema || []).some(t => t === 'ContactPage' || t === 'ContactPoint'));
+  const contattiDaDati = buone.some(p =>
+    p.contatti && p.contatti.telefono && (p.contatti.via || p.contatti.coordinate));
+  const contatti = hoPagina('contatt', 'contact', 'kontakt', 'preventivo')
+    || contattiDaSchema || contattiDaDati;
 
   const perPagina = {};
   for (const k of Object.keys(buone[0].flag || {})) {

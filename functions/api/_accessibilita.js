@@ -41,18 +41,26 @@ const MAX_ESEMPI = 5;
 const CACHE_VALORE = Object.create(null);
 const CACHE_PRESENZA = Object.create(null);
 
+// La virgoletta di chiusura deve essere la stessa di apertura, non una
+// qualsiasi delle due: con ["']([^"']*)["'] il valore di
+// aria-label="Leggi l'articolo: X" si fermava all'apostrofo e restava
+// "Leggi l". Su un sito italiano succedeva su ogni alt, title e aria-label
+// che contenesse un apostrofo, e i nomi troncati risultavano tutti uguali.
+// L'ultima alternativa copre il valore scritto senza virgolette.
 function reValore(nome) {
   return CACHE_VALORE[nome] ||
-    (CACHE_VALORE[nome] = new RegExp('\\b' + nome + '\\s*=\\s*["\']([^"\']*)["\']', 'i'));
+    (CACHE_VALORE[nome] = new RegExp(
+      '(?<![-\\w])' + nome + '\\s*=\\s*(?:(["\'])([\\s\\S]*?)\\1|([^\\s"\'>`=]+))', 'i'));
 }
 function rePresenza(nome) {
   return CACHE_PRESENZA[nome] ||
-    (CACHE_PRESENZA[nome] = new RegExp('\\b' + nome + '\\b(?![\\w-])', 'i'));
+    (CACHE_PRESENZA[nome] = new RegExp('(?<![-\\w])' + nome + '\\b(?![\\w-])', 'i'));
 }
 
 function attr(tag, nome) {
   const m = tag.match(reValore(nome));
-  if (m) return m[1].trim();
+  // gruppo 2: valore fra virgolette; gruppo 3: valore senza virgolette
+  if (m) return (m[2] !== undefined ? m[2] : m[3] || '').trim();
   // attributo senza valore, per esempio <img alt> oppure <video autoplay>
   return rePresenza(nome).test(tag) ? '' : null;
 }
@@ -506,7 +514,7 @@ export function analizzaAccessibilita(html, url) {
 
   const link = elementi(corpo, 'a', 800).filter(a => haAttr(a.attributi, 'href'));
   const nomeLink = a => (attr(a.attributi, 'aria-label') || testoPulito(a.dentro) ||
-    (a.dentro.match(/<img[^>]+alt\s*=\s*["']([^"']+)["']/i) || [, ''])[1] ||
+    (a.dentro.match(/<img[^>]+alt\s*=\s*(["'])([\s\S]*?)\1/i) || [, , ''])[2] ||
     attr(a.attributi, 'title') || '').trim();
 
   {

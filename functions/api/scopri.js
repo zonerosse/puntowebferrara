@@ -224,14 +224,36 @@ function stessoSito(host, radice) {
   }
 }
 
+const RE_LOC = /<(?:[a-z0-9]+:)?loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/(?:[a-z0-9]+:)?loc>/i;
+
+// Nell'estensione image: della sitemap ogni <url> contiene anche
+// <image:image><image:loc>. Prendere tutti i <loc> del documento faceva
+// contare le immagini come pagine: 198 indirizzi dove le pagine erano 138, e
+// i sessanta in più venivano poi accusati di "non essere contenuto".
+// Per specifica <loc> è il primo figlio di <url>, mentre image:loc e video:loc
+// stanno più in basso: dentro ogni blocco vale solo il primo.
 function estraiUrl(xml) {
   const testo = xml.length > MAX_XML ? xml.slice(0, MAX_XML) : xml;
   const fuori = [];
-  const re = /<(?:[a-z0-9]+:)?loc>\s*(?:<!\[CDATA\[)?\s*([^<\]\s]+)\s*(?:\]\]>)?\s*<\/(?:[a-z0-9]+:)?loc>/gi;
-  let m;
-  while ((m = re.exec(testo)) !== null) {
+  const nome = /<(?:[a-z0-9]+:)?sitemapindex/i.test(testo) ? 'sitemap' : 'url';
+  const reBlocco = new RegExp(
+    '<(?:[a-z0-9]+:)?' + nome + '\\b[^>]*>([\\s\\S]*?)<\\/(?:[a-z0-9]+:)?' + nome + '\\s*>', 'gi');
+  let b;
+  while ((b = reBlocco.exec(testo)) !== null) {
+    const m = b[1].match(RE_LOC);
+    if (!m) continue;
     fuori.push(m[1]);
     if (fuori.length >= MAX_URL) break;
+  }
+  // File senza blocchi <url> o <sitemap> — per esempio una sitemap in formato
+  // RSS: si torna al comportamento di prima, che lì è quello giusto.
+  if (!fuori.length) {
+    const re = new RegExp(RE_LOC.source, 'gi');
+    let m;
+    while ((m = re.exec(testo)) !== null) {
+      fuori.push(m[1]);
+      if (fuori.length >= MAX_URL) break;
+    }
   }
   return fuori;
 }
@@ -384,8 +406,12 @@ async function scopri(context) {
   });
 
   const intestazioniHome = {};
+  // age e cf-cache-status dicono se quello che abbiamo letto è la pagina viva
+  // o una copia ferma in cache: senza, un rapporto può descrivere un sito che
+  // non esiste più da ore e nessuno se ne accorge.
   for (const nome of ['content-encoding','strict-transport-security','x-content-type-options',
-                      'x-frame-options','referrer-policy','content-security-policy','server']) {
+                      'x-frame-options','referrer-policy','content-security-policy','server',
+                      'age','cf-cache-status','x-cache','date','last-modified']) {
     const v = home.intestazioni && home.intestazioni.get(nome);
     if (v) intestazioniHome[nome] = v;
   }

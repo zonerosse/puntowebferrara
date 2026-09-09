@@ -8,15 +8,28 @@ const RE_LD = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/
 const RE_TITLE = /<title[^>]*>([\s\S]*?)<\/title>/i;
 const RE_TAG = /<[^>]+>/g;
 
+// Prima si isola il tag <meta>, poi il valore si legge con attr(), che sa
+// dove finisce davvero. Le vecchie regole leggevano content="..." con la
+// stessa classe [^"']* che si ferma all'apostrofo: su un sito italiano la
+// description veniva troncata alla prima parola apostrofata — "L'allevamento"
+// diventava "L" — e poi risultava troppo corta.
+function tagMeta(html, chiave, valore) {
+  const re = /<meta\b[^>]*>/gi;
+  const cercato = String(valore).toLowerCase();
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const v = attr(m[0], chiave);
+    if (v !== null && v.toLowerCase() === cercato) return m[0];
+  }
+  return null;
+}
 function meta(html, nome) {
-  const a = html.match(new RegExp('<meta[^>]+name=["\']' + nome + '["\'][^>]+content=["\']([^"\']*)["\']', 'i'));
-  if (a) return a[1];
-  const b = html.match(new RegExp('<meta[^>]+content=["\']([^"\']*)["\'][^>]+name=["\']' + nome + '["\']', 'i'));
-  return b ? b[1] : null;
+  const t = tagMeta(html, 'name', nome);
+  return t ? attr(t, 'content') : null;
 }
 function prop(html, p) {
-  const m = html.match(new RegExp('<meta[^>]+property=["\']' + p + '["\'][^>]+content=["\']([^"\']*)["\']', 'i'));
-  return m ? m[1] : null;
+  const t = tagMeta(html, 'property', p);
+  return t ? attr(t, 'content') : null;
 }
 function pulisci(s) {
   return s.replace(RE_TAG, ' ')
@@ -24,9 +37,13 @@ function pulisci(s) {
     .replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/\s+/g, ' ').trim();
 }
+// La virgoletta di chiusura è la stessa di apertura: altrimenti un apostrofo
+// dentro un valore fra virgolette doppie tronca il valore letto.
 const attr = (tag, nome) => {
-  const m = tag.match(new RegExp(nome + '\\s*=\\s*["\']([^"\']*)["\']', 'i'));
-  return m ? m[1] : null;
+  const m = tag.match(new RegExp(
+    '(?<![-\\w])' + nome + '\\s*=\\s*(?:(["\'])([\\s\\S]*?)\\1|([^\\s"\'>`=]+))', 'i'));
+  if (!m) return null;
+  return m[2] !== undefined ? m[2] : (m[3] || '');
 };
 
 
@@ -181,7 +198,7 @@ export function analizzaPagina(html, url, intestazioni) {
   // ------------------------------------------------------------ dati strutturati
   const tipi = [];
   let blocchi = 0, invalidi = 0;
-  const contatti = { via: null, cap: null, coordinate: null, telefono: null };
+  const contatti = { via: null, cap: null, coordinate: null, telefono: null, puntoContatto: false };
   let entitaCompleta = null;
   const reLd = new RegExp(RE_LD.source, 'gi');
   while ((m = reLd.exec(html)) !== null) {
@@ -204,6 +221,10 @@ export function analizzaPagina(html, url, intestazioni) {
         if (ind.streetAddress) contatti.via = String(ind.streetAddress);
         if (ind.postalCode) contatti.cap = String(ind.postalCode);
       }
+      // ContactPoint sta quasi sempre annidato dentro Organization, quindi non
+      // compare fra i @type di primo livello: va cercato anche come proprietà.
+      if (o.contactPoint || tt.some(x => x === 'ContactPoint' || x === 'ContactPage'))
+        contatti.puntoContatto = true;
       if (o.geo && o.geo.latitude != null) contatti.coordinate = o.geo.latitude + ',' + o.geo.longitude;
       if (o.telephone) contatti.telefono = String(o.telephone).replace(/[^\d+]/g, '');
       if (tt.some(x => ['Organization', 'LocalBusiness', 'ProfessionalService', 'Store'].includes(x))) {
