@@ -1,0 +1,74 @@
+puntowebferrara-sitemap-rotta.zip
+=================================
+
+DUE FILE. Si estraggono nella radice del sito, dove c'e' hugo.toml.
+
+  functions/api/scopri.js         raccoglie gli esiti dei tentativi
+  static/sottosopra/verifica.js   li scrive nell'avviso in cima al rapporto
+
+Sono le stesse rifiniture fatte nell'estensione 1.1.25, portate sullo
+strumento online.
+
+
+COSA NON SERVIVA
+----------------
+I timeout. Lato sito c'erano gia' tutti: sei secondi per chiamata in
+scopri.js, otto in pagina.js, quaranta e quarantacinque per posizioni e
+Lighthouse, piu' la resa complessiva a venti secondi. Il difetto trovato
+nell'estensione qui non esiste, perche' sui Workers una funzione che non
+finisce viene uccisa comunque.
+
+
+COSA CAMBIA
+-----------
+1. scopri.js non butta piu' via il motivo del fallimento
+   Il ciclo delle sitemap faceva "if (!documento.ok) continue": l'analisi
+   finiva con una pagina sola senza poter dire perche'. Ora ogni tentativo
+   fallito viene conservato con indirizzo, stato HTTP e se e' scaduto, e
+   torna al browser nel campo esitiSitemap (massimo 12).
+
+   Aggiunta anche la distinzione fra scadenza e altri guasti di rete:
+   "non ha risposto in sei secondi" e "il nome non esiste" sono difetti
+   diversi.
+
+2. verifica.js scrive il motivo vero invece della formula
+   L'avviso "campione magro" esisteva gia', ma diceva sempre la stessa
+   cosa: "di solito succede quando la sitemap manca, e' irraggiungibile o
+   elenca indirizzi di un altro dominio". Ora, se il server ha detto
+   perche', si riporta quello.
+
+   Su un sito come ABB esce:
+
+     Attenzione: e' stata letta una sola pagina. Il punteggio qui sotto
+     vale per quelle, non per il sito. Ho provato 3 indirizzi per la
+     sitemap: uno ha risposto 504, cioe' il server non ce l'ha fatta, uno
+     non ha risposto entro il tempo massimo, uno non esiste. Non e' un
+     limite di questa analisi: se la sitemap non risponde a me, non
+     risponde nemmeno a Googlebot. Verificalo aprendola nel browser: ...
+
+   Su un sito che semplicemente non ha la sitemap:
+
+     ... Ho provato 2 indirizzi per la sitemap: 2 non esistono. Prima di
+     trarre conclusioni, guarda la sezione sulla sitemap piu' in basso.
+
+   Il link a "verificalo nel browser" compare solo quando c'e' un errore
+   del server o una scadenza: mandare l'utente su un 404 non gli insegna
+   niente. E se esitiSitemap arriva vuoto, resta il testo di prima: chi
+   ha una copia in cache del vecchio scopri.js non vede rotture.
+
+
+DOPO AVER SCOMPATTATO, VERIFICA
+-------------------------------
+  Select-String -Path .\functions\api\scopri.js -Pattern "esitiSitemap"
+  Select-String -Path .\static\sottosopra\verifica.js -Pattern "esitiSitemap"
+
+Devono stampare righe tutte e due. git status: DUE file modificati.
+
+
+COLLAUDATO
+----------
+Sintassi verificata con node --check su entrambi i file, sito ricompilato
+con Hugo senza errori. La costruzione del testo e' stata provata a parte
+su tre scenari: sitemap in 504, sito senza sitemap, nessun esito
+raccolto. Il comportamento sul campo va visto in produzione: prova
+new.abb.com dallo strumento online e guarda cosa scrive.

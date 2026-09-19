@@ -593,13 +593,43 @@ function disegna(scoperta, risultati, lighthouse) {
   // stesso difetto che questo strumento rimprovera agli altri. Quando il
   // campione e' minuscolo lo si dice prima del numero, non in una riga di
   // servizio sotto.
-  if (buone.length <= 2)
+  if (buone.length <= 2) {
+    // Se il server ha detto PERCHE' non ha dato la sitemap, lo si riporta con
+    // le sue parole invece della formula generica: un 504 e un 404 sono due
+    // difetti diversi, col primo che riguarda anche Googlebot.
+    const esiti = scoperta.esitiSitemap || [];
+    let perche = 'Di solito succede quando la sitemap manca, è irraggiungibile o elenca ' +
+      'indirizzi di un altro dominio: in quel caso l\u2019analisi ripiega sulla sola pagina iniziale.';
+    let rimando = 'Prima di trarre conclusioni, guarda la sezione sulla sitemap più in basso.';
+    if (esiti.length) {
+      const rotti = esiti.filter(e => e.stato >= 500);
+      const scadute = esiti.filter(e => e.scaduta);
+      const assenti = esiti.filter(e => e.stato && e.stato < 500);
+      const muti = esiti.filter(e => !e.stato && !e.scaduta);
+      const pezzi = [];
+      if (rotti.length) pezzi.push(rotti.length === 1
+        ? 'uno ha risposto ' + rotti[0].stato + ', cioè il server non ce l\u2019ha fatta'
+        : rotti.length + ' hanno risposto con un errore del server');
+      if (scadute.length) pezzi.push(scadute.length === 1
+        ? 'uno non ha risposto entro il tempo massimo'
+        : scadute.length + ' non hanno risposto entro il tempo massimo');
+      if (assenti.length) pezzi.push(assenti.length === 1 ? 'uno non esiste'
+        : assenti.length + ' non esistono');
+      if (muti.length) pezzi.push(muti.length === 1 ? 'uno non era raggiungibile'
+        : muti.length + ' non erano raggiungibili');
+      perche = 'Ho provato ' + esiti.length + (esiti.length === 1 ? ' indirizzo' : ' indirizzi') +
+        ' per la sitemap: ' + pezzi.join(', ') + '.';
+      const daGuardare = (rotti[0] || scadute[0] || esiti[0]).url;
+      if (rotti.length || scadute.length)
+        rimando = 'Non è un limite di questa analisi: se la sitemap non risponde a me, non ' +
+          'risponde nemmeno a Googlebot. Verificalo aprendola nel browser: ' +
+          '<a href="' + T(daGuardare) + '" target="_blank" rel="noopener">' + T(daGuardare) + '</a>';
+    }
     p.push('<div class="campione-magro"><b>Attenzione: ' +
       (buone.length === 1 ? 'è stata letta una sola pagina' : 'sono state lette due pagine') +
       '.</b> Il punteggio qui sotto vale per quelle, non per il sito. ' +
-      'Di solito succede quando la sitemap manca, è irraggiungibile o elenca indirizzi ' +
-      'di un altro dominio: in quel caso l\u2019analisi ripiega sulla sola pagina iniziale. ' +
-      'Prima di trarre conclusioni, guarda la sezione sulla sitemap più in basso.</div>');
+      perche + ' ' + rimando + '</div>');
+  }
 
   p.push('<h2>Risultato</h2><div class="punteggio"><div class="quadrante">' +
     '<svg width="112" height="112" viewBox="0 0 112 112">' +

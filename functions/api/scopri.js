@@ -133,7 +133,11 @@ async function prendi(url, tipo, limite, secondoGiro) {
     const testo = await corpoLimitato(risposta, limite === undefined ? 120000 : limite);
     return { ok: true, stato: risposta.status, intestazioni: risposta.headers, testo };
   } catch (err) {
-    return { ok: false, errore: String(err).slice(0, 120) };
+    // La scadenza va distinta dagli altri guasti di rete: "non ha risposto in
+    // sei secondi" e "il nome non esiste" sono due difetti diversi del sito,
+    // e il rapporto deve poterli chiamare col loro nome.
+    const scaduta = !!(err && (err.name === 'TimeoutError' || err.name === 'AbortError'));
+    return { ok: false, scaduta, errore: String(err).slice(0, 120) };
   }
 }
 
@@ -366,6 +370,11 @@ async function scopri(context) {
 
   const giaViste = new Set();
   const malformati = [];
+  // Gli esiti dei tentativi vanno conservati: scartarli con un "continue"
+  // silenzioso faceva finire l'analisi con una pagina sola senza poter dire
+  // perché. Una sitemap che non risponde non è un intoppo dell'analisi, è un
+  // difetto del sito: se non risponde a noi non risponde nemmeno a Googlebot.
+  const esitiSitemap = [];
   let tentativi = 0;
   while (daVisitare.length && tentativi < 20 && sitemapTrovate < MAX_SITEMAP && pagine.length < MAX_URL) {
     tentativi++;
@@ -373,7 +382,14 @@ async function scopri(context) {
     if (viste.has(indirizzoSitemap)) continue;
     viste.add(indirizzoSitemap);
     const documento = await prendi(indirizzoSitemap, 'application/xml', 900000);
-    if (!documento.ok) continue;
+    if (!documento.ok) {
+      if (esitiSitemap.length < 12) esitiSitemap.push({
+        url: indirizzoSitemap,
+        stato: documento.stato || null,
+        scaduta: !!documento.scaduta,
+      });
+      continue;
+    }
     sitemapTrovate++;
     const trovati = estraiUrl(documento.testo);
     if (/<sitemapindex/i.test(documento.testo)) {
@@ -428,6 +444,7 @@ async function scopri(context) {
     llmsPresente: llms.ok,
     llmsRighe: llms.ok ? llms.testo.split(/\r?\n/).filter(Boolean).length : 0,
     sitemapTrovate,
+    esitiSitemap,
     pagine,
     totalePagine: pagine.length,
   });
