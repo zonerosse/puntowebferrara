@@ -1,0 +1,60 @@
+puntowebferrara-estensione-store.zip
+====================================
+
+TRE FILE. Si estraggono nella radice del sito, dove c'e' hugo.toml.
+
+  content/estensione.md                   pagina riscritta per lo store
+  layouts/page/sottosopra.html            il bottone sotto il modulo
+  layouts/partials/stile-strumento.html   il CSS di quel bottone
+
+Il menu a tendina NON e' toccato: la voce "Estensione per Chrome" c'era
+gia' e continua a puntare a /estensione/.
+
+
+UNA COSA DA FARE A MANO
+-----------------------
+Cancella il vecchio pacchetto, che ora non serve piu' a nessuno:
+
+  static\download\verifica-sito-estensione.zip
+
+Era la versione 1.1.0. Nello store c'e' la 1.1.23 (in revisione la 1.1.24),
+quindi lasciarlo li' significa offrire una copia vecchia di tre versioni.
+Nessun'altra pagina lo linkava: l'unico link era dentro estensione.md, che
+adesso e' riscritta.
+
+Se rimane vuota, togli anche la cartella static\download.
+
+
+DOPO AVER SCOMPATTATO, VERIFICA CHE SIA ENTRATO DAVVERO
+-------------------------------------------------------
+  Select-String -Path .\content\estensione.md -Pattern "chromewebstore"
+  Select-String -Path .\layouts\page\sottosopra.html -Pattern "riga-estensione"
+
+Devono stampare delle righe tutte e due. Poi git status deve elencare
+TRE file modificati, piu' lo zip cancellato.
+
+
+COSA CAMBIA
+-----------
+/sottosopra/   sotto la riga "Basta il dominio..." compare una riga separata
+               da un filetto, con il bottone "Installa l'estensione per
+               Chrome" e una frase che rimanda a /estensione/.
+
+/estensione/   la pagina non parla piu' di installazione manuale, zip e
+               modalita' sviluppatore. Al loro posto:
+               - il pulsante che porta allo store
+               - la distinzione fra pannello (legge il DOM renderizzato,
+                 quindi i siti in JavaScript li vede) e analisi completa
+                 (legge l'HTML del server, ma con la tua sessione: passa
+                 dietro il login)
+               - una sezione sull'avviso "Procedi con cautela" di
+                 Navigazione sicura avanzata, che compare sulle estensioni
+                 di sviluppatori pubblicati da poco
+               Le FAQ sono quattro: l'avviso di Chrome, i dati raccolti,
+               Edge/Brave/Opera/Vivaldi, Firefox.
+
+
+COLLAUDATO
+----------
+Sito ricompilato con Hugo: build senza errori, il link allo store esce
+corretto su tutte e due le pagine, lo schema FAQPage viene generato.
