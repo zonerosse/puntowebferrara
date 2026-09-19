@@ -1,0 +1,62 @@
+puntowebferrara-schema-software.zip
+===================================
+
+DUE FILE. Si estraggono nella radice del sito, dove c'e' hugo.toml.
+
+  layouts/partials/schema.html   blocco SoftwareApplication nel @graph
+  content/estensione.md          i dati del software nel front matter
+
+Presuppone che tu abbia gia' pubblicato il pacchetto precedente
+(puntowebferrara-estensione-store.zip). Il file estensione.md qui dentro
+parte da quella versione: se non l'hai pubblicata, fermati e dimmelo.
+
+
+COSA CAMBIA
+-----------
+Niente, a vedersi. E' un blocco JSON-LD invisibile che dice a Google e ai
+motori IA che /estensione/ descrive un software installabile e gratuito,
+non un articolo che parla di software.
+
+Senza, alla domanda "uno strumento gratuito per controllare il mio sito"
+rispondono con articoli. Con, la pagina e' candidabile come la cosa.
+
+Il blocco e' pilotato dal front matter: la chiave "software:" in qualsiasi
+pagina genera il blocco. Se domani vuoi lo stesso per lo strumento online,
+basta aggiungere quella chiave a content/sottosopra/_index.md.
+
+
+COSA NON C'E', E PERCHE'
+------------------------
+Nessun aggregateRating. Va messo solo quando le recensioni esistono
+davvero: inventarlo e' un rilievo manuale garantito da parte di Google.
+Quando arrivano le prime valutazioni nello store, si aggiunge.
+
+
+NIENTE NUMERO DI VERSIONE
+-------------------------
+Il campo softwareVersion non c'e': sarebbe stato da riallineare a mano a
+ogni pubblicazione nello store, e un numero sbagliato vale meno di un
+numero assente. Se un giorno lo vuoi, aggiungi sotto "software:" la riga
+
+  versione: "1.1.24"
+
+e il blocco lo genera da solo.
+
+
+DOPO AVER SCOMPATTATO, VERIFICA
+-------------------------------
+  Select-String -Path .\layouts\partials\schema.html -Pattern "SoftwareApplication"
+  Select-String -Path .\content\estensione.md -Pattern "featureList|funzioni"
+
+Poi git status deve elencare DUE file modificati.
+
+A sito pubblicato, incolla https://puntowebferrara.com/estensione/ nel
+test dei risultati multimediali di Google: deve riconoscere FAQ e
+Software, senza errori.
+
+
+COLLAUDATO
+----------
+Sito ricompilato con Hugo, build pulita. Il JSON-LD della pagina e' stato
+riletto e validato: sette nodi nel grafo, l'ultimo e' SoftwareApplication,
+con offerta a zero euro e le sette funzioni.

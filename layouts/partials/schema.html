@@ -187,6 +187,37 @@
           "acceptedAnswer": { "@type": "Answer", "text": {{ $q.a }} }
         }{{ end }}
       ]
+    }{{ end }}{{ with .Params.software }},
+    {{- /* SOFTWAREAPPLICATION: PILOTATO DAL FRONT MATTER.
+         Serve a far capire a Google e ai motori IA che questa pagina
+         descrive un software installabile e gratuito, non un articolo che
+         parla di software. Senza, "strumento gratuito per controllare il
+         sito" pesca articoli; con, pesca la cosa. Nessun aggregateRating:
+         va messo solo quando le recensioni esistono davvero, e inventarlo
+         e' un rilievo manuale garantito. */ -}}
+    {
+      "@type": "SoftwareApplication",
+      "@id": {{ printf "%s#software" $.Permalink }},
+      "name": {{ .nome }},
+      "description": {{ .descrizione }},
+      "applicationCategory": {{ default "BrowserApplication" .categoria }},
+      "operatingSystem": {{ .sistemi }},
+      {{ with .versione }}"softwareVersion": {{ . }},{{ end }}
+      "url": {{ .url }},
+      "installUrl": {{ .url }},
+      "downloadUrl": {{ .url }},
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      },
+      {{ with .funzioni }}"featureList": [{{ range $i, $f := . }}{{ if $i }}, {{ end }}{{ $f }}{{ end }}],{{ end }}
+      "author": { "@id": {{ $personID }} },
+      "publisher": { "@id": {{ $orgID }} },
+      "mainEntityOfPage": { "@id": {{ printf "%s#webpage" $.Permalink }} },
+      "inLanguage": "it-IT"
     }{{ end }}{{ if and (eq .Section "blog") .IsPage }},
     {
       "@type": "BlogPosting",

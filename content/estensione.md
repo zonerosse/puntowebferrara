@@ -6,6 +6,20 @@ tipoPagina: "WebPage"
 sitemap:
   priority: 0.6
   changefreq: monthly
+software:
+  nome: "Sottosopra — analisi tecnica del sito"
+  descrizione: "Estensione gratuita per il browser: analizza la pagina aperta o l'intero sito con 48 controlli tecnici, SEO e di accesso dei motori IA."
+  categoria: "BrowserApplication"
+  sistemi: "Chrome, Edge, Brave, Opera, Vivaldi"
+  url: "https://chromewebstore.google.com/detail/bfgmlinfkcleljfoahigajnfhdfbngig"
+  funzioni:
+    - "48 controlli con punteggio verificabile su 100"
+    - "Analisi della pagina aperta, letta dal browser"
+    - "Analisi dell'intero sito dalla sitemap, fino a 200 pagine"
+    - "Elenco dei crawler dei motori IA ammessi o bloccati dal robots.txt"
+    - "Velocità misurata con Lighthouse"
+    - "Rapporto esportabile in PDF"
+    - "Nessuna registrazione e nessun dato raccolto"
 faq:
   - q: "Chrome dice che l'estensione non è attendibile. Devo preoccuparmi?"
     a: "No. È l'avviso che la Protezione avanzata di Navigazione sicura mostra sulle estensioni di sviluppatori pubblicati da poco, indipendentemente da cosa fanno: servono alcuni mesi perché uno sviluppatore nuovo venga considerato attendibile. Lo vedi solo se hai attivato la Protezione avanzata, che non è l'impostazione predefinita, e l'installazione prosegue normalmente."
