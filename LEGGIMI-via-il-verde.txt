@@ -1,0 +1,46 @@
+puntowebferrara-via-il-verde.zip
+================================
+
+DUE FILE. Si estraggono nella radice del sito, dove c'e' hugo.toml.
+
+  layouts/page/sottosopra.html            via la sezione verde
+  layouts/partials/stile-strumento.html   via il suo CSS
+
+ATTENZIONE ALL'ORDINE: questi due file contengono anche il bottone sotto
+il modulo, quindi questo zip va estratto DOPO
+puntowebferrara-estensione-store.zip. Se quello non l'hai ancora
+pubblicato, estrai prima quello e poi questo.
+
+
+COSA CAMBIA
+-----------
+Tolta la sezione "Anche come estensione del browser" in fondo a
+/sottosopra/: il riquadro verde pieno col bottone bianco.
+
+Diceva "Installazione manuale, due minuti", che non e' piu' vero da
+quando l'estensione e' nello store, e comunque era il secondo richiamo
+all'estensione sulla stessa pagina, dopo quello sotto il modulo.
+
+Tolto anche tutto il CSS che la disegnava: le regole .blocco-estensione
+e .bottone-estensione, piu' il selettore che la nascondeva in stampa, che
+adesso punterebbe a una classe inesistente.
+
+Resta il bottone "Installa l'estensione per Chrome" sotto il modulo, che
+porta direttamente allo store.
+
+
+DOPO AVER SCOMPATTATO, VERIFICA
+-------------------------------
+  Select-String -Path .\layouts\page\sottosopra.html -Pattern "blocco-estensione"
+
+Questo NON deve stampare niente.
+
+  Select-String -Path .\layouts\page\sottosopra.html -Pattern "riga-estensione"
+
+Questo invece SI'.
+
+
+COLLAUDATO
+----------
+Sito ricompilato con Hugo, build pulita. Sulla pagina generata resta un
+solo link allo store e zero tracce di blocco-estensione.
