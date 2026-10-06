@@ -173,6 +173,13 @@ export async function onRequest(context) {
     );
   }
 
+  // Tetto di spesa mensile (ottobre 2026): il permesso lo dà il gestionale dell'allevamento, che tiene il conto
+  // (SOTTOSOPRA_CAP analisi al mese, predefinito 30). Si chiude, non si apre: senza risposta, non si spende.
+  const tetto = await budgetOk(context.env);
+  if (!tetto.ok) {
+    return risposta({ disponibile: false, motivo: tetto.motivo });
+  }
+
   try {
     return await posizioni(context);
   } catch (err) {
@@ -180,6 +187,20 @@ export async function onRequest(context) {
       disponibile: false,
       motivo: 'Controllo posizioni non riuscito: ' + String(err && err.message || err).slice(0, 140),
     });
+  }
+}
+
+async function budgetOk(env) {
+  const chiave = (env && env.GESTIONALE_KEY || '').trim();
+  if (!chiave) return { ok: false, motivo: 'Controllo delle posizioni non configurato (manca il tetto di spesa).' };
+  try {
+    const r = await fetch('https://gestionale.delpiccolodiavolo.it/api/public/budget', {
+      method: 'POST', headers: { 'content-type': 'application/json', 'x-budget-key': chiave }, body: '{"who":"sottosopra"}' });
+    const j = await r.json();
+    if (j.ok) return { ok: true };
+    return { ok: false, motivo: 'Il controllo delle posizioni è in pausa fino al mese prossimo: è stato raggiunto il limite mensile. Il resto della verifica funziona normalmente.' };
+  } catch {
+    return { ok: false, motivo: 'Il controllo delle posizioni non è disponibile in questo momento. Il resto della verifica funziona normalmente.' };
   }
 }
 
