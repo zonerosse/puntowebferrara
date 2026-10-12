@@ -103,9 +103,25 @@ export function bloccoPosizioni(dati) {
       (m.perNome ? ' · riconosciuto dal nome' : '') + '</span>');
   };
 
+  const misuraAI = (esito) => {
+    const nome = 'Risultati AI', sigla = 'Panoramica di Google';
+    if (!esito || esito.errore || !esito.ai)
+      return riga(nome, sigla, '<span class="fuori">non rilevato</span>');
+    const a = esito.ai;
+    if (!a.presente)
+      return riga(nome, sigla, '<span class="fuori">nessuna panoramica AI</span>');
+    if (!a.dentro)
+      return riga(nome, sigla,
+        '<span class="fuori attenzione">c’è, non ti cita</span>' +
+        '<span class="sotto">' + a.totale + ' fonti citate, nessuna tua</span>');
+    return riga(nome, sigla,
+      '<span class="numero alto">ti cita</span>' +
+      '<span class="sotto">sei fra le ' + a.totale + ' fonti</span>');
+  };
+
   const luogo = (classe, nome, esito) =>
     '<div class="luogo ' + classe + '"><span class="dove">' + T(nome) + '</span>' +
-    misuraSerp(esito) + misuraMappe(esito) + '</div>';
+    misuraSerp(esito) + misuraMappe(esito) + misuraAI(esito) + '</div>';
 
   const tendina = (titolo, dentro, avviso) =>
     '<details><summary' + (avviso ? ' class="avviso"' : '') + '>' + titolo + '</summary>' +
@@ -187,6 +203,9 @@ export function bloccoPosizioni(dati) {
           lato.mappe.chi.map(v => (typeof v === 'string'
             ? { testo: v, indirizzo: null }
             : { testo: v.nome, indirizzo: v.indirizzo })), ' nomi');
+      if (lato.ai && lato.ai.presente && lato.ai.chi && lato.ai.chi.length)
+        dentro += elenco('Fonti della panoramica AI',
+          lato.ai.chi.map(v => ({ testo: v.dominio || v.nome, indirizzo: v.indirizzo })), '');
       if (dentro)
         gruppi.push('<div class="gruppo ' + classe + '"><p class="luogo-capo">' + T(dove) +
                     '</p>' + dentro + '</div>');
@@ -202,16 +221,20 @@ export function bloccoPosizioni(dati) {
     for (const lato of [e.nazionale, e.locale])
       if (lato && lato.errore && guasti.indexOf(lato.errore) === -1) guasti.push(lato.errore);
 
-  const spiegone = tendina('Perch\u00e9 due numeri per ogni luogo',
+  const spiegone = tendina('Perch\u00e9 pi\u00f9 numeri per ogni luogo',
     '<p><b>Risultati normali (SERP)</b> \u2014 i collegamenti blu, dieci per pagina. ' +
     'Dipendono dal <b>sito</b>: contenuti, struttura, velocit\u00e0, collegamenti che riceve. ' +
     '\u00c8 quello che misura il resto di questo rapporto.</p>' +
     '<p><b>Riquadro mappe (Google Business Profile)</b> \u2014 il blocco con la cartina sopra i ' +
     'risultati. Non dipende dal sito: lo decide la scheda dell\u2019attivit\u00e0 su Google Maps, ' +
     'cio\u00e8 categoria, indirizzo, orari, recensioni e distanza da chi sta cercando.</p>' +
-    '<p>Sono due gare separate, con regole diverse: si pu\u00f2 essere primi nelle mappe e in ' +
+    '<p><b>Risultati AI (Panoramica di Google)</b> \u2014 la risposta generata dall\u2019AI che ' +
+    'compare in cima a certe ricerche. Non c\u2019\u00e8 sempre; quando c\u2019\u00e8 cita alcune ' +
+    'fonti, e qui si guarda se fra quelle fonti c\u2019\u00e8 il tuo sito.</p>' +
+    '<p>Sono gare separate, con regole diverse: si pu\u00f2 essere primi nelle mappe e in ' +
     'quarta pagina fra i risultati normali. Se manchi nelle mappe si lavora sul Business ' +
-    'Profile; se sei in fondo fra i risultati normali si lavora sul sito.</p>');
+    'Profile; se sei in fondo fra i risultati normali si lavora sul sito; nelle risposte AI ' +
+    'si finisce quando il sito \u00e8 chiaro, ben strutturato e cita le sue fonti.</p>');
 
   let nota = 'Ricerca su Google' + (conCitta ? ' in Italia e a ' + T(nomeCitta) : ' in Italia') +
              ', primi ' + dati.profondita + ' risultati, da computer fisso. ' +
