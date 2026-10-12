@@ -81,7 +81,6 @@ async function personaVera(context) {
 
 const MAX_PAROLE = 2;
 const PROFONDITA = 50;        // quanti risultati guardare: si fattura ogni 10, quindi 50 = cinque unità
-const CARICA_AI = true;       // chiedere anche la panoramica AI (AI Overview) e vedere se cita il sito; false per spegnerla e non spendere di più
 const NAZIONE = 'Italy';
 const LINGUA = 'it';
 
@@ -129,34 +128,6 @@ function nomeDalDominio(dominio) {
   } while (radice !== prima);
 
   return radice;
-}
-
-// Le fonti citate dalla panoramica AI (AI Overview) di Google. La forma esatta
-// della voce cambia nel tempo, quindi non si cercano campi fissi: si raccoglie
-// qualunque url o dominio compaia dentro, una sola volta per dominio. Non
-// lancia mai: se non trova niente torna una lista vuota.
-function fontiPanoramica(voce) {
-  const out = [], visti = new Set();
-  const aggiungi = (url, nome) => {
-    const d = estraiDominio(String(url || ''));
-    if (!d || visti.has(d)) return;
-    visti.add(d);
-    out.push({
-      nome: String(nome || d).slice(0, 60),
-      dominio: d,
-      indirizzo: /^https?:\/\//i.test(url) ? url : ('https://' + d),
-    });
-  };
-  const scava = (o) => {
-    if (!o || typeof o !== 'object') return;
-    if (Array.isArray(o)) { o.forEach(scava); return; }
-    const url = o.url || o.link || o.reference_url;
-    if (typeof url === 'string') aggiungi(url, o.title || o.source || o.domain);
-    else if (typeof o.domain === 'string') aggiungi('https://' + o.domain, o.title || o.source);
-    for (const k in o) if (o[k] && typeof o[k] === 'object') scava(o[k]);
-  };
-  scava(voce);
-  return out;
 }
 
 function schedaMia(voce, dominio) {
@@ -305,10 +276,6 @@ async function posizioni(context) {
         language_code: LINGUA,
         device: 'desktop',
         depth: PROFONDITA,
-        // Carica la panoramica AI (AI Overview) nella stessa risposta: serve
-        // per sapere se l'AI cita il sito. Costa qualche unità in più per
-        // ricerca; si spegne mettendo CARICA_AI a false.
-        ...(CARICA_AI ? { load_async_ai_overview: true } : {}),
       }]),
       signal: AbortSignal.timeout(40000),
     })
@@ -375,13 +342,6 @@ async function posizioni(context) {
     const mappe = voci.filter(v => v.type === 'local_pack');
     const mioNelleMappe = mappe.findIndex(v => schedaMia(v, dominio));
 
-    // La panoramica AI (AI Overview). Non c'è per ogni ricerca; quando c'è,
-    // arriva nella stessa risposta e cita delle fonti: se fra quelle c'è il
-    // tuo dominio, l'AI ti sta citando.
-    const panoramica = voci.find(v => v.type === 'ai_overview');
-    const fontiAI = panoramica ? fontiPanoramica(panoramica) : [];
-    const aiDentro = fontiAI.some(f => stessoDominio(f.dominio, dominio));
-
     riga[chiave] = {
       posizione: posizione,
       oltre: !mio,
@@ -411,12 +371,6 @@ async function posizioni(context) {
           nome: (v.title || '').slice(0, 60),
           indirizzo: v.url || (v.domain ? 'https://' + v.domain : null),
         })),
-      },
-      ai: {
-        presente: !!panoramica,
-        dentro: aiDentro,
-        totale: fontiAI.length,
-        chi: fontiAI.slice(0, 3),
       },
     };
   }
