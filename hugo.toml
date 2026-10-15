@@ -89,7 +89,7 @@ enableRobotsTXT = false
 [params]
   description = "Web designer a Ferrara: realizzo siti web professionali, veloci e sicuri. Specializzato in siti statici con Hugo. Preventivo gratuito."
   telefono = "377 689 6955"
-  email = "info@puntowebferrara.com"
+  email = "sara.boldrini23@gmail.com"
   indirizzo = "Ostellato (FE)"
 
 [params.biz]
@@ -99,7 +99,7 @@ enableRobotsTXT = false
   phone       = "377 689 6955"
   phoneIntl   = "+393776896955"
   whatsapp    = "393776896955"
-  email       = "info@puntowebferrara.com"
+  email       = "sara.boldrini23@gmail.com"
   locality    = "Ostellato"
   region      = "FE"
   postalCode  = "44020"
