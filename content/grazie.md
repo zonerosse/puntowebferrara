@@ -19,7 +19,7 @@ Se hai fretta o preferisci parlarne a voce, puoi contattarmi direttamente:
 
 - **Telefono e WhatsApp:** [377 689 6955](tel:+393776896955)
 - **WhatsApp diretto:** [scrivimi qui](https://wa.me/393776896955)
-- **Email:** [info@puntowebferrara.com](mailto:info@puntowebferrara.com)
+- **Email:** [sara.boldrini23@gmail.com](mailto:sara.boldrini23@gmail.com)
 
 ### Cosa succede adesso
 
