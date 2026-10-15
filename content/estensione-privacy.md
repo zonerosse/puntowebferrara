@@ -12,7 +12,7 @@ sitemap:
 
 Ultimo aggiornamento: 24 agosto 2026
 
-Questa informativa riguarda l'estensione per browser **Sottosopra**, pubblicata da Paolo Boldrini — Punto Web Ferrara, Ostellato (FE), Italia. Contatto: [sara.boldrini23@gmail.com](mailto:sara.boldrini23@gmail.com).
+Questa informativa riguarda l'estensione per browser **Sottosopra**, pubblicata da Paolo Boldrini — Punto Web Ferrara, Ostellato (FE), Italia. Contatto: [info@puntowebferrara.com](mailto:info@puntowebferrara.com).
 
 ### In sintesi
 

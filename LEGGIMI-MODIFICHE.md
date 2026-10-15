@@ -31,7 +31,7 @@ git push
 
 ## Da fare a mano
 
-1. **Formspree** — cambiare la destinazione del form da `zonerosse@gmail.com` a `sara.boldrini23@gmail.com`.
+1. **Formspree** — cambiare la destinazione del form da `zonerosse@gmail.com` a `info@puntowebferrara.com`.
 2. **Verifica schema** — dopo il deploy, controllare la home su `search.google.com/test/rich-results`.
 3. **Google Business Profile** — non ancora attiva. È la leva più pesante per il posizionamento locale.
 

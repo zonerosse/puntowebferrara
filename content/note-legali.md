@@ -16,7 +16,7 @@ Ultimo aggiornamento: agosto 2026
 
 Questo sito è gestito da **Sara Boldrini**, che opera con il nome commerciale **Punto Web Ferrara**, con sede operativa a Ostellato, in provincia di Ferrara.
 
-Contatti: [sara.boldrini23@gmail.com](mailto:sara.boldrini23@gmail.com) — telefono e WhatsApp al 377 689 6955.
+Contatti: [info@puntowebferrara.com](mailto:info@puntowebferrara.com) — telefono e WhatsApp al 377 689 6955.
 
 ### Natura dell'attività
 
@@ -66,4 +66,4 @@ Il presente sito e i rapporti che ne derivano sono regolati dalla legge italiana
 
 ### Segnalazioni
 
-Per segnalare un errore in una pagina, un contenuto che ritieni improprio o una richiesta relativa a questi contenuti: [sara.boldrini23@gmail.com](mailto:sara.boldrini23@gmail.com).
+Per segnalare un errore in una pagina, un contenuto che ritieni improprio o una richiesta relativa a questi contenuti: [info@puntowebferrara.com](mailto:info@puntowebferrara.com).
