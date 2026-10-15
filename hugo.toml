@@ -88,7 +88,7 @@ enableRobotsTXT = false
 
 [params]
   description = "Web designer a Ferrara: realizzo siti web professionali, veloci e sicuri. Specializzato in siti statici con Hugo. Preventivo gratuito."
-  telefono = "392 463 5584"
+  telefono = "377 689 6955"
   email = "info@puntowebferrara.com"
   indirizzo = "Ostellato (FE)"
 
@@ -96,9 +96,9 @@ enableRobotsTXT = false
   name        = "Punto Web Ferrara"
   legalName   = "Punto Web Ferrara di Sara Boldrini"
   description = "Web designer a Ferrara: siti web professionali veloci, sicuri e ottimizzati SEO, realizzati con Hugo e Cloudflare. Hosting gratuito e zero manutenzione."
-  phone       = "392 463 5584"
-  phoneIntl   = "+393924635584"
-  whatsapp    = "393924635584"
+  phone       = "377 689 6955"
+  phoneIntl   = "+393776896955"
+  whatsapp    = "393776896955"
   email       = "info@puntowebferrara.com"
   locality    = "Ostellato"
   region      = "FE"

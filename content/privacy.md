@@ -15,7 +15,7 @@ Ultimo aggiornamento: Agosto 2026
 Punto Web Ferrara di Sara Boldrini  
 Ostellato (FE)  
 Email: info&#64;puntowebferrara&#46;com  
-Telefono: 392 463 5584
+Telefono: 377 689 6955
 
 ### Dati Raccolti
 
@@ -102,4 +102,4 @@ Ci riserviamo il diritto di modificare questa informativa. La data di ultimo agg
 
 Per qualsiasi domanda relativa alla privacy, contattare:  
 Email: info&#64;puntowebferrara&#46;com  
-Telefono: 392 463 5584
+Telefono: 377 689 6955

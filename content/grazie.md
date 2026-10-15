@@ -17,8 +17,8 @@ Grazie per avermi scritto. Leggo personalmente ogni messaggio e ti rispondo
 
 Se hai fretta o preferisci parlarne a voce, puoi contattarmi direttamente:
 
-- **Telefono e WhatsApp:** [392 463 5584](tel:+393924635584)
-- **WhatsApp diretto:** [scrivimi qui](https://wa.me/393924635584)
+- **Telefono e WhatsApp:** [377 689 6955](tel:+393776896955)
+- **WhatsApp diretto:** [scrivimi qui](https://wa.me/393776896955)
 - **Email:** [info@puntowebferrara.com](mailto:info@puntowebferrara.com)
 
 ### Cosa succede adesso
