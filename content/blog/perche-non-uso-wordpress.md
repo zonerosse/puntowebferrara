@@ -5,7 +5,7 @@ date: 2025-12-20
 description: "Dopo anni con WordPress sono passato a Hugo + Cloudflare. Risultato: PageSpeed 95+, hosting gratuito, zero manutenzione, impossibile da hackerare."
 tags: ["wordpress", "hugo", "cloudflare", "tecnologia"]
 categories: ["Tecnologia"]
-author: "Paolo Boldrini"
+author: "Sara Boldrini"
 slug: "perche-non-uso-wordpress"
 ---
 

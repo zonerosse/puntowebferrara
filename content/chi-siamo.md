@@ -1,7 +1,7 @@
 ---
 title: "Chi Sono"
-titleSeo: "Paolo Boldrini, Web Designer a Ferrara"
-description: "Paolo Boldrini, fondatore di Punto Web Ferrara. Realizzo siti web professionali, veloci e sicuri per aziende e professionisti di Ferrara."
+titleSeo: "Sara Boldrini, Web Designer a Ferrara"
+description: "Sara Boldrini, fondatrice di Punto Web Ferrara. Laureata in Business Economy con la passione per il web. Realizzo siti professionali, veloci e sicuri."
 type: "page"
 layout: "chi-siamo"
 sitemap:

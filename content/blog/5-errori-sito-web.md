@@ -5,7 +5,7 @@ date: 2025-12-15
 description: "Il tuo sito non porta clienti? Probabilmente stai facendo uno di questi 5 errori comuni. Ecco come identificarli e risolverli."
 tags: ["errori", "sito web", "conversioni"]
 categories: ["Guide"]
-author: "Paolo Boldrini"
+author: "Sara Boldrini"
 slug: "5-errori-sito-web"
 ---
 

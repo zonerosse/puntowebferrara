@@ -94,7 +94,7 @@ enableRobotsTXT = false
 
 [params.biz]
   name        = "Punto Web Ferrara"
-  legalName   = "Punto Web Ferrara di Paolo Boldrini"
+  legalName   = "Punto Web Ferrara di Sara Boldrini"
   description = "Web designer a Ferrara: siti web professionali veloci, sicuri e ottimizzati SEO, realizzati con Hugo e Cloudflare. Hosting gratuito e zero manutenzione."
   phone       = "392 463 5584"
   phoneIntl   = "+393924635584"

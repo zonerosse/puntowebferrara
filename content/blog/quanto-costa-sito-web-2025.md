@@ -6,7 +6,7 @@ lastmod: 2026-08-08
 description: "Prezzi reali per un sito web nel 2026. Sito vetrina 500-2000€, ecommerce 2000-8000€. Attento ai costi nascosti: hosting e manutenzione possono costarti."
 tags: ["costi", "prezzi", "sito web"]
 categories: ["Guide"]
-author: "Paolo Boldrini"
+author: "Sara Boldrini"
 slug: "quanto-costa-sito-web-2025"
 ---
 

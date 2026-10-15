@@ -5,7 +5,7 @@ date: 2025-12-26
 description: "Il tuo sito WordPress è lento? Le 7 cause principali e le soluzioni concrete. Da PageSpeed 40 a 95+ è possibile."
 tags: ["wordpress", "velocità", "performance"]
 categories: ["Guide"]
-author: "Paolo Boldrini"
+author: "Sara Boldrini"
 slug: "perche-wordpress-lento"
 faq:
   - q: "Il Tuo Sito È Lento?"

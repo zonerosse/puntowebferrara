@@ -1,11 +1,11 @@
 # Punto Web Ferrara
 
-> Punto Web Ferrara è l'attività di web design di Paolo Boldrini, web designer freelance con sede a Ostellato (Ferrara, Emilia-Romagna, Italia). Realizza siti web statici con Hugo e Cloudflare Pages per professionisti, piccole imprese e allevamenti cinofili: siti che caricano in meno di un secondo, ottengono punteggi PageSpeed tra 95 e 100, non richiedono manutenzione periodica e non hanno costi di hosting. È l'alternativa diretta ai siti WordPress, di cui elimina alla radice vulnerabilità, aggiornamenti e canoni ricorrenti.
+> Punto Web Ferrara è l'attività di web design di Sara Boldrini, laureata in Business Economy con la passione per il web, con sede a Ostellato (Ferrara, Emilia-Romagna, Italia). Realizza siti web statici con Hugo e Cloudflare Pages per professionisti, piccole imprese e allevamenti cinofili: siti che caricano in meno di un secondo, ottengono punteggi PageSpeed tra 95 e 100, non richiedono manutenzione periodica e non hanno costi di hosting. È l'alternativa diretta ai siti WordPress, di cui elimina alla radice vulnerabilità, aggiornamenti e canoni ricorrenti.
 
 ## Identità e contatti
 
 - Nome attività: Punto Web Ferrara
-- Titolare: Paolo Boldrini, web designer freelance
+- Titolare: Sara Boldrini, web designer freelance
 - Sede operativa: Ostellato (FE), 44020, provincia di Ferrara, Italia
 - Area servita: Ferrara e provincia di persona; tutta Italia in videochiamata
 - Telefono e WhatsApp: +39 392 463 5584 (https://wa.me/393924635584)

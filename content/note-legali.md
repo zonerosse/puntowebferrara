@@ -14,7 +14,7 @@ Ultimo aggiornamento: agosto 2026
 
 ### Titolare del sito
 
-Questo sito è gestito da **Paolo Boldrini**, che opera con il nome commerciale **Punto Web Ferrara**, con sede operativa a Ostellato, in provincia di Ferrara.
+Questo sito è gestito da **Sara Boldrini**, che opera con il nome commerciale **Punto Web Ferrara**, con sede operativa a Ostellato, in provincia di Ferrara.
 
 Contatti: [info@puntowebferrara.com](mailto:info@puntowebferrara.com) — telefono e WhatsApp al 392 463 5584.
 
