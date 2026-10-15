@@ -14,7 +14,7 @@ Ultimo aggiornamento: Agosto 2026
 
 Punto Web Ferrara di Sara Boldrini  
 Ostellato (FE)  
-Email: sara.boldrini23sara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#64;gmailsara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#46;com  
+Email: sara.boldrini23@gmail.com  
 Telefono: 377 689 6955
 
 ### Dati Raccolti
@@ -83,7 +83,7 @@ In conformità al GDPR (Regolamento UE 2016/679), l'utente ha diritto di:
 - Richiedere la portabilità dei dati
 - Revocare il consenso in qualsiasi momento
 
-Per esercitare i propri diritti, contattare: sara.boldrini23sara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#64;gmailsara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#46;com
+Per esercitare i propri diritti, contattare: sara.boldrini23@gmail.com
 
 ### Cookie
 
@@ -101,5 +101,5 @@ Ci riserviamo il diritto di modificare questa informativa. La data di ultimo agg
 ### Contatti
 
 Per qualsiasi domanda relativa alla privacy, contattare:  
-Email: sara.boldrini23sara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#64;gmailsara.boldrini23info&#64;puntowebferrara&#46;com#64;gmailinfo&#64;puntowebferrara&#46;com#46;com#46;com  
+Email: sara.boldrini23@gmail.com  
 Telefono: 377 689 6955
